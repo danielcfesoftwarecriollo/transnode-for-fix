@@ -1,0 +1,7 @@
+name: transnode
+version: 0.0.1
+description: A transnode web application
+dependencies:
+  angular: any
+  angular_ui: any
+  browser: any
