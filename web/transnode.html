@@ -14,33 +14,15 @@
   <title>Transnode</title>
 </head>
 <body transnode>
+  <nav>
+    <a href="#/">Home</a>
+    <a href="#/login">Login</a>
+    <a href="#/shipment_order">Shipment_Order</a>      
+  </nav>
   <div class="container">
-    <div ng-hide="true">Loading...</div>
-
-    <div login>
-      <div ng-hide="app.isAuthenticated()" ng-cloak>
-        <div class="alert alert-danger" ng-show="login.haveMessage()" ng-cloak>{{ login.message }}</div>
-
-        <form class="form-signin" role="form">
-          <h2 class="form-signin-heading">Please sign in</h2>
-
-          <input ng-model="login.email" type="email" class="form-control" placeholder="Email address" required="" autofocus="">
-          <input ng-model="login.password" type="password" class="form-control" placeholder="Password" required="">
-          <label class="checkbox">
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-
-          <button class="btn btn-lg btn-primary btn-block" ng-click="login.signIn()">Sign in</button>
-        </form>
-      </div>
-
-      <div ng-show="app.isAuthenticated()" ng-cloak>
-        <h1>Hi, {{ app.user_email() }}</h1>
-        <button class="btn btn-lg btn-primary" ng-click="login.signOut()">Logout</button>
-      </div>
-    </div>
+    <ng-view></ng-view>
+      
   </div>
-
   <script type="application/dart" src="transnode.dart"></script>
   <script type="text/javascript" src="packages/browser/dart.js"></script>
 </body>
