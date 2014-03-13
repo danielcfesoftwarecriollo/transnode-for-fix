@@ -14,16 +14,15 @@
   <title>Transnode</title>
 </head>
 <body transnode>
-  <div class="container">
-
+  <nav>
     <a href="#/">Home</a>
     <a href="#/login">Login</a>
-    <a href="#/shipment_order">Shipment_Order</a>
-
-  <ng-view></ng-view>
+    <a href="#/shipment_order">Shipment_Order</a>      
+  </nav>
+  <div class="container">
+    <ng-view></ng-view>
       
   </div>
-
   <script type="application/dart" src="transnode.dart"></script>
   <script type="text/javascript" src="packages/browser/dart.js"></script>
 </body>
