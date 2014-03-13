@@ -25,3 +25,12 @@ example:
 ```
 
 * serve static files from `web` directory
+
+## editing style
+  All changes should be in .less file.
+  transnode.less must only have @import
+  
+```shell
+  cd web/style
+  lessc --clean-css transnode.less ../transnode.css 
+```
