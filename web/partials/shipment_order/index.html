@@ -1,45 +1,47 @@
-<div shipment-order>
-  <h1> Shipment Order </h1>  
+<div shipment-order-controller>
+  <h1> Shipment Order </h1> 
   <form>
 
     <div class='row'>
-      <label> BillTo code <input type="text" ng-model='shipment_order.bill_to.code' > </label>
-      <label> BillTo name <input type="text" ng-model='shipment_order.bill_to.name' > </label>
-      <label> City <input type="text" ng-model='shipment_order.bill_to.city' > </label>
-      <label> State <input type="text" ng-model='shipment_order.bill_to.state' > </label>
-      <label> CSR Rep <input type="text" ng-model='shipment_order.bill_to.csr_rep' > </label>
-      <label> Terms <input type="text" ng-model='shipment_order.bill_to.terms' > </label>
-      <label> Customs Broker <input type="text" ng-model='shipment_order.bill_to.customs_broker' > </label>
-      <label> Ready Date <input type="text" ng-model='shipment_order.bill_to.ready_date' > </label>
+      <label> BillTo code <input type="text" ng-model='shipment_order_controller.shipment_order.bill_to.code' > </label>
+      <label> BillTo name <input type="text" ng-model='shipment_order_controller.shipment_order.bill_to.name' > </label>
+      <label> City <input type="text" ng-model='shipment_order_controller.shipment_order.bill_to.city' > </label>
+      <label> State <input type="text" ng-model='shipment_order_controller.shipment_order.bill_to.state' > </label>
+      <label> CSR Rep <input type="text" ng-model='shipment_order_controller.shipment_order.bill_to.csr_rep' > </label>
+      <label> Terms <input type="text" ng-model='shipment_order_controller.shipment_order.bill_to.terms' > </label>
+      <label> Customs Broker <input type="text" ng-model='shipment_order_controller.shipment_order.bill_to.customs_broker' > </label>
+      <label> Ready Date <input type="text" ng-model='shipment_order_controller.shipment_order.bill_to.ready_date' > </label>
     </div>
     <div class="row">
       <label> Credit Check ?
-        <input type="text" ng-model='shipment_order.credit_check' >
+        <input type="text" ng-model='shipment_order_controller.shipment_order.credit_check' >
       </label>
     </div>
 
     <div class='row'>
-      <label> Customer code <input type="text" ng-model='shipment_order.customer.code' > </label>
-      <label> Customer name <input type="text" ng-model='shipment_order.customer.name' > </label>
-      <label> City <input type="text" ng-model='shipment_order.customer.city' > </label>
-      <label> State <input type="text" ng-model='shipment_order.customer.state' > </label>
-      <label> Zip <input type="text" ng-model='shipment_order.customer.zip' > </label>
-      <label> Quote Ref <input type="text" ng-model='shipment_order.customer.quote_ref' > </label>
-      <label> Bill $ Est <input type="text" ng-model='shipment_order.customer.bill_estimate' > </label>
-      <label> Credit Status <input type="text" ng-model='shipment_order.customer.credit_status' > </label>
-      <label> File Created <input type="text" ng-model='' > </label>
+      <label> Customer code <input type="text" ng-model='shipment_order_controller.shipment_order.customer.code' > </label>
+      <label> Customer name <input type="text" ng-model='shipment_order_controller.shipment_order.customer.name' > </label>
+      <label> City <input type="text" ng-model='shipment_order_controller.shipment_order.customer.city' > </label>
+      <label> State <input type="text" ng-model='shipment_order_controller.shipment_order.customer.state' > </label>
+      <label> Zip <input type="text" ng-model='shipment_order_controller.shipment_order.customer.zip' > </label>
+      <label> Quote Ref <input type="text" ng-model='shipment_order_controller.shipment_order.customer.quote_ref' > </label>
+      <label> Bill $ Est <input type="text" ng-model='shipment_order_controller.shipment_order.customer.bill_estimate' > </label>
+      <label> Credit Status <input type="text" ng-model='shipment_order_controller.shipment_order.customer.credit_status' > </label>
+      <label> File Created <input type="text" ng-model='shipment_order_controller.shipment_order.file_created' > </label>
     </div>
 
     <div class='row'>
-      <label> Shipper code <input type="text" ng-model='shipment_order.shipper.code' >  > </label>
-      <label> Shipper name <input type="text" ng-model='shipment_order.shipper.name' >  > </label>
-      <label> City <input type="text" ng-model='shipment_order.shipper.city' >  > </label>
-      <label> State <input type="text" ng-model='shipment_order.shipper.state' >  > </label>
-      <label> CSR Rep <input type="text" ng-model='shipment_order.shipper.csr_rep' >  > </label>
-      <label> Terms <input type="text" ng-model='shipment_order.shipper.term' >  > </label>
-      <label> Customs Broker <input type="text" ng-model='shipment_order.shipper.custom_broker' >  > </label>
-      <label> Ready Date <input type="text" ng-model='shipment_order.shipper.ready_date' >  > </label>
+      <label> Shipper code <input type="text" ng-model='shipment_order_controller.shipment_order.shipper.code' >   </label>
+      <label> Shipper name <input type="text" ng-model='shipment_order_controller.shipment_order.shipper.name' >   </label>
+      <label> City <input type="text" ng-model='shipment_order_controller.shipment_order.shipper.city' >   </label>
+      <label> State <input type="text" ng-model='shipment_order_controller.shipment_order.shipper.state' >   </label>
+      <label> CSR Rep <input type="text" ng-model='shipment_order_controller.shipment_order.shipper.csr_rep' >   </label>
+      <label> Terms <input type="text" ng-model='shipment_order_controller.shipment_order.shipper.term' >   </label>
+      <label> Customs Broker <input type="text" ng-model='shipment_order_controller.shipment_order.shipper.custom_broker' >   </label>
+      <label> Ready Date <input type="text" ng-model='shipment_order_controller.shipment_order.shipper.ready_date' >   </label>
       <button> Add shipper</button>
     </div>
+
+    <div ng-model="shipment_order_controller.shipment_order.bill_to.code"> </div>
   </form>
 </div>

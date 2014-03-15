@@ -1,4 +1,7 @@
+library transnode.routes;
+
 import 'package:angular/angular.dart';
+
 class TransnodeRouter implements RouteInitializer {
   init(Router router, ViewFactory view) {
     router.root

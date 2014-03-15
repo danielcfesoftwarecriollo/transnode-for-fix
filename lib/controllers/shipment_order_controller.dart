@@ -1,16 +1,19 @@
 library transnode.shipment_order_controller;
 
 import 'package:angular/angular.dart';
+import 'package:transnode/models/shipment_order.dart' show ShipmentOrder;
 
 @NgController(
-    selector: '[shipment-order]',
-    publishAs: 'shipment_order')
+    selector: '[shipment-order-controller]',
+    publishAs: 'shipment_order_controller')
 
 class ShipmentOrderController {
   String text ="no";
+  ShipmentOrder shipment_order = new ShipmentOrder();
 
   ShipmentOrderController(){
     this.text="ok";
+    this.shipment_order = new ShipmentOrder();
   }
   String other(){
     return this.text;
