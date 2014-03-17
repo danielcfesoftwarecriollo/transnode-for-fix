@@ -17,6 +17,10 @@ class CustomerController {
   void create(){
     CustomerSaver customer_saver = new CustomerSaver(this.customer);
     customer_saver.save();
+    if(customer_saver.sucessfull)
+      print("WE ARE THE CHAMPIONS");
+    else
+      print("for the next time");
   }
   void reset(){
 

@@ -7,6 +7,7 @@ import 'package:di/di.dart';
 import 'package:transnode/routes/transnode_routes.dart' show TransnodeRouter;
 
 import 'package:transnode/controllers/app_controller.dart';
+import 'package:transnode/controllers/customer_controller.dart';
 import 'package:transnode/controllers/login_controller.dart';
 import 'package:transnode/controllers/shipment_order_controller.dart';
 
@@ -24,6 +25,7 @@ class TransnodeModule extends Module {
     type(AppController);
     type(LoginController);
     type(ShipmentOrderController);
+    type(CustomerController);
     type(User);
     type(ApiService);
     factory(NgRoutingUsePushState,
