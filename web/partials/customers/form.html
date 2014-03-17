@@ -1,4 +1,5 @@
 <div customer-controller>
+  <div class="error" ng-show="controller.error">{{controller.full_messages}}</div>
   <form novalidate ng-submit="controller.create()"> 
     <label> Code: <input ng-model='controller.customer.code' /> </label>
     <label> Name: <input ng-model="controller.customer.name" /> </label>

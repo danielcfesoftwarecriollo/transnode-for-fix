@@ -1,13 +1,14 @@
 import 'package:transnode/models/customer.dart' show Customer;
+import 'package:transnode/models/saver.dart';
 import 'dart:html';
 
-class CustomerSaver{
+class CustomerSaver extends Saver{
   Customer customer;
   bool sucessfull = false;
   
   CustomerSaver(this.customer);
   
-  void save() {
+  bool save() {
     HttpRequest request = new HttpRequest();
     request.onReadyStateChange.listen((_) {
     if ( this.sucessful(request)) {
@@ -20,20 +21,12 @@ class CustomerSaver{
     }
     });
     request.open("POST", "/customers", async: false);
-    request.send(this.to_s());
+    request.send(this.params());
+    return this.sucessfull;
   }
   
-  String to_s(){
-    return this.customer.to_map().toString();
+  String params(){
+    return this.map_to_param(this.customer.to_map());
   }
-  
-  bool sucessful(request){
-    return request.readyState == HttpRequest.DONE && (request.status == 200 || request.status == 0);
-  }
-  
-  String map_to_param(Map map){
-    Set<String> params = new Set();
-    map.forEach((k,v) => v != null ? params.add(k+'='+v): "" );
-    return params.join("&");
-  }
+ 
 }
