@@ -1,10 +1,11 @@
 <div customer-controller>
-  <form>
-    Name: <input type="text" ng-model="customer_controller.customer.name" /><br />
-    E-mail: <input type="email" ng-model="customer_controller.customer.email" /><br />
-    Gender: <input type="radio" ng-model="customer_controller.customer.gender" value="male" />male
-    <input type="radio" ng-model="customer_controller.customer.gender" value="female" />female<br />
-    <button ng-click="reset()">RESET</button>
-    <button ng-click="update(user)">SAVE</button>
+  <form novalidate ng-submit="controller.create()"> 
+    <label> Code: <input ng-model='controller.customer.code' /> </label>
+    <label> Name: <input ng-model="controller.customer.name" /> </label>
+    <label> City: <input ng-model="controller.customer.city" /> </label>
+    <label> State: <input ng-model="controller.customer.state" /> </label>
+    <label> Zip: <input ng-model="controller.customer.zip" /> </label>
+    <button ng-click="controller.reset">RESET</button>
+    <button ng-disabled="form.invalid">SAVE</button>
   </form>
 </div>

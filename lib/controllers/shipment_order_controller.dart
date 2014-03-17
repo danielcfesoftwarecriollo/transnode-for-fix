@@ -8,15 +8,9 @@ import 'package:transnode/models/shipment_order.dart' show ShipmentOrder;
     publishAs: 'shipment_order_controller')
 
 class ShipmentOrderController {
-  String text ="no";
   ShipmentOrder shipment_order = new ShipmentOrder();
 
   ShipmentOrderController(){
-    this.text="ok";
     this.shipment_order = new ShipmentOrder();
   }
-  String other(){
-    return this.text;
-  }
-
 }
