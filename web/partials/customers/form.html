@@ -1,0 +1,11 @@
+<div customer-controller>
+  <form novalidate ng-submit="controller.create()"> 
+    <label> Code: <input ng-model='controller.customer.code' /> </label>
+    <label> Name: <input ng-model="controller.customer.name" /> </label>
+    <label> City: <input ng-model="controller.customer.city" /> </label>
+    <label> State: <input ng-model="controller.customer.state" /> </label>
+    <label> Zip: <input ng-model="controller.customer.zip" /> </label>
+    <button ng-click="controller.reset">RESET</button>
+    <button ng-disabled="form.invalid">SAVE</button>
+  </form>
+</div>
