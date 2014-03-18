@@ -1,8 +1,10 @@
-import 'package:transnode/models/customer.dart' show Customer;
+library transnode.user_service;
+
+import 'package:transnode/models/customer.dart';
 import 'package:transnode/models/saver.dart';
 import 'dart:html';
 
-class CustomerSaver extends Saver{
+class CustomerService extends Saver{
   bool sucessfull = false;
     
   bool save(customer) {

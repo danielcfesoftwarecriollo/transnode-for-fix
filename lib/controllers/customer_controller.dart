@@ -10,6 +10,7 @@ import 'package:transnode/services/customer_service.dart';
     
 class CustomerController {
   Customer customer;
+  CustomerService customer_service;
   bool error;
   String full_messages;
   CustomerController(){
