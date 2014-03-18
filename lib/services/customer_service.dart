@@ -3,12 +3,9 @@ import 'package:transnode/models/saver.dart';
 import 'dart:html';
 
 class CustomerSaver extends Saver{
-  Customer customer;
   bool sucessfull = false;
-  
-  CustomerSaver(this.customer);
-  
-  bool save() {
+    
+  bool save(customer) {
     HttpRequest request = new HttpRequest();
     request.onReadyStateChange.listen((_) {
     if ( this.sucessful(request)) {
@@ -21,12 +18,12 @@ class CustomerSaver extends Saver{
     }
     });
     request.open("POST", "/customers", async: false);
-    request.send(this.params());
+    request.send(this.params(customer));
     return this.sucessfull;
   }
   
-  String params(){
-    return this.map_to_param(this.customer.to_map());
+  String params(Customer customer){
+    return this.map_to_param(customer.to_map());
   }
  
 }

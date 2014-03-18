@@ -1,7 +1,7 @@
 library transnode.customer_controller;
 import 'package:angular/angular.dart';
-import 'package:transnode/models/customer.dart' show Customer;
-import 'package:transnode/models/customer_saver.dart' show CustomerSaver;
+import 'package:transnode/models/customer.dart';
+import 'package:transnode/services/customer_service.dart';
 
 
 @NgController(
@@ -15,12 +15,13 @@ class CustomerController {
   CustomerController(){
     this.error = false;
     this.customer = new Customer();
+    this.customer_service = new CustomerService();
+
     this.full_messages = "";
   }
   void create(){
-    CustomerSaver customer_saver = new CustomerSaver(this.customer);
-    customer_saver.save();
-    if(customer_saver.sucessfull){
+    this.customer_service.save(this.customer);
+    if(this.customer_service.sucessfull){
       print("we are the champions");
     }
     else{
