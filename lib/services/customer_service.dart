@@ -1,31 +1,32 @@
 library transnode.user_service;
 
 import 'package:transnode/models/customer.dart';
-import 'package:transnode/models/saver.dart';
-import 'dart:html';
 
-class CustomerService extends Saver{
+import 'dart:convert';
+import 'dart:async';
+import 'package:angular/angular.dart';
+
+@NgInjectableService()
+class CustomerService{
+  static final String api_url = 'http://0.0.0.0:3000';
+  static final String customers = api_url + '/customers';
+
   bool sucessfull = false;
-    
-  bool save(customer) {
-    HttpRequest request = new HttpRequest();
-    request.onReadyStateChange.listen((_) {
-    if ( this.sucessful(request)) {
-      // SUCCESS
-        sucessfull = true;
-      }
-    else{
-      // FAIL
-      sucessfull = false;
-    }
-    });
-    request.open("POST", "/customers", async: false);
-    request.send(this.params(customer));
-    return this.sucessfull;
+  final Http _http;
+  
+  CustomerService(this._http);
+  
+  Future<HttpResponse> save(Customer customer) {
+    return _http.post(customers, this.params(customer))
+      .then((HttpResponse response) {
+        print ("WIIII");
+      })
+      .catchError((error) {
+        throw('Something is bad!');
+      });
   }
   
   String params(Customer customer){
-    return this.map_to_param(customer.to_map());
-  }
- 
+    return JSON.encode(customer.to_map());
+  }  
 }

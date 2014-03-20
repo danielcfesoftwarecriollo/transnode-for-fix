@@ -13,6 +13,7 @@ import 'package:transnode/controllers/shipment_order_controller.dart';
 
 
 import 'package:transnode/services/api_service.dart';
+import 'package:transnode/services/customer_service.dart';
 import 'package:transnode/services/user_service.dart';
 
 @MirrorsUsed(override: '*')
@@ -28,6 +29,8 @@ class TransnodeModule extends Module {
     type(CustomerController);
     type(User);
     type(ApiService);
+    type(CustomerService);
+
     factory(NgRoutingUsePushState,
             (_) => new NgRoutingUsePushState.value(false));
   }

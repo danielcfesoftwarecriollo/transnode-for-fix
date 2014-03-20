@@ -10,14 +10,12 @@ import 'package:transnode/services/customer_service.dart';
     
 class CustomerController {
   Customer customer;
-  CustomerService customer_service;
+  final CustomerService customer_service;
   bool error;
   String full_messages;
-  CustomerController(){
-    this.error = false;
+  CustomerController(this.customer_service){
     this.customer = new Customer();
-    this.customer_service = new CustomerService();
-
+    this.error = false;
     this.full_messages = "";
   }
   void create(){
