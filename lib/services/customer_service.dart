@@ -19,14 +19,14 @@ class CustomerService{
   Future<HttpResponse> save(Customer customer) {
     return _http.post(customers, this.params(customer))
       .then((HttpResponse response) {
-        print ("WIIII");
+        print ("It's ok");
       })
       .catchError((error) {
-        throw('Something is bad!');
+        print ('Something is bad!');
       });
   }
   
   String params(Customer customer){
-    return JSON.encode(customer.to_map());
+    return JSON.encode({"customer":customer.to_map()});
   }  
 }
