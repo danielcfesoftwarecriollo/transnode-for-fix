@@ -9,6 +9,7 @@ import 'package:transnode/services/customer_service.dart';
     publishAs: 'controller')
     
 class CustomerController {
+  @NgTwoWay("customer")
   Customer customer;
   final CustomerService customer_service;
   bool error;
@@ -17,6 +18,10 @@ class CustomerController {
     this.customer = new Customer();
     this.error = false;
     this.full_messages = "";
+  }
+  void add_contact(){
+    print("adding contact");
+    this.customer.new_empty_contact();
   }
   void create(){
     this.customer_service.save(this.customer);

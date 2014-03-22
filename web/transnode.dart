@@ -16,6 +16,8 @@ import 'package:transnode/services/api_service.dart';
 import 'package:transnode/services/customer_service.dart';
 import 'package:transnode/services/user_service.dart';
 
+import 'package:transnode/components/components.dart';
+
 @MirrorsUsed(override: '*')
 import 'dart:mirrors';
 
@@ -31,6 +33,7 @@ class TransnodeModule extends Module {
     type(ApiService);
     type(CustomerService);
 
+    type(ContactComponent);
     factory(NgRoutingUsePushState,
             (_) => new NgRoutingUsePushState.value(false));
   }
