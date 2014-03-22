@@ -1,5 +1,11 @@
 <div customer-controller>
-  <div class="error" ng-show="controller.error">{{controller.full_messages}}</div>
+  <div class="alert alert-dismissable alert-danger" ng-show="controller.customer_service.has_errors()">
+    <p>{{controller.customer_service.error}}</p>
+  </div>
+  
+  <ul class="alert alert-dismissable alert-danger" ng-show="controller.customer.has_errors">
+    <li class="error" ng-repeat="error in controller.customer.errors">{{error}}</li>
+  </ul>
   <form novalidate ng-submit="controller.create()"> 
     <label> Code: <input ng-model='controller.customer.code' /> </label>
     <label> Name: <input ng-model="controller.customer.name" /> </label>
@@ -17,6 +23,6 @@
     <label> State: <input ng-model="controller.customer.state" /> </label>
     <label> Zip: <input ng-model="controller.customer.zip" /> </label>
     <button ng-click="controller.reset">RESET</button>
-    <button ng-disabled="form.invalid">SAVE</button>
+    <button>SAVE</button>
   </form>
 </div>
