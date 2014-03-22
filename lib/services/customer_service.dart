@@ -17,6 +17,7 @@ class CustomerService{
   CustomerService(this._http);
   
   Future<HttpResponse> save(Customer customer) {
+    print(this.params(customer));
     return _http.post(customers, this.params(customer))
       .then((HttpResponse response) {
         print ("It's ok");
