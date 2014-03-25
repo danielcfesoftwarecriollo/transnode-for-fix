@@ -5,7 +5,6 @@ import 'package:transnode/services/user_service.dart';
 
 import 'dart:convert';
 import 'dart:async';
-import 'dart:html';
 
 @NgInjectableService()
 class ApiService {
@@ -48,7 +47,7 @@ class ApiService {
       });
   }
 
-  Future signOut() {        
+  Future signOut() {
     return _http.delete(signout_url, headers: http_headers())
       .then((HttpResponse response) {
         user.token = null;

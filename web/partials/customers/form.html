@@ -1,12 +1,28 @@
 <div customer-controller>
-  <div class="error" ng-show="controller.error">{{controller.full_messages}}</div>
+  <div class="alert alert-dismissable alert-danger" ng-show="controller.customer_service.has_errors()">
+    <p>{{controller.customer_service.error}}</p>
+  </div>
+  
+  <ul class="alert alert-dismissable alert-danger" ng-show="controller.customer.has_errors">
+    <li class="error" ng-repeat="error in controller.customer.errors">{{error}}</li>
+  </ul>
   <form novalidate ng-submit="controller.create()"> 
     <label> Code: <input ng-model='controller.customer.code' /> </label>
     <label> Name: <input ng-model="controller.customer.name" /> </label>
+    <div class="contacts">
+      <div class="contact" ng-repeat="contact in controller.customer.contacts" ctrl_contact>
+        <label>Name:<input ng-model='contact.name'></label>
+        <label>Phone:<input  ng-model='contact.phone'></label>
+        <label>Email:<input  ng-model='contact.email'></label>
+        <button class='delete' ng-show='controller.customer.has_many_contacts()'>-</button>
+      </div>      
+      <button class='btn add' type='button' ng-click='controller.add_contact()'>Add contact</button>
+    </div>
+
     <label> City: <input ng-model="controller.customer.city" /> </label>
     <label> State: <input ng-model="controller.customer.state" /> </label>
     <label> Zip: <input ng-model="controller.customer.zip" /> </label>
     <button ng-click="controller.reset">RESET</button>
-    <button ng-disabled="form.invalid">SAVE</button>
+    <button>SAVE</button>
   </form>
 </div>
