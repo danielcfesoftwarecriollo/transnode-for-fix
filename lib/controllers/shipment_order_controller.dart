@@ -6,11 +6,10 @@ import 'package:transnode/models/shipment_order.dart' show ShipmentOrder;
 @NgController(
     selector: '[shipment-order-controller]',
     publishAs: 'shipment_order_controller')
-
 class ShipmentOrderController {
-  ShipmentOrder shipment_order = new ShipmentOrder();
+  ShipmentOrder shipment_order;
 
-  ShipmentOrderController(){
+  ShipmentOrderController() {
     this.shipment_order = new ShipmentOrder();
   }
 }

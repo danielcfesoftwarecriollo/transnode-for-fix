@@ -9,7 +9,6 @@ import 'package:transnode/services/api_service.dart';
 class LoginController {
   ApiService _api;
 
-  // default values to not fill form every time
   String email;
   String password;
   String message;
@@ -18,6 +17,7 @@ class LoginController {
 
   void signIn() {
     message = null;
+
     _api.signIn(email, password).catchError((error) {
       message = error;
     });
