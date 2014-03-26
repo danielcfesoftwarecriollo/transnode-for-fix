@@ -1,6 +1,6 @@
 library transnode.model.shipper;
 
-class Shipper{
+class Shipper {
   String code;
   String name;
   String city;

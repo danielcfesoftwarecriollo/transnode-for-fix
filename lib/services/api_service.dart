@@ -11,9 +11,9 @@ class ApiService {
   static final String api_url = '';
   static final String signin_url = api_url + '/sessions';
   static final String signout_url = api_url + '/sessions';
-  User user;
-
   final Http _http;
+
+  User user;
 
   ApiService(this._http, this.user);
 
@@ -24,11 +24,11 @@ class ApiService {
   bool isAuthenticated() {
     return user.isAuthenticated();
   }
-  
+
   Map<String, String> http_headers() {
     return {'Authorization':"Token token=${token()}"};
   }
-  
+
   Future signIn(String email, String password) {
     var data = {
       'user': {

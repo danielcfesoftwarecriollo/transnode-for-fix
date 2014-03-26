@@ -6,16 +6,15 @@ part of transnode.components;
     applyAuthorStyles: true,
     publishAs: 'ctrl_contact'
 )
-
 class ContactComponent {
   @NgTwoWay("contacts")
-  List<Contact> contacts; 
+  List<Contact> contacts;
 
   ContactComponent() {
     this.contacts = [new Contact()];
   }
 
-  void addItem(){
+  void addItem() {
     contacts.add(new Contact());
   }
 
