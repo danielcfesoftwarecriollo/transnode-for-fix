@@ -1,6 +1,7 @@
 library transnode.user_service;
 
 import 'package:transnode/models/customer.dart';
+import 'package:transnode/services/user_service.dart';
 
 import 'dart:convert';
 import 'dart:async';
@@ -10,11 +11,14 @@ import 'package:angular/angular.dart';
 class CustomerService{
   static final String api_url = 'http://0.0.0.0:3000';
   static final String customers = api_url + '/customers';
-  final Http _http;
+  Http _http;
   String error;
+  User user;
+
   
-  CustomerService(this._http){
+  CustomerService(this._http,this.user){
     this.error = "";
+    _http.defaults.headers.setToken(user);
   }
   
   Future save(Customer customer) {
