@@ -18,8 +18,13 @@ class ApiService {
   String token() {
     return user.token;
   }
-  void setToken(String token) {
-    _http.defaults.headers.setToken(token);
+  void setDataUser(email, token) {
+    user.email = email;
+    user.token = token;
+    setToken();
+  }
+  void setToken() {
+    _http.defaults.headers.setToken(user);
   }
   void cleanToken() {
     _http.defaults.headers.cleanToken();
@@ -37,11 +42,9 @@ class ApiService {
 
   Future<HttpResponse> connection(String method, String route, [Map params]) {
     method = method.toUpperCase();
-    if (params == null) {
-      params = {};
-    }
-    String string_params = JSON.encode(params);
-    Future http_response = this._call_by_method(method, route, string_params);
+    var dinamic_prams = _params_by_method(method, params);
+    Future http_response = this._call_by_method(method, full_path(route),
+        dinamic_prams);
     http_response.catchError((HttpResponse response) {
       if (_error_in_server(response.status)) {
 
@@ -51,9 +54,20 @@ class ApiService {
 
       }
     });
-    return null;
+    return http_response;
   }
 
+  String full_path(path) {
+    return api_url + path;
+  }
+  _params_by_method(String method, Map params) {
+    switch (method) {
+      case "POST":
+        return JSON.encode(params);
+      default:
+        return params;
+    }
+  }
   Future<HttpResponse> _call_by_method(String method, String route, String
       params) {
     Future http_request;

@@ -13,6 +13,7 @@ import 'package:transnode/services/api_service.dart';
 import 'package:transnode/services/customer_service.dart';
 import 'package:transnode/services/user_service.dart';
 import 'package:transnode/services/custom_header.dart';
+import 'package:transnode/services/session_services.dart';
 
 import 'package:transnode/components/components.dart';
 
@@ -28,6 +29,7 @@ class TransnodeModule extends Module {
     type(CustomerController);
     type(User);
     type(ApiService);
+    type(SessionService);
     type(CustomerService);
     type(HttpDefaultHeaders, implementedBy: CustomHeader);
     type(ContactComponent);

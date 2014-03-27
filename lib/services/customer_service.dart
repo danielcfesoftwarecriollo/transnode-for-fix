@@ -18,7 +18,7 @@ class CustomerService {
 
   CustomerService(this._http,this.user) {
     this.error = "";
-    _http.defaults.headers.setToken(user);
+    _http.defaults.headers.setToken(user.token);
   }
 
   Future save(Customer customer) {
