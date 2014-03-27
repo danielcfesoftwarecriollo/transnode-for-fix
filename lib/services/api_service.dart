@@ -3,14 +3,12 @@ library transnode.api_service;
 import 'package:angular/angular.dart';
 import 'package:transnode/services/user_service.dart';
 
-import 'dart:convert';
 import 'dart:async';
+import 'dart:convert';
 
 @NgInjectableService()
 class ApiService {
   static final String api_url = 'http://localhost:3000';
-  static final String signin_url = api_url + '/sessions';
-  static final String signout_url = api_url + '/sessions';
   final Http _http;
 
   User user;
@@ -20,10 +18,10 @@ class ApiService {
   String token() {
     return user.token;
   }
-  void setToken(){
-    _http.defaults.headers.setToken();
+  void setToken(String token) {
+    _http.defaults.headers.setToken(token);
   }
-  void cleanToken(){
+  void cleanToken() {
     _http.defaults.headers.cleanToken();
   }
 
@@ -32,46 +30,32 @@ class ApiService {
   }
 
   Map<String, String> http_headers() {
-    return {'Authorization':"Token token=${token()}"};
+    return {
+      'Authorization': "Token token=${token()}"
+    };
   }
-  
-  Future connection(String method,String route, Map params){
+
+  Future<HttpResponse> connection(String method, String route, [Map params]) {
     method = method.toUpperCase();
-    Future http_response = this._call_by_method(method,route,params);
+    if (params == null) {
+      params = {};
+    }
+    String string_params = JSON.encode(params);
+    Future http_response = this._call_by_method(method, route, string_params);
     http_response.catchError((HttpResponse response) {
-      // HAndle error
+      if (_error_in_server(response.status)) {
+
+      } else if (_session_out(response.status)) {
+
+      } else if (_forbidden_access(response.status)) {
+
+      }
     });
     return null;
   }
 
-  Future signIn(String email, String password) {
-    var data = {
-      'user': {
-        'email':    email,
-        'password': password
-      }
-    };
-
-    return _http.post(signin_url, JSON.encode(data))
-      .then((HttpResponse response) {
-        user.token = response.data['token'];
-        
-      })
-      .catchError((error) {
-        throw('not this time');
-      });
-  }
-
-  Future signOut() {
-    return _http.delete(signout_url)
-      .then((HttpResponse response) {
-        user.token = null;
-      })
-      .catchError((error) {
-        print('oops');
-      });
-  }
-  Future _call_by_method(method, route, params){
+  Future<HttpResponse> _call_by_method(String method, String route, String
+      params) {
     Future http_request;
     switch (method) {
       case 'GET':
@@ -91,13 +75,18 @@ class ApiService {
     }
     return http_request;
   }
-  
-  Future _post(route,params) => _http.post(route,params);
 
-  Future _get(route,params) => _http.get(route,params:params);
+  Future _post(route, params) => _http.post(route, params);
 
-  Future _put(route,params) => _http.put(route,params);
+  Future _get(route, params) => _http.get(route, params: params);
 
-  Future _delete(route,params) => _http.delete(route,params:params);
+  Future _put(route, params) => _http.put(route, params);
 
+  Future _delete(route, params) => _http.delete(route, params: params);
+
+  bool _error_in_server(int status) => [500, 404].contains(status);
+
+  bool _session_out(int status) => status == 401;
+
+  bool _forbidden_access(int status) => status == 403;
 }

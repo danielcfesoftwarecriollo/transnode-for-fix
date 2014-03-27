@@ -7,8 +7,8 @@ class CustomHeader extends HttpDefaultHeaders {
   @override
   setHeaders(Map<String, String> headers, String method) {
     super.setHeaders(headers, method);
-    if (this.user != null) {
-      headers['Authorization'] = this.user.token;
+    if (this.user != null || this.user.token != "") {
+      headers['Authorization'] = "Token token=${this.user.token}";
     }
   }
 
