@@ -12,6 +12,7 @@ import 'package:transnode/controllers/shipment_order_controller.dart';
 import 'package:transnode/services/api_service.dart';
 import 'package:transnode/services/customer_service.dart';
 import 'package:transnode/services/user_service.dart';
+import 'package:transnode/services/message_service.dart';
 import 'package:transnode/services/custom_header.dart';
 import 'package:transnode/services/session_services.dart';
 
@@ -32,6 +33,7 @@ class TransnodeModule extends Module {
 
     type(User);
     type(ApiService);
+    type(MessageService);
     type(SessionService);
     type(CustomerService);
 
