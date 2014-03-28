@@ -5,15 +5,33 @@ import 'package:transnode/services/user_service.dart';
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:html';
 
 @NgInjectableService()
 class ApiService {
-  static final String api_url = 'http://localhost:3000';
+  static String api_url = 'http://localhost:3000';
   final Http _http;
 
   User user;
 
-  ApiService(this._http, this.user);
+  ApiService(this._http, this.user) {
+    if (is_production()) {
+      api_url = production_path();
+    } else {
+      api_url = development_path();
+    }
+  }
+
+  bool is_production() {
+    return window.location.hostname != '127.0.0.1';
+  }
+
+  String development_path() {
+    return "http://0.0.0.0:3000";
+  }
+  String production_path() {
+    return "http://0.0.0.0:3000";
+  }
 
   String token() {
     return user.token;
