@@ -2,6 +2,7 @@ library transnode.api_service;
 
 import 'package:angular/angular.dart';
 import 'package:transnode/services/user_service.dart';
+import 'package:transnode/services/message_service.dart';
 
 import 'dart:async';
 import 'dart:convert';
@@ -13,8 +14,9 @@ class ApiService {
   final Http _http;
 
   User user;
+  MessageService message;
 
-  ApiService(this._http, this.user) {
+  ApiService(this._http, this.user, this.message) {
     if (is_production()) {
       api_url = production_path();
     } else {
@@ -60,26 +62,29 @@ class ApiService {
   }
 
   Future<HttpResponse> connection(String method, String route, [Map params]) {
+    message.cleanMessage();
     method = method.toUpperCase();
-    var dinamic_prams = _params_by_method(method, params);
-    Future http_response = this._call_by_method(method, full_path(route),
+    var dinamic_prams = _paramsByMethod(method, params);
+    Future http_response = this._callByMethod(method, fullPath(route),
         dinamic_prams);
     http_response.catchError((HttpResponse response) {
-      if (_error_in_server(response.status)) {
-
-      } else if (_session_out(response.status)) {
-
-      } else if (_forbidden_access(response.status)) {
-
+      if (_errorInServer(response.status)) {
+        message.setError(response);
+      } else if (_sessionOut(response.status)) {
+        message.setSessionOut(response);
+      } else if (_forbiddenAccess(response.status)) {
+        message.setForbiddenAccesss(response);
+      } else if (_conectionRefuse(response.status)) {
+        message.setConectionRefuse(response);
       }
     });
     return http_response;
   }
 
-  String full_path(path) {
+  String fullPath(path) {
     return api_url + path;
   }
-  _params_by_method(String method, Map params) {
+  _paramsByMethod(String method, Map params) {
     switch (method) {
       case "POST":
         return JSON.encode(params);
@@ -87,7 +92,7 @@ class ApiService {
         return params;
     }
   }
-  Future<HttpResponse> _call_by_method(String method, String route, String
+  Future<HttpResponse> _callByMethod(String method, String route, String
       params) {
     Future http_request;
     switch (method) {
@@ -117,9 +122,12 @@ class ApiService {
 
   Future _delete(route, params) => _http.delete(route, params: params);
 
-  bool _error_in_server(int status) => [500, 404].contains(status);
+  bool _errorInServer(int status) => [500, 404].contains(status);
 
-  bool _session_out(int status) => status == 401;
+  bool _sessionOut(int status) => status == 401;
 
-  bool _forbidden_access(int status) => status == 403;
+  bool _forbiddenAccess(int status) => status == 403;
+
+  bool _conectionRefuse(int status) => status == 0;
+
 }

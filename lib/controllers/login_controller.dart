@@ -18,8 +18,11 @@ class LoginController {
 
   void signIn() {
     message = null;
-    _session_server.signIn(email, password).catchError((error) {
-      message = error;
+    _session_server.signIn(email, password).catchError((HttpResponse error) {
+      if(error.status == 422){
+        message = "imposible"; //TODO
+      }
+
     });
   }
 

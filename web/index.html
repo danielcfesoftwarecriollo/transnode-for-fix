@@ -20,6 +20,9 @@
     <a href="#/customer">Customer</a>
     <a href="#/shipment_order">Shipment Order</a>
   </nav>
+  <div class="alert alert-dismissable alert-danger" ng-show="app.has_message()" >
+    <div>{{app.mesage_error()}}</div>
+  </div>
 
   <div class="container">
     <ng-view></ng-view>
