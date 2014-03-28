@@ -23,18 +23,22 @@ import 'dart:mirrors';
 class TransnodeModule extends Module {
   TransnodeModule() {
     type(RouteInitializer, implementedBy: TransnodeRouter);
+    type(NgRoutingHelper);
+
     type(AppController);
     type(LoginController);
     type(ShipmentOrderController);
     type(CustomerController);
+
     type(User);
     type(ApiService);
     type(SessionService);
     type(CustomerService);
+
     type(HttpDefaultHeaders, implementedBy: CustomHeader);
     type(ContactComponent);
-    factory(NgRoutingUsePushState,
-            (_) => new NgRoutingUsePushState.value(false));
+    factory(NgRoutingUsePushState, (_) => new NgRoutingUsePushState.value(false)
+        );
   }
 }
 

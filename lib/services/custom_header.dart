@@ -17,7 +17,6 @@ class CustomHeader extends HttpDefaultHeaders {
     this.setHeaders({}, "GET");
   }
   void cleanToken() {
-    user.token = "";
     this.setHeaders({}, "GET");
   }
 }

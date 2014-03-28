@@ -1,9 +1,7 @@
 <div ng-hide="true">Loading...</div>
 
 <div login>
-  <div ng-hide="app.isAuthenticated()" ng-cloak>
     <div class="alert alert-danger" ng-show="login.haveMessage()" ng-cloak>{{ login.message }}</div>
-
     <form class="form-signin" role="form">
       <h2 class="form-signin-heading">Please sign in</h2>
 
@@ -15,10 +13,4 @@
 
       <button class="btn btn-lg btn-primary btn-block" ng-click="login.signIn()">Sign in</button>
     </form>
-  </div>
-
-  <div ng-show="app.isAuthenticated()" ng-cloak>
-    <h1>Hi, {{ app.user_email() }}</h1>
-    <button class="btn btn-lg btn-primary" ng-click="login.signOut()">Logout</button>
-  </div>
 </div>

@@ -45,6 +45,7 @@ class ApiService {
     _http.defaults.headers.setToken(user);
   }
   void cleanToken() {
+    user.token = "";
     _http.defaults.headers.cleanToken();
   }
 

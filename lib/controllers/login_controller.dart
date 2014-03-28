@@ -2,10 +2,9 @@ library transnode.login_controller;
 
 import 'package:angular/angular.dart';
 import 'package:transnode/services/session_services.dart';
+import 'package:transnode/services/user_service.dart';
 
-@NgController(
-    selector: '[login]',
-    publishAs: 'login')
+@NgController(selector: '[login]', publishAs: 'login')
 class LoginController {
   SessionService _session_server;
 
@@ -13,7 +12,9 @@ class LoginController {
   String password;
   String message;
 
-  LoginController(this._session_server);
+  User _user;
+
+  LoginController(this._session_server, this._user);
 
   void signIn() {
     message = null;
@@ -28,5 +29,9 @@ class LoginController {
 
   bool haveMessage() {
     return message != null;
+  }
+
+  String user_email() {
+    return _user.email;
   }
 }
