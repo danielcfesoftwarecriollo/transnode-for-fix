@@ -3,57 +3,123 @@ library transnode.api_service;
 import 'package:angular/angular.dart';
 import 'package:transnode/services/user_service.dart';
 
-import 'dart:convert';
 import 'dart:async';
+import 'dart:convert';
+import 'dart:html';
 
 @NgInjectableService()
 class ApiService {
-  static final String api_url = '';
-  static final String signin_url = api_url + '/sessions';
-  static final String signout_url = api_url + '/sessions';
-  User user;
-
+  static String api_url = 'http://localhost:3000';
   final Http _http;
 
-  ApiService(this._http, this.user);
+  User user;
+
+  ApiService(this._http, this.user) {
+    if (is_production()) {
+      api_url = production_path();
+    } else {
+      api_url = development_path();
+    }
+  }
+
+  bool is_production() {
+    return window.location.hostname != '127.0.0.1';
+  }
+
+  String development_path() {
+    return "http://0.0.0.0:3000";
+  }
+  String production_path() {
+    return "http://0.0.0.0:3000";
+  }
 
   String token() {
     return user.token;
+  }
+  void setDataUser(email, token) {
+    user.email = email;
+    user.token = token;
+    setToken();
+  }
+  void setToken() {
+    _http.defaults.headers.setToken(user);
+  }
+  void cleanToken() {
+    user.token = "";
+    _http.defaults.headers.cleanToken();
   }
 
   bool isAuthenticated() {
     return user.isAuthenticated();
   }
-  
+
   Map<String, String> http_headers() {
-    return {'Authorization':"Token token=${token()}"};
-  }
-  
-  Future signIn(String email, String password) {
-    var data = {
-      'user': {
-        'email':    email,
-        'password': password
-      }
+    return {
+      'Authorization': "Token token=${token()}"
     };
-
-    return _http.post(signin_url, JSON.encode(data))
-      .then((HttpResponse response) {
-        user.token = response.data['token'];
-        user.email = email;
-      })
-      .catchError((error) {
-        throw('not this time');
-      });
   }
 
-  Future signOut() {
-    return _http.delete(signout_url, headers: http_headers())
-      .then((HttpResponse response) {
-        user.token = null;
-      })
-      .catchError((error) {
-        print('oops');
-      });
+  Future<HttpResponse> connection(String method, String route, [Map params]) {
+    method = method.toUpperCase();
+    var dinamic_prams = _params_by_method(method, params);
+    Future http_response = this._call_by_method(method, full_path(route),
+        dinamic_prams);
+    http_response.catchError((HttpResponse response) {
+      if (_error_in_server(response.status)) {
+
+      } else if (_session_out(response.status)) {
+
+      } else if (_forbidden_access(response.status)) {
+
+      }
+    });
+    return http_response;
   }
+
+  String full_path(path) {
+    return api_url + path;
+  }
+  _params_by_method(String method, Map params) {
+    switch (method) {
+      case "POST":
+        return JSON.encode(params);
+      default:
+        return params;
+    }
+  }
+  Future<HttpResponse> _call_by_method(String method, String route, String
+      params) {
+    Future http_request;
+    switch (method) {
+      case 'GET':
+        http_request = this._get(route, params);
+        break;
+      case 'POST':
+        http_request = this._post(route, params);
+        break;
+      case 'PUT':
+        http_request = this._put(route, params);
+        break;
+      case 'DELETE':
+        http_request = this._delete(route, params);
+        break;
+      default:
+        throw new StateError('Method not valid');
+    }
+    return http_request;
+  }
+
+  Future _post(route, params) => _http.post(route, params);
+
+  Future _get(route, params) => _http.get(route, params: params);
+
+  Future _put(route, params) => _http.put(route, params);
+
+  Future _delete(route, params) => _http.delete(route, params: params);
+
+  bool _error_in_server(int status) => [500, 404].contains(status);
+
+  bool _session_out(int status) => status == 401;
+
+  bool _forbidden_access(int status) => status == 403;
 }

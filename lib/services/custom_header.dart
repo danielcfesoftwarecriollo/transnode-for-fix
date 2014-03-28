@@ -3,13 +3,20 @@ import 'package:transnode/services/user_service.dart';
 
 class CustomHeader extends HttpDefaultHeaders {
   User user;
+
   @override
   setHeaders(Map<String, String> headers, String method) {
     super.setHeaders(headers, method);
-    headers['Authorization'] = this.user.token;
+    if (this.user != null && this.user.token != "") {
+      headers['Authorization'] = "Token token=${this.user.token}";
+    }
   }
-  void setToken(User user){
+
+  void setToken(User user) {
     this.user = user;
-    this.setHeaders({},"GET"); 
+    this.setHeaders({}, "GET");
+  }
+  void cleanToken() {
+    this.setHeaders({}, "GET");
   }
 }

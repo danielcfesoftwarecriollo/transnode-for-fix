@@ -10,6 +10,10 @@ class TransnodeRouter implements RouteInitializer {
         path: '/login',
         enter: view('partials/login/index.html'))
       ..addRoute(
+        name: 'in',
+        path: '/logged',
+        enter: view('partials/login/in.html'))
+      ..addRoute(
         name: 'shipment_order',
         path: '/shipment_order',
         enter: view('partials/shipment_order/index.html'))

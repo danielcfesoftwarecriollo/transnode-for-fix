@@ -1,33 +1,37 @@
 library transnode.login_controller;
 
 import 'package:angular/angular.dart';
-import 'package:transnode/services/api_service.dart';
+import 'package:transnode/services/session_services.dart';
+import 'package:transnode/services/user_service.dart';
 
-@NgController(
-    selector: '[login]',
-    publishAs: 'login')
+@NgController(selector: '[login]', publishAs: 'login')
 class LoginController {
-  ApiService _api;
+  SessionService _session_server;
 
-  // default values to not fill form every time
   String email;
   String password;
   String message;
 
-  LoginController(this._api);
+  User _user;
+
+  LoginController(this._session_server, this._user);
 
   void signIn() {
     message = null;
-    _api.signIn(email, password).catchError((error) {
+    _session_server.signIn(email, password).catchError((error) {
       message = error;
     });
   }
 
   void signOut() {
-    _api.signOut();
+    _session_server.signOut();
   }
 
   bool haveMessage() {
     return message != null;
+  }
+
+  String user_email() {
+    return _user.email;
   }
 }
