@@ -9,7 +9,14 @@ class Customer {
   String city;
   String state;
   String zip;
-
+  String creditNote;
+  double creditLimit;
+  String balance;
+  bool requiredPOD;
+  String currency;
+  int rating;
+  String note;
+  
   List<Contact> contacts;
 
   @NgTwoWay("errors")
