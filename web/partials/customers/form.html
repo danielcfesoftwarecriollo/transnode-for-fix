@@ -36,7 +36,7 @@
             <input ng-model='contact.email' class="form-control" placeholder='email'>
           </div>
           <div class="col-xs-1"> 
-            <button class='btn delete' ng-show='controller.customer.has_many_contacts()'>-</button>
+            <button class='btn delete'type='button' ng-show='controller.customer.has_many_contacts()' ng-click='controller.delete_contact(contact)'>-</button>
           </div>          
          
         </div>        

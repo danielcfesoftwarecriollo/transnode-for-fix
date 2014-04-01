@@ -35,6 +35,9 @@ class Customer {
 
     return contact;
   }
+  void delete_contact(Contact contact){
+    contacts.remove(contact);
+  }
 
   bool has_many_contacts() {
     return contacts.length > 1;
