@@ -9,7 +9,14 @@ class Customer {
   String city;
   String state;
   String zip;
-
+  String creditNote;
+  double creditLimit;
+  String balance;
+  bool requiredPOD;
+  String currency;
+  int rating;
+  String note;
+  
   List<Contact> contacts;
 
   @NgTwoWay("errors")
@@ -27,6 +34,9 @@ class Customer {
     this.contacts.add(contact);
 
     return contact;
+  }
+  void delete_contact(Contact contact){
+    contacts.remove(contact);
   }
 
   bool has_many_contacts() {

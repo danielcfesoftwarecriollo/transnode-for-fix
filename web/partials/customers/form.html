@@ -7,26 +7,75 @@
     <li class="error" ng-repeat="error in controller.customer.errors">{{ error }}</li>
   </ul>
 
-  <form novalidate ng-submit="controller.create()">
-    <label>Code:<input ng-model='controller.customer.code'/></label>
-    <label>Name:<input ng-model='controller.customer.name'/></label>
-
-    <div class="contacts">
-      <div class="contact" ng-repeat="contact in controller.customer.contacts" ctrl_contact>
-        <label>Name:<input ng-model='contact.name'></label>
-        <label>Phone:<input ng-model='contact.phone'></label>
-        <label>Email:<input ng-model='contact.email'></label>
-        <button class='delete' ng-show='controller.customer.has_many_contacts()'>-</button>
+  <form class='form-horizontal' novalidate ng-submit="controller.create()">
+    <div class="form-group">
+      <label for="customer_code" class="col-sm-2 control-label">code</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="customer_code" ng-model='controller.customer.code' placeholder="Code">
       </div>
+    </div>
+    <div class="form-group">
+      <label for="customer_name" class="col-sm-2 control-label">name</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="customer_name" ng-model='controller.customer.name' placeholder="name">
+      </div>
+    </div>
+    
+    <div class="contacts">
+      <h3>contacts</h3>
+      <div class="contact" ng-repeat="contact in controller.customer.contacts" ctrl_contact>
+        <div class='row'>
+          <div class="col-xs-3"> 
+            <input ng-model='contact.name' class="form-control" placeholder='full name'>
+          </div>
+          <div class="col-xs-4"> 
+            <input ng-model='contact.phone' class="form-control" placeholder='number phone'>
 
+          </div>
+          <div class="col-xs-4"> 
+            <input ng-model='contact.email' class="form-control" placeholder='email'>
+          </div>
+          <div class="col-xs-1"> 
+            <button class='btn delete'type='button' ng-show='controller.customer.has_many_contacts()' ng-click='controller.delete_contact(contact)'>-</button>
+          </div>          
+         
+        </div>        
+      </div>
       <button class='btn add' type='button' ng-click='controller.add_contact()'>Add contact</button>
     </div>
 
-    <label>City:<input ng-model="controller.customer.city" /></label>
-    <label>State:<input ng-model="controller.customer.state" /></label>
-    <label>Zip:<input ng-model="controller.customer.zip" /></label>
-
-    <button ng-click="controller.reset">reset</button>
-    <button>save</button>
+    <div class='row'>
+      <div class="col-xs-3"> 
+        <label for="customer_credit_note" class="col-sm-6 control-label">credit note</label>
+        <select ng-model="controller.customer.creditNote">
+          <option value="select">select</option>
+        </select>
+      </div>
+      <div class="col-xs-4"> 
+        <input ng-model='controller.customer.creditLimit' class="form-control" placeholder='Credit Limit'>
+      </div>
+    </div>
+    
+    <div class='row'>
+      <div class="col-xs-3"> 
+        <label for="customer_credit_note" class="col-sm-6 control-label">currency</label>
+        <select ng-model="controller.customer.currency">
+          <option value="select">CAD</option>
+          <option value="select">USD</option>
+        </select>
+      </div>
+      <div class="col-xs-4"> 
+        <input ng-model='controller.customer.rating' class="form-control" placeholder='Rating'>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="customer_notes" class="col-sm-2 control-label">Notes</label>
+      <div class="col-sm-10">
+        <textarea type="email" class="form-control" id="customer_notes" ng-model="controller.customer.note" placeholder="Notes"></textarea>
+      </div>
+   </div>
+    
+    <button class='btn btn-success'>save</button>
   </form>
 </div>
