@@ -1,6 +1,7 @@
 library transnode.model.customer;
 
 import "package:transnode/models/contact.dart";
+import "package:transnode/models/location.dart";
 import 'package:angular/angular.dart';
 
 class Customer {
@@ -16,8 +17,9 @@ class Customer {
   String currency;
   int rating;
   String note;
-  
+
   List<Contact> contacts;
+  List<Location> locations;
 
   @NgTwoWay("errors")
   List errors;
@@ -26,16 +28,16 @@ class Customer {
 
   Customer() {
     this.contacts = [new Contact()];
-    this.errors   = [];
+    this.locations = [new Location()];
+    this.errors = [];
   }
 
   Contact new_empty_contact() {
     Contact contact = new Contact();
     this.contacts.add(contact);
-
     return contact;
   }
-  void delete_contact(Contact contact){
+  void delete_contact(Contact contact) {
     contacts.remove(contact);
   }
 
@@ -43,11 +45,29 @@ class Customer {
     return contacts.length > 1;
   }
 
+  Location new_empty_location() {
+    Location location = new Location();
+    this.locations.add(location);
+    return location;
+  }
+  void delete_location(Location location) {
+    locations.remove(location);
+  }
+
+  bool has_many_locations() {
+    return locations.length > 1;
+  }
+
   List<Map> contacts_to_map() {
     List<Map> contacts_map = [];
     this.contacts.forEach((contact) => contacts_map.add(contact.to_map()));
 
     return contacts_map;
+  }
+  List<Map> locations_to_map() {
+    List<Map> locations_map = [];
+    this.locations.forEach((location) => locations_map.add(location.to_map()));
+    return locations_map;
   }
 
   void set_errors(Map errors_map) {
@@ -62,12 +82,12 @@ class Customer {
 
   Map to_map() {
     return {
-      'code':  this.code,
-      'name':  this.name,
-      'city':  this.city,
+      'code': this.code,
+      'name': this.name,
+      'city': this.city,
       'state': this.state,
-      'zip':   this.zip,
+      'zip': this.zip,
       'contacts': contacts_to_map()
-     };
-   }
+    };
+  }
 }

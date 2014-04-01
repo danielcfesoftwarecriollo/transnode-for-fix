@@ -8,17 +8,17 @@ part of transnode.components;
 )
 class ContactComponent {
   @NgTwoWay("contacts")
-  List<Contact> contacts;
+  List<Location> contacts;
 
   ContactComponent() {
-    this.contacts = [new Contact()];
+    this.contacts = [new Location()];
   }
 
   void addItem() {
-    contacts.add(new Contact());
+    contacts.add(new Location());
   }
 
-  void deleteItem(Contact item) {
+  void deleteItem(Location item) {
     contacts.remove(item);
   }
 }
