@@ -14,11 +14,10 @@ class CustomerService {
 
   Http _http;
   String error;
-  User user;
+  UserService user;
 
   CustomerService(this._http,this.user) {
     this.error = "";
-    _http.defaults.headers.setToken(user.token);
   }
 
   Future save(Customer customer) {
