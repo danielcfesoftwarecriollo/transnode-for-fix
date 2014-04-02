@@ -9,19 +9,19 @@ import 'dart:convert';
 
 @NgInjectableService()
 class SessionService {
-  ApiService  _api;
-  Router      _router;
+  ApiService _api;
+  Router _router;
   UserService _user_service;
 
   SessionService(this._api, this._router, this._user_service);
 
   Future signIn(email, password) {
-    return _api.request("post", "/sessions", data: _serialize(email, password)).then((data) {
-      _user_service.email = email;
-      _user_service.token = data['token'];
-
-      _router.gotoUrl('/');
-    });
+    return _api.request("post", "/sessions", data: _serialize(email, password))
+      .then((HttpResponse response){
+        _user_service.email = email;
+        _user_service.token = response.data['token'];
+        _router.gotoUrl('/');
+      });
   }
 
   Future signOut() {

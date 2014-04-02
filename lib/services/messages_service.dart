@@ -13,6 +13,10 @@ class MessagesService {
   List<String> get messages   => _messages;
   bool         get hasMessage => _messages.isNotEmpty;
 
+  void clean(){
+    _messages.clear();
+  }
+  
   void add(String message) {
     _messages.add(message);
   }

@@ -17,23 +17,21 @@
   <div ng-hide="true">
     <h1>Loading...</h1>
   </div>
-
   <div ng-show="app.isAuthenticated" ng-cloak>
     <nav>
-      <a href="#/">Home</a>
+      <a href="/">Home</a>
       <a href="#/customer">Customers</a>
       <a href="#/shipment_order">Shipment Order</a>
       <a login-controller ng-click="login.signOut()" class="btn-logout pull-right">Sign Out</a>
       <div class="pull-right">Hello, {{ app.email }}</div>
     </nav>
-
-    <div messages-controller ng-show="messages.hasMessage" >
-      <div ng-repeat="message in messages.messages" class="alert alert-dismissable alert-danger">
-        {{ message }}
-      </div>
+  </div>
+  <div messages-controller ng-show="app.hasMessage()" ng-cloak class='message-controller'>
+    <div ng-repeat="message in app.messages()" class="alert alert-dismissable alert-danger">
+      {{ message }}
     </div>
   </div>
-
+  
   <div class="container">
     <ng-view></ng-view>
   </div>

@@ -29,11 +29,7 @@ class ApiService {
 
   Future<HttpResponse> request(String method, String url, { Map<String, dynamic> params, String data }) {
     url = api_url + url;
-
     return _http.call(method: method, url: url, data: data, params: params)
-      .then((HttpResponse response) {
-        return response.data;
-      })
       .catchError((HttpResponse error) {
         switch (error.status) {
           case 404:
@@ -52,7 +48,6 @@ class ApiService {
           default:
             _messages.add("We're sorry, some unexpected error occurred");
         }
-
         throw error;
       });
   }
