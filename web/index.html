@@ -14,14 +14,24 @@
   <title>Transnode</title>
 </head>
 <body transnode>
-  <nav>
-    <a href="#/">Home</a>
-    <a href="#/login">Login</a>
-    <a href="#/customer">Customer</a>
-    <a href="#/shipment_order">Shipment Order</a>
-  </nav>
-  <div class="alert alert-dismissable alert-danger" ng-show="app.has_message()" >
-    <div>{{app.mesage_error()}}</div>
+  <div ng-hide="true">
+    <h1>Loading...</h1>
+  </div>
+
+  <div ng-show="app.isAuthenticated" ng-cloak>
+    <nav>
+      <a href="#/">Home</a>
+      <a href="#/customer">Customers</a>
+      <a href="#/shipment_order">Shipment Order</a>
+      <a login-controller ng-click="login.signOut()" class="btn-logout pull-right">Sign Out</a>
+      <div class="pull-right">Hello, {{ app.email }}</div>
+    </nav>
+
+    <div messages-controller ng-show="messages.hasMessage" >
+      <div ng-repeat="message in messages.messages" class="alert alert-dismissable alert-danger">
+        {{ message }}
+      </div>
+    </div>
   </div>
 
   <div class="container">

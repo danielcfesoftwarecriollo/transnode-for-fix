@@ -2,29 +2,20 @@ library transnode.routes;
 
 import 'package:angular/angular.dart';
 
-class TransnodeRouter implements RouteInitializer {
-  init(Router router, ViewFactory view) {
-    router.root
-      ..addRoute(
-        name: 'login',
-        path: '/login',
-        enter: view('partials/login/index.html'))
-      ..addRoute(
-        name: 'in',
-        path: '/logged',
-        enter: view('partials/login/in.html'))
-      ..addRoute(
-        name: 'shipment_order',
-        path: '/shipment_order',
-        enter: view('partials/shipment_order/index.html'))
-      ..addRoute(
-        name: 'customer',
-        path: '/customer',
-        enter: view('partials/customers/form.html'))
-      ..addRoute(
-        name: 'root',
+transnodeRouterInitializer(Router router, RouteViewFactory views) {
+  views.configure({
+    'root': ngRoute(
         path: '/',
-        defaultRoute: true,
-        enter: view('partials/home/index.html'));
-  }
+        view: 'partials/home/index.html'),
+    'login': ngRoute(
+        path: '/login',
+        view: 'partials/login/sign_in.html',
+        defaultRoute: true),
+    'customer': ngRoute(
+        path: '/customer',
+        view: 'partials/customers/form.html'),
+    'shipment_order': ngRoute(
+        path: '/shipment_order',
+        view: 'partials/shipment_order/index.html')
+  });
 }

@@ -1,40 +1,28 @@
 library transnode.login_controller;
 
 import 'package:angular/angular.dart';
-import 'package:transnode/services/session_services.dart';
-import 'package:transnode/services/user_service.dart';
+import 'package:transnode/services/session_service.dart';
+import 'package:transnode/services/messages_service.dart';
 
-@NgController(selector: '[login]', publishAs: 'login')
+@NgController(selector: '[login-controller]', publishAs: 'login')
 class LoginController {
-  SessionService _session_server;
+  SessionService _session_service;
+  MessagesService _messages_service;
 
-  String email;
-  String password;
-  String message;
+  String email    = 'a@a.aa';
+  String password = 'a';
 
-  User _user;
-
-  LoginController(this._session_server, this._user);
+  LoginController(this._session_service, this._messages_service);
 
   void signIn() {
-    message = null;
-    _session_server.signIn(email, password).catchError((HttpResponse error) {
-      if(error.status == 422){
-        message = "imposible"; //TODO
-      }
-
+    _session_service.signIn(email, password).then((data) {
+      _messages_service.add("You successfully signed in, $email");
+    }).catchError((errors) {
+      _messages_service.add('not this time');
     });
   }
 
   void signOut() {
-    _session_server.signOut();
-  }
-
-  bool haveMessage() {
-    return message != null;
-  }
-
-  String user_email() {
-    return _user.email;
+    _session_service.signOut();
   }
 }
