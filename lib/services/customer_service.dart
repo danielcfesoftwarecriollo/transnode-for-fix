@@ -1,4 +1,4 @@
-library transnode.user_service;
+library transnode.customer_service;
 
 import 'package:transnode/models/customer.dart';
 import 'package:transnode/services/user_service.dart';

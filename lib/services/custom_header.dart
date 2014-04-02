@@ -1,3 +1,5 @@
+library transnode.custom_header;
+
 import 'package:angular/angular.dart';
 import 'package:transnode/services/user_service.dart';
 
