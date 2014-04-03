@@ -4,13 +4,12 @@ import 'package:angular/angular.dart';
 import 'package:transnode/services/user_service.dart';
 import 'package:transnode/services/messages_service.dart';
 
-class TransnodeRouterInitializer
-{
+class TransnodeRouterInitializer {
   UserService _userService;
   MessagesService _messagesService;
-  TransnodeRouterInitializer(this._userService,this._messagesService);
+  TransnodeRouterInitializer(this._userService, this._messagesService);
   Router _router;
-  void call(Router router,RouteViewFactory views) {
+  void call(Router router, RouteViewFactory views) {
     _router = router;
     views.configure({
       'root': ngRoute(
@@ -30,12 +29,11 @@ class TransnodeRouterInitializer
           preEnter:authenticatedAccess)
     });
   }
-  authenticatedAccess(RoutePreEnterEvent e){
-    if(!this._userService.isAuthenticated){
+  authenticatedAccess(RoutePreEnterEvent e) {
+    if (!this._userService.isAuthenticated) {
       this._messagesService.add("We're sorry, but you need to login first");
       _router.gotoUrl("/");
     }
   }
 }
-
 
