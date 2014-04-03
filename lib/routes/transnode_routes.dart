@@ -37,6 +37,7 @@ class TransnodeRouterInitializer {
       this._messagesService.add("We're sorry, but you need to login first");
       var allow = new Future<bool>.value(false);
       e.allowEnter(allow);
+      _router.gotoUrl("/login");
     }
   }
   skipAuthenticatedAccess(RoutePreEnterEvent e) {
