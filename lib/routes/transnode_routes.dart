@@ -12,13 +12,15 @@ class TransnodeRouterInitializer {
   void call(Router router, RouteViewFactory views) {
     _router = router;
     views.configure({
-      'root': ngRoute(
-          path: '/',
-          view: 'partials/home/index.html'),
+      'home': ngRoute(
+          path: '/home',
+          view: 'partials/home/index.html',
+          preEnter:authenticatedAccess),
       'login': ngRoute(
           path: '/login',
           view: 'partials/login/sign_in.html',
-          defaultRoute: true),
+          defaultRoute: true,
+          preEnter:skipAuthenticatedAccess),
       'customer': ngRoute(
           path: '/customer',
           view: 'partials/customers/form.html',
@@ -33,6 +35,11 @@ class TransnodeRouterInitializer {
     if (!this._userService.isAuthenticated) {
       this._messagesService.add("We're sorry, but you need to login first");
       _router.gotoUrl("/");
+    }
+  }
+  skipAuthenticatedAccess(RoutePreEnterEvent e) {
+    if (this._userService.isAuthenticated) {
+      _router.gotoUrl("/home");
     }
   }
 }
