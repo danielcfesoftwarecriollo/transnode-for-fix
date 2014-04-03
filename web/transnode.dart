@@ -22,7 +22,9 @@ import 'package:transnode/components/components.dart';
 
 class TransnodeModule extends Module {
   TransnodeModule() {
-    value(RouteInitializerFn, transnodeRouterInitializer);
+    
+    type(RouteInitializerFn, implementedBy: TransnodeRouterInitializer);
+
     factory(NgRoutingUsePushState,
         (_) => new NgRoutingUsePushState.value(false));
 
