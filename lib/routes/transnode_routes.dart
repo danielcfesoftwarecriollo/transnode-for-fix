@@ -33,16 +33,26 @@ class TransnodeRouterInitializer {
     });
   }
   authenticatedAccess(RoutePreEnterEvent e) {
+    var allow;
     if (!this._userService.isAuthenticated) {
       this._messagesService.add("We're sorry, but you need to login first");
-      var allow = new Future<bool>.value(false);
+      allow = new Future<bool>.value(false);
       e.allowEnter(allow);
-      _router.gotoUrl("/login");
+      _router.go("login",{});
     }
+    else {
+      allow = new Future<bool>.value(true);      
+      e.allowEnter(allow);
+    }
+   
   }
   skipAuthenticatedAccess(RoutePreEnterEvent e) {
     if (this._userService.isAuthenticated) {
-      _router.gotoUrl("/home");
+      e.allowEnter(new Future<bool>.value(false));
+      _router.go("home",{});
+    }
+    else {
+      e.allowEnter(new Future<bool>.value(true));
     }
   }
 }
