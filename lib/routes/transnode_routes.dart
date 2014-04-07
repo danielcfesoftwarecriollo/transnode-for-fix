@@ -8,19 +8,21 @@ import 'dart:async';
 class TransnodeRouterInitializer {
   UserService _userService;
   MessagesService _messagesService;
-  TransnodeRouterInitializer(this._userService, this._messagesService);
   Router _router;
+
+  TransnodeRouterInitializer(this._userService, this._messagesService);
+  
   void call(Router router, RouteViewFactory views) {
     _router = router;
     views.configure({
       'home': ngRoute(
           path: '/home',
           view: 'partials/home/index.html',
+          defaultRoute: true,
           preEnter: authenticatedAccess),
       'login': ngRoute(
           path: '/login',
           view: 'partials/login/sign_in.html',
-          defaultRoute: true,
           preEnter: skipAuthenticatedAccess),
       'customer': ngRoute(
           path: '/customer',
@@ -32,21 +34,21 @@ class TransnodeRouterInitializer {
           preEnter: authenticatedAccess)
     });
   }
-  authenticatedAccess(RoutePreEnterEvent e) {
-    var allow;
+  
+  void authenticatedAccess(RoutePreEnterEvent e) {
+    Future<bool> allow;
     if (!this._userService.isAuthenticated) {
       this._messagesService.add("We're sorry, but you need to login first");
-      allow = new Future<bool>.value(false);
+      allow = new Future<bool>.value(false).whenComplete(() =>  _router.go("login",{}));
       e.allowEnter(allow);
-      _router.go("login",{});
     }
     else {
       allow = new Future<bool>.value(true);      
       e.allowEnter(allow);
-    }
-   
+    }   
   }
-  skipAuthenticatedAccess(RoutePreEnterEvent e) {
+  
+  void skipAuthenticatedAccess(RoutePreEnterEvent e) {
     if (this._userService.isAuthenticated) {
       e.allowEnter(new Future<bool>.value(false));
       _router.go("home",{});
@@ -55,5 +57,6 @@ class TransnodeRouterInitializer {
       e.allowEnter(new Future<bool>.value(true));
     }
   }
+  
 }
 

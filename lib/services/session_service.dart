@@ -16,12 +16,11 @@ class SessionService {
   SessionService(this._api, this._router, this._user_service);
 
   Future signIn(String email, String password) {
-    email.trim();
     return _api.request("post", "/sessions", data: _serialize(email, password))
       .then((HttpResponse response){
         _user_service.email = email.trim();
         _user_service.token = response.data['token'];
-        _router.gotoUrl('/');
+        _router.go('home',{});
       });
   }
 

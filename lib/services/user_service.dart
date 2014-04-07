@@ -10,8 +10,9 @@ class UserService {
   
   UserService(){
     this._token = window.sessionStorage['user-token'];
-    this._token = window.sessionStorage['user-email'];
+    this._email = window.sessionStorage['user-email'];
   }
+  
   void set email(String email) {
     _email = email;
     window.sessionStorage['user-email'] = email;
@@ -21,6 +22,7 @@ class UserService {
     _token = token;
     window.sessionStorage['user-token'] = token;
   }
+  
   void cleanToken(){
     _token = null;
     window.sessionStorage.clear();
