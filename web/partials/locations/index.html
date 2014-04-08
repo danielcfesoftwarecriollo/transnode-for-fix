@@ -1,0 +1,18 @@
+<table locations-list-controller class="table">
+  <thead>
+    <tr>
+      <th>Customer</th>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat='location in ctrl.locations'>
+      <td>{{location.customer_name}}</td>
+      <td>{{location.name}}</td>
+      <td>
+        <a href="#/locations/{{location.id}}">Edit</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
