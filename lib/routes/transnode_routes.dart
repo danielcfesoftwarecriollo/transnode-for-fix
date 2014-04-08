@@ -19,6 +19,10 @@ class TransnodeRouterInitializer {
           view: 'partials/login/sign_in.html',
           defaultRoute: true,
           preEnter: skipAuthenticatedAccess),
+      'locations': ngRoute(
+          path: '/locations',
+          view: 'partials/locations/index.html',
+          preEnter: skipAuthenticatedAccess),
       'customer': ngRoute(
           path: '/customer',
           view: 'partials/customers/form.html',
