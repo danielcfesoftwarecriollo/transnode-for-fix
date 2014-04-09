@@ -1,11 +1,4 @@
-library transnode.session_service;
-
-import 'package:angular/angular.dart';
-import 'package:transnode/services/api_service.dart';
-import 'package:transnode/services/user_service.dart';
-
-import 'dart:async';
-import 'dart:convert';
+part of transnode;
 
 @NgInjectableService()
 class SessionService {

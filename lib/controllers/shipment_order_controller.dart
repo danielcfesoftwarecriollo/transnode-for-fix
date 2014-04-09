@@ -1,7 +1,4 @@
-library transnode.shipment_order_controller;
-
-import 'package:angular/angular.dart';
-import 'package:transnode/models/shipment_order.dart';
+part of transnode;
 
 @NgController(
     selector: '[shipment-order-controller]',

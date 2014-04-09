@@ -1,10 +1,4 @@
-library transnode.customer_controller;
-
-import 'package:angular/angular.dart';
-import 'package:transnode/models/customer.dart';
-import 'package:transnode/models/location.dart';
-import 'package:transnode/services/customer_service.dart';
-import 'package:transnode/models/contact.dart';
+part of transnode;
 
 @NgController(
     selector: '[customer-controller]',

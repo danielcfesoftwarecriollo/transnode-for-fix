@@ -1,4 +1,4 @@
-library transnode.model.contact;
+part of transnode;
 
 class Contact {
   String name;
