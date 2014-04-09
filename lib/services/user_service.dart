@@ -9,23 +9,23 @@ class UserService {
   String _token;
   
   UserService(){
-    this._token = window.sessionStorage['user-token'];
-    this._email = window.sessionStorage['user-email'];
+    this._token = window.localStorage['user-token'];
+    this._email = window.localStorage['user-email'];
   }
   
   void set email(String email) {
     _email = email;
-    window.sessionStorage['user-email'] = email;
+    window.localStorage['user-email'] = email;
   }
 
   void set token(String token) {
     _token = token;
-    window.sessionStorage['user-token'] = token;
+    window.localStorage['user-token'] = token;
   }
   
   void cleanToken(){
     _token = null;
-    window.sessionStorage.clear();
+    window.localStorage.clear();
   }
 
   String get email => _email;
