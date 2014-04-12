@@ -25,7 +25,7 @@ class ApiService {
 
   bool   is_production()    => window.location.hostname != '127.0.0.1';
   String development_path() => "http://0.0.0.0:3000";
-  String production_path()  => "http://0.0.0.0:3000";
+  String production_path()  => "http://api.apps.welkeglobal.com/";
 
   Future<HttpResponse> request(String method, String url, { Map<String, dynamic> params, String data }) {
     url = api_url + url;
