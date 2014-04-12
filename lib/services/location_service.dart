@@ -1,11 +1,4 @@
-library transnode.session_service;
-
-import 'package:angular/angular.dart';
-import 'package:transnode/services/api_service.dart';
-import 'package:transnode/services/user_service.dart';
-
-import 'dart:async';
-import 'dart:convert';
+part of transnode;
 
 @NgInjectableService()
 class LocationService {
@@ -15,8 +8,21 @@ class LocationService {
 
   LocationService(this._api, this._router, this._user_service);
 
-  Future all_index() {
+  Future<HttpResponse> all_index() {
     return _api.request("get", "/locations")
+      .then((HttpResponse response){
+        print(response);
+      });
+  }
+  Future<HttpResponse> location(id) { 
+    return _api.request("get", "/locations/"+id)
+      .then((HttpResponse response){
+        print(response);
+      });
+  }
+  
+  Future<HttpResponse> update_location(location) { 
+    return _api.request("put", "/locations",params:{})
       .then((HttpResponse response){
         print(response);
       });

@@ -1,8 +1,4 @@
-library transnode.controllers.location_list;
-import 'package:angular/angular.dart';
-import 'package:transnode/models/location.dart';
-import 'package:transnode/services/location_service.dart';
-import 'package:transnode/services/messages_service.dart';
+part of  transnode;
 
 
 @NgController(selector: '[locations-list-controller]', publishAs: 'ctrl')

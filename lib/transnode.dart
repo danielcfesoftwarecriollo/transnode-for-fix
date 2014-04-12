@@ -13,6 +13,7 @@ part 'services/api_service.dart';
 part 'services/user_service.dart';
 part 'services/messages_service.dart';
 part 'services/custom_header.dart';
+part 'services/location_service.dart';
 part 'services/customer_service.dart';
 part 'services/session_service.dart';
 part 'services/users_service.dart';
@@ -24,6 +25,8 @@ part 'controllers/messages_controller.dart';
 part 'controllers/shipment_order_controller.dart';
 part 'controllers/test_controller.dart';
 part 'controllers/users_controller.dart';
+part 'controllers/locations_list_controller.dart';
+part 'controllers/location_controller.dart';
 
 part 'models/contact.dart';
 part 'models/customer.dart';
