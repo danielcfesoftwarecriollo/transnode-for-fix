@@ -1,13 +1,10 @@
 part of transnode;
 
-import 'package:angular/angular.dart';
-import 'dart:html';
-
 @NgInjectableService()
 class UserService {
   String _email;
   String _token;
-  
+
   UserService(){
     this._token = window.localStorage['user-token'];
     this._email = window.localStorage['user-email'];
