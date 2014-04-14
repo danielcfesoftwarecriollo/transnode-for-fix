@@ -2,20 +2,36 @@ part of transnode;
 
 @NgInjectableService()
 class MessagesService {
-  List<String> _messages;
+  List<MessageItem> _messages;
 
   MessagesService() {
-    _messages = new List<String>();
+    _messages = new List<MessageItem>();
   }
 
-  List<String> get messages   => _messages;
-  bool         get hasMessage => _messages.isNotEmpty;
+  List<MessageItem> get messages => _messages;
+  bool get hasMessage => _messages.isNotEmpty;
 
-  void clean(){
+  void clean() {
     _messages.clear();
   }
-  
-  void add(String message) {
+
+  void add(String type, String content) {
+    MessageItem message = new MessageItem(type: type, content: content);
     _messages.add(message);
+
+    new Future.delayed(const Duration(milliseconds: 5000), () {
+      _messages.remove(message);
+    });
   }
+
+  void delete(MessageItem message) {
+    _messages.remove(message);
+  }
+}
+
+class MessageItem {
+  var type;
+  var content;
+
+  MessageItem({String this.type:null, String this.content:''});
 }
