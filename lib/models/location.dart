@@ -1,4 +1,4 @@
-library transnode.model.location;
+part of transnode;
 
 class Location {
   String name;

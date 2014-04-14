@@ -1,4 +1,4 @@
-library transnode.model.shipper;
+part of transnode;
 
 class Shipper {
   String code;

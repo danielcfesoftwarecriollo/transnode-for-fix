@@ -1,8 +1,4 @@
-library transnode.login_controller;
-
-import 'package:angular/angular.dart';
-import 'package:transnode/services/session_service.dart';
-import 'package:transnode/services/messages_service.dart';
+part of transnode;
 
 @NgController(selector: '[login-controller]', publishAs: 'login')
 class LoginController {

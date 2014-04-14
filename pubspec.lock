@@ -33,6 +33,10 @@ packages:
     description: collection
     source: hosted
     version: "0.9.1"
+  dartmocks:
+    description: dartmocks
+    source: hosted
+    version: "0.5.1"
   di:
     description: di
     source: hosted
@@ -57,10 +61,18 @@ packages:
     description: logging_handlers
     source: hosted
     version: "0.8.0"
+  matcher:
+    description: matcher
+    source: hosted
+    version: "0.10.0"
   meta:
     description: meta
     source: hosted
     version: "0.8.8"
+  mock:
+    description: mock
+    source: hosted
+    version: "0.10.0"
   path:
     description: path
     source: hosted
@@ -85,6 +97,10 @@ packages:
     description: stack_trace
     source: hosted
     version: "0.9.3"
+  unittest:
+    description: unittest
+    source: hosted
+    version: "0.10.1+2"
   utf:
     description: utf
     source: hosted

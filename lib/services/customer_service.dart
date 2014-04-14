@@ -1,11 +1,4 @@
-library transnode.customer_service;
-
-import 'package:transnode/models/customer.dart';
-import 'package:transnode/services/user_service.dart';
-
-import 'dart:convert';
-import 'dart:async';
-import 'package:angular/angular.dart';
+part of transnode;
 
 @NgInjectableService()
 class CustomerService {

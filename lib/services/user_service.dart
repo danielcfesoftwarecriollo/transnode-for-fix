@@ -1,7 +1,4 @@
-library transnode.user_service;
-
-import 'package:angular/angular.dart';
-import 'dart:html';
+part of transnode;
 
 @NgInjectableService()
 class UserService {

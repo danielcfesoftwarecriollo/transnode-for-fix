@@ -1,9 +1,4 @@
-library transnode.app_controller;
-
-import 'package:angular/angular.dart';
-import 'package:transnode/services/user_service.dart';
-import 'package:transnode/services/messages_service.dart';
-import 'dart:async';
+part of transnode;
 
 @NgController(
     selector: '[transnode]',

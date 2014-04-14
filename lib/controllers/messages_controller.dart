@@ -1,7 +1,4 @@
-library transnode.messages_controller;
-
-import 'package:angular/angular.dart';
-import 'package:transnode/services/messages_service.dart';
+part of transnode;
 
 @NgController(selector: '[messages-controller]', publishAs: 'messages')
 class MessagesController {

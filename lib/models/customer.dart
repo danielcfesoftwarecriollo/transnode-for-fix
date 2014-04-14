@@ -1,8 +1,4 @@
-library transnode.model.customer;
-
-import "package:transnode/models/contact.dart";
-import "package:transnode/models/location.dart";
-import 'package:angular/angular.dart';
+part of transnode;
 
 class Customer {
   String code;

@@ -1,6 +1,4 @@
-library transnode.messages_service;
-
-import 'package:angular/angular.dart';
+part of transnode;
 
 @NgInjectableService()
 class MessagesService {

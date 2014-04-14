@@ -1,11 +1,4 @@
-library transnode.api_service;
-
-import 'package:angular/angular.dart';
-import 'package:transnode/services/user_service.dart';
-import 'package:transnode/services/messages_service.dart';
-
-import 'dart:async';
-import 'dart:html';
+part of transnode;
 
 @NgInjectableService()
 class ApiService {

@@ -1,7 +1,4 @@
-library transnode.models.shipment_order;
-
-import 'package:transnode/models/customer.dart';
-import 'package:transnode/models/shipper.dart';
+part of transnode;
 
 class ShipmentOrder {
   Customer bill_to;
