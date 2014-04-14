@@ -1,8 +1,4 @@
-library transnode.test_controller;
-
-import 'package:angular/angular.dart';
-import 'package:transnode/services/api_service.dart';
-import 'package:transnode/services/messages_service.dart';
+part of transnode;
 
 @NgController(selector: '[test-controller]', publishAs: 'testCtrl')
 class TestController {
