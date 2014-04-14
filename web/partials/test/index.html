@@ -1,0 +1,12 @@
+<div test-controller>
+  <div class="row">
+    <button type="button" class="btn btn-success" ng-click="testCtrl.authorizedAction()">authorized action</button>
+    <button type="button" class="btn btn-danger" ng-click="testCtrl.unauthorizedAction()">unauthorized action</button>
+    <button type="button" class="btn btn-default" ng-click="testCtrl.addMessage()">add message</button>
+  </div>
+  <div class="row">
+    <p>
+      {{ testCtrl.serverResponse }}
+    </p>
+  </div>
+</div>
