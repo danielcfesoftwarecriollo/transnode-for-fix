@@ -2,23 +2,23 @@ part of transnode;
 
 @NgController(selector: '[login-controller]', publishAs: 'login')
 class LoginController {
-  SessionService _session_service;
-  MessagesService _messages_service;
+  SessionService _sessionService;
+  MessagesService _messagesService;
 
-  String email    = 'a@a.aa';
-  String password = 'a';
+  String email;
+  String password;
 
-  LoginController(this._session_service, this._messages_service);
+  LoginController(this._sessionService, this._messagesService);
 
   void signIn() {
-    _session_service.signIn(email, password).then((data) {
-      _messages_service.add("You successfully signed in, $email");
+    _sessionService.signIn(email, password).then((data) {
+      _messagesService.add('success', "You successfully signed in, $email");
     }).catchError((errors) {
-      _messages_service.add('not this time');
+      _messagesService.add('warning', 'Wrong email or password');
     });
   }
 
   void signOut() {
-    _session_service.signOut();
+    _sessionService.signOut();
   }
 }
