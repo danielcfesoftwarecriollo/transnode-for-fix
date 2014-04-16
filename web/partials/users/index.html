@@ -1,0 +1,51 @@
+<div users-controller>
+  <div class="row">
+    <h3>Create new user</h3>
+    <form class="form-inline form-new-user" role="form" name="formNewUser">
+      <div class="form-group">
+        <input ng-model="usersCtrl.user.email" ng-required="true" type="email" class="form-control email" placeholder="Enter email">
+      </div>
+      <div class="form-group">
+        <input ng-model="usersCtrl.user.password" ng-required="true" type="password" class="form-control password" placeholder="Password">
+      </div>
+      <div class="form-group">
+        <select ng-model="usersCtrl.user.role" class="form-control role">
+          <option>admin</option>
+          <option>csr</option>
+          <option>manager</option>
+          <option>agent</option>
+          <option>accountant</option>
+        </select>
+      </div>
+      <button ng-click="usersCtrl.save()" ng-disabled="formNewUser.invalid" type="button" class="btn btn-success btn-add-user"><i class="glyphicon glyphicon-plus icon-btn"></i>Add user</button>
+    </form>
+  </div>
+
+  <div class="row">
+    <table class="table table-hover table-users">
+      <thead>
+        <tr>
+          <th class="id">id</th>
+          <th>email</th>
+          <th class="role">role</th>
+          <th class="actions">actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="user in usersCtrl.users | orderBy: 'id'">
+          <td><a ng-href="#/users/{{user.id}}/show">{{ user.id }}</a></td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+          <td class="actions">
+            <a class="btn btn-warning" ng-href="#/users/{{user.id}}/edit">
+              <i class="glyphicon glyphicon-pencil"></i>
+            </a>
+            <button ng-click="usersCtrl.delete(user)" class="btn btn-danger">
+              <i class="glyphicon glyphicon-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

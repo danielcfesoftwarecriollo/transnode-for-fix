@@ -1,0 +1,32 @@
+<div users-controller>
+  <div class="row">
+  <div class="page-header">
+    <h2>{{ usersCtrl.user.email }} <small>edit</small></h2>
+  </div>
+    <form role="form" class="form-horizontal">
+      <div class="form-group">
+        <label for="role" class="col-sm-2 control-label">User role</label>
+        <div class="col-sm-3">
+          <select ng-model="usersCtrl.user.role" id="role" class="form-control">
+            <option>admin</option>
+            <option>csr</option>
+            <option>manager</option>
+            <option>agent</option>
+            <option>accountant</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password" class="col-sm-2 control-label">Password</label>
+        <div class="col-sm-3">
+          <input ng-model="usersCtrl.user.password" type="password" class="form-control" id="password" placeholder="Enter new password">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button ng-click="usersCtrl.update()" type="button" class="btn btn-success">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
