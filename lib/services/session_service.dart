@@ -17,11 +17,10 @@ class SessionService {
       });
   }
 
-  Future signOut() {
-    return _api.request("delete", "/sessions").then((HttpResponse response) {
-      _user_service.cleanToken();
-      _router.go("login", {});
-    });
+  void signOut() {
+    _api.request("delete", "/sessions");
+    _user_service.cleanToken();
+    _router.go("login", {});
   }
 
   String _serialize(String email, String password) {
