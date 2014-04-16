@@ -21,6 +21,7 @@ part 'controllers/customer_controller.dart';
 part 'controllers/login_controller.dart';
 part 'controllers/messages_controller.dart';
 part 'controllers/shipment_order_controller.dart';
+part 'controllers/test_controller.dart';
 
 part 'models/contact.dart';
 part 'models/customer.dart';
@@ -42,6 +43,7 @@ class TransnodeModule extends Module {
     type(MessagesController);
     type(ShipmentOrderController);
     type(CustomerController);
+    type(TestController);
 
     type(UserService);
     type(ApiService);

@@ -16,9 +16,9 @@ class ApiService {
     }
   }
 
-  bool   is_production()    => window.location.hostname != '127.0.0.1';
+  bool   is_production()    => ['127.0.0.1', 'localhost'].indexOf(window.location.hostname) == -1 ;
   String development_path() => "http://0.0.0.0:3000";
-  String production_path()  => "http://api.apps.welkeglobal.com/";
+  String production_path()  => "http://api.apps.welkeglobal.com";
 
   Future<HttpResponse> request(String method, String url, { Map<String, dynamic> params, String data }) {
     url = api_url + url;
@@ -27,20 +27,23 @@ class ApiService {
         switch (error.status) {
           case 404:
           case 500:
-            _messages.add("We're sorry, the server encountered a problem");
+            _messages.add('danger', "We're sorry, the server encountered a problem");
             break;
           case 401:
-            _messages.add("We're sorry, but you need to login first");
+            if (!url.contains('session')) {
+              _messages.add('danger', "We're sorry, but you need to login first");
+            }
             break;
           case 403:
-            _messages.add("We're sorry, you are not authorized for this action");
+            _messages.add('danger', "We're sorry, you are not authorized for this action");
             break;
           case 0:
-            _messages.add("We're sorry, cannot connect to server");
+            _messages.add('danger', "We're sorry, cannot connect to server");
             break;
           default:
-            _messages.add("We're sorry, some unexpected error occurred");
+            _messages.add('danger', "We're sorry, some unexpected error occurred");
         }
+
         throw error;
       });
   }
