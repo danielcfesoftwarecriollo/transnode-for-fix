@@ -1,19 +1,27 @@
 part of transnode;
 
-class Customer {
-  String code;
+class Customer extends RecordModel{
+  int id;
   String name;
   String city;
   String state;
   String zip;
   String creditNote;
   double creditLimit;
-  String balance;
+  double balance;
   bool requiredPOD;
   String currency;
   int rating;
   String note;
-
+  String taxId;
+  String invoice;
+  String terms;
+  String importCustomsBroker;
+  String exportCustomsBroker;
+  String currencyRiskFactor;
+  String SaleRep;
+  String Territory;
+  
   List<Contact> contacts;
   List<Location> locations;
 
@@ -23,6 +31,7 @@ class Customer {
   bool has_errors;
 
   Customer() {
+    this.balance = 0.0;
     this.contacts = [new Contact()];
     this.locations = [new Location()];
     this.errors = [];
