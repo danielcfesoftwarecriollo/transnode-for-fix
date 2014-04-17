@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:angular/angular.dart';
 import 'package:angular/routing/module.dart';
 import 'package:ctrl_alt_foo/keys.dart';
+import "dart:mirrors"; 
 
 part 'routes/transnode_routes.dart';
 
@@ -28,12 +29,15 @@ part 'controllers/users_controller.dart';
 part 'controllers/locations_list_controller.dart';
 part 'controllers/location_controller.dart';
 
+part 'models/record_model.dart';
 part 'models/contact.dart';
 part 'models/customer.dart';
 part 'models/location.dart';
 part 'models/shipment_order.dart';
 part 'models/shipper.dart';
 part 'models/user.dart';
+
+part 'validators/location.dart';
 
 class TransnodeModule extends Module {
   TransnodeModule() {

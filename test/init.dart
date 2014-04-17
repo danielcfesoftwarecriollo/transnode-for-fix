@@ -13,6 +13,9 @@ import 'package:transnode/transnode.dart';
 part 'services/api_service.dart';
 part 'services/location_service.dart';
 
+part 'models/location.dart';
+
+part 'helpers/json.dart';
 
 class TestResponse {
   final data;
@@ -33,5 +36,5 @@ main(){
    });
    tearDown(tearDownInjector);
   
-   testLocationService();
+   testLocation();
 }
