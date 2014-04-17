@@ -5,7 +5,7 @@ class TestController {
   ApiService _api;
   MessagesService _messagesService;
   String serverResponse;
-  Integer messageCount;
+  int messageCount;
 
   TestController(this._api, this._messagesService) {
     messageCount = 0;

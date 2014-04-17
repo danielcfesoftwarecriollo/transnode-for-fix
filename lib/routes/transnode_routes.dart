@@ -27,6 +27,24 @@ class TransnodeRouterInitializer {
           path: '/shipment_order',
           view: 'partials/shipment_order/index.html',
           preEnter: authenticatedAccess),
+      'users': ngRoute(
+          path: '/users',
+          view: 'partials/users/index.html',
+          preEnter: authenticatedAccess),
+      'user_resource': ngRoute(
+          path: '/users/:userId',
+          preEnter: authenticatedAccess,
+          mount: {
+            'user_list': ngRoute(
+                path: '',
+                view: 'partials/users/index.html'),
+            'user_show': ngRoute(
+                path: '/show',
+                view: 'partials/users/show.html'),
+            'user_edit': ngRoute(
+                path: '/edit',
+                view: 'partials/users/edit.html'),
+          }),
       'test': ngRoute(
           path: '/test',
           view: 'partials/test/index.html',
