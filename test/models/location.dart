@@ -4,12 +4,14 @@ testLocation(){
   group('Location', () {
     test('empty location no valid', (){
           Location location = new Location();
-          expect(location.valid, isFalse);
+          LocationValidator locationValidator = new LocationValidator(location);
+          expect(locationValidator.valid(), isFalse);
     });
     test('empty location no valid', (){
       Location location = new Location();
       location.load_with_json(FactoryJson.location());
-      expect(location.valid, isTrue);
+      LocationValidator locationValidator = new LocationValidator(location);
+      expect(locationValidator.valid(), isTrue);
     });        
   });
 }
