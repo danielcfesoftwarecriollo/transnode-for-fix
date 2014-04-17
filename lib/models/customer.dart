@@ -19,8 +19,8 @@ class Customer extends RecordModel{
   String importCustomsBroker;
   String exportCustomsBroker;
   String currencyRiskFactor;
-  String SaleRep;
-  String Territory;
+  String salesRep;
+  String territory;
   
   List<Contact> contacts;
   List<Location> locations;
@@ -84,15 +84,15 @@ class Customer extends RecordModel{
     this.errors = [];
     this.has_errors = false;
   }
-
+ 
   Map to_map() {
     return {
-      'code': this.code,
+      'id': this.id,
       'name': this.name,
       'city': this.city,
       'state': this.state,
       'zip': this.zip,
-      'contacts': contacts_to_map()
+      'locations_attributes': locations_to_map()
     };
   }
 }

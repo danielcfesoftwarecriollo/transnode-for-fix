@@ -25,13 +25,14 @@
       <h3>locations</h3>
       <div class="location" ng-repeat="location in controller.customer.locations">
         <div class='row'>
-          <div class="col-xs-3">
+          <div class="col-xs-4">
             <input ng-model='location.name' class="form-control" placeholder='full name'>
           </div>
-          <div class="col-xs-4">
-            <input ng-model='location.address' class="form-control" placeholder='address'>
+          <div class="col-xs-3">
+            <input ng-model='location.zip' class="form-control" placeholder='zip'>
           </div>
           <div class="col-xs-4">
+            <label>country</label>
             <select ng-model="location.country">
               <option value="CA">CA</option>
               <option value="US">US</option>
@@ -43,19 +44,76 @@
           </div>
         </div>
 
-        <div class='row'>
+        <div class="row">
+          <div class="col-xs-4">
+            <input ng-model='location.address_1' class="form-control" placeholder='address 1'>
+          </div>
           <div class="col-xs-3">
-            <input ng-model='location.city' class="form-control" placeholder='city'>
-          </div>
-          <div class="col-xs-4">
-            <input ng-model='location.zip' class="form-control" placeholder='zip'>
-          </div>
-          <div class="col-xs-4">
             <input ng-model='location.on' class="form-control" placeholder='on'>
           </div>
         </div>
 
+        <div class='row'>
+          <div class="col-xs-4">
+            <input ng-model='location.address_2' class="form-control" placeholder='address 2'>
+          </div>
+          <div class="col-xs-3">
+            <input ng-model='location.city' class="form-control" placeholder='city'>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class="col-xs-4">
+            <label>phone</label>
+            <input ng-model='location.phone' class="form-control" placeholder='phone'>
+          </div>
+          <div class="col-xs-3">
+            <label>email</label>
+            <input ng-model='location.email' class="form-control" placeholder='email'>
+          </div>
+          <div class="col-xs-4">
+            <label>fax</label>
+            <input ng-model='location.fax' class="form-control" placeholder='email'>
+          </div>
+        </div>
+        <div class='row'>
+          <div class="col-xs-8">
+            <div class="row">
+              <div class="col-xs-4">
+                <label>freight class</label>
+                <input ng-model='location.freightClass' class="form-control" placeholder='freight class'>
+              </div>
+              <div class="col-xs-3">
+                <label>NAICS</label>
+                <input class="form-control" placeholder='naics'>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4">
+                <label>hours</label>
+                <input ng-model='location.hours' class="form-control" placeholder='freight class'>
+              </div>
+              <div class="col-xs-3">
+                <label>lane code</label>
+                <select ng-model='location.laneCode'>
+                  <option>ABC</option>
+                </select>
+              </div>
+              <div class="col-xs-3">
+                <label>email opt out</label>
+                <select ng-model='location.emailOptOut'>
+                  <option>ABC</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <label>role</label>
+            <div>ROLES - TODO</div>
+           </div>
+        </div>
       </div>
+
       <button class='btn add' type='button' ng-click='controller.add_location()'>Add location</button>
     </div>
 
@@ -145,14 +203,14 @@
     <div class='row'>
       <div class="col-xs-4">
         <label>import customs broker</label>
-        <select ng-model='controller.customer.importCustomsBrokers'>
+        <select ng-model='controller.customer.importCustomsBroker'>
           <option>entity_id</option>
         </select>
       </div>
 
       <div class="col-xs-4">
         <label>export customs broker</label>
-        <select ng-model='controller.customer.exportCustomsBrokers'>
+        <select ng-model='controller.customer.exportCustomsBroker'>
           <option>entity_id</option>
         </select>
       </div>
@@ -186,8 +244,7 @@
           <select ng-model='controller.customer.territory'>
             <option>option</option>
           </select>
-        </div>
-        
+        </div>        
       </div>
     </div>
 
