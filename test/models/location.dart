@@ -9,7 +9,7 @@ testLocation(){
     });
     test('empty location no valid', (){
       Location location = new Location();
-      location.load_with_json(FactoryJson.location());
+      location.loadWithJson(FactoryJson.location());
       LocationValidator locationValidator = new LocationValidator(location);
       expect(locationValidator.valid(), isTrue);
     });        

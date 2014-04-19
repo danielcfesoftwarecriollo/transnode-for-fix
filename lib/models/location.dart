@@ -18,18 +18,39 @@ class Location extends RecordModel{
   String email;
   String hours;
   bool emailOptOut;
+  String status;
   
   List freightClass;
   List salesTerritory;
-  List status;
-
+  List<Contact> contacts;
+  
   bool get valid => false;
-    
+  
+  Contact new_empty_contact() {
+    Contact contact = new Contact();
+    this.contacts.add(contact);
+    return contact;
+  }
+  void delete_contact(Contact contact) {
+    contacts.remove(contact);
+  }
+  
+  List<Map> contacts_to_map() {
+    List<Map> contacts_map = [];
+    this.contacts.forEach((contact) => contacts_map.add(contact.to_map()));
+
+    return contacts_map;
+  }
+  
+  bool has_many_contacts() {
+    return contacts.length > 1;
+  }
+
   Map to_map() {
     return {
       'id': id,
       'partner_id': partner_id,
-      'salesRep': salesRep,
+      'sales_rep_id': salesRep,
       'name': name,
       'address_1': address_1,
       'address_2': address_2,
@@ -40,11 +61,12 @@ class Location extends RecordModel{
       'on': on,
       'phone': phone,
       'fax': fax,
-      'laneCode': laneCode,
+      'lane_code': laneCode,
       'email': email,
-      'freightClass': freightClass,
-      'salesTerritory': salesTerritory,
-      'status': status
+      'freight_class': freightClass,
+      'sales_territory': salesTerritory,
+      'status': status,
+      "contacts_attributes" : contacts_to_map()
     };
   }
 

@@ -8,8 +8,9 @@ class CustomerService {
   Http _http;
   String error;
   UserService user;
+  MessagesService _messageServices;
 
-  CustomerService(this._http,this.user) {
+  CustomerService(this._http,this.user,this._messageServices) {
     this.error = "";
   }
 
@@ -19,8 +20,10 @@ class CustomerService {
     return _http.post(customers, this.params(customer))
       .catchError((HttpResponse response) {
         if(response.status == 422) {
-          print("Nice, i got the error");
-          customer.set_errors(JSON.decode(response.data));
+          Map<String,List<String>> errors = JSON.decode(response.data);
+          _messageServices.add("Review the errors in the form");
+          print(errors);
+          customer.set_errors(errors);
         }
         else {
           this.error = "the server is down";
