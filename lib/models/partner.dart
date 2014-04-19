@@ -1,14 +1,28 @@
 part of transnode;
 
-class Customer extends Partner{
-
-  @NgTwoWay("errors")
-  Map<String,List<String>> errors;
-
-  Customer() {
-    this.balance = 0.0;
-    this.locations = [new Location()];
-  }
+class Partner extends RecordModel{
+  int id;
+  String name;
+  String city;
+  String state;
+  String zip;
+  String creditNote;
+  double creditLimit;
+  double balance;
+  bool requiredPOD;
+  String currency;
+  int rating;
+  String note;
+  String taxId;
+  String invoice;
+  String terms;
+  String importCustomsBroker;
+  String exportCustomsBroker;
+  String currencyRiskFactor;
+  String salesRep;
+  String territory;
+  
+  List<Location> locations;
 
   Location new_empty_location() {
     Location location = new Location();
@@ -17,6 +31,10 @@ class Customer extends Partner{
   }
   void delete_location(Location location) {
     locations.remove(location);
+  }
+
+  bool count_locations() {
+    return locations.length > 1;
   }
 
   List<Map> locations_to_map() {
