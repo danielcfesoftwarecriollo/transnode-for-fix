@@ -1,9 +1,10 @@
 part of transnode;
 class CustomerValidator extends Validator{
   Customer _customer;
-  Map<String, List<String>> errors;
 
-  CustomerValidator(this._customer);
+  CustomerValidator(this._customer){
+    this.clean_errors();
+  }
 
   bool run_validations() {
     errors = new Map<String, List<String>>();
