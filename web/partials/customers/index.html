@@ -1,22 +1,25 @@
-<h1>Customers</h1>
-<div customer-list ng-show='ctrl.has_customers'>
-  <table class='table'>
-    <thead>
-      <tr>
-        <th>id</th>
-        <th>name</th>
-        <th>actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat='customer in ctrl.customers'>
-        <td>customer.id</td>
-        <td>customer.name</td>
-        <td> Actions</td>
-      </tr>
-    </tbody>
-  </table>
+<div customer-list-controller>
+  <h1>Customers</h1>
+  <div ng-show='ctrl.has_customers'>
+    <table class='table'>
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat='customer in ctrl.customers'>
+          <td>customer.id</td>
+          <td>customer.name</td>
+          <td> Actions</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div customer-list ng-hide='ctrl.has_customers'>
+    <a class='btn btn-info' ng-href="#/customers/new"> Create a customer</a>
+  </div>
 </div>
-<div customer-list ng-hide='ctrl.has_customers'>
-  <a class='btn btn-info' ng-href="#/customers/new"> Create a customer</a>
-</div>
+

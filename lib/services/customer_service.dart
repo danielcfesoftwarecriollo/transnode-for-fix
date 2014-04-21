@@ -14,6 +14,10 @@ class CustomerService {
     this.error = "";
   }
 
+  Future index(){
+    return _http.get(customers);
+  }
+  
   Future save(Customer customer) {
     this.error = "";
 

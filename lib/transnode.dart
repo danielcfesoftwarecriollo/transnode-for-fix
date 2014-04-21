@@ -21,6 +21,7 @@ part 'services/users_service.dart';
 
 part 'controllers/app_controller.dart';
 part 'controllers/customer_controller.dart';
+part 'controllers/customers_list_controller.dart';
 part 'controllers/login_controller.dart';
 part 'controllers/messages_controller.dart';
 part 'controllers/shipment_order_controller.dart';
@@ -58,6 +59,7 @@ class TransnodeModule extends Module {
     type(CustomerController);
     type(TestController);
     type(UsersController);
+    type(CustomersListController);
 
     type(UserService);
     type(ApiService);
