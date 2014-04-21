@@ -5,6 +5,7 @@ import 'dart:html';
 import 'dart:convert';
 import 'package:angular/angular.dart';
 import 'package:angular/routing/module.dart';
+import 'package:ctrl_alt_foo/keys.dart';
 
 part 'routes/transnode_routes.dart';
 
