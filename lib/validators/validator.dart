@@ -1,17 +1,26 @@
 part of transnode;
-abstract class Validator {
+
+class Validator {
   Map<String, List<String>> errors;
-
-
-  bool run_validations();
+   
+  bool run_validations(){
+    return false;
+  }
 
   bool valid() {
     return errors.isEmpty;
   }
 
   void required_string(String value, String name_field) {
-    if (value == "" || value == null) {
+    if (value == null || value == "") {
       _add_error_required(name_field);
+    }
+  }
+  void email_format(String value, String name_field){
+    RegExp regex = new RegExp("^([0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})\$");
+    if(value == null || !regex.hasMatch(value)){
+      _add_error("format invalid",name_field);
+
     }
   }
   
@@ -21,11 +30,31 @@ abstract class Validator {
     }
   }
   
+  void clean_errors(){
+    this.errors = {};
+  }
+
+  void setup_errors(Map<String, List<String>> errors_map) {
+    this.errors = errors_map;
+  }
+  
+  String errors_by_field(String field) {
+    if (has_errors(field)) {
+      return errors[field].join(', ');
+    } else {
+      return null;
+    }
+  }
+  
+  bool has_errors(String field) {
+    return errors.containsKey(field);
+  }
+  
   void _add_error_required(String name_field) {
     _add_error("it's required",name_field);
   }
   void _add_error(String message, String name_field) {
-    if (errors.containsKey(name_field)) {
+    if (!errors.containsKey(name_field)) {
       errors[name_field] = new List<String>();
     }
     errors[name_field].add(message);

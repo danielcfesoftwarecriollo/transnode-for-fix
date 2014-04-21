@@ -20,11 +20,28 @@ class Location extends RecordModel{
   bool emailOptOut;
   String status;
   
+  Map<String,bool> roles;
   List freightClass;
   List salesTerritory;
   List<Contact> contacts;
   
   bool get valid => false;
+  
+  Location() {
+    this._validator = new LocationValidator(this);
+    this.roles = {
+      'shipper':false,
+      'billTo':false,
+      'cons':false,
+      'main':false
+    };
+    
+  }
+  
+  List roles_keys(){
+    return ['shipper', 'billTo', 'cons', 'main'];
+  }
+  
   
   Contact new_empty_contact() {
     Contact contact = new Contact();
@@ -37,8 +54,7 @@ class Location extends RecordModel{
   
   List<Map> contacts_to_map() {
     List<Map> contacts_map = [];
-    this.contacts.forEach((contact) => contacts_map.add(contact.to_map()));
-
+    //this.contacts.forEach((contact) => contacts_map.add(contact.to_map()));
     return contacts_map;
   }
   
@@ -66,6 +82,7 @@ class Location extends RecordModel{
       'freight_class': freightClass,
       'sales_territory': salesTerritory,
       'status': status,
+      'roles': roles,
       "contacts_attributes" : contacts_to_map()
     };
   }

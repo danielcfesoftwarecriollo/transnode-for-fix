@@ -21,11 +21,13 @@ class CustomerController {
   }
 
   void create() {
-    var response = this.customer_service.save(this.customer);
-    
-    response.then((HttpResponse response) {
-      if(response == null)
-        return false;
-    });
+    if(this.customer.full_valid()){
+      var response = this.customer_service.save(this.customer);    
+      response.then((HttpResponse response) {
+        if(response == null)
+          return false;
+      });      
+    }
+
   }
 }

@@ -8,6 +8,7 @@ class Customer extends Partner{
   Customer() {
     this.balance = 0.0;
     this.locations = [new Location()];
+    this._validator = new CustomerValidator(this);
   }
 
   Location new_empty_location() {
@@ -15,6 +16,7 @@ class Customer extends Partner{
     this.locations.add(location);
     return location;
   }
+  
   void delete_location(Location location) {
     locations.remove(location);
   }
@@ -25,6 +27,15 @@ class Customer extends Partner{
     return locations_map;
   }
 
+  bool full_valid(){
+    // i use  'result = validation && result, for forced the validations
+    bool result = _validator.run_validations();
+    this.locations.forEach((location) => result=location.is_valid() && result); 
+    return result;
+  }
+  bool has_many_locations(){
+    return locations.length > 1;
+  }
  
   Map to_map() {
     return {

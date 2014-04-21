@@ -4,26 +4,28 @@ abstract class RecordModel {
   
   Validator _validator;
 
-  Map<String, List<String>> errors;
-
+  bool is_valid(){
+    print("running valid");
+    print(this);
+   return _validator.run_validations();    
+  }
+  
   void set_errors(Map<String, List<String>> errors_map) {
+    Map<String, List<String>> errors;    
     errors_map.forEach((k, v) => errors[underscoreToCamelCase(k)] = v);
+    _validator.setup_errors(errors);
   }
 
   String errors_by_field(String field) {
-    if (has_errors(field)) {
-      return this.errors[field].join(', ');
-    } else {
-      return '';
-    }
-
+    return _validator.errors_by_field(field);
   }
+  
   bool has_errors(String field) {
-    return this.errors.containsKey(field);
+    return _validator.has_errors(field);
   }
 
   void clean_errors() {
-    this.errors = {};
+    _validator.clean_errors();
   }
 
   void loadWithJson(Map<String, dynamic> map) {
