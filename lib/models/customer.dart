@@ -1,9 +1,9 @@
 part of transnode;
 
-class Customer extends Partner{
+class Customer extends Partner {
 
   @NgTwoWay("errors")
-  Map<String,List<String>> errors;
+  Map<String, List<String>> errors;
 
   Customer() {
     this.balance = 0.0;
@@ -16,7 +16,7 @@ class Customer extends Partner{
     this.locations.add(location);
     return location;
   }
-  
+
   void delete_location(Location location) {
     locations.remove(location);
   }
@@ -27,16 +27,17 @@ class Customer extends Partner{
     return locations_map;
   }
 
-  bool full_valid(){
+  bool full_valid() {
     // i use  'result = validation && result, for forced the validations
     bool result = _validator.run_validations();
-    this.locations.forEach((location) => result=location.is_valid() && result); 
+    this.locations.forEach((location) => result = location.is_valid() && result
+        );
     return result;
   }
-  bool has_many_locations(){
+  bool has_many_locations() {
     return locations.length > 1;
   }
- 
+
   Map to_map() {
     return {
       'id': this.id,
