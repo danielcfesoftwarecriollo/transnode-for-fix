@@ -6,5 +6,6 @@ dependencies:
   angular_ui: any
   browser: any
   unittest: any
+  ctrl_alt_foo: any
 dev_dependencies:
     dartmocks: ">= 0.5.0"

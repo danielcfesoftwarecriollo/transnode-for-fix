@@ -33,6 +33,10 @@ packages:
     description: collection
     source: hosted
     version: "0.9.1"
+  ctrl_alt_foo:
+    description: ctrl_alt_foo
+    source: hosted
+    version: "0.3.0"
   dartmocks:
     description: dartmocks
     source: hosted
