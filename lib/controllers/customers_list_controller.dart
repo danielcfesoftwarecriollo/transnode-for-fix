@@ -18,10 +18,13 @@ class CustomersListController {
   void load_customers() {
     var response = this.customer_service.index();
     response.then((HttpResponse response) {
-      List customers_json = response.data;
-      customers_json.forEach(_add_customer);
+      
+      response.data.forEach(_add_customer);
       if (response == null) return false;
     });
+  }
+  void todo(){
+    window.alert("TODO");
   }
   
   void _add_customer(Map<String,dynamic> json){

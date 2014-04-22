@@ -38,9 +38,13 @@ abstract class RecordModel {
   String underscoreToCamelCase(String underscored) {
     String camelCased;
     List<String> names = underscored.split("_");
-    camelCased = names[0];
-    names.map((String part) => capitalize(part));
-    camelCased = camelCased + names.join('');
+    if (names.length > 1){
+      camelCased = names[0];
+      names.map((String part) => capitalize(part));
+      camelCased = camelCased + names.join('');      
+    } else {
+      camelCased = underscored;
+    }
     return camelCased;
   }
 

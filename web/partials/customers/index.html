@@ -1,5 +1,6 @@
 <div customer-list-controller>
   <h1>Customers</h1>
+  <a class='btn btn-info' ng-href="#/customers/new"> Create a customer</a>
   <div ng-show='ctrl.has_customers'>
     <table class='table'>
       <thead>
@@ -11,9 +12,12 @@
       </thead>
       <tbody>
         <tr ng-repeat='customer in ctrl.customers'>
-          <td>customer.id</td>
-          <td>customer.name</td>
-          <td> Actions</td>
+          <td>{{customer.id}}</td>
+          <td>{{customer.name}}</td>
+          <td>
+            <a ng-click="ctrl.todo()">show</a>
+            <a ng-click="ctrl.todo()">edit</a>
+          </td>
         </tr>
       </tbody>
     </table>
