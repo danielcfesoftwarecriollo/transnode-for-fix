@@ -5,8 +5,6 @@ abstract class RecordModel {
   Validator _validator;
 
   bool is_valid(){
-    print("running valid");
-    print(this);
    return _validator.run_validations();    
   }
   
