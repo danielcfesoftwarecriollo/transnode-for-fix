@@ -11,10 +11,9 @@ class LocationValidator extends Validator {
     email_format(_location.email,'email');
     required_string(_location.address_1, "address_1");
     required_string(_location.country, "country");
-    required_string(_location.state, "state");
+    required_string(_location.city, "city");
     required_string(_location.zip, "zip");
     required_string(_location.phone, "phone");
-    required_string(_location.status, "status");
     return this.valid();
   }
 }
