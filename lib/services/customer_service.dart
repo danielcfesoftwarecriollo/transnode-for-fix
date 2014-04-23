@@ -2,41 +2,28 @@ part of transnode;
 
 @NgInjectableService()
 class CustomerService {
-  static final String api_url = 'http://0.0.0.0:3000';
-  static final String customers = api_url + '/customers';
-
-  Http _http;
-  String error;
-  UserService user;
+  static String url = '/customers';
+  UserService user; 
   MessagesService _messageServices;
+  ApiService _api;
 
-  CustomerService(this._http,this.user,this._messageServices) {
-    this.error = "";
+
+  CustomerService(this._api,this.user,this._messageServices) {
   }
 
   Future index(){
-    return _http.get(customers);
+    return _api.request('get', '/customers');
   }
   
   Future save(Customer customer) {
-    this.error = "";
-
-    return _http.post(customers, this.params(customer))
+    return _api.request('post', '/customers',data:params(customer))
       .catchError((HttpResponse response) {
         if(response.status == 422) {
           Map<String,List<String>> errors = JSON.decode(response.data);
-          _messageServices.add("Review the errors in the form");
-          print(errors);
+          _messageServices.add("danger","Review the errors in the form");
           customer.set_errors(errors);
         }
-        else {
-          this.error = "the server is down";
-        }
       });
-  }
-
-  bool has_errors() {
-    return this.error != "";
   }
 
   String params(Customer customer) {
