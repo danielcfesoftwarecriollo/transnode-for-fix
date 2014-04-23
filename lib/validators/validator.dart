@@ -23,6 +23,9 @@ class Validator {
 
     }
   }
+  void format_phone(String value, String name_field){
+    required_string(value,name_field);
+  }
   
   void required_number(int value, String name_field) {
     if (value == 0 || value == null) {

@@ -7,7 +7,7 @@ class CustomerValidator extends Validator{
   }
 
   bool run_validations() {
-    errors = new Map<String, List<String>>();
+    this.clean_errors();
     required_string(_customer.name, "name");
     required_string(_customer.state, "state");
     required_string(_customer.zip, "zip");

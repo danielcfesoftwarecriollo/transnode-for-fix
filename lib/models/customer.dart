@@ -8,6 +8,7 @@ class Customer extends Partner {
   Customer() {
     this.balance = 0.0;
     this.locations = [new Location()];
+    this.contacts = [new Contact()];
     this._validator = new CustomerValidator(this);
   }
 
@@ -21,21 +22,20 @@ class Customer extends Partner {
     locations.remove(location);
   }
 
-  List<Map> locations_to_map() {
-    List<Map> locations_map = [];
-    this.locations.forEach((location) => locations_map.add(location.to_map()));
-    return locations_map;
-  }
-
   bool full_valid() {
     // i use  'result = validation && result, for forced the validations
     bool result = _validator.run_validations();
-    this.locations.forEach((location) => result = location.is_valid() && result
-        );
+    this.locations.forEach((location) => result = location.is_valid() && result);
+    this.contacts.forEach((contact) => result = contact.is_valid() && result);
     return result;
   }
+
   bool has_many_locations() {
     return locations.length > 1;
+  }
+
+  bool has_many_contacts() {
+    return contacts.length > 1;
   }
 
   Map to_map() {
@@ -45,7 +45,8 @@ class Customer extends Partner {
       'city': this.city,
       'state': this.state,
       'zip': this.zip,
-      'locations_attributes': locations_to_map()
+      'locations_attributes': locations_to_map(),
+      'contacts_attributes': contacts_to_map(),
     };
   }
 }

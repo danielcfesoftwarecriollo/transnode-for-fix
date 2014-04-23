@@ -17,6 +17,8 @@ class Location extends RecordModel{
   String laneCode;
   String email;
   String hours;
+  String naics;
+
   bool emailOptOut;
   String status;
   

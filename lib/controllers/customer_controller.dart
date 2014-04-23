@@ -19,6 +19,13 @@ class CustomerController {
   void delete_location(Location location) {
     this.customer.delete_location(location);
   }
+  void add_contact() {
+    this.customer.new_empty_contact();
+  }
+
+  void delete_contact(Contact contact) {
+    this.customer.delete_contact(contact);
+  }
 
   void create() {
     if (this.customer.full_valid()) {

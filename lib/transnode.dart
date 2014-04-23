@@ -42,6 +42,7 @@ part 'models/user.dart';
 part 'validators/validator.dart';
 part 'validators/location.dart';
 part 'validators/customer.dart';
+part 'validators/contact.dart';
 
 class TransnodeModule extends Module {
   TransnodeModule() {
