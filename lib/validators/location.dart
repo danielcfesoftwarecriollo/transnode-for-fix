@@ -9,7 +9,7 @@ class LocationValidator extends Validator {
   bool run_validations() {
     this.clean_errors();
     email_format(_location.email,'email');
-    required_string(_location.address_1, "address_1");
+    required_string(_location.address1, "address1");
     required_string(_location.country, "country");
     required_string(_location.city, "city");
     required_string(_location.zip, "zip");

@@ -1,7 +1,7 @@
 part of transnode;
 
 abstract class RecordModel {
-  
+  int id;
   Validator _validator;
 
   bool is_valid(){
@@ -29,7 +29,9 @@ abstract class RecordModel {
   void loadWithJson(Map<String, dynamic> map) {
     Mirror instanceMirror = reflect(this);
     map.forEach((k, v) {
-      instanceMirror.setField(new Symbol(underscoreToCamelCase(k)), v);
+      if( !is_nested_model_attribute(k)){
+        instanceMirror.setField(new Symbol(underscoreToCamelCase(k)), v);        
+      }
     });
   }
 
@@ -38,6 +40,7 @@ abstract class RecordModel {
     List<String> names = underscored.split("_");
     if (names.length > 1){
       camelCased = names[0];
+      names.remove(names[0]);
       names.map((String part) => capitalize(part));
       camelCased = camelCased + names.join('');      
     } else {
@@ -48,5 +51,9 @@ abstract class RecordModel {
 
   String capitalize(String part) {
     return part[0].toUpperCase() + part.substring(1);
+  }
+  bool is_nested_model_attribute(String field){
+    List<String> names = field.split("_");
+    return names.last == "attributes";
   }
 }

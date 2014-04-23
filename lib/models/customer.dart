@@ -18,6 +18,23 @@ class Customer extends Partner {
     return location;
   }
 
+  @override
+  void loadWithJson(Map<String, dynamic> map) {
+    super.loadWithJson(map);
+    this.locations = [];
+    this.contacts = [];
+    map['locations_attributes'].forEach((attr){
+          Location l = new Location();
+          l.loadWithJson(attr);
+          this.locations.add(l);
+        });
+    map['contacts_attributes'].forEach((attr){
+          Contact c = new Contact();
+          c.loadWithJson(attr);
+          this.contacts.add(c);
+        });    
+  }
+  
   void delete_location(Location location) {
     locations.remove(location);
   }

@@ -6,10 +6,17 @@ part of transnode;
 class CustomerController {
   @NgTwoWay("customer")
   Customer customer;
-  final CustomerService customer_service;
+  RouteProvider _routeProvider;
 
-  CustomerController(this.customer_service) {
+  final CustomerService _customerService;
+
+  CustomerController(this._customerService,this._routeProvider) {
     this.customer = new Customer();
+    if (_is_edit_path()) {
+      _customerService.get(_routeProvider.parameters['customerId']).then((_) => this.customer = _);
+    } else {
+      print(_routeProvider.routeName );
+    }
   }
 
   void add_location() {
@@ -29,10 +36,13 @@ class CustomerController {
 
   void create() {
     if (this.customer.full_valid()) {
-      var response = this.customer_service.save(this.customer);
+      var response = this._customerService.save(this.customer);
       response.then((HttpResponse response) {
         if (response == null) return false;
       });
     }
   }
+  
+  bool _is_edit_path() => _routeProvider.routeName == 'customer_edit';
+  bool _is_new_path() => _routeProvider.routeName == 'customer_edit';
 }

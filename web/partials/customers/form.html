@@ -50,9 +50,9 @@
           </div>
 
           <div class="row">
-            <div class="col-xs-4" ng-class="{'has-error':location.has_errors('address_1')}">
-              <input ng-model='location.address_1' class="form-control" placeholder='address 1'>
-              <p ng-show="location.has_errors('address_1')" class='error'>{{location.errors_by_field('address_1')}}</p>
+            <div class="col-xs-4" ng-class="{'has-error':location.has_errors('address1')}">
+              <input ng-model='location.address1' class="form-control" placeholder='address 1'>
+              <p ng-show="location.has_errors('address1')" class='error'>{{location.errors_by_field('address1')}}</p>
               
             </div>
             <div class="col-xs-3">
@@ -62,7 +62,7 @@
 
           <div class='row'>
             <div class="col-xs-4">
-              <input ng-model='location.address_2' class="form-control" placeholder='address 2'>
+              <input ng-model='location.address2' class="form-control" placeholder='address 2'>
             </div>
             <div class="col-xs-3" ng-class="{'has-error':location.has_errors('city')}">
               <input ng-model='location.city' class="form-control" placeholder='city'>

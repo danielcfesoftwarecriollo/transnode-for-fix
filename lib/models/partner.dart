@@ -1,7 +1,7 @@
 part of transnode;
 
 class Partner extends RecordModel {
-  int id;
+
   String name;
   String city;
   String state;
