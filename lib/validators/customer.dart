@@ -9,7 +9,7 @@ class CustomerValidator extends Validator{
   bool run_validations() {
     this.clean_errors();
     required_string(_customer.name, "name");
-    required_string(_customer.zip, "zip");
+    format_zip(_customer.zip, "zip");
     return this.valid();
   }
 }

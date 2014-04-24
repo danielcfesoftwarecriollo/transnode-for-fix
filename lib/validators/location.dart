@@ -8,12 +8,12 @@ class LocationValidator extends Validator {
 
   bool run_validations() {
     this.clean_errors();
-    email_format(_location.email,'email');
+    format_email(_location.email,'email');
     required_string(_location.address1, "address1");
     required_string(_location.country, "country");
     required_string(_location.city, "city");
-    required_string(_location.zip, "zip");
-    required_string(_location.phone, "phone");
+    format_zip(_location.zip, "zip",required:true);
+    format_phone(_location.phone, "phone",required:true);
     return this.valid();
   }
 }
