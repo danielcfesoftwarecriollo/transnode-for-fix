@@ -1,5 +1,8 @@
 <div customer-controller>
-  <form class='form-horizontal' novalidate ng-submit="controller.create()">
+
+  <h1 ng-if="controller.customer.is_new()">Add a new Customer</h1>
+  <h1 ng-if="!controller.customer.is_new()">Edit Customer</h1>
+  <form class='form-horizontal' novalidate ng-submit="controller.save()">
     <div class="form-group">
       <label for="customer_id" class="col-sm-2 control-label">Id</label>
       <div class="col-sm-10">
@@ -22,11 +25,40 @@
     </div>
 
     <div class="locations">
-      <div class="location" ng-repeat="location in controller.customer.locations">
-        <fieldset>
+      <div class="location" ng-repeat="location in controller.customer.locations" ng-hide="location.pending_to_delete()">
+        <div ng-hide='location.is_expanded()'>
+          <div class="row">
+            <div class="col-xs-2">
+              <p>default</p>
+            </div>
+            <div class="col-xs-2 form-group" ng-class="{'has-error':location.has_errors('name')}">
+              <input ng-model='location.name' class="form-control" placeholder='name'> 
+              <p ng-show="location.has_errors('name')" class='error'>{{location.errors_by_field('name')}}</p>
+     
+            </div>
+            <div class="col-xs-2 form-group" ng-class="{'has-error':location.has_errors('city')}">
+              <input ng-model='location.city' class="form-control" placeholder='city'>
+              <p ng-show="location.has_errors('city')" class='error'>{{location.errors_by_field('city')}}</p>
+            </div>
+            <div class="col-xs-2 form-group" ng-class="{'has-error':location.has_errors('zip')}">
+              <input ng-model='location.zip' class="form-control" placeholder='zip'>
+              <p ng-show="location.has_errors('zip')" class='error'>{{location.errors_by_field('zip')}}</p>
+           </div>
+            <div class="col-xs-3 form-group" ng-class="{'has-error':location.has_errors('phone')}">
+              <input ng-model='location.phone' class="form-control" placeholder='phone'>
+              <p ng-show="location.has_errors('phone')" class='error'>{{location.errors_by_field('phone')}}</p>
+            </div>
+            <div class="col-xs-2 actions">
+              <button ng-click="location.expand()" type="button" class="btn btn-success"><i class="glyphicon glyphicon-resize-vertical icon-btn"></i></button>
+              <button ng-click="controller.customer.delete_location(location)" ng-show='controller.customer.has_many_locations()' type="button" class="btn btn-danger"><i class="glyphicon glyphicon-remove icon-btn"></i></button>
+
+            </div>
+          </div>
+        </div>
+        <fieldset ng-show="location.is_expanded()">
           <legend>Location</legend>
           <div class='row'>
-            <div class="col-xs-4 form-group" ng-class="{'has-error':location.has_errors('name')}">
+            <div class="col-xs-3 form-group" ng-class="{'has-error':location.has_errors('name')}">
               <input ng-model='location.name' class="form-control" placeholder='full name'>
               <p ng-show="location.has_errors('name')" class='error'>{{location.errors_by_field('name')}}</p>
             </div>
@@ -34,7 +66,7 @@
               <input ng-model='location.zip' class="form-control" placeholder='zip'>
               <p ng-show="location.has_errors('zip')" class='error'>{{location.errors_by_field('zip')}}</p>
             </div>          
-            <div class="col-xs-4" ng-class="{'has-error':location.has_errors('country')}">
+            <div class="col-xs-3" ng-class="{'has-error':location.has_errors('country')}">
               <label class='control-label'>country</label>
               <select ng-model="location.country" >
                 <option value="CA">CA</option>
@@ -44,8 +76,8 @@
               <p ng-show="location.has_errors('country')" class='error'>{{location.errors_by_field('country')}}</p>
             </div>
 
-            <div class="col-xs-1">
-              <button class='btn delete'type='button' ng-show='controller.customer.has_many_locations()' ng-click='controller.delete_location(location)'>-</button>
+            <div class="col-xs-3 actions">
+              <button ng-click="location.delete()" ng-show='controller.customer.has_many_locations()' type="button" class="btn btn-danger"><i class="glyphicon glyphicon-remove icon-btn"></i></button>
             </div>
           </div>
 
@@ -131,8 +163,8 @@
       <button class='btn add' type='button' ng-click='controller.add_location()'>Add location</button>
     </div>
     <div class="contacts">
-      <div class="contact" ng-repeat='contact in controller.customer.contacts'>
-        <fieldset class="contact">
+      <div class="contact" ng-repeat='contact in controller.customer.contacts' >
+        <fieldset class="contact" ng-hide="contact.pending_to_delete()">
           <legend>contact</legend>
           <div class="row">
             <div class="col-xs-4 form-group" ng-class="{'has-error':contact.has_errors('name')}">
@@ -148,7 +180,7 @@
               <p ng-show="contact.has_errors('email')" class='error'>{{contact.errors_by_field('email')}}</p>
             </div>
             <div class="col-xs-1">
-              <button class='btn delete'type='button' ng-show='controller.customer.has_many_contacts()' ng-click='controller.delete_contact(contact)'>-</button>
+              <button ng-click='controller.delete_contact(contact)' ng-show='controller.customer.has_many_contacts()' type="button" class="btn btn-danger"><i class="glyphicon glyphicon-remove icon-btn"></i></button>
             </div>
 
           </div>
@@ -269,7 +301,6 @@
         </div>        
       </div>
     </div>
-
 
     <button class='btn btn-success'>save</button>
   </form>

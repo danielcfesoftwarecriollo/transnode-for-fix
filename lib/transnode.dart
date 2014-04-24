@@ -31,6 +31,7 @@ part 'controllers/locations_list_controller.dart';
 part 'controllers/location_controller.dart';
 
 part 'models/record_model.dart';
+part 'models/record_model_nested.dart';
 part 'models/contact.dart';
 part 'models/partner.dart';
 part 'models/customer.dart';

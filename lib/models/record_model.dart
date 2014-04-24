@@ -8,6 +8,9 @@ abstract class RecordModel {
    return _validator.run_validations();    
   }
   
+  bool is_new() => id == null;
+  
+  
   void set_errors(Map<String, List<String>> errors_map) {
     Map<String, List<String>> errors;    
     errors_map.forEach((k, v) => errors[underscoreToCamelCase(k)] = v);

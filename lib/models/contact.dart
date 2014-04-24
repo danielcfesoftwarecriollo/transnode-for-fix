@@ -1,6 +1,6 @@
 part of transnode;
 
-class Contact extends RecordModel{
+class Contact extends RecordModelNested{
   String name;
   String phone;
   String email;
@@ -8,11 +8,14 @@ class Contact extends RecordModel{
   Contact(){
     this._validator = new ContactValidator(this);
   }
+    
   Map to_map() {
     return {
+      'id' : id,
       'name'  : name,
       'phone' : phone,
-      'email' : email
+      'email' : email,
+      '_destroy':_destroy      
     };
   }
 }

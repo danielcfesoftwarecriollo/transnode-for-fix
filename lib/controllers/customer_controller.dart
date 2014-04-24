@@ -7,10 +7,11 @@ class CustomerController {
   @NgTwoWay("customer")
   Customer customer;
   RouteProvider _routeProvider;
+  Router _router;
 
   final CustomerService _customerService;
 
-  CustomerController(this._customerService,this._routeProvider) {
+  CustomerController(this._customerService, this._routeProvider, this._router) {
     this.customer = new Customer();
     if (_is_edit_path()) {
       _customerService.get(_routeProvider.parameters['customerId']).then((_) => this.customer = _);
@@ -31,14 +32,16 @@ class CustomerController {
   }
 
   void delete_contact(Contact contact) {
+    print("deleting contact");
     this.customer.delete_contact(contact);
   }
 
-  void create() {
+  void save() {
     if (this.customer.full_valid()) {
       var response = this._customerService.save(this.customer);
       response.then((HttpResponse response) {
         if (response == null) return false;
+        _router.go('customers', {});
       });
     }
   }

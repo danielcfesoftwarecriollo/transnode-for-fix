@@ -1,6 +1,6 @@
 part of transnode;
 
-class Location extends RecordModel{
+class Location extends RecordModelNested{
 
   int partner_id;
   int salesRep;
@@ -27,20 +27,31 @@ class Location extends RecordModel{
   List freightClass;
   List salesTerritory;
   
+  bool _expanded;
+  
   bool get valid => false;
   
   Location() {
-    this._validator = new LocationValidator(this);    
+    this._validator = new LocationValidator(this);
+    _expanded = false;
   }
   
+  
+  bool is_expanded() {
+    return is_new() || _expanded;
+  }
+  
+  void expand(){
+    _expanded = !_expanded;
+  }
   Map to_map() {
     return {
       'id': id,
       'partner_id': partner_id,
       'sales_rep_id': salesRep,
       'name': name,
-      'address1': address1,
-      'address2': address2,
+      'address_1': address1,
+      'address_2': address2,
       'country': country,
       'state': state,
       'city': city,
@@ -52,7 +63,8 @@ class Location extends RecordModel{
       'email': email,
       'freight_class': freightClass,
       'sales_territory': salesTerritory,
-      'status': status
+      'status': status,
+      '_destroy':_destroy
     };
   }
 
