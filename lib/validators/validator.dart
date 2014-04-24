@@ -16,42 +16,6 @@ class Validator {
     return errors.isEmpty;
   }
 
-  void required_string(String value, String name_field) {
-    if (value == null || value == "") {
-      _add_error_required(name_field);
-    }
-  }
-  void format_zip(String value, String name_field, {bool required: false}) {
-    if (!_valid_format(value, zip_regex, required)) {
-      _add_error("format invalid, should be 5 digits", name_field);
-    }
-  }
-  void format_email(String value, String name_field, {bool required: false}) {
-    if (!_valid_format(value, email_regex, required)) {
-      _add_error("format invalid", name_field);
-    }
-  }
-  void format_phone(String value, String name_field, {bool required: false}) {
-    if (!_valid_format(value, phone_regex, required)) {
-      _add_error("format should be: +(01) 123-123-1234", name_field);
-    }
-
-  }
-  
-  bool _valid_format(String value, String expresion, bool required) {
-    RegExp regex = new RegExp(expresion);
-    if (required && (value == null || value == "")) {
-      return false;
-    }
-    return (value == null || !regex.hasMatch(value));
-  }
-  
-  void required_number(int value, String name_field) {
-    if (value == 0 || value == null) {
-      _add_error_required(name_field);
-    }
-  }
-
   void clean_errors() {
     this.errors = {};
   }
@@ -71,6 +35,61 @@ class Validator {
   bool has_errors(String field) {
     return errors.containsKey(field);
   }
+  
+  void required_string(String value, String name_field) {
+    if (value == null || value == "") {
+      _add_error_required(name_field);
+    }
+  }
+  void format_zip(String value, String name_field, {bool required: false}) {
+    if (!_valid_format(value, zip_regex, required)) {
+      _add_error("format invalid, should be 5 digits", name_field);
+    }
+  }
+  void format_email(String value, String name_field, {bool required: false}) {
+    if (!_valid_format(value, email_regex, required)) {
+      _add_error("format invalid", name_field);
+    }
+  }
+  
+  void format_phone(String value, String name_field, {bool required: false}) {
+    if (!_valid_format(value, phone_regex, required)) {
+      _add_error("format should be: +(01) 123-123-1234", name_field);
+    }
+  }
+  
+  void format_int(int value, String name_field, {bool required:false}){
+    if(value == null && !required) {
+      return;
+    } else if(value == null && required){
+      _add_error_required(name_field);
+    }
+    else if (value.isNaN) {
+      _add_error("Should be a number",name_field); 
+    }
+  }
+  
+  void format_double(double value, String name_field, {bool required:false}){
+    print(value);
+    if(value == null && !required) {
+      return;
+    } else if(value == null && required){
+      _add_error_required(name_field);
+    }
+    else if (value.isNaN) {
+      _add_error("Should be a number",name_field); 
+    }
+
+  }
+
+  bool _valid_format(String value, String expresion, bool required) {
+    RegExp regex = new RegExp(expresion);
+    if (required && (value == null || value == "")) {
+      return false;
+    }
+    return (value == null || !regex.hasMatch(value));
+  }
+
 
   void _add_error_required(String name_field) {
     _add_error("it's required", name_field);

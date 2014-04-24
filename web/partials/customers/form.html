@@ -191,17 +191,20 @@
    </div>
   
     <div class='row'>
-      <div class="col-xs-4 form-group">
+      <div class="col-xs-4 form-group" ng-class="{'has-error':controller.customer.has_errors('creditNote')}">
         <label for="customer_credit_note" class="col-xs-4 control-label">credit note</label>
         <select ng-model="controller.customer.creditNote">
           <option value="select">select</option>
         </select>
+        <p ng-show="controller.customer.has_errors('creditNote')" class='error'>{{controller.customer.errors_by_field('creditNote')}}</p>        
       </div>
-      <div class="col-xs-4 form-group">
+      <div class="col-xs-4 form-group" ng-class="{'has-error':controller.customer.has_errors('creditLimit')}">
         <label class="control-label col-xs-4">credit limit</label>
         <div class="col-xs-8">
-          <input ng-model='controller.customer.creditLimit' class="form-control" placeholder='Credit Limit'>
+          <input type="number" ng-model='controller.customer.creditLimit' min='0' class="form-control" placeholder='Credit Limit'>
         </div>
+        <p ng-show="controller.customer.has_errors('creditLimit')" class='error'>{{controller.customer.errors_by_field('creditLimit')}}</p>
+        
       </div>
       <div class="col-xs-4 form-group">
         <label class="control-label col-xs-2">balance</label>

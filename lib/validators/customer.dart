@@ -10,6 +10,8 @@ class CustomerValidator extends Validator{
     this.clean_errors();
     required_string(_customer.name, "name");
     format_zip(_customer.zip, "zip");
+    format_double(_customer.creditLimit,"creditLimit");
+    print(this.errors);
     return this.valid();
   }
 }
