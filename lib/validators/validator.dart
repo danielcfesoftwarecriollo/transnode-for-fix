@@ -35,18 +35,18 @@ class Validator {
   bool has_errors(String field) {
     return errors.containsKey(field);
   }
-  
+
   void required_string(String value, String name_field) {
     if (value == null || value == "") {
       _add_error_required(name_field);
     }
   }
-  void required_field(value, String name_field){
+  void required_field(value, String name_field) {
     if (!_is_present(value)) {
       _add_error_required(name_field);
-    }    
+    }
   }
-  
+
   void format_zip(String value, String name_field, {bool required: false}) {
     if (!_valid_format(value, zip_regex, required)) {
       _add_error("format invalid, should be 5 digits", name_field);
@@ -57,32 +57,30 @@ class Validator {
       _add_error("format invalid", name_field);
     }
   }
-  
+
   void format_phone(String value, String name_field, {bool required: false}) {
     if (!_valid_format(value, phone_regex, required)) {
       _add_error("format should be: +(01) 123-123-1234", name_field);
     }
   }
-  
-  void format_int(int value, String name_field, {bool required:false}){
-    if( !required && !_is_present(value)) {
+
+  void format_int(int value, String name_field, {bool required: false}) {
+    if (!required && !_is_present(value)) {
       return;
-    } else if(value == null && required){
+    } else if (value == null && required) {
       _add_error_required(name_field);
-    }
-    else if (value.isNaN || value.toInt() != value) {
-      _add_error("Should be a number",name_field); 
+    } else if (value.isNaN || value.toInt() != value) {
+      _add_error("Should be a number", name_field);
     }
   }
-  
-  void format_double(double value, String name_field, {bool required:false}){
-    if(!required && !_is_present(value)) {
+
+  void format_double(double value, String name_field, {bool required: false}) {
+    if (!required && !_is_present(value)) {
       return;
-    } else if(value == null && required){
+    } else if (value == null && required) {
       _add_error_required(name_field);
-    }
-    else if (value.isNaN) {
-      _add_error("Should be a number",name_field); 
+    } else if (value.isNaN) {
+      _add_error("Should be a number", name_field);
     }
   }
 
@@ -100,7 +98,7 @@ class Validator {
   void _add_error_required(String name_field) {
     _add_error("it's required", name_field);
   }
-  
+
   void _add_error(String message, String name_field) {
     if (!errors.containsKey(name_field)) {
       errors[name_field] = new List<String>();

@@ -14,9 +14,10 @@ class CustomerController {
   CustomerController(this._customerService, this._routeProvider, this._router) {
     this.customer = new Customer();
     if (_is_edit_path()) {
-      _customerService.get(_routeProvider.parameters['customerId']).then((_) => this.customer = _);
+      _customerService.get(_routeProvider.parameters['customerId']).then((_) =>
+          this.customer = _);
     } else {
-      print(_routeProvider.routeName );
+      //other paths...
     }
   }
 
@@ -32,7 +33,6 @@ class CustomerController {
   }
 
   void delete_contact(Contact contact) {
-    print("deleting contact");
     this.customer.delete_contact(contact);
   }
 
@@ -45,7 +45,7 @@ class CustomerController {
       });
     }
   }
-  
+
   bool _is_edit_path() => _routeProvider.routeName == 'customer_edit';
   bool _is_new_path() => _routeProvider.routeName == 'customer_edit';
 }
