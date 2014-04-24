@@ -118,10 +118,11 @@
               </div>
               <p ng-show="location.has_errors('email')" class='error'>{{location.errors_by_field('email')}}</p>
             </div>
-            <div class="col-xs-4  form-group">
+            <div class="col-xs-4  form-group" ng-class="{'has-error':location.has_errors('fax')}">
               <label class="control-label col-xs-2">fax</label>
               <div class="col-xs-10">
                 <input ng-model='location.fax' class="form-control" placeholder='fax'>
+                <p ng-show="location.has_errors('fax')" class='error'>{{location.errors_by_field('fax')}}</p>
               </div>
             </div>
           </div>
@@ -194,9 +195,11 @@
       <div class="col-xs-4 form-group" ng-class="{'has-error':controller.customer.has_errors('creditNote')}">
         <label for="customer_credit_note" class="col-xs-4 control-label">credit note</label>
         <select ng-model="controller.customer.creditNote">
-          <option value="select">select</option>
+          <option value="cod">cod</option>
+          <option value="hold">hold</option>
+          <option value="availCreditNote">avail credit note</option>
         </select>
-        <p ng-show="controller.customer.has_errors('creditNote')" class='error'>{{controller.customer.errors_by_field('creditNote')}}</p>        
+        <p ng-show="controller.customer.has_errors('creditNote')" class='error'>{{controller.customer.errors_by_field('creditNote')}}</p>
       </div>
       <div class="col-xs-4 form-group" ng-class="{'has-error':controller.customer.has_errors('creditLimit')}">
         <label class="control-label col-xs-4">credit limit</label>
@@ -220,8 +223,8 @@
 
       </div>
       <div class="col-xs-4 form-group">
-        <label class="control-label">invoice</label>
-        <select ng-model="controller.customer.invoice">
+        <label class="control-label">invoice method</label>
+        <select ng-model="controller.customer.invoiceMethod">
           <option value='email'>email</option>
           <option value='mail'>mail</option>
           <option value='SelfService'>SelfService</option>
@@ -248,9 +251,10 @@
           <option>option</option>
         </select>
       </div>
-      <div class="col-xs-4 form-group">
+      <div class="col-xs-4 form-group" ng-class="{'has-error':controller.customer.has_errors('rating')}">
         <label class="control-label">rating</label>
-        <input ng-model='controller.customer.rating'>
+        <input type='number' ng-model='controller.customer.rating'>
+        <p ng-show="controller.customer.has_errors('rating')" class='error'>{{controller.customer.errors_by_field('rating')}}</p>
       </div>
     </div>
 
@@ -260,14 +264,14 @@
     <div class='row'>
       <div class="col-xs-4 form-group">
         <label class="control-label">import customs broker</label>
-        <select ng-model='controller.customer.importCustomsBroker'>
+        <select ng-model='controller.customer.importCustomsBrokerId'>
           <option>entity_id</option>
         </select>
       </div>
 
       <div class="col-xs-4 form-group">
         <label class="control-label">export customs broker</label>
-        <select ng-model='controller.customer.exportCustomsBroker'>
+        <select ng-model='controller.customer.exportCustomsBrokerId'>
           <option>entity_id</option>
         </select>
       </div>
@@ -291,14 +295,14 @@
 
       <div class='col-xs-4 form-group'>
         <div>
-          <label class="control-label">salesrep</label>
-          <select ng-model='controller.customer.salesRep'>
+          <label class="control-label">sales rep</label>
+          <select ng-model='controller.customer.salesRepId'>
             <option>option</option>
           </select>
         </div>
         <div>
           <label class="control-label">territory</label>
-          <select ng-model='controller.customer.territory'>
+          <select ng-model='controller.customer.territoryId'>
             <option>option</option>
           </select>
         </div>        

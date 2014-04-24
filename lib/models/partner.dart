@@ -1,7 +1,6 @@
 part of transnode;
 
 class Partner extends RecordModel {
-
   String name;
   String city;
   String state;
@@ -11,22 +10,35 @@ class Partner extends RecordModel {
   double balance;
   bool requiredPOD;
   String currency;
-  int rating;
+  int _rating;
   String note;
   String taxId;
-  String invoice;
+  String invoiceMethod;
   String terms;
-  String importCustomsBroker;
-  String exportCustomsBroker;
+  String importCustomsBrokerId;
+  String exportCustomsBrokerId;
   String currencyRiskFactor;
-  String salesRep;
-  String territory;
+  String salesRepId;
+  String territoryId;
 
   List<Location> locations;
   List<Contact> contacts;
 
+  
+  @NgTwoWay("rating")
+  int get rating => _rating;
+  
+  void set rating(value){
+    if(value == null){
+      _rating = null;
+    } else {
+      _rating = value.toInt();
+    }
+  }
+  
   Location new_empty_location() {
     Location location = new Location();
+    this.rating = 0;
     this.locations.add(location);
     return location;
   }

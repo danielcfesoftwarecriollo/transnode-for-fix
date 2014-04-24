@@ -11,7 +11,7 @@ class CustomerValidator extends Validator{
     required_string(_customer.name, "name");
     format_zip(_customer.zip, "zip");
     format_double(_customer.creditLimit,"creditLimit");
-    print(this.errors);
+    format_int(_customer.rating,"rating", required:true);
     return this.valid();
   }
 }

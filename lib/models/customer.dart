@@ -7,6 +7,7 @@ class Customer extends Partner {
 
   Customer() {
     this.balance = 0.0;
+    this.rating = 0;
     this.locations = [new Location()];
     this.contacts = [new Contact()];
     this._validator = new CustomerValidator(this);

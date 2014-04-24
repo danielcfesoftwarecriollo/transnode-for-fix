@@ -14,6 +14,7 @@ class LocationValidator extends Validator {
     required_string(_location.city, "city");
     format_zip(_location.zip, "zip",required:true);
     format_phone(_location.phone, "phone",required:true);
+    format_phone(_location.fax, "fax",required:false);
     return this.valid();
   }
 }

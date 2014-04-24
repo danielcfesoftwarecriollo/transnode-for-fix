@@ -41,6 +41,12 @@ class Validator {
       _add_error_required(name_field);
     }
   }
+  void required_field(value, String name_field){
+    if (!_is_present(value)) {
+      _add_error_required(name_field);
+    }    
+  }
+  
   void format_zip(String value, String name_field, {bool required: false}) {
     if (!_valid_format(value, zip_regex, required)) {
       _add_error("format invalid, should be 5 digits", name_field);
@@ -59,19 +65,18 @@ class Validator {
   }
   
   void format_int(int value, String name_field, {bool required:false}){
-    if(value == null && !required) {
+    if( !required && !_is_present(value)) {
       return;
     } else if(value == null && required){
       _add_error_required(name_field);
     }
-    else if (value.isNaN) {
+    else if (value.isNaN || value.toInt() != value) {
       _add_error("Should be a number",name_field); 
     }
   }
   
   void format_double(double value, String name_field, {bool required:false}){
-    print(value);
-    if(value == null && !required) {
+    if(!required && !_is_present(value)) {
       return;
     } else if(value == null && required){
       _add_error_required(name_field);
@@ -79,8 +84,9 @@ class Validator {
     else if (value.isNaN) {
       _add_error("Should be a number",name_field); 
     }
-
   }
+
+  bool _is_present(value) => value != null && value.toString() != "";
 
   bool _valid_format(String value, String expresion, bool required) {
     RegExp regex = new RegExp(expresion);
