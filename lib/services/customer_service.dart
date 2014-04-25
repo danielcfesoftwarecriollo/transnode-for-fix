@@ -2,37 +2,69 @@ part of transnode;
 
 @NgInjectableService()
 class CustomerService {
-  static final String api_url = 'http://0.0.0.0:3000';
-  static final String customers = api_url + '/customers';
-
-  Http _http;
-  String error;
+  static String url = '/customers';
   UserService user;
+  MessagesService _messageServices;
+  ApiService _api;
 
-  CustomerService(this._http,this.user) {
-    this.error = "";
+  CustomerService(this._api, this.user, this._messageServices);
+
+  Future index() {
+    return _api.request('get', url);
+  }
+
+  Future<User> get(String userId) {
+    return _api.request("get", url + "/" + userId.toString())
+      .then((HttpResponse response) => _loadCustomer(response.data));
   }
 
   Future save(Customer customer) {
-    this.error = "";
-
-    return _http.post(customers, this.params(customer))
+    String method;
+    String parameters;
+    String path;
+    if (customer.is_new()) {
+      method = 'post';
+      parameters = params(customer);
+      path = url;
+    } else {
+      method = 'put';
+      parameters = params_update(customer);
+      path = url + "/" + customer.id.toString() ; 
+    }
+    return _api.request(method, path, data: parameters)
       .catchError((HttpResponse response) {
-        if(response.status == 422) {
-          print("Nice, i got the error");
-          customer.set_errors(JSON.decode(response.data));
-        }
-        else {
-          this.error = "the server is down";
+        if (response.status == 422) {
+          Map<String, List<String>> errors = JSON.decode(response.data);
+          _messageServices.add("danger", "Review the errors in the form");
+          customer.set_errors(errors);
         }
       });
   }
 
-  bool has_errors() {
-    return this.error != "";
+  Customer _loadCustomer(map) {
+    Customer customer = new Customer();
+    customer.loadWithJson(map);
+    return customer;
   }
 
+  String params_update(Customer customer) {
+    return encode({
+      "customer": customer.to_map(),
+      "id": customer.id
+    });
+  }
   String params(Customer customer) {
-    return JSON.encode({ "customer": customer.to_map() });
+    return encode({
+      "customer": customer.to_map()
+    });
+  }
+  String params_id(Customer customer) {
+    return encode({
+      "id": customer.id
+    });
+  }
+
+  String encode(Map map) {
+    return JSON.encode(map);
   }
 }

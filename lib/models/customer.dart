@@ -1,44 +1,16 @@
 part of transnode;
 
-class Customer {
-  String code;
-  String name;
-  String city;
-  String state;
-  String zip;
-  String creditNote;
-  double creditLimit;
-  String balance;
-  bool requiredPOD;
-  String currency;
-  int rating;
-  String note;
-
-  List<Contact> contacts;
-  List<Location> locations;
+class Customer extends Partner {
 
   @NgTwoWay("errors")
-  List errors;
-
-  bool has_errors;
+  Map<String, List<String>> errors;
 
   Customer() {
-    this.contacts = [new Contact()];
+    this.balance = 0.0;
+    this.rating = 0;
     this.locations = [new Location()];
-    this.errors = [];
-  }
-
-  Contact new_empty_contact() {
-    Contact contact = new Contact();
-    this.contacts.add(contact);
-    return contact;
-  }
-  void delete_contact(Contact contact) {
-    contacts.remove(contact);
-  }
-
-  bool has_many_contacts() {
-    return contacts.length > 1;
+    this.contacts = [new Contact()];
+    this._validator = new CustomerValidator(this);
   }
 
   Location new_empty_location() {
@@ -46,44 +18,105 @@ class Customer {
     this.locations.add(location);
     return location;
   }
+
+  @override
+  void loadWithJson(Map<String, dynamic> map) {
+    super.loadWithJson(map);
+    this.locations = [];
+    this.contacts = [];
+    if (map.containsKey("locations_attributes")) {
+      map['locations_attributes'].forEach((attr) {
+        Location l = new Location();
+        l.loadWithJson(attr);
+        this.locations.add(l);
+      });
+    }
+    if (map.containsKey("contacts_attributes")) {
+      map['contacts_attributes'].forEach((attr) {
+        Contact c = new Contact();
+        c.loadWithJson(attr);
+        this.contacts.add(c);
+      });
+
+    }
+
+  }
+
   void delete_location(Location location) {
-    locations.remove(location);
+    if (location.is_new()) {
+      locations.remove(location);
+    } else {
+      location.delete();
+    }
+  }
+  void delete_contact(Contact contact) {
+    if (contact.is_new()) {
+      contacts.remove(contact);
+    } else {
+      contact.delete();
+    }
+  }
+
+  bool full_valid() {
+    // i use  'result = validation && result, for forced the validations
+    bool result = _validator.run_validations();
+    this.locations.forEach((location) => result = location.is_valid() && result
+        );
+    this.contacts.forEach((contact) => result = contact.is_valid() && result);
+    return result;
   }
 
   bool has_many_locations() {
-    return locations.length > 1;
+    return locations.length > 1 &&
+        _exists_at_least_more_than_two_locations_available();
   }
 
-  List<Map> contacts_to_map() {
-    List<Map> contacts_map = [];
-    this.contacts.forEach((contact) => contacts_map.add(contact.to_map()));
-
-    return contacts_map;
-  }
-  List<Map> locations_to_map() {
-    List<Map> locations_map = [];
-    this.locations.forEach((location) => locations_map.add(location.to_map()));
-    return locations_map;
+  bool _exists_at_least_more_than_two_locations_available() {
+    return total_locations_delete_pending() < locations.length - 1;
   }
 
-  void set_errors(Map errors_map) {
-    this.has_errors = true;
-    this.errors = errors_map['customers'];
+  int total_locations_delete_pending() {
+    return locations.fold(0, (int total, Location location) =>
+        (location.pending_to_delete() ? total + 1 : total));
   }
 
-  void clean_errors() {
-    this.errors = [];
-    this.has_errors = false;
+  bool has_many_contacts() {
+    return contacts.length > 1 &&
+        _exists_at_least_more_than_two_contacts_available();
+  }
+
+  bool _exists_at_least_more_than_two_contacts_available() {
+    return total_contacts_delete_pending() < contacts.length - 1;
+  }
+
+  int total_contacts_delete_pending() {
+    return contacts.fold(0, (int total, Contact contact) =>
+        (contact.pending_to_delete() ? total + 1 : total));
   }
 
   Map to_map() {
     return {
-      'code': this.code,
+      'id': this.id,
       'name': this.name,
       'city': this.city,
       'state': this.state,
       'zip': this.zip,
-      'contacts': contacts_to_map()
+      'credit_note': this.creditNote,
+      'credit_limit': this.creditLimit,
+      'required_pod': this.requiredPOD,
+      'currency': this.currency,
+      'rating': this.rating,
+      'note': this.note,
+      'tax_id': this.taxId,
+      'invoice_method': this.invoiceMethod,
+      'terms': this.terms,
+      'import_customs_broker_id': this.importCustomsBrokerId,
+      'export_customs_broker_id': this.exportCustomsBrokerId,
+      'currency_risk_factor': this.currencyRiskFactor,
+      'sales_rep_id': this.salesRepId,
+      'territory_id': this.territoryId,
+      'locations_attributes': locations_to_map(),
+      'contacts_attributes': contacts_to_map(),
     };
   }
 }

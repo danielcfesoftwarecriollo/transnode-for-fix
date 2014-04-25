@@ -1,119 +1,313 @@
 <div customer-controller>
-  <div class="alert alert-dismissable alert-danger" ng-show="controller.customer_service.has_errors()">
-    <p>{{ controller.customer_service.error }}</p>
-  </div>
 
-  <ul class="alert alert-dismissable alert-danger" ng-show="controller.customer.has_errors">
-    <li class="error" ng-repeat="error in controller.customer.errors">{{ error }}</li>
-  </ul>
-
-  <form class='form-horizontal' novalidate ng-submit="controller.create()">
+  <h1 ng-if="cctrlcustomer.is_new()">Add a new Customer</h1>
+  <h1 ng-if="!ctrl.customer.is_new()">Edit Customer</h1>
+  <form class='form-horizontal' novalidate ng-submit="ctrl.save()">
     <div class="form-group">
-      <label for="customer_code" class="col-sm-2 control-label">code</label>
+      <label for="customer_id" class="col-sm-2 control-label">Id</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="customer_code" ng-model='controller.customer.code' placeholder="Code">
+        <input type="text" disabled class="form-control" id="customer_id" ng-model='ctrl.customer.id' placeholder="Id">
       </div>
     </div>
     <div class="form-group">
       <label for="customer_name" class="col-sm-2 control-label">name</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="customer_name" ng-model='controller.customer.name' placeholder="name">
+        <input type="text" class="form-control" id="customer_name" ng-model='ctrl.customer.name' placeholder="name">
       </div>
     </div>
 
+    <div class="form-group has-feedback" ng-class="{'has-error':ctrl.customer.has_errors('zip')}">
+      <label for="customer_zip" class="col-sm-2 control-label">zip</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="customer_zip" ng-model='ctrl.customer.zip' placeholder="zip">
+      </div>
+      <p ng-show="ctrl.customer.has_errors('zip')" class='error'>{{ctrl.customer.errors_by_field('zip')}}</p>
+    </div>
+
+    <div class="locations">
+      <div class="location" ng-repeat="location in ctrl.customer.locations" ng-hide="location.pending_to_delete()">
+        <div ng-hide='location.is_expanded()'>
+          <div class="row">
+            <div class="col-xs-2">
+              <p>default</p>
+            </div>
+            <div class="col-xs-2 form-group" ng-class="{'has-error':location.has_errors('name')}">
+              <input ng-model='location.name' class="form-control" placeholder='name'> 
+              <p ng-show="location.has_errors('name')" class='error'>{{location.errors_by_field('name')}}</p>
+     
+            </div>
+            <div class="col-xs-2 form-group" ng-class="{'has-error':location.has_errors('city')}">
+              <input ng-model='location.city' class="form-control" placeholder='city'>
+              <p ng-show="location.has_errors('city')" class='error'>{{location.errors_by_field('city')}}</p>
+            </div>
+            <div class="col-xs-2 form-group" ng-class="{'has-error':location.has_errors('zip')}">
+              <input ng-model='location.zip' class="form-control" placeholder='zip'>
+              <p ng-show="location.has_errors('zip')" class='error'>{{location.errors_by_field('zip')}}</p>
+           </div>
+            <div class="col-xs-3 form-group" ng-class="{'has-error':location.has_errors('phone')}">
+              <input ng-model='location.phone' class="form-control" placeholder='phone'>
+              <p ng-show="location.has_errors('phone')" class='error'>{{location.errors_by_field('phone')}}</p>
+            </div>
+            <div class="col-xs-2 actions">
+              <button ng-click="location.expand()" type="button" class="btn btn-success"><i class="glyphicon glyphicon-resize-vertical icon-btn"></i></button>
+              <button ng-click="ctrl.customer.delete_location(location)" ng-show='ctrl.customer.has_many_locations()' type="button" class="btn btn-danger"><i class="glyphicon glyphicon-remove icon-btn"></i></button>
+
+            </div>
+          </div>
+        </div>
+        <fieldset ng-show="location.is_expanded()">
+          <legend>Location</legend>
+          <div class='row'>
+            <div class="col-xs-3 form-group" ng-class="{'has-error':location.has_errors('name')}">
+              <input ng-model='location.name' class="form-control" placeholder='full name'>
+              <p ng-show="location.has_errors('name')" class='error'>{{location.errors_by_field('name')}}</p>
+            </div>
+            <div class="col-xs-3" ng-class="{'has-error':location.has_errors('zip')}">
+              <input ng-model='location.zip' class="form-control" placeholder='zip'>
+              <p ng-show="location.has_errors('zip')" class='error'>{{location.errors_by_field('zip')}}</p>
+            </div>          
+            <div class="col-xs-3" ng-class="{'has-error':location.has_errors('country')}">
+              <label class='control-label'>country</label>
+              <select ng-model="location.country" >
+                <option value="CA">CA</option>
+                <option value="US">US</option>
+                <option value="MX">MX</option>
+              </select>
+              <p ng-show="location.has_errors('country')" class='error'>{{location.errors_by_field('country')}}</p>
+            </div>
+
+            <div class="col-xs-3 actions">
+              <button ng-click="location.delete()" ng-show='ctrl.customer.has_many_locations()' type="button" class="btn btn-danger"><i class="glyphicon glyphicon-remove icon-btn"></i></button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-4" ng-class="{'has-error':location.has_errors('address1')}">
+              <input ng-model='location.address1' class="form-control" placeholder='address 1'>
+              <p ng-show="location.has_errors('address1')" class='error'>{{location.errors_by_field('address1')}}</p>
+              
+            </div>
+            <div class="col-xs-3">
+              <input ng-model='location.on' class="form-control" placeholder='on'>
+            </div>
+          </div>
+
+          <div class='row'>
+            <div class="col-xs-4">
+              <input ng-model='location.address2' class="form-control" placeholder='address 2'>
+            </div>
+            <div class="col-xs-3" ng-class="{'has-error':location.has_errors('city')}">
+              <input ng-model='location.city' class="form-control" placeholder='city'>
+              <p ng-show="location.has_errors('city')" class='error'>{{location.errors_by_field('city')}}</p>
+            </div>
+          </div>
+
+          <div class='row'>
+            <div class="col-xs-4 form-group" ng-class="{'has-error':location.has_errors('phone')}">
+              <label class='control-label col-xs-2'>phone</label>
+              <div class="col-xs-10">
+                <input ng-model='location.phone' class="form-control" placeholder='phone'>
+              </div>
+              <p ng-show="location.has_errors('phone')" class='error'>{{location.errors_by_field('phone')}}</p>
+              
+            </div>
+            <div class="col-xs-4  form-group" ng-class="{'has-error':location.has_errors('email')}">
+              <label class='control-label col-xs-2'>email</label>
+              <div class="col-xs-10">
+                <input ng-model='location.email' class="form-control" placeholder='email'>
+              </div>
+              <p ng-show="location.has_errors('email')" class='error'>{{location.errors_by_field('email')}}</p>
+            </div>
+            <div class="col-xs-4  form-group" ng-class="{'has-error':location.has_errors('fax')}">
+              <label class="control-label col-xs-2">fax</label>
+              <div class="col-xs-10">
+                <input ng-model='location.fax' class="form-control" placeholder='fax'>
+                <p ng-show="location.has_errors('fax')" class='error'>{{location.errors_by_field('fax')}}</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-xs-4 form-group">
+              <label class="control-label col-xs-2">freight class</label>
+              <div class="col-xs-10">
+                <input ng-model='location.freightClass' class="form-control" placeholder='freight class'>
+              </div>
+            </div>
+            <div class="col-xs-4 form-group">
+              <label class="control-label col-xs-2">NAICS</label>
+              <div class="col-xs-10">
+                <input ng-model='location.naics' class="form-control" placeholder='naics'>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-4 form-group">
+              <label class="control-label col-xs-2">hours</label>
+              <div class="col-xs-10">
+                <input ng-model='location.hours' class="form-control" placeholder='hours'>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <label class="control-label">lane code</label>
+              <select ng-model='location.laneCode'>
+                <option>ABC</option>
+              </select>
+            </div>
+            <div class="col-xs-3">
+              <label class="control-label">email opt out</label>
+              <input type='checkbox' value='true' ng-model='location.emailOptOut'>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <button class='btn add' type='button' ng-click='ctrl.add_location()'>Add location</button>
+    </div>
     <div class="contacts">
-      <h3>locations</h3>
-      <div class="location" ng-repeat="location in controller.customer.locations">
-        <div class='row'>
-          <div class="col-xs-3">
-            <input ng-model='location.name' class="form-control" placeholder='full name'>
-          </div>
-          <div class="col-xs-4">
-            <input ng-model='location.address' class="form-control" placeholder='address'>
-          </div>
-          <div class="col-xs-4">
-            <select ng-model="location.country">
-              <option value="CA">CA</option>
-              <option value="US">US</option>
-              <option value="MX">MX</option>
-            </select>
-          </div>
-          <div class="col-xs-1">
-            <button class='btn delete'type='button' ng-show='controller.customer.has_many_locations()' ng-click='controller.delete_location(location)'>-</button>
-          </div>
-        </div>
+      <div class="contact" ng-repeat='contact in ctrl.customer.contacts' >
+        <fieldset class="contact" ng-hide="contact.pending_to_delete()">
+          <legend>contact</legend>
+          <div class="row">
+            <div class="col-xs-4 form-group" ng-class="{'has-error':contact.has_errors('name')}">
+              <input ng-model='contact.name' class="form-control" placeholder='name'>
+              <p ng-show="contact.has_errors('name')" class='error'>{{contact.errors_by_field('name')}}</p>
+            </div>
+            <div class="col-xs-4 form-group" ng-class="{'has-error':contact.has_errors('phone')}">
+              <input ng-model='contact.phone' class="form-control" placeholder='phone'>
+              <p ng-show="contact.has_errors('phone')" class='error'>{{contact.errors_by_field('phone')}}</p>
+            </div>
+            <div class="col-xs-3" ng-class="{'has-error':contact.has_errors('email')}">
+              <input ng-model='contact.email' class="form-control" placeholder='email'>
+              <p ng-show="contact.has_errors('email')" class='error'>{{contact.errors_by_field('email')}}</p>
+            </div>
+            <div class="col-xs-1">
+              <button ng-click='ctrl.delete_contact(contact)' ng-show='ctrl.customer.has_many_contacts()' type="button" class="btn btn-danger"><i class="glyphicon glyphicon-remove icon-btn"></i></button>
+            </div>
 
-        <div class='row'>
-          <div class="col-xs-3">
-            <input ng-model='location.city' class="form-control" placeholder='city'>
           </div>
-          <div class="col-xs-4">
-            <input ng-model='location.zip' class="form-control" placeholder='zip'>
-          </div>
-          <div class="col-xs-4">
-            <input ng-model='location.on' class="form-control" placeholder='on'>
-          </div>
-        </div>
-
+        </fieldset>
       </div>
-      <button class='btn add' type='button' ng-click='controller.add_location()'>Add location</button>
-    </div>
+    <button class='btn add' type='button' ng-click='ctrl.add_contact()'>Add contact</button>
 
-
-    <div class="contacts">
-      <h3>contacts</h3>
-      <div class="contact" ng-repeat="contact in controller.customer.contacts" ctrl_contact>
-        <div class='row'>
-          <div class="col-xs-3">
-            <input ng-model='contact.name' class="form-control" placeholder='full name'>
-          </div>
-          <div class="col-xs-4">
-            <input ng-model='contact.phone' class="form-control" placeholder='number phone'>
-
-          </div>
-          <div class="col-xs-4">
-            <input ng-model='contact.email' class="form-control" placeholder='email'>
-          </div>
-          <div class="col-xs-1">
-            <button class='btn delete'type='button' ng-show='controller.customer.has_many_contacts()' ng-click='controller.delete_contact(contact)'>-</button>
-          </div>
-
-        </div>
-      </div>
-      <button class='btn add' type='button' ng-click='controller.add_contact()'>Add contact</button>
-    </div>
-
+   </div>
+  
     <div class='row'>
-      <div class="col-xs-3">
-        <label for="customer_credit_note" class="col-sm-6 control-label">credit note</label>
-        <select ng-model="controller.customer.creditNote">
-          <option value="select">select</option>
+      <div class="col-xs-4 form-group" ng-class="{'has-error':ctrl.customer.has_errors('creditNote')}">
+        <label for="customer_credit_note" class="col-xs-4 control-label">credit note</label>
+        <select ng-model="ctrl.customer.creditNote">
+          <option value="cod">cod</option>
+          <option value="hold">hold</option>
+          <option value="availCreditNote">avail credit note</option>
+        </select>
+        <p ng-show="ctrl.customer.has_errors('creditNote')" class='error'>{{ctrl.customer.errors_by_field('creditNote')}}</p>
+      </div>
+      <div class="col-xs-4 form-group" ng-class="{'has-error':ctrl.customer.has_errors('creditLimit')}">
+        <label class="control-label col-xs-4">credit limit</label>
+        <div class="col-xs-8">
+          <input type="number" ng-model='ctrl.customer.creditLimit' min='0' class="form-control" placeholder='Credit Limit'>
+        </div>
+        <p ng-show="ctrl.customer.has_errors('creditLimit')" class='error'>{{ctrl.customer.errors_by_field('creditLimit')}}</p>
+        
+      </div>
+      <div class="col-xs-4 form-group">
+        <label class="control-label col-xs-2">balance</label>
+        <p class="col-xs-10">{{ctrl.customer.balance}}</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class="col-xs-4 form-group">
+        <label class="control-label col-xs-3">tax id</label>
+        <div class="col-xs-9">
+          <input ng-model='ctrl.customer.taxId' class="form-control" placeholder='Tax id'>
+        </div>
+
+      </div>
+      <div class="col-xs-4 form-group">
+        <label class="control-label">invoice method</label>
+        <select ng-model="ctrl.customer.invoiceMethod">
+          <option value='email'>email</option>
+          <option value='mail'>mail</option>
+          <option value='SelfService'>SelfService</option>
         </select>
       </div>
-      <div class="col-xs-4">
-        <input ng-model='controller.customer.creditLimit' class="form-control" placeholder='Credit Limit'>
+      <div class="col-xs-4 form-group">
+        <label class="control-label">requirePOD</label>
+        <input type='checkbox' ng-model='ctrl.customer.requiredPOD'>
       </div>
     </div>
 
     <div class='row'>
-      <div class="col-xs-3">
+      <div class="col-xs-4 form-group">
         <label for="customer_credit_note" class="col-sm-6 control-label">currency</label>
-        <select ng-model="controller.customer.currency">
+        <select ng-model="ctrl.customer.currency">
           <option value="select">CAD</option>
           <option value="select">USD</option>
         </select>
       </div>
-      <div class="col-xs-4">
-        <input ng-model='controller.customer.rating' class="form-control" placeholder='Rating'>
+
+      <div class="col-xs-4 form-group">
+        <label class="control-label">terms</label>
+        <select ng-model='ctrl.customer.terms'>
+          <option>option</option>
+        </select>
+      </div>
+      <div class="col-xs-4 form-group" ng-class="{'has-error':ctrl.customer.has_errors('rating')}">
+        <label class="control-label">rating</label>
+        <input type='number' ng-model='ctrl.customer.rating'>
+        <p ng-show="ctrl.customer.has_errors('rating')" class='error'>{{ctrl.customer.errors_by_field('rating')}}</p>
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="customer_notes" class="col-sm-2 control-label">Notes</label>
-      <div class="col-sm-10">
-        <textarea type="email" class="form-control" id="customer_notes" ng-model="controller.customer.note" placeholder="Notes"></textarea>
+    <div class="bill_to"> BILL TO </div>
+
+
+    <div class='row'>
+      <div class="col-xs-4 form-group">
+        <label class="control-label">import customs broker</label>
+        <select ng-model='ctrl.customer.importCustomsBrokerId'>
+          <option>entity_id</option>
+        </select>
       </div>
-   </div>
+
+      <div class="col-xs-4 form-group">
+        <label class="control-label">export customs broker</label>
+        <select ng-model='ctrl.customer.exportCustomsBrokerId'>
+          <option>entity_id</option>
+        </select>
+      </div>
+
+      <div class="col-xs-4 form-group">
+        <label class="control-label">currency risk factor</label>
+        <select ng-model='ctrl.customer.currencyRiskFactor'>
+          <option>option</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class='col-xs-8'>
+        <div class="form-group">
+          <label for="customer_notes" class="col-sm-2 control-label">Notes</label>
+          <div class="col-sm-10">
+            <textarea type="email" class="form-control" id="customer_notes" ng-model="ctrl.customer.note" placeholder="Notes"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class='col-xs-4 form-group'>
+        <div>
+          <label class="control-label">sales rep</label>
+          <select ng-model='ctrl.customer.salesRepId'>
+            <option>option</option>
+          </select>
+        </div>
+        <div>
+          <label class="control-label">territory</label>
+          <select ng-model='ctrl.customer.territoryId'>
+            <option>option</option>
+          </select>
+        </div>        
+      </div>
+    </div>
 
     <button class='btn btn-success'>save</button>
   </form>

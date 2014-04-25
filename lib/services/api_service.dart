@@ -7,8 +7,9 @@ class ApiService {
 
   UserService _user;
   MessagesService _messages;
+  Router _routes;
 
-  ApiService(this._http, this._user, this._messages) {
+  ApiService(this._http, this._user, this._messages, this._routes) {
     if (is_production()) {
       api_url = production_path();
     } else {
@@ -32,10 +33,13 @@ class ApiService {
           case 401:
             if (!url.contains('session')) {
               _messages.add('danger', "We're sorry, but you need to login first");
+              _user.cleanToken();
+              _routes.go('home',{});
             }
             break;
           case 403:
             _messages.add('danger', "We're sorry, you are not authorized for this action");
+            _routes.go('home',{});
             break;
           case 0:
             _messages.add('danger', "We're sorry, cannot connect to server");

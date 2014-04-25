@@ -10,7 +10,7 @@ class AppController {
   AppController(this._user_service, this._router) {
     Keys.shortcuts({
         'Ctrl+1': ()=> _router.go('home', {}),
-        'Ctrl+2': ()=> _router.go('customer', {}),
+        'Ctrl+2': ()=> _router.go('customers', {}),
         'Ctrl+3': ()=> _router.go('shipment_order', {}),
         'Ctrl+4': ()=> _router.go('users', {}),
         'Ctrl+5': ()=> _router.go('test', {}),
