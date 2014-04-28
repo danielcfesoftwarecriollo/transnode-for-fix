@@ -8,7 +8,7 @@ class Partner extends RecordModel {
   String creditNote;
   double creditLimit;
   double balance;
-  bool requiredPOD;
+  bool requiredPod;
   String currency;
   int _rating;
   String note;
@@ -81,7 +81,7 @@ class Partner extends RecordModel {
       'zip': this.zip,
       'credit_note': this.creditNote,
       'credit_limit': this.creditLimit,
-      'required_pod': this.requiredPOD,
+      'required_pod': this.requiredPod,
       'currency': this.currency,
       'rating': this.rating,
       'note': this.note,

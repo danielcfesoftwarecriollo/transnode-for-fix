@@ -41,11 +41,14 @@ abstract class RecordModel {
   String underscoreToCamelCase(String underscored) {
     String camelCased;
     List<String> names = underscored.split("_");
+    List<String> names_capitalized = new List<String>();
     if (names.length > 1){
       camelCased = names[0];
       names.remove(names[0]);
-      names.map((String part) => capitalize(part));
-      camelCased = camelCased + names.join('');      
+      names.forEach((String part){
+        names_capitalized.add(capitalize(part));
+      });
+      camelCased = camelCased + names_capitalized.join('');      
     } else {
       camelCased = underscored;
     }
@@ -55,6 +58,7 @@ abstract class RecordModel {
   String capitalize(String part) {
     return part[0].toUpperCase() + part.substring(1);
   }
+  
   bool is_nested_model_attribute(String field){
     List<String> names = field.split("_");
     return names.last == "attributes";
