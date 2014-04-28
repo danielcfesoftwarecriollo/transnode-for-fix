@@ -3,8 +3,8 @@ part of transnode;
 class Validator {
   Map<String, List<String>> errors;
   static final String email_regex =
-      r'^([0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$';
-  static final String zip_regex = "^\d{4,5}\$";
+      r'^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$';
+  static final String zip_regex = r"^\d{4,5}$";
   static final String phone_regex =
       r'^(\+\d{1,3})[ -](\d{3})[ -]?(\d{3})[ -]?(\d{4})$';
 
@@ -26,7 +26,7 @@ class Validator {
 
   String errors_by_field(String field) {
     if (has_errors(field)) {
-      return errors[field].join(', ');
+      return "${field} ${errors[field].join(', ')}";
     } else {
       return null;
     }
@@ -60,14 +60,26 @@ class Validator {
 
   void format_phone(String value, String name_field, {bool required: false}) {
     if (!_valid_format(value, phone_regex, required)) {
-      _add_error("format should be: +(01) 123-123-1234", name_field);
+      _add_error("format should be: +01 123 123 1234", name_field);
     }
+  }
+
+
+  void range_int(int value, String name_field, {int min: 1, int max: 5, bool
+      required: false}) {
+    format_int(value, name_field, required: required);
+    if (!has_errors(name_field)) {
+      if (value < min || value > max) {
+        _add_error("it's out of the range, ${min},${max}", name_field);
+      }
+    }
+
   }
 
   void format_int(int value, String name_field, {bool required: false}) {
     if (!required && !_is_present(value)) {
       return;
-    } else if (value == null && required) {
+    } else if (!_is_present(value) && required) {
       _add_error_required(name_field);
     } else if (value.isNaN || value.toInt() != value) {
       _add_error("Should be a number", name_field);
@@ -91,7 +103,7 @@ class Validator {
     if (required && (value == null || value == "")) {
       return false;
     }
-    return (value == null || !regex.hasMatch(value));
+    return (value == null || regex.hasMatch(value));
   }
 
 
