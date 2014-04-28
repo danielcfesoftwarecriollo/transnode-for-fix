@@ -100,7 +100,6 @@ class Customer extends Partner {
       'name': this.name,
       'city': this.city,
       'state': this.state,
-      'zip': this.zip,
       'credit_note': this.creditNote,
       'credit_limit': this.creditLimit,
       'required_pod': this.requiredPod,

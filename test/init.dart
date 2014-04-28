@@ -10,11 +10,9 @@ import 'package:angular/mock/module.dart';
 
 import 'package:transnode/transnode.dart';
 
-part 'services/api_service.dart';
-part 'services/location_service.dart';
-
 part 'models/location.dart';
-
+part 'models/customer.dart';
+ 
 part 'helpers/json.dart';
 
 class TestResponse {
@@ -37,4 +35,5 @@ main(){
    tearDown(tearDownInjector);
   
    testLocation();
+   testCustomer();
 }

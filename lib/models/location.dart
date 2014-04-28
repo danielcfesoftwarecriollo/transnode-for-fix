@@ -2,7 +2,7 @@ part of transnode;
 
 class Location extends RecordModelNested{
 
-  int partner_id;
+  int partnerId;
   int salesRep;
   String name;
   String address1;
