@@ -70,7 +70,7 @@ class Validator {
     format_int(value, name_field, required: required);
     if (!has_errors(name_field)) {
       if (value < min || value > max) {
-        _add_error("it's out of the range, #{min},#{max}", name_field);
+        _add_error("it's out of the range, ${min},${max}", name_field);
       }
     }
 

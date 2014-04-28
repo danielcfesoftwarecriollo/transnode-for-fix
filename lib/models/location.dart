@@ -47,7 +47,7 @@ class Location extends RecordModelNested{
   Map to_map() {
     return {
       'id': id,
-      'partner_id': partner_id,
+      'partner_id': partnerId,
       'sales_rep_id': salesRep,
       'name': name,
       'address_1': address1,
