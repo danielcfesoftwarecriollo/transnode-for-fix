@@ -14,7 +14,13 @@ class FactoryJson {
       'status': "ok"
     };
   }
-
+  static Map contact(){
+   return {
+     'name': 'name',
+     'email': 'email@test.com',
+     'phone': '+01 123 123 1234'
+   };
+  }
   static Map customer() {
     return {
       'name': 'name',

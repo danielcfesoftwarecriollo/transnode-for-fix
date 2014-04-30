@@ -8,7 +8,8 @@ class ContactValidator extends Validator {
 
   bool run_validations() {
     this.clean_errors();
-    format_email(_contact.email, 'email');
+    required_string(_contact.name, 'name');
+    format_email(_contact.email, 'email',required:true);
     format_phone(_contact.phone, 'phone');
     return this.valid();
   }
