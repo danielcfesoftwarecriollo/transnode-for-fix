@@ -35,10 +35,8 @@ testContact() {
             contactValidator.run_validations();
             expect(contactValidator.valid(), isFalse);
           });
-
         });        
       });
-
     });
 
   });

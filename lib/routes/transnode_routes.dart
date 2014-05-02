@@ -39,7 +39,24 @@ class TransnodeRouterInitializer {
           path: '/users',
           view: 'partials/users/index.html',
           preEnter: authenticatedAccess),
-      'user_resource': ngRoute(
+      'contact_resource': ngRoute(
+        path: '/contacts',
+        preEnter: authenticatedAccess,
+        mount: {
+          'contact_list': ngRoute(
+              path: '',
+              view: 'partials/contacts/index.html'),
+          'contact_new': ngRoute(
+              path: '/show',
+              view: 'partials/contacts/new.html'),
+          'contact_show': ngRoute(
+              path: '/show',
+              view: 'partials/contacts/show.html'),
+          'contact_edit': ngRoute(
+              path: '/edit',
+              view: 'partials/contacts/edit.html'),
+        }),
+       'user_resource': ngRoute(
           path: '/users/:userId',
           preEnter: authenticatedAccess,
           mount: {
