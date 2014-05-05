@@ -47,14 +47,14 @@ class TransnodeRouterInitializer {
               path: '',
               view: 'partials/contacts/index.html'),
           'contact_new': ngRoute(
-              path: '/show',
-              view: 'partials/contacts/new.html'),
+              path: '/new',
+              view: 'partials/contacts/form.html'),
           'contact_show': ngRoute(
               path: '/show',
               view: 'partials/contacts/show.html'),
           'contact_edit': ngRoute(
-              path: '/edit',
-              view: 'partials/contacts/edit.html'),
+              path: '/:idContact/edit',
+              view: 'partials/contacts/form.html'),
         }),
        'user_resource': ngRoute(
           path: '/users/:userId',
