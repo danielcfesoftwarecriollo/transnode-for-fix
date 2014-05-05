@@ -1,7 +1,6 @@
 <div contact-controller>
   <h1 ng-show="ctrl.contact.is_new()">Add a new contact</h1>
   <h1 ng-hide="ctrl.contact.is_new()">Edit contact</h1>
-  
   <form class='form-horizontal' novalidate ng-submit="ctrl.save()">
     <div class="form-group">
       <label for="contact_id" class="col-sm-2 control-label">Id</label>
@@ -18,17 +17,17 @@
     </div>
 
     <div class="row">
-      <div class="col-xs-4 form-group" ng-class="{'has-error':ctrl.contact.has_errors('role')}">
-        <label class='control-label'>role</label>
-        <select ng-model='ctrl.contact.role' class="form-control" placeholder='role'>
+      <div class="col-xs-6 form-group" ng-class="{'has-error':ctrl.contact.has_errors('role')}">
+        <label class='control-label col-xs-5'>role</label>
+        <select ng-model='ctrl.contact.role' class="col-xs-7" placeholder='role'>
           <option>roles</option>
         </select>
         <p ng-show="ctrl.contact.has_errors('role')" class='error'>{{ctrl.contact.errors_by_field('role')}}</p>
       </div>
 
-      <div class="col-xs-8 form-group" ng-class="{'has-error':ctrl.contact.has_errors('title')}">
-        <label class='control-label'>title</label>
-        <input ng-model='ctrl.contact.title' class="form-control" placeholder='title'>
+      <div class="col-xs-5 form-group" ng-class="{'has-error':ctrl.contact.has_errors('title')}">
+        <label class='control-label col-xs-5'>title</label>
+        <input ng-model='ctrl.contact.title' class="col-xs-7" placeholder='title'>
         <p ng-show="ctrl.contact.has_errors('title')" class='error'>{{ctrl.contact.errors_by_field('title')}}</p>
       </div>
     </div>
@@ -54,7 +53,7 @@
     <div class="form-group has-feedback" ng-class="{'has-error':ctrl.contact.has_errors('email')}">
       <label for="contact_email" class="col-sm-2 control-label">email 1</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="contact_email" l='ctrl.contact.email' placeholder="email 1">
+        <input type="text" class="form-control" id="contact_email" ng-model='ctrl.contact.email' placeholder="email 1">
       </div>
       <p ng-show="ctrl.contact.has_errors('email')" class='error'>{{ctrl.contact.errors_by_field('email')}}</p>
     </div>
@@ -73,8 +72,8 @@
         <p ng-show="ctrl.contact.has_errors('phone')" class='error'>{{ctrl.contact.errors_by_field('phone')}}</p>
       </div>
       <div class="col-sm-5">
-        <input type="text" class="form-control" id="contact_phone" ng-model='ctrl.contact.phone2' placeholder="phone2">
-        <p ng-show="ctrl.contact.has_errors('phone2')" class='error'>{{ctrl.contact.errors_by_field('phone2')}}</p>
+        <input type="text" class="form-control" id="contact_phone" ng-model='ctrl.contact.phoneHome' placeholder="phoneHome">
+        <p ng-show="ctrl.contact.has_errors('phoneHome')" class='error'>{{ctrl.contact.errors_by_field('phoneHome')}}</p>
       </div>
     </div>
     <div class="form-group has-feedback" ng-class="{'has-error':ctrl.contact.has_errors('mobile')}">
@@ -85,15 +84,15 @@
       <p ng-show="ctrl.contact.has_errors('mobile')" class='error'>{{ctrl.contact.errors_by_field('mobile')}}</p>
     </div>
 
-    <div class="form-group has-feedback" ng-class="{'has-error':ctrl.contact.has_errors('type_contact}')}">
-      <label for="contact_type_contact" class="col-sm-2 control-label">type_contact</label>
+    <div class="form-group has-feedback" ng-class="{'has-error':ctrl.contact.has_errors('typeUser}')}">
+      <label for="contact_typeUser" class="col-sm-2 control-label">typeUser</label>
       <div class="col-sm-10">
-        <select class="form-control" ng-model='ctrl.contact.type_contact'>
+        <select class="form-control" ng-model='ctrl.contact.typeUser'>
           <option>SalesRep</option>
           <option>Accountant</option>
         </select>
       </div>
-      <p ng-show="ctrl.contact.has_errors('type_contact')" class='error'>{{ctrl.contact.errors_by_field('type_contact')}}</p>
+      <p ng-show="ctrl.contact.has_errors('typeUser')" class='error'>{{ctrl.contact.errors_by_field('typeUser')}}</p>
     </div>
 
     <div class="form-group has-feedback" ng-class="{'has-error':ctrl.contact.has_errors('birthday}')}">

@@ -2,7 +2,7 @@ part of transnode;
 
 @NgInjectableService()
 class ContactService {
-  static String url = '/customers';
+  static String url = '/contacts';
   UserService user;
   MessagesService _messageServices;
   ApiService _api;
@@ -49,7 +49,7 @@ class ContactService {
 
   String params_update(Contact contact) {
     return encode({
-      "customer": contact.to_map(),
+      "contact": contact.to_map(),
       "id": contact.id
     });
   }
