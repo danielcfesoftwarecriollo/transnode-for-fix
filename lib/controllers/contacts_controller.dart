@@ -20,7 +20,7 @@ class ContactsController {
       this._load_contacts();
     }
     else{
-      window.alert("aasda");
+
     }
   }
 

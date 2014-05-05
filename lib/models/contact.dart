@@ -4,6 +4,12 @@ class Contact extends RecordModelNested{
   String name;
   String phone;
   String email;
+  String role;
+  String title;
+  String email2;
+  
+  int branchId;
+  int locationId;
 
   Contact(){
     this._validator = new ContactValidator(this);
