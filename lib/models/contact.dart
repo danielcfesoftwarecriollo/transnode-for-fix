@@ -7,7 +7,11 @@ class Contact extends RecordModelNested{
   String role;
   String title;
   String email2;
-  
+  String phone2;
+  String mobile;
+  String birthday;
+  String status;
+  String type_contact;
   int branchId;
   int locationId;
 

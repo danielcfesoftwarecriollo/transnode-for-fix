@@ -10,7 +10,10 @@ class ContactValidator extends Validator {
     this.clean_errors();
     required_string(_contact.name, 'name');
     format_email(_contact.email, 'email',required:true);
+    format_email(_contact.email, 'email2');
     format_phone(_contact.phone, 'phone');
+    format_phone(_contact.phone2, 'phone2');
+    format_phone(_contact.mobile, 'mobile');
     return this.valid();
   }
 }
