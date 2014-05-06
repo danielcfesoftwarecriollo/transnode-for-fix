@@ -69,11 +69,7 @@ class TransnodeRouterInitializer {
             'user_edit': ngRoute(
                 path: '/edit',
                 view: 'partials/users/edit.html'),
-          }),
-      'test': ngRoute(
-          path: '/test',
-          view: 'partials/test/index.html',
-          preEnter: authenticatedAccess)
+          })
     });
   }
 
