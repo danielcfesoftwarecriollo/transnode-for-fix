@@ -35,20 +35,22 @@
       <label for="contact_branchId" class="col-sm-2 control-label">branchId</label>
       <div class="col-sm-10">
         <select type="text" class="form-control" id="contact_branchId" ng-model='ctrl.contact.branchId' placeholder="branchId">
-          <option value='0'> branch </option>
+          <option value="" disabled selected>Branch</option>
+          <option ng-repeat="branch in ctrl.branchs" ng-value="branch[0]">{{branch[0]}}-{{branch[1]}}</option>
         </select>
       </div>
       <p ng-show="ctrl.contact.has_errors('branchId')" class='error'>{{ctrl.contact.errors_by_field('branchId')}}</p>
     </div>
 
-    <div class="form-group has-feedback" ng-class="{'has-error':ctrl.contact.has_errors('locationId')}">
-      <label for="contact_locationId" class="col-sm-2 control-label">locationId</label>
+    <div class="form-group has-feedback" ng-class="{'has-error':ctrl.contact.has_errors('entityId')}">
+      <label for="contact_entityId" class="col-sm-2 control-label">Partner</label>
       <div class="col-sm-10">
-        <select type="text" class="form-control" id="contact_locationId" ng-model='ctrl.contact.locationId' placeholder="locationId">
-          <option value='0'> location</option>
+        <select ng-model="ctrl.contact.entityId">
+          <option value="" disabled selected>Partner</option>
+          <option ng-repeat="partner in ctrl.partners" ng-value="partner[0]">{{partner[0]}}-{{partner[1]}}</option>
         </select>
       </div>
-      <p ng-show="ctrl.contact.has_errors('locationId')" class='error'>{{ctrl.contact.errors_by_field('locationId')}}</p>
+      <p ng-show="ctrl.contact.has_errors('entityId')" class='error'>{{ctrl.contact.errors_by_field('entityId')}}</p>
     </div>
     <div class="form-group has-feedback" ng-class="{'has-error':ctrl.contact.has_errors('email')}">
       <label for="contact_email" class="col-sm-2 control-label">email 1</label>

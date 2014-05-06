@@ -9,17 +9,25 @@ class ContactsController {
   RouteProvider _routeProvider;
   Router _router;
   final ContactService _contactService;
+  
+  @NgTwoWay("branchs")
+  List branchs;
+  @NgTwoWay("partners")
+  List partners;
 
   ContactsController(this._contactService, this._routeProvider, this._router) {
     this.contact = new Contact();
     if (_isEditPath()) {
       _contactService.get(_routeProvider.parameters['contactId']).then((_) =>
           this.contact = _);
+      _config_data_form();      
+
     } else if (_isIndexPath()) {
       this.contacts = [];
       this._load_contacts();
     }
     else{
+      _config_data_form();      
 
     }
   }
@@ -39,11 +47,20 @@ class ContactsController {
   void todo() {
     window.alert("TODO");
   }
+  void _config_data_form(){
+    _contactService.form().then((data){
+      print("------->");
+      print(data);
+      this.partners = data["locations"];
+      this.branchs =  data["branchs"];
+      print(this.partners);
+    });
+  }
 
   void _load_contacts() {
     var response = this._contactService.index();
     response.then((HttpResponse response) {
-
+      print(response.data);
       response.data.forEach(_add_contact);
       if (response == null) return false;
     });

@@ -13,6 +13,12 @@ class ContactService {
     return _api.request('get', url);
   }
 
+
+  Future form(){
+    return _api.request("get", url + "/form")
+      .then((HttpResponse response) => response.data); 
+  }
+  
   Future<Contact> get(String contactId) {
     return _api.request("get", url + "/" + contactId.toString())
       .then((HttpResponse response) => _loadContact(response.data));

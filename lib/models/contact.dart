@@ -13,7 +13,6 @@ class Contact extends RecordModelNested{
   String status;
   String typeUser;
   String branchId;
-  String locationId;
   String entityType;
   String fax;
   int entityId;
@@ -35,7 +34,7 @@ class Contact extends RecordModelNested{
       'status' : status,
       'type_user' : typeUser,
       'branch_id': branchId,
-      'location_id':locationId
+      'entity_id': entityId
     };
   }
   
