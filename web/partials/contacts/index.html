@@ -1,0 +1,31 @@
+<div contact-controller>
+  <h1>Contacts</h1>
+  <div ng-show='ctrl.has_contacts'>
+    <a class='btn btn-info' ng-href="#/customers/new"> Create a contact</a>
+    <table class='table table-hover'>
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat='contact in ctrl.contacts'>
+          <td>{{contact.id}}</td>
+          <td>{{contact.name}}</td>
+          <td class="actions">
+            <a class="btn btn-warning" ng-href="#/contacts/{{contact.id}}/edit">
+              <i class="glyphicon glyphicon-pencil"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+  </div>
+  <div customer-list ng-hide='ctrl.has_contacts'>
+    <a class='btn btn-info' ng-href="#/contacts/new"> Create a contact</a>
+  </div>
+</div>
+

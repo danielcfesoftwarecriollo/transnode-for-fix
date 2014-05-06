@@ -1,28 +1,17 @@
 <div customer-controller>
 
-  <h1 ng-if="cctrlcustomer.is_new()">Add a new Customer</h1>
+  <h1 ng-if="ctrl.customer.is_new()">Add a new Customer</h1>
   <h1 ng-if="!ctrl.customer.is_new()">Edit Customer</h1>
   <form class='form-horizontal' novalidate ng-submit="ctrl.save()">
-    <div class="form-group">
-      <label for="customer_id" class="col-sm-2 control-label">Id</label>
-      <div class="col-sm-10">
-        <input type="text" disabled class="form-control" id="customer_id" ng-model='ctrl.customer.id' placeholder="Id">
-      </div>
+    <div class="row">
+      <p><span>id</span> #{{ctrl.customer.id}}</p>
     </div>
-    <div class="form-group">
-      <label for="customer_name" class="col-sm-2 control-label">name</label>
-      <div class="col-sm-10">
+   <div class="row">
+      <div class="col-sm-4 form-group" ng-class="{'has-error':ctrl.customer.has_errors('name')}">
         <input type="text" class="form-control" id="customer_name" ng-model='ctrl.customer.name' placeholder="name">
-      </div>
-    </div>
-
-    <div class="form-group has-feedback" ng-class="{'has-error':ctrl.customer.has_errors('zip')}">
-      <label for="customer_zip" class="col-sm-2 control-label">zip</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="customer_zip" ng-model='ctrl.customer.zip' placeholder="zip">
-      </div>
-      <p ng-show="ctrl.customer.has_errors('zip')" class='error'>{{ctrl.customer.errors_by_field('zip')}}</p>
-    </div>
+        <p ng-show="ctrl.customer.has_errors('name')" class='error'>{{ctrl.customer.errors_by_field('name')}}</p>
+      </div>     
+   </div> 
 
     <div class="locations">
       <div class="location" ng-repeat="location in ctrl.customer.locations" ng-hide="location.pending_to_delete()">
@@ -55,8 +44,9 @@
             </div>
           </div>
         </div>
-        <fieldset ng-show="location.is_expanded()">
-          <legend>Location</legend>
+
+        <div ng-show="location.is_expanded()">
+          <h3>Location</h3>
           <div class='row'>
             <div class="col-xs-3 form-group" ng-class="{'has-error':location.has_errors('name')}">
               <input ng-model='location.name' class="form-control" placeholder='full name'>
@@ -159,7 +149,7 @@
               <input type='checkbox' value='true' ng-model='location.emailOptOut'>
             </div>
           </div>
-        </fieldset>
+        </div>
       </div>
       <button class='btn add' type='button' ng-click='ctrl.add_location()'>Add location</button>
     </div>

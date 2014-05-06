@@ -12,6 +12,7 @@ part 'routes/transnode_routes.dart';
 
 part 'services/api_service.dart';
 part 'services/user_service.dart';
+part 'services/contact_service.dart';
 part 'services/messages_service.dart';
 part 'services/custom_header.dart';
 part 'services/location_service.dart';
@@ -21,6 +22,7 @@ part 'services/users_service.dart';
 
 part 'controllers/app_controller.dart';
 part 'controllers/customer_controller.dart';
+part 'controllers/contacts_controller.dart';
 part 'controllers/login_controller.dart';
 part 'controllers/messages_controller.dart';
 part 'controllers/shipment_order_controller.dart';
@@ -55,6 +57,7 @@ class TransnodeModule extends Module {
 
     type(AppController);
     type(LoginController);
+    type(ContactsController);
     type(MessagesController);
     type(ShipmentOrderController);
     type(CustomerController);
@@ -65,6 +68,7 @@ class TransnodeModule extends Module {
     type(ApiService);
     type(MessagesService);
     type(SessionService);
+    type(ContactService);
     type(CustomerService);
     type(UsersService);
   }

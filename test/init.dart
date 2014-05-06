@@ -12,6 +12,7 @@ import 'package:transnode/transnode.dart';
 
 part 'models/location.dart';
 part 'models/customer.dart';
+part 'models/contact.dart';
  
 part 'helpers/json.dart';
 
@@ -36,4 +37,5 @@ main(){
   
    testLocation();
    testCustomer();
+   testContact();
 }

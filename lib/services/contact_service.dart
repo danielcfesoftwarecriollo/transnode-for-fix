@@ -1,66 +1,72 @@
 part of transnode;
 
 @NgInjectableService()
-class CustomerService {
+class ContactService {
   static String url = '/contacts';
   UserService user;
   MessagesService _messageServices;
   ApiService _api;
 
-  CustomerService(this._api, this.user, this._messageServices);
+  ContactService(this._api, this.user, this._messageServices);
 
   Future index() {
     return _api.request('get', url);
   }
 
-  Future<User> get(String userId) {
-    return _api.request("get", url + "/" + userId.toString())
+
+  Future form(){
+    return _api.request("get", url + "/form")
+      .then((HttpResponse response) => response.data); 
+  }
+  
+  Future<Contact> get(String contactId) {
+    return _api.request("get", url + "/" + contactId.toString())
       .then((HttpResponse response) => _loadContact(response.data));
   }
 
-  Future save(Customer customer) {
+  Future save(Contact contact) {
     String method;
     String parameters;
     String path;
-    if (customer.is_new()) {
+    if (contact.is_new()) {
       method = 'post';
-      parameters = params(customer);
+      parameters = params(contact);
       path = url;
     } else {
       method = 'put';
-      parameters = params_update(customer);
-      path = url + "/" + customer.id.toString() ; 
+      parameters = params_update(contact);
+      path = url + "/" + contact.id.toString() ; 
     }
     return _api.request(method, path, data: parameters)
       .catchError((HttpResponse response) {
         if (response.status == 422) {
           Map<String, List<String>> errors = JSON.decode(response.data);
           _messageServices.add("danger", "Review the errors in the form");
-          customer.set_errors(errors);
+          contact.set_errors(errors);
         }
       });
   }
 
-  Customer _loadCustomer(map) {
-    Customer customer = new Customer();
-    customer.loadWithJson(map);
-    return customer;
+  Contact _loadContact(map) {
+    Contact contact = new Contact();
+    contact.loadWithJson(map);
+    return contact;
   }
 
-  String params_update(Customer customer) {
+  String params_update(Contact contact) {
     return encode({
-      "customer": customer.to_map_single(),
-      "id": customer.id
+      "contact": contact.to_map(),
+      "id": contact.id
     });
   }
-  String params(Customer customer) {
+  String params(Contact contact) {
     return encode({
-      "customer": customer.to_map_single()
+      "contact": contact.to_map()
     });
   }
-  String params_id(Customer customer) {
+  String params_id(Contact contact) {
     return encode({
-      "id": customer.id
+      "id": contact.id
     });
   }
 
