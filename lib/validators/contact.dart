@@ -15,8 +15,8 @@ class ContactValidator extends Validator {
     format_phone(_contact.phoneHome, 'phoneHome');
     format_phone(_contact.mobile, 'mobile');
 
-    range_int(_contact.monthBirthday, "monthBirthday",min:1,max:12, required: true);
-    range_int(_contact.dayBirthday, "dayBirthday",min:1,max:31, required: true);
+    range_int(_contact.monthBirthday, "monthBirthday",min:1,max:12, required: false);
+    range_int(_contact.dayBirthday, "dayBirthday",min:1,max:31, required: false);
     return this.valid();
   }
 }
