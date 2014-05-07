@@ -19,6 +19,14 @@
     </div>
     <hr>
     <div class="locations">
+      <div class="row">
+        <div class="col-md-6">
+          <h4 class="not-margin" >Location</h4>
+        </div>
+        <div class="col-md-6 text-right">
+          <button class='btn btn-primary' type='button' ng-click='ctrl.add_location()'><i class="icon-img-pluss"></i> Add location</button>
+        </div>
+      </div>
       <div class="location" ng-repeat="location in ctrl.customer.locations" ng-hide="location.pending_to_delete()">
         <div ng-hide='location.is_expanded()'>
           <div class="row">
@@ -50,14 +58,7 @@
         </div>
 
         <div ng-show="location.is_expanded()">
-          <div class="row">
-            <div class="col-md-6">
-              <h4 class="not-margin" >Location</h4>
-            </div>
-            <div class="col-md-6 text-right">
-              <button class='btn btn-primary' type='button' ng-click='ctrl.add_location()'><i class="icon-img-pluss"></i> Add location</button>
-            </div>
-          </div>
+
           <div class='row'>
             <div class="col-xs-4 " ng-class="{'has-error':location.has_errors('name')}">
               <input ng-model='location.name' class="form-control" placeholder='Name'>
@@ -172,9 +173,10 @@
             </div>
           </div>
         </div>
+        <hr>
       </div>
     </div>
-    <hr>
+    
     <div class="contacts">
           <div class="row">
             <div class="col-md-6 ">
