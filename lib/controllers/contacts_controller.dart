@@ -49,11 +49,8 @@ class ContactsController {
   }
   void _config_data_form(){
     _contactService.form().then((data){
-      print("------->");
-      print(data);
       this.partners = data["locations"];
       this.branchs =  data["branchs"];
-      print(this.partners);
     });
   }
 

@@ -68,12 +68,15 @@ class Validator {
   void range_int(int value, String name_field, {int min: 1, int max: 5, bool
       required: false}) {
     format_int(value, name_field, required: required);
-    if (!has_errors(name_field)) {
-      if (value < min || value > max) {
-        _add_error("it's out of the range, ${min},${max}", name_field);
-      }
+    if(!required && !_is_present(value)){
+      return;
     }
-
+    if (has_errors(name_field)){
+      return;
+    }
+    if (value < min || value > max) {
+      _add_error("it's out of the range, ${min},${max}", name_field);
+    }
   }
 
   void format_int(int value, String name_field, {bool required: false}) {
