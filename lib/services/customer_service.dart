@@ -2,7 +2,7 @@ part of transnode;
 
 @NgInjectableService()
 class CustomerService {
-  static String url = '/contacts';
+  static String url = '/customers';
   UserService user;
   MessagesService _messageServices;
   ApiService _api;
@@ -15,7 +15,7 @@ class CustomerService {
 
   Future<User> get(String userId) {
     return _api.request("get", url + "/" + userId.toString())
-      .then((HttpResponse response) => _loadContact(response.data));
+      .then((HttpResponse response) => _loadCustomer(response.data));
   }
 
   Future save(Customer customer) {
@@ -49,13 +49,13 @@ class CustomerService {
 
   String params_update(Customer customer) {
     return encode({
-      "customer": customer.to_map_single(),
+      "customer": customer.to_map(),
       "id": customer.id
     });
   }
   String params(Customer customer) {
     return encode({
-      "customer": customer.to_map_single()
+      "customer": customer.to_map()
     });
   }
   String params_id(Customer customer) {

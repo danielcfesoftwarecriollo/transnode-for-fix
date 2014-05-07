@@ -9,16 +9,37 @@ class Contact extends RecordModelNested{
   String email2;
   String phoneHome;
   String mobile;
-  String birthday;
   String status;
   String typeUser;
   String branchId;
   String entityType;
+  int _monthBirthday;
+  int _dayBirthday;
   String fax;
   int entityId;
 
   Contact(){
     this._validator = new ContactValidator(this);
+  }
+  
+  int get monthBirthday => _monthBirthday;
+
+  void set monthBirthday(value) {
+    if (value == null) {
+      _monthBirthday = null;
+    } else {
+      _monthBirthday = value.toInt();
+    }
+  }
+  
+  int get dayBirthday => _dayBirthday;
+
+  void set dayBirthday(value) {
+    if (value == null) {
+      _dayBirthday = null;
+    } else {
+      _dayBirthday = value.toInt();
+    }
   }
 
   Map to_map_single(){
@@ -30,8 +51,9 @@ class Contact extends RecordModelNested{
       'email_2': email2,
       'phone_home' : phoneHome,
       'mobile': mobile,
-      'birthday' : birthday,
       'status' : status,
+      'month_birthday' : monthBirthday,
+      'day_birthday' : dayBirthday,
       'type_user' : typeUser,
       'branch_id': branchId,
       'entity_id': entityId

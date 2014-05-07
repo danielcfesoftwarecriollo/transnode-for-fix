@@ -97,12 +97,22 @@
       <p ng-show="ctrl.contact.has_errors('typeUser')" class='error'>{{ctrl.contact.errors_by_field('typeUser')}}</p>
     </div>
 
-    <div class="form-group has-feedback" ng-class="{'has-error':ctrl.contact.has_errors('birthday}')}">
+    <div class="form-group has-feedback">
       <label for="contact_birthday" class="col-sm-2 control-label">birthday</label>
       <div class="col-sm-10">
-        <input type="date" class="form-control" id="contact_birthday" ng-model='ctrl.contact.birthday' placeholder="birthday">
+        <div class='col-xs-5' ng-class="{'has-error':ctrl.contact.has_errors('monthBirthday}')}">
+          <input type="number" min='1' max='12' class="form-control" id="contact_monthBirthday" ng-model='ctrl.contact.monthBirthday' placeholder="month">
+          <p ng-show="ctrl.contact.has_errors('monthBirthday')" class='error'>{{ctrl.contact.errors_by_field('monthBirthday')}}</p>
+
+        </div>
+        <div class='col-xs-5' ng-class="{'has-error':ctrl.contact.has_errors('dayBirthday}')}">
+          <input type="number" min='1' max='31' class="form-control" id="contact_dayBirthday" ng-model='ctrl.contact.dayBirthday' placeholder="day">
+          <p ng-show="ctrl.contact.has_errors('dayBirthday')" class='error'>{{ctrl.contact.errors_by_field('dayBirthday')}}</p>
+
+        </div>
+
+
       </div>
-      <p ng-show="ctrl.contact.has_errors('birthday')" class='error'>{{ctrl.contact.errors_by_field('birthday')}}</p>
     </div>
 
     <div class="form-group has-feedback" ng-class="{'has-error':ctrl.contact.has_errors('status')}">
