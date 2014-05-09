@@ -20,7 +20,7 @@ class Partner extends RecordModel {
   String currencyRiskFactor;
   String salesRepId;
   String territoryId;
-
+  List<String> roles;
   List<Location> locations;
   List<Contact> contacts;
 
@@ -68,7 +68,7 @@ class Partner extends RecordModel {
 
   List<Map> contacts_to_map() {
     List<Map> contacts_map = [];
-    this.contacts.forEach((contact) => contacts_map.add(contact.to_map()));
+    this.contacts.forEach((contact) => contacts_map.add(contact.to_map_customer()));
     return contacts_map;
   }
 

@@ -41,8 +41,8 @@ class Contact extends RecordModelNested{
       _dayBirthday = value.toInt();
     }
   }
-
-  Map to_map_single(){
+  
+  Map to_map() {
     return {
       'name'  : name,
       'phone' : phone,
@@ -60,9 +60,13 @@ class Contact extends RecordModelNested{
     };
   }
   
-  Map to_map() {
-    Map single_values = this.to_map_single();
-    single_values.addAll({'_destroy':_destroy});
-    return single_values;
+  Map to_map_customer(){
+    return {
+      'id' : id,
+      'name'  : name,
+      'phone' : phone,
+      'email' : email,
+      '_destroy':_destroy
+    };
   }
 }
