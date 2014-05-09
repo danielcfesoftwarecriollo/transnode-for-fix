@@ -11,6 +11,7 @@ class LocationValidator extends Validator {
     format_email(_location.email, 'email');
     required_string(_location.address1, "address1");
     required_string(_location.country, "country");
+    required_string(_location.state, "state");
     required_string(_location.city, "city");
     format_zip(_location.zip, "zip", required: true);
     format_phone(_location.phone, "phone", required: true);
