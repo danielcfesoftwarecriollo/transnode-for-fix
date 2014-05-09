@@ -1,6 +1,6 @@
 part of transnode;
 
-class Partner extends RecordModel {
+class Entity extends RecordModel {
   String name;
   String city;
   String state;
@@ -20,7 +20,7 @@ class Partner extends RecordModel {
   String currencyRiskFactor;
   String salesRepId;
   String territoryId;
-  List<String> roles;
+  Map roles;
   List<Location> locations;
   List<Contact> contacts;
 

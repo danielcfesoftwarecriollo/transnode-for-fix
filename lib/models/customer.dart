@@ -1,6 +1,6 @@
 part of transnode;
 
-class Customer extends Partner {
+class Customer extends Entity {
 
   @NgTwoWay("errors")
   Map<String, List<String>> errors;
@@ -8,6 +8,7 @@ class Customer extends Partner {
   Customer() {
     this.balance = 0.0;
     this.rating = 0;
+    this.roles = {"customer" : true};
     this.locations = [new Location()];
     this.contacts = [new Contact()];
     this._validator = new CustomerValidator(this);
