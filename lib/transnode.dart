@@ -32,7 +32,7 @@ part 'controllers/location_controller.dart';
 part 'models/record_model.dart';
 part 'models/record_model_nested.dart';
 part 'models/contact.dart';
-part 'models/partner.dart';
+part 'models/entity.dart';
 part 'models/customer.dart';
 part 'models/location.dart';
 part 'models/shipment_order.dart';

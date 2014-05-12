@@ -1,6 +1,6 @@
 part of transnode;
 
-class Customer extends Partner {
+class Customer extends Entity {
 
   @NgTwoWay("errors")
   Map<String, List<String>> errors;
@@ -8,7 +8,15 @@ class Customer extends Partner {
   Customer() {
     this.balance = 0.0;
     this.rating = 0;
-    this.locations = [new Location()];
+    this.roles = ["customer"];
+    this._roles_map = {
+      "customer": true
+    };
+
+    Location first_location = new Location();
+    first_location.set_rol_main();
+
+    this.locations = [first_location];
     this.contacts = [new Contact()];
     this._validator = new CustomerValidator(this);
   }
@@ -94,28 +102,4 @@ class Customer extends Partner {
         (contact.pending_to_delete() ? total + 1 : total));
   }
 
-  Map to_map() {
-    return {
-      'id': this.id,
-      'name': this.name,
-      'city': this.city,
-      'state': this.state,
-      'credit_note': this.creditNote,
-      'credit_limit': this.creditLimit,
-      'required_pod': this.requiredPod,
-      'currency': this.currency,
-      'rating': this.rating,
-      'note': this.note,
-      'tax_id': this.taxId,
-      'invoice_method': this.invoiceMethod,
-      'terms': this.terms,
-      'import_customs_broker_id': this.importCustomsBrokerId,
-      'export_customs_broker_id': this.exportCustomsBrokerId,
-      'currency_risk_factor': this.currencyRiskFactor,
-      'sales_rep_id': this.salesRepId,
-      'territory_id': this.territoryId,
-      'locations_attributes': locations_to_map(),
-      'contacts_attributes': contacts_to_map(),
-    };
-  }
 }

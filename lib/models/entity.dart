@@ -1,6 +1,6 @@
 part of transnode;
 
-class Partner extends RecordModel {
+class Entity extends RecordModel {
   String name;
   String city;
   String state;
@@ -20,7 +20,8 @@ class Partner extends RecordModel {
   String currencyRiskFactor;
   String salesRepId;
   String territoryId;
-
+  List roles;
+  Map _roles_map;
   List<Location> locations;
   List<Contact> contacts;
 
@@ -40,11 +41,13 @@ class Partner extends RecordModel {
     this.locations.add(location);
     return location;
   }
+
   Contact new_empty_contact() {
     Contact contact = new Contact();
     this.contacts.add(contact);
     return contact;
   }
+
   void delete_location(Location location) {
     locations.remove(location);
   }
@@ -56,6 +59,7 @@ class Partner extends RecordModel {
   bool count_locations() {
     return locations.length > 1;
   }
+
   bool count_contacts() {
     return contacts.length > 1;
   }
@@ -68,8 +72,28 @@ class Partner extends RecordModel {
 
   List<Map> contacts_to_map() {
     List<Map> contacts_map = [];
-    this.contacts.forEach((contact) => contacts_map.add(contact.to_map()));
+    this.contacts.forEach((contact) => contacts_map.add(contact.to_map_customer(
+        )));
     return contacts_map;
+  }
+
+  List roles_to_list() {
+    List roles_return = [];
+    _roles_map.forEach((role, has_role) {
+      if (has_role) roles_return.add(role);
+    });
+    return roles_return;
+  }
+
+  void loadWithJson(Map<String, dynamic> map) {
+    super.loadWithJson(map);
+    load_map_roles();
+  }
+
+  void load_map_roles() {
+    roles.forEach((role) {
+      this._roles_map[role] = true;
+    });
   }
 
   Map to_map() {
@@ -78,7 +102,6 @@ class Partner extends RecordModel {
       'name': this.name,
       'city': this.city,
       'state': this.state,
-      'zip': this.zip,
       'credit_note': this.creditNote,
       'credit_limit': this.creditLimit,
       'required_pod': this.requiredPod,
@@ -88,6 +111,7 @@ class Partner extends RecordModel {
       'tax_id': this.taxId,
       'invoice_method': this.invoiceMethod,
       'terms': this.terms,
+      'roles': this.roles_to_list(),
       'import_customs_broker_id': this.importCustomsBrokerId,
       'export_customs_broker_id': this.exportCustomsBrokerId,
       'currency_risk_factor': this.currencyRiskFactor,
