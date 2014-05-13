@@ -12,11 +12,10 @@ class Contact extends RecordModelNested{
   String status;
   String typeUser;
   String branchId;
-  String entityType;
   int _monthBirthday;
   int _dayBirthday;
   String fax;
-  int entityId;
+  int locationId;
 
   Contact(){
     this._validator = new ContactValidator(this);
@@ -56,7 +55,7 @@ class Contact extends RecordModelNested{
       'day_birthday' : dayBirthday,
       'type_user' : typeUser,
       'branch_id': branchId,
-      'entity_id': entityId
+      'location_id': locationId
     };
   }
   

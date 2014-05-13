@@ -12,8 +12,8 @@ class ContactsController {
   
   @NgTwoWay("branchs")
   List branchs;
-  @NgTwoWay("partners")
-  List partners;
+  @NgTwoWay("locations")
+  List locations;
 
   ContactsController(this._contactService, this._routeProvider, this._router) {
     this.contact = new Contact();
@@ -49,7 +49,7 @@ class ContactsController {
   }
   void _config_data_form(){
     _contactService.form().then((data){
-      this.partners = data["locations"];
+      this.locations = data["locations"];
       this.branchs =  data["branchs"];
     });
   }
