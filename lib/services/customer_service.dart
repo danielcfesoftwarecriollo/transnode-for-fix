@@ -13,15 +13,18 @@ class CustomerService {
     return _api.request('get', url);
   }
 
-  Future<User> get(String userId) {
-    return _api.request("get", url + "/" + userId.toString())
+  Future<Customer> get(String customerId) {
+    return _api.request("get", url + "/" + customerId.toString())
       .then((HttpResponse response) => _loadCustomer(response.data));
   }
 
+  Future<Customer> delete(String customerId) {
+    return _api.request("delete", url + "/" + customerId.toString())
+      .then((_) => _messageServices.add("info", "customer delete it"));
+  }
+
   Future save(Customer customer) {
-    String method;
-    String parameters;
-    String path;
+    String method, parameters, path;
     if (customer.is_new()) {
       method = 'post';
       parameters = params(customer);
@@ -31,6 +34,7 @@ class CustomerService {
       parameters = params_update(customer);
       path = url + "/" + customer.id.toString() ; 
     }
+    
     return _api.request(method, path, data: parameters)
       .catchError((HttpResponse response) {
         if (response.status == 422) {

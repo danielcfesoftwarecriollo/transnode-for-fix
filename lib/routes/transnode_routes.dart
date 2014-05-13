@@ -27,8 +27,12 @@ class TransnodeRouterInitializer {
           path: '/customers/new',
           view: 'partials/customers/form.html',
           preEnter: authenticatedAccess),
-      'customer_edit': ngRoute(
+      'customer_show': ngRoute(
           path: '/customers/:customerId',
+          view: 'partials/customers/show.html',
+          preEnter: authenticatedAccess),
+      'customer_edit': ngRoute(
+          path: '/customers/:customerId/edit',
           view: 'partials/customers/form.html',
           preEnter: authenticatedAccess),
       'shipment_order': ngRoute(
