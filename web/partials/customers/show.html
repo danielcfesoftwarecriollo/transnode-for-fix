@@ -1,0 +1,173 @@
+<div customer-controller id='customer_show'>
+  <h2>Customer</h2>
+  <h3>{{ctrl.customer.name}}-#{{ctrl.customer.id}}</h3>
+  <div class="locations">
+    <div class="location" ng-repeat="location in ctrl.customer.locations">
+      <h4>Location</h4>
+      <div class='row'>
+        <div class="col-xs-3">
+          <p><span>name</span>{{location.name}}</p>
+        </div>
+        <div class="col-xs-3">
+          <p><span>zip</span>{{location.zip}}</p>
+        </div>
+        <div class="col-xs-3">
+          <p><span>country</span>{{location.country}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4">
+          <p><span>address</span>{{location.address1}}</p>              
+        </div>
+      </div>
+      
+      <div class='row'>
+        <div class="col-xs-4">
+          <p><span>address 2</span>{{location.address2}}</p>
+        </div>
+        <div class="col-xs-3">
+          <p><span>city</span>{{location.city}}</p>
+        </div>
+      </div>
+
+      <div class='row'>
+        <div class="col-xs-4">
+          <p><span>phone</span>{{loction.phone}}</p>
+        </div>
+        <div class="col-xs-4">
+          <p><span>email</span>{{location.email}}</p>
+        </div>
+        <div class="col-xs-4">
+          <p><span>fax</span>{{location.fax}}</p>
+        </div>
+      </div>
+        
+      <div class="row">
+        <div class="col-xs-4">
+          <p><span>freight class</span>{{location.freightClass}}</p>
+        </div>
+        <div class="col-xs-4">
+          <p><span>NAICS</span>{{location.naics}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4">
+          <p><span>hours</span>{{location.hours}}</p>
+        </div>
+        <div class="col-xs-4">
+          <p><span>lane code</span>{{location.laneCode}}</p>
+        </div>
+        <div class="col-xs-3">            
+          <label class="control-label">email opt out</label>
+          <input type='checkbox' value='true' disabled="disabled" ng-model='location.emailOptOut'>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="contacts">
+    <h4>Contacts</h4>
+    <div class="contact" ng-repeat='contact in ctrl.customer.contacts' >
+      <div class="row">
+        <div class="col-xs-4">
+          <p><span>name</span>{{contact.name}}</p>
+        </div>
+        <div class="col-xs-4">
+          <p><span>phone</span>{{contact.phone}}</p>
+        </div>
+        <div class="col-xs-4">
+          <p><span>email</span>{{contact.email}}</p>
+        </div>
+      </div>
+    </div>
+ </div>
+
+  <div class='row'>
+    <div class="col-xs-4">
+      <p><span>credit note</span>{{ctrl.customer.creditNote}}</p>
+    </div>
+    <div class="col-xs-4">
+      <p><span>credit limit</span>{{ctrl.customer.creditLimit}}</p>
+    </div>
+    <div class="col-xs-4">
+      <p><span>balance</span>{{ctrl.customer.balance}}</p>
+    </div>
+  </div>
+  <div class='row'>
+    <div class="col-xs-4">
+      <p><span>tax id</span>{{ctrl.customer.taxId}}</p>
+    </div>
+    <div class="col-xs-4">
+      <p><span>invoice method</span>{{ctrl.customer.invoiceMethod}}</p>
+    </div>
+    <div class="col-xs-4">
+      <p><span>requirePOD</span>{{ctrl.customer.requiredPod}}</p>
+    </div>
+  </div>
+
+  <div class='row'>
+    <div class="col-xs-4">
+      <p><span>currency</span>{{ctrl.customer.currency}}</p>
+    </div>
+
+    <div class="col-xs-4">
+      <p><span>terms</span>{{ctrl.customer.terms}}</p>
+    </div>
+
+    <div class="col-xs-4" >
+      <p><span>rating</span>{{ctrl.customer.rating}}</p>
+    </div>
+  </div>
+
+  <div class="bill_to"> BILL TO </div>
+
+
+  <div class='row'>
+    <div class="col-xs-4">
+      <label class="control-label">import customs broker</label>
+      <select ng-model='ctrl.customer.importCustomsBrokerId'>
+        <option>entity_id</option>
+      </select>
+    </div>
+
+    <div class="col-xs-4">
+      <label class="control-label">export customs broker</label>
+      <select ng-model='ctrl.customer.exportCustomsBrokerId'>
+        <option>entity_id</option>
+      </select>
+    </div>
+
+    <div class="col-xs-4">
+      <label class="control-label">currency risk factor</label>
+      <select ng-model='ctrl.customer.currencyRiskFactor'>
+        <option>option</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-xs-8'>
+      <div class="form-group">
+        <label for="customer_notes" class="col-sm-2 control-label">Notes</label>
+        <div class="col-sm-10">
+          <textarea type="email" class="form-control" id="customer_notes" ng-model="ctrl.customer.note" placeholder="Notes"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-xs-4'>
+      <div>
+        <label class="control-label">sales rep</label>
+        <select ng-model='ctrl.customer.salesRepId'>
+          <option>option</option>
+        </select>
+      </div>
+      <div>
+        <label class="control-label">territory</label>
+        <select ng-model='ctrl.customer.territoryId'>
+          <option>option</option>
+        </select>
+      </div>        
+    </div>
+  </div>
+
+  <button class='btn btn-success'>save</button>
+</div>
