@@ -22,6 +22,9 @@ class Location extends RecordModelNested {
   bool emailOptOut;
   String status;
 
+  List<Contact> contacts;
+
+  
   List roles;
   Map<String, bool> _roles_map;
 
@@ -34,12 +37,49 @@ class Location extends RecordModelNested {
 
   Location() {
     this._validator = new LocationValidator(this);
+    this.contacts = [new Contact()];
+
     _expanded = false;
     this._roles_map = {};
   }
 
   void set_rol_main() {
     this._roles_map['main'] = true;
+  }
+
+  Contact new_empty_contact() {
+    Contact contact = new Contact();
+    this.contacts.add(contact);
+    return contact;
+  }
+  
+  @override
+  void loadWithJson(Map<String, dynamic> map) {
+    super.loadWithJson(map);
+    if (map.containsKey("contacts_attributes")) {
+      map['contacts_attributes'].forEach((attr) {
+        Contact c = new Contact();
+        c.loadWithJson(attr);
+        this.contacts.add(c);
+      });
+    }
+  }
+  void delete_contact(Contact contact) {
+    if (contact.is_new()) {
+      contacts.remove(contact);
+    } else {
+      contact.delete();
+    }
+  }
+
+  bool count_contacts() {
+    return contacts.length > 1;
+  }
+  List<Map> contacts_to_map() {
+    List<Map> contacts_map = [];
+    this.contacts.forEach((contact) => contacts_map.add(contact.to_map_customer(
+        )));
+    return contacts_map;
   }
 
   bool is_expanded() {
@@ -60,6 +100,26 @@ class Location extends RecordModelNested {
     return roles_return;
   }
 
+  bool full_valid(){
+    bool result = _validator.run_validations();
+    this.contacts.forEach((contact) => result = contact.is_valid() && result);
+    return result;
+  }
+  bool has_many_contacts() {
+    return contacts.length > 1 &&
+        _exists_at_least_more_than_two_contacts_available();
+  }
+
+  bool _exists_at_least_more_than_two_contacts_available() {
+    return _total_contacts_delete_pending() < contacts.length - 1;
+  }
+
+  int _total_contacts_delete_pending() {
+    return contacts.fold(0, (int total, Contact contact) =>
+        (contact.pending_to_delete() ? total + 1 : total));
+  }
+
+  
   Map to_map() {
     return {
       'id': id,
@@ -80,6 +140,7 @@ class Location extends RecordModelNested {
       'roles': roles_to_list(),
       'freight_class': freightClass,
       'sales_territory': salesTerritory,
+      'contacts_attributes': contacts_to_map(),
       'status': status,
       '_destroy': _destroy
     };

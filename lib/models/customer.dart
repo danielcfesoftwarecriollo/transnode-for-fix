@@ -17,7 +17,6 @@ class Customer extends Entity {
     first_location.set_rol_main();
 
     this.locations = [first_location];
-    this.contacts = [new Contact()];
     this._validator = new CustomerValidator(this);
   }
 
@@ -31,7 +30,6 @@ class Customer extends Entity {
   void loadWithJson(Map<String, dynamic> map) {
     super.loadWithJson(map);
     this.locations = [];
-    this.contacts = [];
     if (map.containsKey("locations_attributes")) {
       map['locations_attributes'].forEach((attr) {
         Location l = new Location();
@@ -39,15 +37,6 @@ class Customer extends Entity {
         this.locations.add(l);
       });
     }
-    if (map.containsKey("contacts_attributes")) {
-      map['contacts_attributes'].forEach((attr) {
-        Contact c = new Contact();
-        c.loadWithJson(attr);
-        this.contacts.add(c);
-      });
-
-    }
-
   }
 
   void delete_location(Location location) {
@@ -57,20 +46,12 @@ class Customer extends Entity {
       location.delete();
     }
   }
-  void delete_contact(Contact contact) {
-    if (contact.is_new()) {
-      contacts.remove(contact);
-    } else {
-      contact.delete();
-    }
-  }
 
   bool full_valid() {
     // i use  'result = validation && result, for forced the validations
     bool result = _validator.run_validations();
-    this.locations.forEach((location) => result = location.is_valid() && result
+    this.locations.forEach((location) => result = location.full_valid() && result
         );
-    this.contacts.forEach((contact) => result = contact.is_valid() && result);
     return result;
   }
 
@@ -86,20 +67,6 @@ class Customer extends Entity {
   int total_locations_delete_pending() {
     return locations.fold(0, (int total, Location location) =>
         (location.pending_to_delete() ? total + 1 : total));
-  }
-
-  bool has_many_contacts() {
-    return contacts.length > 1 &&
-        _exists_at_least_more_than_two_contacts_available();
-  }
-
-  bool _exists_at_least_more_than_two_contacts_available() {
-    return total_contacts_delete_pending() < contacts.length - 1;
-  }
-
-  int total_contacts_delete_pending() {
-    return contacts.fold(0, (int total, Contact contact) =>
-        (contact.pending_to_delete() ? total + 1 : total));
   }
 
 }
