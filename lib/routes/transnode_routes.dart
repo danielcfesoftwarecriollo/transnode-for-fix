@@ -7,7 +7,7 @@ class TransnodeRouterInitializer {
 
   TransnodeRouterInitializer(this._userService, this._messagesService);
 
-  void call(Router router, RouteViewFactory views) {
+  void call(Router router, views) {
     _router = router;
     views.configure({
       'home': ngRoute(
