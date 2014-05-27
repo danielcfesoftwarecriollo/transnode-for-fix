@@ -2,9 +2,6 @@ part of transnode;
 
 class Entity extends RecordModel {
   String name;
-  String city;
-  String state;
-  String zip;
   String creditNote;
   double creditLimit;
   double balance;
@@ -20,6 +17,7 @@ class Entity extends RecordModel {
   String currencyRiskFactor;
   String salesRepId;
   String territoryId;
+  String billToId;
   List roles;
   Map _roles_map;
   List<Location> locations;
@@ -80,8 +78,6 @@ class Entity extends RecordModel {
     return {
       'id': this.id,
       'name': this.name,
-      'city': this.city,
-      'state': this.state,
       'credit_note': this.creditNote,
       'credit_limit': this.creditLimit,
       'required_pod': this.requiredPod,

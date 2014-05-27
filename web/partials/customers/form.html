@@ -116,7 +116,7 @@
             </div> -->
             <div class="col-xs-2" ng-class="{'has-error':location.has_errors('country')}">
               <label for="country">Country</label>
-                <select ng-model="location.country" id="country" class="form-control" >
+                <select ng-model="location.country" id="countryId" class="form-control" >
                   <option value="" disabled selected>Country</option>
                   <option selected value="CA">CA</option>
                   <option value="US">US</option>
@@ -126,7 +126,7 @@
             </div>
             <div class="col-xs-2" ng-class="{'has-error':location.has_errors('state')}">
                 <label for="state">State</label>
-                <select ng-model="location.state" id="state" class="form-control" >
+                <select ng-model="location.state" id="stateId" class="form-control" >
                   <option value="" disabled selected>State</option>
                   <option selected value="CA">CA</option>
                   <option value="US">US</option>
@@ -199,7 +199,7 @@
                 <h4 class="not-margin">Contact</h4>
               </div>
               <div class="col-md-6 text-right">
-                <button class='btn btn-primary' type='button' ng-click='location.add_contact()'><i class="icon-img-pluss"></i>Add Contact</button>
+                <button class='btn btn-primary' type='button' ng-click='location.new_empty_contact()'><i class="icon-img-pluss"></i>Add Contact</button>
               </div>
             </div>
             <div class="contact" ng-repeat='contact in location.contacts' >      
@@ -227,6 +227,7 @@
               </fieldset>
             </div>
           </div>
+          <hr>
         </div>
       </div>
     </div>

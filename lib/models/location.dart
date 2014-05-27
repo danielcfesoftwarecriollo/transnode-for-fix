@@ -8,6 +8,8 @@ class Location extends RecordModelNested {
   String address2;
   String country;
   String state;
+  String stateId;
+  String countryId;
   String city;
   String zip;
   String on;
@@ -57,6 +59,7 @@ class Location extends RecordModelNested {
   void loadWithJson(Map<String, dynamic> map) {
     super.loadWithJson(map);
     if (map.containsKey("contacts_attributes")) {
+      this.contacts = [];
       map['contacts_attributes'].forEach((attr) {
         Contact c = new Contact();
         c.loadWithJson(attr);
@@ -128,8 +131,8 @@ class Location extends RecordModelNested {
       'name': name,
       'address_1': address1,
       'address_2': address2,
-      'country': country,
-      'state': state,
+      'country_id': countryId,
+      'state_id': stateId,
       'city': city,
       'zip': zip,
       'on': on,
