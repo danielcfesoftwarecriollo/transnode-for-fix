@@ -6,10 +6,10 @@ class Location extends RecordModelNested {
   String name;
   String address1;
   String address2;
-  String country;
-  String state;
-  String stateId;
-  String countryId;
+  var country;
+  List  states;
+  int stateId;
+  int countryId;
   String city;
   String zip;
   String on;
@@ -129,6 +129,7 @@ class Location extends RecordModelNested {
       'partner_id': partnerId,
       'sales_rep_id': salesRep,
       'name': name,
+      'states': states,
       'address_1': address1,
       'address_2': address2,
       'country_id': countryId,

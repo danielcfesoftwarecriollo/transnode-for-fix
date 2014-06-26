@@ -114,25 +114,22 @@
 <!--             <div class="col-xs-4">
               <input ng-model='location.on' class="form-control" placeholder='on'>
             </div> -->
-            <div class="col-xs-2" ng-class="{'has-error':location.has_errors('country')}">
-              <label for="country">Country</label>
-                <select ng-model="location.country" id="countryId" class="form-control" >
+
+            <div class="col-xs-2" ng-class="{'has-error':location.has_errors('countryId')}">
+              <label for="countryId">Country</label>
+                <select ng-model="location.countryId" ng-change="ctrl.changeCountries(location)" id="countryId" class="countries form-control" >
                   <option value="" disabled selected>Country</option>
-                  <option selected value="CA">CA</option>
-                  <option value="US">US</option>
-                  <option value="MX">MX</option>
+                  <option ng-repeat='country in ctrl.countries' ng-value='country[0]' ng-selected="country[0] == location.countryId">{{country[1]}}</option>
                 </select>
-              <p ng-show="location.has_errors('country')" class='error'>{{location.errors_by_field('country')}}</p>
+              <p ng-show="location.has_errors('countryId')" class='error'>{{location.errors_by_field('countryId')}}</p>
             </div>
-            <div class="col-xs-2" ng-class="{'has-error':location.has_errors('state')}">
-                <label for="state">State</label>
-                <select ng-model="location.state" id="stateId" class="form-control" >
-                  <option value="" disabled selected>State</option>
-                  <option selected value="CA">CA</option>
-                  <option value="US">US</option>
-                  <option value="MX">MX</option>
-                </select>
-              <p ng-show="location.has_errors('state')" class='error'>{{location.errors_by_field('state')}}</p>
+            <div class="col-xs-2" ng-class="{'has-error':location.has_errors('stateId')}">
+              <label for="stateId">State</label>
+              <select ng-model="location.stateId" id="stateId" class=" states form-control">
+                <option value="" disabled selected>State</option>
+                <option ng-repeat='state in location.states' ng-value='state[0]' ng-selected="state[0] == location.stateId">{{state[1]}}</option>
+              </select>
+              <p ng-show="location.has_errors('stateId')" class='error'>{{location.errors_by_field('stateId')}}</p>
             </div>
             <div class="col-xs-2" ng-class="{'has-error':location.has_errors('city')}">
               <label for="city">City</label>

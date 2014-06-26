@@ -12,7 +12,6 @@ class Customer extends Entity {
     this._roles_map = {
       "customer": true
     };
-
     Location first_location = new Location();
     first_location.set_rol_main();
 

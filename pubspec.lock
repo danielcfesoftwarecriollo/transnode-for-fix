@@ -37,6 +37,10 @@ packages:
     description: di
     source: hosted
     version: "0.0.32"
+  dquery:
+    description: dquery
+    source: hosted
+    version: "0.7.0"
   html5lib:
     description: html5lib
     source: hosted

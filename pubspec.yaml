@@ -9,5 +9,6 @@ dependencies:
   di: "0.0.32"
   ctrl_alt_foo: any
   route_hierarchical: 0.4.15
+  dquery: any
 dev_dependencies:
     dartmocks: ">= 0.5.0"

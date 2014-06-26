@@ -6,11 +6,17 @@ class CustomerService {
   UserService user;
   MessagesService _messageServices;
   ApiService _api;
+  Map countriesx;
 
   CustomerService(this._api, this.user, this._messageServices);
 
   Future index() {
     return _api.request('get', url);
+  }
+
+  Future loadForm() {
+    return _api.request("post", url + "/form")
+      .then((HttpResponse response) => response.data);
   }
 
   Future<Customer> get(String customerId) {
@@ -49,6 +55,12 @@ class CustomerService {
     Customer customer = new Customer();
     customer.loadWithJson(map);
     return customer;
+  }
+
+  
+
+  void _loadFormData(response) {
+    countriesx = response['countries'];
   }
 
   String params_update(Customer customer) {

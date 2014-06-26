@@ -9,12 +9,19 @@ class CustomerController {
   RouteProvider _routeProvider;
   Router _router;
   final CustomerService _customerService;
+  List countries;
+  var statesOfCountries;
 
   CustomerController(this._customerService, this._routeProvider, this._router) {
     this.customer = new Customer();
+    _customerService.loadForm().then((response){
+      this.countries = response['countries'];
+      this.statesOfCountries = response['states_of_countries'];
+    });
     if (_isEditPath()) {
       var customer_id = _routeProvider.parameters['customerId'];
       _customerService.get(customer_id).then((_) => this.customer = _);
+      
     } else if (_isShowPath()) {
       var customer_id = _routeProvider.parameters['customerId'];
       _customerService.get(customer_id).then((_) => this.customer = _);      
@@ -22,6 +29,29 @@ class CustomerController {
       this.customers = [];
       this._load_customers();
     }
+//    this.loadStates();
+    
+    new Timer(const Duration(milliseconds: 1000), () {
+      List countries = querySelectorAll('.countries') ;
+      countries.forEach((element) => dispachChange(element));
+    });
+//     
+//   window.onContentLoaded.listen((e){
+//
+//   });
+  }
+//  void loadStates(){
+//    this.customer.locations.forEach((location){
+//      if(location.countryId != null){
+//        location.states = this.getStatesByCountry(location.countryId.toString()); 
+//      }
+//    });
+//  }
+  
+  
+  void dispachChange(SelectElement element){
+    Event changeE = new Event('change');
+    element.dispatchEvent(changeE);
   }
 
   bool get has_customers => this.customers.isNotEmpty;
@@ -68,10 +98,32 @@ class CustomerController {
   void _load_customers() {
     var response = this._customerService.index();
     response.then((HttpResponse response) {
+      response.data.forEach(_add_customer);
+      if (response == null) return false;
+    });
+  }
+  
+  void _load_form_customers() {
+    var response = this._customerService.index();
+    response.then((HttpResponse response) {
 
       response.data.forEach(_add_customer);
       if (response == null) return false;
     });
+  }
+
+  void changeCountries (currentLocation) {
+     new Timer(const Duration(milliseconds: 1), () {
+       print(currentLocation.countryId);
+       List x = this.getStatesByCountry(currentLocation.countryId.toString());
+       currentLocation.states = x;
+       print(currentLocation.states);
+     });
+
+  }
+  
+  List getStatesByCountry(String countryId) {
+    return this.statesOfCountries[countryId]['states'];
   }
 
   void _add_customer(Map<String, dynamic> json) {
