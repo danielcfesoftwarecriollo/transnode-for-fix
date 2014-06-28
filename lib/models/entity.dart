@@ -17,7 +17,7 @@ class Entity extends RecordModel {
   String currencyRiskFactor;
   String salesRepId;
   String territoryId;
-  String billToId;
+  int billToId;
   List roles;
   Map _roles_map;
   List<Location> locations;

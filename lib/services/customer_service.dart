@@ -15,10 +15,25 @@ class CustomerService {
   }
 
   Future loadForm() {
-    return _api.request("post", url + "/form")
+    return _api.request("post", url + "/form_step1")
       .then((HttpResponse response) => response.data);
   }
+  
+  Future loadForm_step2(int customerId) {
+    return _api.request("post", url + "/form_step2/"+customerId.toString())
+      .then((HttpResponse response) => response.data);
+  }
+  
+  Future load_billToLocations(int customerId){
+    String urlService = "/bill_to_location/"+customerId.toString();
+    return load_data(urlService);    
+  }
 
+  Future load_data(String stringUrl) {
+    return _api.request("post", url + stringUrl)
+      .then((HttpResponse response) => response.data);
+  }
+  
   Future<Customer> get(String customerId) {
     return _api.request("get", url + "/" + customerId.toString())
       .then((HttpResponse response) => _loadCustomer(response.data));

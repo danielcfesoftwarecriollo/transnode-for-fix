@@ -9,19 +9,26 @@ class CustomerController {
   RouteProvider _routeProvider;
   Router _router;
   final CustomerService _customerService;
+  
+  // helpers
   List countries;
   var statesOfCountries;
-
+  int  step;
+  Map  billTo;
+  List billTos;
+  List customBrokers;
+  List locations;
+  
   CustomerController(this._customerService, this._routeProvider, this._router) {
     this.customer = new Customer();
+    this.billTos = [];
     _customerService.loadForm().then((response){
       this.countries = response['countries'];
-      this.statesOfCountries = response['states_of_countries'];
+      this.statesOfCountries = response['states_of_countries'];      
     });
     if (_isEditPath()) {
       var customer_id = _routeProvider.parameters['customerId'];
       _customerService.get(customer_id).then((_) => this.customer = _);
-      
     } else if (_isShowPath()) {
       var customer_id = _routeProvider.parameters['customerId'];
       _customerService.get(customer_id).then((_) => this.customer = _);      
@@ -29,25 +36,14 @@ class CustomerController {
       this.customers = [];
       this._load_customers();
     }
-//    this.loadStates();
-    
     new Timer(const Duration(milliseconds: 1000), () {
-      List countries = querySelectorAll('.countries') ;
+      List countries = querySelectorAll('.countries');
       countries.forEach((element) => dispachChange(element));
     });
-//     
-//   window.onContentLoaded.listen((e){
-//
-//   });
+    this.step = 1;
   }
-//  void loadStates(){
-//    this.customer.locations.forEach((location){
-//      if(location.countryId != null){
-//        location.states = this.getStatesByCountry(location.countryId.toString()); 
-//      }
-//    });
-//  }
-  
+
+  int stepForm(int step) => this.step = step;
   
   void dispachChange(SelectElement element){
     Event changeE = new Event('change');
@@ -82,17 +78,35 @@ class CustomerController {
 //  }
 
   void save() {
-    if (this.customer.full_valid()) {
+    if(this.step == 1){
+      save_step1();
+    }else if(this.step == 2){
+      save_step2();
+    }
+  }
+  
+  void save_step1(){
+    if (this.customer.valid_step1()) {
+      var responseSave = this._customerService.save(this.customer);
+      responseSave.then((HttpResponse response) {
+        if (response == null) return false;
+        var responseLoadFormStep2 = this._customerService.loadForm_step2(this.customer.id);
+        this.stepForm(2);
+        responseLoadFormStep2.then((response2) {
+          print(response2);
+          _loadForm_step2(response2);
+        });
+      });
+    }
+  }
+  void save_step2(){
+    if (this.customer.valid_step2()) {
       var response = this._customerService.save(this.customer);
       response.then((HttpResponse response) {
         if (response == null) return false;
         _router.go('customers', {});
       });
     }
-  }
-
-  void todo() {
-    window.alert("TODO");
   }
 
   void _load_customers() {
@@ -103,13 +117,17 @@ class CustomerController {
     });
   }
   
-  void _load_form_customers() {
-    var response = this._customerService.index();
-    response.then((HttpResponse response) {
-
-      response.data.forEach(_add_customer);
-      if (response == null) return false;
-    });
+//  void _load_form_customers() {
+//    var response = this._customerService.index();
+//    response.then((HttpResponse response) {
+//      response.data.forEach(_add_customer);
+//      if (response == null) return false;
+//    });
+//  }
+  
+  void _loadForm_step2(Map formData) {
+    this.billTos = formData['bill_to'];
+    this.customBrokers = formData['custom_brokers'];
   }
 
   void changeCountries (currentLocation) {
@@ -119,13 +137,23 @@ class CustomerController {
        currentLocation.states = x;
        print(currentLocation.states);
      });
-
   }
   
   List getStatesByCountry(String countryId) {
     return this.statesOfCountries[countryId]['states'];
   }
 
+  void change_bill_to() {
+    print(this.customer.billToId);
+    var response = this._customerService.load_billToLocations(this.customer.id);
+    this.stepForm(2);
+    response.then((response) {
+      print(response);
+      this.locations = response['locations'];
+      this.billTo = response['bill_to'];
+    });
+  }
+  
   void _add_customer(Map<String, dynamic> json) {
     Customer customer = new Customer();
     customer.loadWithJson(json);

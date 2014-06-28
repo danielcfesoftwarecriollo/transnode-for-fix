@@ -14,7 +14,6 @@ class Customer extends Entity {
     };
     Location first_location = new Location();
     first_location.set_rol_main();
-
     this.locations = [first_location];
     this._validator = new CustomerValidator(this);
   }
@@ -46,17 +45,18 @@ class Customer extends Entity {
     }
   }
 
-  bool full_valid() {
-    // i use  'result = validation && result, for forced the validations
-    bool result = _validator.run_validations();
-    this.locations.forEach((location) => result = location.full_valid() && result
-        );
+  bool valid_step1() {
+    bool result = _validator.run_validations_step1();
+    this.locations.forEach((location) => result = location.full_valid() && result);
     return result;
+  }
+  
+  bool valid_step2(){
+    return _validator.run_validations_step2();
   }
 
   bool has_many_locations() {
-    return locations.length > 1 &&
-        _exists_at_least_more_than_two_locations_available();
+    return locations.length > 1 && _exists_at_least_more_than_two_locations_available();
   }
 
   bool _exists_at_least_more_than_two_locations_available() {

@@ -28,7 +28,7 @@ class Location extends RecordModelNested {
 
   
   List roles;
-  Map<String, bool> _roles_map;
+//  Map<String, bool> _roles_map;
 
   List freightClass;
   List salesTerritory;
@@ -42,13 +42,34 @@ class Location extends RecordModelNested {
     this.contacts = [new Contact()];
 
     _expanded = false;
-    this._roles_map = {};
+    this.roles = [];
+//    this._roles_map = {};
   }
 
   void set_rol_main() {
-    this._roles_map['main'] = true;
+    this.roles.add('main');
   }
 
+  void toggleRole(role) {
+    if(this.has_role(role))
+      this.remove_role(role);
+    else
+      this.add_role(role);
+  }
+  
+  bool has_role(role) {
+    return this.roles.indexOf(role) > -1;
+  }
+  
+  void remove_role(role) {
+    this.roles.remove(role);
+  }
+  
+  void add_role(role) {
+    this.roles.add(role);
+  }
+  
+  
   Contact new_empty_contact() {
     Contact contact = new Contact();
     this.contacts.add(contact);
@@ -93,15 +114,15 @@ class Location extends RecordModelNested {
     _expanded = !_expanded;
   }
 
-  List roles_to_list() {
-    List roles_return = [];
-    _roles_map.forEach((role, has_role) {
-      if (has_role) {
-        roles_return.add(role);
-      }
-    });
-    return roles_return;
-  }
+//  List roles_to_list() {
+//    List roles_return = [];
+//    _roles_map.forEach((role, has_role) {
+//      if (has_role) {
+//        roles_return.add(role);
+//      }
+//    });
+//    return roles_return;
+//  }
 
   bool full_valid(){
     bool result = _validator.run_validations();
@@ -141,7 +162,7 @@ class Location extends RecordModelNested {
       'fax': fax,
       'lane_code': laneCode,
       'email': email,
-      'roles': roles_to_list(),
+      'roles': roles,
       'freight_class': freightClass,
       'sales_territory': salesTerritory,
       'contacts_attributes': contacts_to_map(),
