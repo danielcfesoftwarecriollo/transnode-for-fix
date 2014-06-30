@@ -84,7 +84,7 @@
                   <input type="checkbox" class="pull-right" id="role4" name="role" value="true" >
                 </div> -->
 
-                <div class="col-xs-2" ng-repeat="role in ['shipper','bill_to','consigner','warehouse']">
+                <div class="col-xs-2" ng-repeat="role in ['main','shipper','bill_to','consigner','warehouse']">
                   <label>
                     <input type="checkbox" value="{{role}}" ng-checked="location.roles.indexOf(role) > -1" ng-click="location.toggleRole(role)"> {{role}}
                   </label>
@@ -321,9 +321,9 @@
         </div>
         <div class="row">
           <div class="col-md-4">
-            <select ng-model="ctrl.customer.billToId" id="bill_to" class="form-control" ng-change="ctrl.change_bill_to()" >
+            <select ng-model="ctrl.billToId" id="bill_to" class="form-control" ng-change="ctrl.change_bill_to()" >
               <option value="" disabled selected>Bill To</option>
-              <option ng-repeat='billTo in ctrl.billTos' ng-value='billTo[0]' ng-selected="billTo[0] == ctrl.customer.billToId">{{billTo[1]}}</option>
+              <option ng-repeat='billTo in ctrl.billTos' ng-value='billTo[0]' ng-selected="billTo[0] == ctrl.billToId">{{billTo[1]}}</option>
             </select>
           </div>
           <div class="col-md-4">
@@ -336,11 +336,11 @@
         <div class="row">
           <div class="col-xs-4" >
             <label >Credit Note:</label>
-            <span>{{ctrl.billTo['creditNote']}}</span>
+            <span>{{ctrl.billTo['credit_note']}}</span>
           </div>
           <div class="col-xs-4" >
             <label >Credit Limit:</label>
-            <span>{{ctrl.billTo['creditLimit']}}</span>
+            <span>{{ctrl.billTo['credit_limit']}}</span>
           </div>
           <div class="col-xs-4 ">
             <label >Balance</label>
@@ -350,21 +350,21 @@
         <div class='row'>
           <div class="col-xs-4 ">
             <label>Tax ID</label>
-            <span>{{ctrl.billTo['taxId']}}</span>
+            <span>{{ctrl.billTo['tax_id']}}</span>
           </div>
           <div class="col-xs-4 ">
             <label>Invoice Method</label>
-            <span>{{ctrl.billTo['invoiceMethod']}}</span>
+            <span>{{ctrl.billTo['invoice_method']}}</span>
           </div>
           <div class="col-xs-4 ">
             <label >requirePOD</label>
-            <span>{{ctrl.billTo['requiredPod']}}</span>
+            <span>{{ctrl.billTo['required_pod']}}</span>
           </div>
         </div>
         <div class='row'>
           <div class="col-xs-4">
             <label>Currency</label>
-            <span>{{ctrl.billTo['creditLimit']}}</span>
+            <span>{{ctrl.billTo['credit_limit']}}</span>
           </div>
 
           <div class="col-xs-4">

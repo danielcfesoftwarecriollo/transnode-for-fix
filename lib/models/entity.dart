@@ -81,6 +81,7 @@ class Entity extends RecordModel {
       'credit_note': this.creditNote,
       'credit_limit': this.creditLimit,
       'required_pod': this.requiredPod,
+      'bill_to_id': this.billToId,
       'currency': this.currency,
       'rating': this.rating,
       'note': this.note,

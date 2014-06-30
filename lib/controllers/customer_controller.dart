@@ -18,31 +18,39 @@ class CustomerController {
   List billTos;
   List customBrokers;
   List locations;
+  int billToId;
   
   CustomerController(this._customerService, this._routeProvider, this._router) {
     this.customer = new Customer();
     this.billTos = [];
-    _customerService.loadForm().then((response){
-      this.countries = response['countries'];
-      this.statesOfCountries = response['states_of_countries'];      
-    });
     if (_isEditPath()) {
       var customer_id = _routeProvider.parameters['customerId'];
       _customerService.get(customer_id).then((_) => this.customer = _);
+      load_form();
     } else if (_isShowPath()) {
       var customer_id = _routeProvider.parameters['customerId'];
-      _customerService.get(customer_id).then((_) => this.customer = _);      
+      _customerService.get(customer_id).then((_) => this.customer = _);
+      load_form();
     } else if (_isIndexPath()) {
       this.customers = [];
       this._load_customers();
     }
+  
+  }
+
+  void load_form(){
+    _customerService.loadForm().then((response){
+      this.countries = response['countries'];
+      this.statesOfCountries = response['states_of_countries'];      
+    });
+    
     new Timer(const Duration(milliseconds: 1000), () {
       List countries = querySelectorAll('.countries');
       countries.forEach((element) => dispachChange(element));
     });
     this.step = 1;
   }
-
+  
   int stepForm(int step) => this.step = step;
   
   void dispachChange(SelectElement element){
@@ -126,7 +134,10 @@ class CustomerController {
 //  }
   
   void _loadForm_step2(Map formData) {
-    this.billTos = formData['bill_to'];
+    this.billTo = formData['bill_to'];
+    this.billTos = formData['bill_tos'];
+    this.locations = formData['locations'];
+    this.billToId = formData['customer_bill_to_id'];
     this.customBrokers = formData['custom_brokers'];
   }
 
