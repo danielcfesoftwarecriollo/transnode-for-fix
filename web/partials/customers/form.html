@@ -321,12 +321,14 @@
         </div>
         <div class="row">
           <div class="col-md-4">
+            <label >Customer for Location:</label>
             <select ng-model="ctrl.billToId" id="bill_to" class="form-control" ng-change="ctrl.change_bill_to()" >
               <option value="" disabled selected>Bill To</option>
               <option ng-repeat='billTo in ctrl.billTos' ng-value='billTo[0]' ng-selected="billTo[0] == ctrl.billToId">{{billTo[1]}}</option>
             </select>
           </div>
           <div class="col-md-4">
+            <label >Location:</label>
             <select ng-model="ctrl.customer.billToId" id="bill_to" class="form-control" >
               <option value="" disabled selected>Location</option>
               <option ng-repeat='locationBillTo in ctrl.locations' ng-value='locationBillTo[0]' ng-selected="locationBillTo[0] == ctrl.customer.billToId">{{locationBillTo[1]}}</option>
@@ -388,7 +390,7 @@
             <label for="importcustomsbrokerid">Import Broker</label>
             <select id="importcustomsbrokerid" ng-model='ctrl.customer.importCustomsBrokerId' class="form-control">
               <option value="" disabled selected>Import Broker</option>
-              <option>entity_id</option>
+              <option ng-repeat='importBroker in ctrl.importBrokers' ng-value='importBroker[0]' ng-selected="importBroker[0] == ctrl.customer.importCustomsBrokerId">{{importBroker[1]}}</option>
             </select>
           </div>
 
@@ -396,7 +398,7 @@
             <label for="exportcustomsbrokerid">Export Broker</label>
             <select id="exportcustomsbrokerid" ng-model='ctrl.customer.exportCustomsBrokerId' class="form-control">
               <option value="" disabled selected>Export Broker</option>
-              <option>entity_id</option>
+              <option ng-repeat='exportBroker in ctrl.exportBrokers' ng-value='exportBroker[0]' ng-selected="exportBroker[0] == ctrl.customer.exportCustomsBrokerId" >{{exportBroker[1]}}</option>
             </select>
           </div>
 
@@ -404,7 +406,7 @@
             <label for="currencyriskfactor">Currency Risk Factor</label>
             <select id="currencyriskfactor" ng-model='ctrl.customer.currencyRiskFactor' class="form-control">
               <option value="" disabled selected>Currency Risk Factor</option>
-              <option>option</option>
+              <option ng-repeat='currencyRiskFactor in ctrl.currencyRiskFactors' ng-value='currencyRiskFactor[0]' ng-selected="currencyRiskFactor[0] == ctrl.customer.currencyRiskFactor" >{{currencyRiskFactor[1]}}</option>
             </select>
           </div>
         </div>
@@ -417,7 +419,7 @@
               <label for="salesrepresentative">Sales Representative</label>
               <select id="salesrepresentative" ng-model='ctrl.customer.salesRepId' class="form-control">
                 <option value="" disabled selected>Sales Representative</option>
-                <option>option</option>
+                <option ng-repeat='salesRepId in ctrl.salesRepIds' ng-value='salesRepId[0]' ng-selected="salesRepId[0] == ctrl.customer.salesRepId" >{{salesRepId[1]}}</option>
               </select>
             </div>
           </div>
@@ -426,7 +428,7 @@
               <label for="territory">Territory</label>
               <select id="territory" ng-model='ctrl.customer.territoryId' class="form-control">
                 <option value="" disabled selected>Territory</option>
-                <option>option</option>
+                <option ng-repeat='territoryId in ctrl.territoryIds' ng-value='territoryId[0]' ng-selected="territoryId[0] == ctrl.customer.territoryId" >{{territoryId[1]}}</option>
               </select>
             </div>        
           </div>
@@ -434,7 +436,7 @@
             <label for="sources">Sources</label>
             <select id="sources" class="form-control">
               <option value="" disabled selected>sources</option>
-              <option>option</option>
+              <option ng-repeat='source in ctrl.sources' ng-value='source[0]' ng-selected="source[0] == ctrl.customer.sourceId" >{{source[1]}}</option>
             </select>
           </div>
         </div>

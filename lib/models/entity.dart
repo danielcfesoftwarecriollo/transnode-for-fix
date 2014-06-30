@@ -17,6 +17,7 @@ class Entity extends RecordModel {
   String currencyRiskFactor;
   String salesRepId;
   String territoryId;
+  String sourceId;
   int billToId;
   List roles;
   Map _roles_map;
@@ -88,6 +89,7 @@ class Entity extends RecordModel {
       'tax_id': this.taxId,
       'invoice_method': this.invoiceMethod,
       'terms': this.terms,
+      'source_id': this.sourceId,
       'roles': this.roles_to_list(),
       'import_customs_broker_id': this.importCustomsBrokerId,
       'export_customs_broker_id': this.exportCustomsBrokerId,

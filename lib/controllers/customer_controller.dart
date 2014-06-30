@@ -17,7 +17,13 @@ class CustomerController {
   Map  billTo;
   List billTos;
   List customBrokers;
+  List importBrokers;
+  List exportBrokers;
+  List currencyRiskFactors;
+  List salesRepIds;
+  List territoryIds;
   List locations;
+  List sources;
   int billToId;
   
   CustomerController(this._customerService, this._routeProvider, this._router) {
@@ -139,6 +145,12 @@ class CustomerController {
     this.locations = formData['locations'];
     this.billToId = formData['customer_bill_to_id'];
     this.customBrokers = formData['custom_brokers'];
+    this.importBrokers = formData['import_brokers'];
+    this.exportBrokers = formData['export_brokers'];
+    this.currencyRiskFactors = formData['currency_risk_factors'];
+    this.salesRepIds = formData['sales_rep_ids'];
+    this.territoryIds = formData['territory_ids'];
+    this.sources = formData['sources'];
   }
 
   void changeCountries (currentLocation) {
