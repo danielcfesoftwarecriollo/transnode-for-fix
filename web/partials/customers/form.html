@@ -67,23 +67,6 @@
                   <label >Role</label>
                 </div>
 
-            <!--<div class="col-xs-2">
-                  <label for="role1" class="control-label not-paddin">Ship</label>
-                  <input type="checkbox" class="pull-right" id="role1" name="role" value="true" >
-                </div>
-                <div class="col-xs-2">
-                  <label for="role2"class="control-label not-paddin">BilTo</label>
-                  <input type="checkbox" class="pull-right" id="role2" name="role" value="true" >
-                </div>
-                <div class="col-xs-2">
-                  <label for="role3" class="control-label not-paddin">Cons</label>
-                  <input type="checkbox" class="pull-right" id="role3" name="role" value="true" >
-                </div>
-                <div class="col-xs-2">
-                  <label for="role4" class="control-label not-paddin">Main</label>
-                  <input type="checkbox" class="pull-right" id="role4" name="role" value="true" >
-                </div> -->
-
                 <div class="col-xs-2" ng-repeat="role in ['main','shipper','bill_to','consigner','warehouse']">
                   <label>
                     <input type="checkbox" value="{{role}}" ng-checked="location.roles.indexOf(role) > -1" ng-click="location.toggleRole(role)"> {{role}}
@@ -406,7 +389,7 @@
             <label for="currencyriskfactor">Currency Risk Factor</label>
             <select id="currencyriskfactor" ng-model='ctrl.customer.currencyRiskFactor' class="form-control">
               <option value="" disabled selected>Currency Risk Factor</option>
-              <option ng-repeat='currencyRiskFactor in ctrl.currencyRiskFactors' ng-value='currencyRiskFactor[0]' ng-selected="currencyRiskFactor[0] == ctrl.customer.currencyRiskFactor" >{{currencyRiskFactor[1]}}</option>
+              <option ng-repeat='currencyRiskFactor in ctrl.currencyRiskFactors' ng-value='currencyRiskFactor[1]' ng-selected="currencyRiskFactor[1] == ctrl.customer.currencyRiskFactor" >{{currencyRiskFactor[0]}}</option>
             </select>
           </div>
         </div>
@@ -436,7 +419,7 @@
             <label for="sources">Sources</label>
             <select id="sources" class="form-control">
               <option value="" disabled selected>sources</option>
-              <option ng-repeat='source in ctrl.sources' ng-value='source[0]' ng-selected="source[0] == ctrl.customer.sourceId" >{{source[1]}}</option>
+              <option ng-repeat='source in ctrl.sources' ng-value='source[1]' ng-selected="source[1] == ctrl.customer.sourceId" >{{source[0]}}</option>
             </select>
           </div>
         </div>

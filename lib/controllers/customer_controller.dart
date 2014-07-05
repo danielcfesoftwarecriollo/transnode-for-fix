@@ -41,7 +41,7 @@ class CustomerController {
       this.customers = [];
       this._load_customers();
     }
-  
+    this.step = 1;
   }
 
   void load_form(){
@@ -54,7 +54,6 @@ class CustomerController {
       List countries = querySelectorAll('.countries');
       countries.forEach((element) => dispachChange(element));
     });
-    this.step = 1;
   }
   
   int stepForm(int step) => this.step = step;
