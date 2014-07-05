@@ -73,7 +73,23 @@ class TransnodeRouterInitializer {
             'user_edit': ngRoute(
                 path: '/edit',
                 view: 'partials/users/edit.html'),
-          })
+          }),
+          'carriers': ngRoute(
+              path: '/carriers',
+              view: 'partials/carriers/index.html',
+              preEnter: authenticatedAccess),
+          'carrier_new': ngRoute(
+              path: '/carriers/new',
+              view: 'partials/carriers/form.html',
+              preEnter: authenticatedAccess),
+          'carrier_show': ngRoute(
+              path: '/carriers/:carrierId',
+              view: 'partials/carriers/show.html',
+              preEnter: authenticatedAccess),
+          'carrier_edit': ngRoute(
+              path: '/carriers/:carrierId/edit',
+              view: 'partials/carriers/form.html',
+              preEnter: authenticatedAccess),
     });
   }
 

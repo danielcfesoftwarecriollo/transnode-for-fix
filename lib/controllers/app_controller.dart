@@ -14,6 +14,7 @@ class AppController {
         'Ctrl+3': ()=> _router.go('shipment_order', {}),
         'Ctrl+4': ()=> _router.go('users', {}),
         'Ctrl+5': ()=> _router.go('contact_list', {}),
+        'Ctrl+6': ()=> _router.go('carriers', {}),
     });
   }
 

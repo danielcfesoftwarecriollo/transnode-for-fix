@@ -1,0 +1,30 @@
+<div carrier-controller>
+  <h1>Carriers</h1>
+  <div ng-show='ctrl.has_carriers'>
+    <a class='btn btn-info' ng-href="#/carriers/new"> Create a carrier</a>
+    <table class='table table-hover'>
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat='carrier in ctrl.carriers'>
+          <td>{{carrier.id}}</td>
+          <td>{{carrier.name}}</td>
+          <td class="actions">
+            <a class="btn btn-warning" ng-href="#/carriers/{{carrier.id}}/edit">
+              <i class="glyphicon glyphicon-pencil"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+  </div>
+  <div carrier-list ng-hide='ctrl.has_carriers'>
+    <a class='btn btn-info' ng-href="#/carriers/new"> Create a carrier</a>
+  </div>
+</div>
