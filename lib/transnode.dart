@@ -16,11 +16,13 @@ part 'services/messages_service.dart';
 part 'services/custom_header.dart';
 part 'services/location_service.dart';
 part 'services/customer_service.dart';
+part 'services/carrier_service.dart';
 part 'services/session_service.dart';
 part 'services/users_service.dart';
 
 part 'controllers/app_controller.dart';
 part 'controllers/customer_controller.dart';
+part 'controllers/carrier_controller.dart';
 part 'controllers/contacts_controller.dart';
 part 'controllers/login_controller.dart';
 part 'controllers/messages_controller.dart';
@@ -33,7 +35,10 @@ part 'models/record_model.dart';
 part 'models/record_model_nested.dart';
 part 'models/contact.dart';
 part 'models/entity.dart';
+part 'models/lane.dart';
+part 'models/price.dart';
 part 'models/customer.dart';
+part 'models/carrier.dart';
 part 'models/location.dart';
 part 'models/shipment_order.dart';
 part 'models/shipper.dart';
@@ -42,6 +47,7 @@ part 'models/user.dart';
 part 'validators/validator.dart';
 part 'validators/location.dart';
 part 'validators/customer.dart';
+part 'validators/carrier.dart';
 part 'validators/contact.dart';
 
 class TransnodeModule extends Module {
@@ -59,6 +65,7 @@ class TransnodeModule extends Module {
     type(MessagesController);
     type(ShipmentOrderController);
     type(CustomerController);
+    type(CarrierController);
     type(UsersController);
 
     type(UserService);
@@ -67,6 +74,7 @@ class TransnodeModule extends Module {
     type(SessionService);
     type(ContactService);
     type(CustomerService);
+    type(CarrierService);
     type(UsersService);
   }
 }

@@ -1,6 +1,6 @@
 part of transnode;
 class CarrierValidator extends Validator {
-  Carrier _customer;
+  Carrier _carrier;
 
   CarrierValidator(this._carrier) {
     this.clean_errors();

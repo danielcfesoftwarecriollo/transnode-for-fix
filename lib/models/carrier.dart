@@ -22,6 +22,12 @@ class Carrier extends Entity {
     return location;
   }
 
+  Location new_empty_lane() {
+    Lane lane = new Lane();
+    this.locations.add(lane);
+    return lane;
+  }
+  
   @override
   void loadWithJson(Map<String, dynamic> map) {
     super.loadWithJson(map);

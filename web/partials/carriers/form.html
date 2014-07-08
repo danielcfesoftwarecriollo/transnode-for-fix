@@ -1,4 +1,4 @@
-<div class="row" carrier-controller>
+<div class="row" carrier-controller >
   <div class="col-md-12">
     <h1 ng-if="ctrl.carrier.is_new()">Add a new Carrier</h1>
     <h1 ng-if="!ctrl.carrier.is_new()">Edit Carrier</h1>
@@ -18,7 +18,7 @@
         <p ng-show="ctrl.carrier.has_errors('name')" class='error'>{{ctrl.carrier.errors_by_field('name')}}</p>
       </div>
     </div>
-    <div class="step1" ng-show="(ctrl.step==1)" >
+    <div class="step1" >
       <div class="locations">
         <div class="row">
           <hr>
@@ -242,20 +242,41 @@
         <div class="col-md-1">
           <label for="currency">Lanes</label>
         </div>
-        <div class="col-md-4">
-          <ul class="list-group">
-            <li class="list-group-item">
-              <span class="badge">14</span>
-              Cras justo odio
-            </li>
-            <li class="list-group-item">
-              <span class="badge">14</span>
-              Cras justo odio
-            </li>
-            <li class="list-group-item">
-              <input type="text" >
-            </li>
-          </ul>
+        <div class="col-md-5">
+          <div class="list-group-item row">
+            <div id="item-lane" >
+              <div id="min-lane" class="col-md-12">
+                <button ng-click="lane.expand()" type="button" style="float: right; padding: 11px 16px;" class="btn btn-success"><i class="glyphicon glyphicon-resize-vertical icon-btn"></i></button>
+                <div class="list-group">
+                  <div class="list-group-item" style="margin-right: 54px;" >
+                    <div ng-hide="lane.is_expanded()" style="">
+                      <span> {{lane.term1.code}} - {{lane.term2.code}} : {{lane.term1.city}} - {{lane.term2.city}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="detail-lane" class="col-md-12" ng-hide="lane.is_expanded()">
+                <div class="form-group" ng-class="{'has-error':lane.has_errors('term1')}">
+                  <label for="phone">Terminal 1 (origin)</label>
+                  <input ng-model='lane.term1' class="form-control" placeholder='term1'>
+                  <p ng-show="lane.has_errors('term1')" class='error'>{{lane.errors_by_field('city')}}</p>
+                </div>
+                <div class="form-group" ng-class="{'has-error':lane.has_errors('term2')}">
+                  <label for="phone">Terminal 2 (destination)</label>
+                  <input ng-model='lane.term2' class="form-control" placeholder='term2'>
+                  <p ng-show="lane.has_errors('term2')" class='error'>{{lane.errors_by_field('term2')}}</p>
+                </div>
+                <div class="form-group" ng-class="{'has-error':lane.has_errors('service-note')}">
+                  <label for="phone">Service Note</label>
+                  <textarea ng-model='lane.service-note' class="form-control" cols="30" rows="5">
+                    
+                  </textarea>
+                  <p ng-show="lane.has_errors('service-note')" class='error'>{{lane.errors_by_field('note')}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <input type="button" ng-click="ctrl.add_lane()" class='btn btn-primary' value="add lane" />
         </div>
         <div class="col-md-2">
           <input type="button" ng-click="ctrl.stepForm(1)" class='btn btn-primary' value="Prices list" />
@@ -263,7 +284,7 @@
         <div class="col-md-1">
           <label for="currency">Notes</label>
         </div>
-        <div class="col-md-4 text-center">
+        <div class="col-md-3 text-center">
           <textarea type="email" class="form-control" id="carrier_notes" ng-model="ctrl.carrier.note" placeholder="Notes"></textarea>
         </div>
       </div>
@@ -272,9 +293,8 @@
     <div>
       <div class="row">
         <div class="col-md-12  text-center">
-          <input type="button" ng-show="(ctrl.step==1)" ng-click="ctrl.save_step1()" class='btn btn-primary' value="Save and Next" />
-          <input type="button" ng-show="(ctrl.step==2)" ng-click="ctrl.stepForm(1)" class='btn btn-primary' value="Back" />
-          <button ng-show="(ctrl.step==2)" class='btn btn-primary'>Save</button>
+          <input type="button" ng-click="ctrl.save()" class='btn btn-primary' value="Save and Next" />
+          <button class='btn btn-primary'>Save</button>
         </div>
       </div>
     </div>
