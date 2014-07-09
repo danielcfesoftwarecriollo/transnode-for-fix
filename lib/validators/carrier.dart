@@ -9,6 +9,7 @@ class CarrierValidator extends Validator {
   bool run_validations() {
     this.clean_errors();
     required_string(_carrier.name, "name");
+    required_string(_carrier.note, "note");    
     return this.valid();
   }
 
