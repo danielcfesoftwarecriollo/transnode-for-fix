@@ -43,12 +43,17 @@ part 'models/location.dart';
 part 'models/shipment_order.dart';
 part 'models/shipper.dart';
 part 'models/user.dart';
+part 'models/city.dart';
 
 part 'validators/validator.dart';
 part 'validators/location.dart';
 part 'validators/customer.dart';
 part 'validators/carrier.dart';
 part 'validators/contact.dart';
+part 'validators/price.dart';
+part 'validators/city.dart';
+part 'validators/lane.dart';
+
 
 class TransnodeModule extends Module {
   TransnodeModule() {

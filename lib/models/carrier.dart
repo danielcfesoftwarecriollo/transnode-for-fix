@@ -4,9 +4,12 @@ class Carrier extends Entity {
 
   @NgTwoWay("errors")
   Map<String, List<String>> errors;
-
+  List<Lane> lanes;
+  String note;
+  
   Carrier() {
     this.roles = ["carrier"];
+    this.lanes = [];
     this._roles_map = {
       "carrier": true
     };
@@ -14,6 +17,10 @@ class Carrier extends Entity {
     first_location.set_rol_main();
     this.locations = [first_location];
     this._validator = new CarrierValidator(this);
+    
+    Lane first_lane = new Lane();
+    this.lanes = [first_lane];    
+    
   }
 
   Location new_empty_location() {
@@ -22,9 +29,9 @@ class Carrier extends Entity {
     return location;
   }
 
-  Location new_empty_lane() {
+  Lane new_empty_lane() {
     Lane lane = new Lane();
-    this.locations.add(lane);
+    this.lanes.add(lane);
     return lane;
   }
   
@@ -49,9 +56,10 @@ class Carrier extends Entity {
     }
   }
 
-  bool valid() {
+  bool full_validation() {
     bool result = _validator.run_validations();
     this.locations.forEach((location) => result = location.full_valid() && result);
+    this.lanes.forEach((lane) => result = lane.full_valid () && result);
     return result;
   }
 

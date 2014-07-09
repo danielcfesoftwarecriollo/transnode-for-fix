@@ -40,6 +40,8 @@ class CustomerController {
     } else if (_isIndexPath()) {
       this.customers = [];
       this._load_customers();
+    } else if(_isNewPath()){
+      load_form();
     }
     this.step = 1;
   }

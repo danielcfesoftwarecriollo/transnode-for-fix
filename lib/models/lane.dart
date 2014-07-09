@@ -11,8 +11,15 @@ class Lane extends RecordModelNested{
   
   
   Lane(){
+    prices = [];
     this._validator = new LaneValidator(this);
   }
+  
+  bool full_valid(){
+    bool result = _validator.run_validations();
+    this.prices.forEach((price) => result = price.is_valid() && result);
+    return result;
+  }  
   
   bool is_expanded() {
     return is_new() || _expanded;
@@ -21,30 +28,6 @@ class Lane extends RecordModelNested{
   void expand() {
     _expanded = !_expanded;
   }
-  
-  @override
-  void loadWithJson(Map<String, dynamic> map) {
-    super.loadWithJson(map);
-    if (map.containsKey("prices_attributes")) {
-      this.prices = [];
-      map['prices_attributes'].forEach((attr) {
-        Price c = new Price();
-        c.loadWithJson(attr);
-        this.prices.add(c);
-      });
-    }
-  }
-  
-  
-  void delete_contact(Contact contact) {
-    if (contact.is_new()) {
-      contacts.remove(contact);
-    } else {
-      contact.delete();
-    }
-  }
-  
-  
   
   
   Map to_map() {
