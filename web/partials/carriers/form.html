@@ -244,34 +244,34 @@
         </div>
         <div class="col-md-5">
           <div class="list-group-item row">
-            <div id="item-lane" >
-              <div id="min-lane" class="col-md-12">
+            <div class="clearfix item-lane" ng-repeat="lane in ctrl.carrier.lanes" >
+              <div id="min-lane" ng-hide="lane.is_expanded()" class="col-md-12">
                 <button ng-click="lane.expand()" type="button" style="float: right; padding: 11px 16px;" class="btn btn-success"><i class="glyphicon glyphicon-resize-vertical icon-btn"></i></button>
                 <div class="list-group">
                   <div class="list-group-item" style="margin-right: 54px;" >
-                    <div ng-hide="lane.is_expanded()" style="">
+                    <div style="">
                       <span> {{lane.term1.code}} - {{lane.term2.code}} : {{lane.term1.city}} - {{lane.term2.city}}</span>
                     </div>
                   </div>
                 </div>
               </div>
-              <div id="detail-lane" class="col-md-12" ng-hide="lane.is_expanded()">
+              <div id="detail-lane" class="col-md-12" ng-show="lane.is_expanded()">
                 <div class="form-group" ng-class="{'has-error':lane.has_errors('term1')}">
                   <label for="phone">Terminal 1 (origin)</label>
                   <input ng-model='lane.term1' class="form-control" placeholder='term1'>
-                  <p ng-show="lane.has_errors('term1')" class='error'>{{lane.errors_by_field('city')}}</p>
+                  <p ng-show="lane.has_errors('term1')" class='error'>{{lane.errors_by_field('term1')}}</p>
                 </div>
                 <div class="form-group" ng-class="{'has-error':lane.has_errors('term2')}">
                   <label for="phone">Terminal 2 (destination)</label>
                   <input ng-model='lane.term2' class="form-control" placeholder='term2'>
                   <p ng-show="lane.has_errors('term2')" class='error'>{{lane.errors_by_field('term2')}}</p>
                 </div>
-                <div class="form-group" ng-class="{'has-error':lane.has_errors('service-note')}">
+                <div class="form-group" ng-class="{'has-error':lane.has_errors('serviceNote')}">
                   <label for="phone">Service Note</label>
-                  <textarea ng-model='lane.service-note' class="form-control" cols="30" rows="5">
+                  <textarea ng-model='lane.serviceNote' class="form-control" cols="30" rows="5">
                     
                   </textarea>
-                  <p ng-show="lane.has_errors('service-note')" class='error'>{{lane.errors_by_field('note')}}</p>
+                  <p ng-show="lane.has_errors('serviceNote')" class='error'>{{lane.errors_by_field('serviceNote')}}</p>
                 </div>
               </div>
             </div>
@@ -284,8 +284,9 @@
         <div class="col-md-1">
           <label for="currency">Notes</label>
         </div>
-        <div class="col-md-3 text-center">
+        <div class="col-md-3 text-center" ng-class="{'has-error':ctrl.carrier.has_errors('note')}" >
           <textarea type="email" class="form-control" id="carrier_notes" ng-model="ctrl.carrier.note" placeholder="Notes"></textarea>
+          <p ng-show="ctrl.carrier.has_errors('note')" class='error'>{{ctrl.carrier.errors_by_field('note')}}</p>
         </div>
       </div>
     </div>
