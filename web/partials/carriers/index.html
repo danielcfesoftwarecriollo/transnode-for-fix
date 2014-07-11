@@ -7,7 +7,7 @@
         <tr>
           <th>id</th>
           <th>name</th>
-          <th>actions</th>
+          <th class='col-xs-3'>actions</th>
         </tr>
       </thead>
       <tbody>
@@ -15,9 +15,17 @@
           <td>{{carrier.id}}</td>
           <td>{{carrier.name}}</td>
           <td class="actions">
+            <a class="btn btn-info" ng-click='ctrl.todo()' ng-href="#/carriers/{{carrier.id}}">
+              <i class="glyphicon glyphicon-search"></i>
+            </a>
+
             <a class="btn btn-warning" ng-href="#/carriers/{{carrier.id}}/edit">
               <i class="glyphicon glyphicon-pencil"></i>
             </a>
+            <a class="btn btn-danger" ng-click='ctrl.delete(carrier)'>
+              <i class="glyphicon glyphicon-remove"></i>
+            </a>
+
           </td>
         </tr>
       </tbody>
@@ -28,3 +36,4 @@
     <a class='btn btn-info' ng-href="#/carriers/new"> Create a carrier</a>
   </div>
 </div>
+

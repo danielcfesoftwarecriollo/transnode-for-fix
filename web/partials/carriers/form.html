@@ -250,28 +250,36 @@
                 <div class="list-group">
                   <div class="list-group-item" style="margin-right: 54px;" >
                     <div style="">
-                      <span> {{lane.term1.code}} - {{lane.term2.code}} : {{lane.term1.city}} - {{lane.term2.city}}</span>
+                      <span> {{lane.term1}} - {{lane.term2}} : {{lane.term1}} - {{lane.term2}}</span>
                     </div>
                   </div>
                 </div>
               </div>
               <div id="detail-lane" class="col-md-12" ng-show="lane.is_expanded()">
+                <button ng-click="lane.delete()" ng-show="ctrl.carrier.has_many_lanes()" type="button" class="btn pull-right btn-danger"><i class="glyphicon glyphicon-remove "></i></button>
                 <div class="form-group" ng-class="{'has-error':lane.has_errors('term1')}">
                   <label for="phone">Terminal 1 (origin)</label>
-                  <input ng-model='lane.term1' class="form-control" placeholder='term1'>
+                  <select ng-model="lane.term1" class="lanes form-control" >
+                    <option value="" disabled selected>Terminal 1</option>
+                    <option ng-repeat='citie in ctrl.cities' ng-value='citie.id' ng-selected="citie.id == lane.term1">{{citie.name}} ({{citie.code}})</option>
+                  </select>
                   <p ng-show="lane.has_errors('term1')" class='error'>{{lane.errors_by_field('term1')}}</p>
                 </div>
                 <div class="form-group" ng-class="{'has-error':lane.has_errors('term2')}">
                   <label for="phone">Terminal 2 (destination)</label>
-                  <input ng-model='lane.term2' class="form-control" placeholder='term2'>
+                  <select ng-model="lane.term2" class="lanes form-control" >
+                    <option value="" disabled selected>Terminal 2</option>
+                    <option ng-repeat='citie in ctrl.cities' ng-value='citie.id' ng-selected="citie.id == lane.term2">{{citie.name}} ({{citie.code}})</option>
+                  </select>
+
                   <p ng-show="lane.has_errors('term2')" class='error'>{{lane.errors_by_field('term2')}}</p>
                 </div>
-                <div class="form-group" ng-class="{'has-error':lane.has_errors('serviceNote')}">
+                <div class="form-group" ng-class="{'has-error':lane.has_errors('service-note')}">
                   <label for="phone">Service Note</label>
                   <textarea ng-model='lane.serviceNote' class="form-control" cols="30" rows="5">
                     
                   </textarea>
-                  <p ng-show="lane.has_errors('serviceNote')" class='error'>{{lane.errors_by_field('serviceNote')}}</p>
+                  <p ng-show="lane.has_errors('service-note')" class='error'>{{lane.errors_by_field('service-note')}}</p>
                 </div>
               </div>
             </div>

@@ -56,6 +56,8 @@ class Entity extends RecordModel {
     return locations_map;
   }
 
+
+
   List roles_to_list() {
     List roles_return = [];
     _roles_map.forEach((role, has_role) {

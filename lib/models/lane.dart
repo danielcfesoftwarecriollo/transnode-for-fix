@@ -2,8 +2,8 @@ part of transnode;
 
 class Lane extends RecordModelNested{
   int id;
-  City term1;
-  City term2;
+  int term1;
+  int term2;
   int carrierId;
   String serviceNote;
   List <Price> prices;

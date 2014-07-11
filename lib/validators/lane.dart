@@ -8,9 +8,10 @@ class LaneValidator extends Validator {
 
   bool run_validations() {
     this.clean_errors();
-    required_field(_lane.term1, "name");
-    required_field(_lane.term2, "code");
-    required_string(_lane.serviceNote, "code");
+    required_field(_lane.term1, "term1");
+    required_field(_lane.term2, "term2");
+    required_string(_lane.serviceNote, "service-note");
+
     return this.valid();
   }
 

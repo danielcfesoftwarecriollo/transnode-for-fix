@@ -30,7 +30,7 @@ class Location extends RecordModelNested {
   List roles;
 //  Map<String, bool> _roles_map;
 
-  List freightClass;
+  String freightClass;
   List salesTerritory;
 
   bool _expanded;
@@ -150,7 +150,6 @@ class Location extends RecordModelNested {
       'partner_id': partnerId,
       'sales_rep_id': salesRep,
       'name': name,
-      'states': states,
       'address_1': address1,
       'address_2': address2,
       'country_id': countryId,

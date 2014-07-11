@@ -77,4 +77,27 @@ class Carrier extends Entity {
         (location.pending_to_delete() ? total + 1 : total));
   }
 
+  bool has_many_lanes() {
+    return lanes.length > 1;
+  }
+
+  List<Map> lanes_to_map() {
+    List<Map> lanes_map = [];
+    this.lanes.forEach((lane) => lanes_map.add(lane.to_map()));
+    return lanes_map;
+  }
+  
+  @override
+  Map to_map() {
+    return {
+      'id': this.id,
+      'name': this.name,
+      'currency': this.currency,
+      'note': this.note,
+      'roles': this.roles_to_list(),
+      'lanes_attributes': lanes_to_map(),
+      'locations_attributes': locations_to_map()
+    };
+  }
+
 }

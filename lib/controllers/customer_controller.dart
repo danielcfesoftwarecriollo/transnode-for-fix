@@ -164,7 +164,11 @@ class CustomerController {
   }
   
   List getStatesByCountry(String countryId) {
-    return this.statesOfCountries[countryId]['states'];
+    if(countryId.toString() != 'null'){
+      return this.statesOfCountries[countryId]['states'];
+    }else{
+      return [];
+    }
   }
 
   void change_bill_to() {

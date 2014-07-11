@@ -28,7 +28,7 @@ class CarrierController {
       load_form();
     } else if (_isIndexPath()) {
       this.carriers = [];
-//      this._load_carriers();
+      this._load_carriers();
     } else if (_isNewPath()){
       load_form();
     }
@@ -65,8 +65,9 @@ class CarrierController {
     if (this.carrier.full_validation()) {
       var response = this._carrierService.save(this.carrier);
       response.then((HttpResponse response) {
+        print(response);
         if (response == null) return false;
-        _router.go('carrier_list', {});
+//        _router.go('carriers', {});
       });
     }
   }
@@ -92,7 +93,6 @@ class CarrierController {
       print("false ");
     }
   }
-
   
   void changeCountries (currentLocation) {
      new Timer(const Duration(milliseconds: 1), () {
@@ -104,14 +104,30 @@ class CarrierController {
   }
   
   List getStatesByCountry(String countryId) {
-    return this.statesOfCountries[countryId]['states'];
+    if(countryId.toString() != 'null'){
+      return this.statesOfCountries[countryId]['states'];
+    }else{
+      return [];
+    }
+  }
+
+  void _add_carrier(Map<String, dynamic> json) {
+    Carrier carrier = new Carrier();
+    carrier.loadWithJson(json);
+    this.carriers.add(carrier);
+  }
+
+  void _load_carriers() {
+    var response = this._carrierService.index();
+    response.then((HttpResponse response) {
+      response.data.forEach(_add_carrier);
+      if (response == null) return false;
+    });
   }
   
-  
-
   bool get has_carriers => this.carriers.isNotEmpty;
   bool _isEditPath() => _routeProvider.routeName == 'carrier_edit';
   bool _isShowPath() => _routeProvider.routeName == 'carrier_show';
   bool _isNewPath() => _routeProvider.routeName == 'carrier_new';
-  bool _isIndexPath() => _routeProvider.routeName == 'carrier_list';
+  bool _isIndexPath() => _routeProvider.routeName == 'carriers';
 }
