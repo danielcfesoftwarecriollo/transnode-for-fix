@@ -242,44 +242,47 @@
         <div class="col-md-1">
           <label for="currency">Lanes</label>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-6">
           <div class="list-group-item row">
-            <div class="clearfix item-lane" ng-repeat="lane in ctrl.carrier.lanes" >
+            <div class="clearfix item-lane" ng-hide="lane.pending_to_delete()" ng-repeat="lane in ctrl.carrier.lanes" >
               <div id="min-lane" ng-hide="lane.is_expanded()" class="col-md-12">
+                <button ng-click="lane.delete()" type="button" style="float: right; padding: 11px 16px;" class="btn btn-danger"><i class="glyphicon glyphicon-remove icon-btn"></i></button>
                 <button ng-click="lane.expand()" type="button" style="float: right; padding: 11px 16px;" class="btn btn-success"><i class="glyphicon glyphicon-resize-vertical icon-btn"></i></button>
                 <div class="list-group">
-                  <div class="list-group-item" style="margin-right: 54px;" >
-                    <div style="">
-                      <span> {{lane.term1}} - {{lane.term2}} : {{lane.term1}} - {{lane.term2}}</span>
+                  <div class="list-group-item" style="margin-right: 110px;border-radius: 0;" >
+                    <div>
+                      <span> ({{lane.term1.code}} - {{lane.term2.code}}) : {{lane.term1.name}} to {{lane.term2.name}}</span>
                     </div>
                   </div>
                 </div>
               </div>
               <div id="detail-lane" class="col-md-12" ng-show="lane.is_expanded()">
-                <button ng-click="lane.delete()" ng-show="ctrl.carrier.has_many_lanes()" type="button" class="btn pull-right btn-danger"><i class="glyphicon glyphicon-remove "></i></button>
+                <button ng-click="lane.delete()" ng-show="ctrl.carrier.has_many_lanes()" type="button" style="margin: -15px -15px;" class="btn pull-right btn-danger"><i class="glyphicon glyphicon-remove "></i></button>
                 <div class="form-group" ng-class="{'has-error':lane.has_errors('term1')}">
-                  <label for="phone">Terminal 1 (origin)</label>
-                  <select ng-model="lane.term1" class="lanes form-control" >
+                  <label >Terminal 1 (origin)</label>
+                  <select ng-model="lane.term1Id" class="lanes form-control" >
                     <option value="" disabled selected>Terminal 1</option>
-                    <option ng-repeat='citie in ctrl.cities' ng-value='citie.id' ng-selected="citie.id == lane.term1">{{citie.name}} ({{citie.code}})</option>
+                    <option ng-repeat='citie in ctrl.cities' ng-value='citie.id' ng-selected="citie.id == lane.term1Id">{{citie.name}} ({{citie.code}})</option>
                   </select>
                   <p ng-show="lane.has_errors('term1')" class='error'>{{lane.errors_by_field('term1')}}</p>
                 </div>
                 <div class="form-group" ng-class="{'has-error':lane.has_errors('term2')}">
-                  <label for="phone">Terminal 2 (destination)</label>
-                  <select ng-model="lane.term2" class="lanes form-control" >
+                  <label >Terminal 2 (destination)</label>
+                  <select ng-model="lane.term2Id" class="lanes form-control" >
                     <option value="" disabled selected>Terminal 2</option>
-                    <option ng-repeat='citie in ctrl.cities' ng-value='citie.id' ng-selected="citie.id == lane.term2">{{citie.name}} ({{citie.code}})</option>
+                    <option ng-repeat='citie in ctrl.cities' ng-value='citie.id' ng-selected="citie.id == lane.term2Id">{{citie.name}} ({{citie.code}})</option>
                   </select>
 
                   <p ng-show="lane.has_errors('term2')" class='error'>{{lane.errors_by_field('term2')}}</p>
                 </div>
                 <div class="form-group" ng-class="{'has-error':lane.has_errors('service-note')}">
-                  <label for="phone">Service Note</label>
-                  <textarea ng-model='lane.serviceNote' class="form-control" cols="30" rows="5">
-                    
-                  </textarea>
+                  <label >Service Note</label>
+                  <textarea maxlength="250" rows="10" ng-model='lane.serviceNote' class="form-control" cols="30" rows="5">                    
+                  </textarea>                  
                   <p ng-show="lane.has_errors('service-note')" class='error'>{{lane.errors_by_field('service-note')}}</p>
+                </div>
+                <div class="prices-lane">
+                  <label >Prices</label>
                 </div>
               </div>
             </div>
@@ -293,7 +296,7 @@
           <label for="currency">Notes</label>
         </div>
         <div class="col-md-3 text-center" ng-class="{'has-error':ctrl.carrier.has_errors('note')}" >
-          <textarea type="email" class="form-control" id="carrier_notes" ng-model="ctrl.carrier.note" placeholder="Notes"></textarea>
+          <textarea type="email" maxlength="250" rows="10" class="form-control" id="carrier_notes" ng-model="ctrl.carrier.note" placeholder="Notes"></textarea>
           <p ng-show="ctrl.carrier.has_errors('note')" class='error'>{{ctrl.carrier.errors_by_field('note')}}</p>
         </div>
       </div>

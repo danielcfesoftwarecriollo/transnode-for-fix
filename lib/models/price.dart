@@ -2,29 +2,29 @@ part of transnode;
 
 class Price extends RecordModelNested{
   int id;
-  int laneId;
   int unit;
   int number;
   double price;
+  bool _expanded;
 
   Price(){
     this._validator = new PriceValidator(this);
+    _expanded = false;
   }
   
   Map to_map() {
     return {
       'id' : id,
-      'lane_id'  : laneId,
       'unit' : unit,
       'number' : number,
-      'price': price
+      'price': price,
+      '_destroy':_destroy
     };
   }
   
   Map to_map_customer(){
     return {
       'id' : id,
-      'lane_id'  : laneId,
       'unit' : unit,
       'number' : number,
       'price': price,

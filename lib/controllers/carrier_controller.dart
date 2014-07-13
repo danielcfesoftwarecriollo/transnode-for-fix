@@ -67,7 +67,7 @@ class CarrierController {
       response.then((HttpResponse response) {
         print(response);
         if (response == null) return false;
-//        _router.go('carriers', {});
+       _router.go('carriers', {});
       });
     }
   }

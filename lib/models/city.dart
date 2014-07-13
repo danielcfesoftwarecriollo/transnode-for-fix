@@ -17,8 +17,6 @@ class City extends RecordModelNested{
   void expand() {
     _expanded = !_expanded;
   }
-
-
   
   Map to_map() {
     return {

@@ -2,16 +2,17 @@ part of transnode;
 
 class Lane extends RecordModelNested{
   int id;
-  int term1;
-  int term2;
-  int carrierId;
+  int term1Id;
+  int term2Id;
   String serviceNote;
   List <Price> prices;
   bool _expanded;
-  
+  City  term1;
+  City  term2;
   
   Lane(){
     prices = [];
+    _expanded = false;
     this._validator = new LaneValidator(this);
   }
   
@@ -33,20 +34,19 @@ class Lane extends RecordModelNested{
   Map to_map() {
     return {
       'id' : id,
-      'term1'  : term1,
-      'term2' : term2,
+      'term1_id' : term1.id,
+      'term2_id' : term2Id,
       'service_note' : serviceNote,
-      'carrier_id': carrierId
+      '_destroy':_destroy
     };
   }
   
-  Map to_map_customer(){
+  Map to_map_carrier(){
     return {
       'id' : id,
-      'term1'  : term1,
-      'term2' : term2,
+      'term1_id'  : term1.id,
+      'term2_id' : term2Id,
       'service_note' : serviceNote,
-      'carrier_id': carrierId,
       '_destroy':_destroy
     };
   }

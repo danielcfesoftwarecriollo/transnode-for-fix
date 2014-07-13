@@ -46,7 +46,32 @@ class Carrier extends Entity {
         this.locations.add(l);
       });
     }
+
+    this.lanes = [];
+    if (map.containsKey("lanes_attributes")) {
+      map['lanes_attributes'].forEach((attr) {
+        Lane l = new Lane();
+        City c = new City();
+        City c2 = new City(); 
+        c.loadWithJson(attr['term1']);
+        c2.loadWithJson(attr['term2']);
+        attr.remove('term1');
+        attr.remove('term2');
+         l.term1 = c;
+         l.term2 = c2;
+         l.loadWithJson(attr);
+         this.lanes.add(l);
+      });
+    }
+
   }
+  
+//  void loadCity(Lane l, Map attr){
+//    City c = new City();
+//    c.loadWithJson(attr['term1']);
+//    attr.remove('term1');
+//    l
+//  }
 
   void delete_location(Location location) {
     if (location.is_new()) {
