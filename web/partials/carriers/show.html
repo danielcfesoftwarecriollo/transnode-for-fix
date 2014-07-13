@@ -1,4 +1,4 @@
-<div customer-controller id='customer_show' style="background-color: #fff;
+<div carrier-controller id='carrier_show' style="background-color: #fff;
 padding: 20px;
 border-radius: 5px;">
 <button class="btn btn-info" ng-click="ctrl.to_index()" style="
@@ -6,11 +6,11 @@ border-radius: 5px;">
     margin-top: 20px;
 ">Back</button>
 
-  <h2>Customer  <h3>{{ctrl.customer.name}}-#{{ctrl.customer.id}}</h3> </h2>
+  <h2>Carrier  <h3>{{ctrl.carrier.name}}-#{{ctrl.carrier.id}}</h3> </h2>
   
   <div class="locations" style="margin: 40px 10px;" >
     <h4>Locations </h4>
-    <div class="location" ng-repeat="location in ctrl.customer.locations" >
+    <div class="location" ng-repeat="location in ctrl.carrier.locations" >
       <div class="row">
         <div class="col-xs-3">
           <p><span>name: </span>{{location.name}}</p>
@@ -89,78 +89,40 @@ border-radius: 5px;">
     </div>
   </div>
 
-
-  <div class='row'>
-    <div class="col-xs-4">
-      <p><span>credit note: </span>{{ctrl.customer.creditNote}}</p>
+  <div class="lanes">
+    <div class="row">
+      <div class="col-xs-3 col-xs-offset-1">
+        <h4>Lanes: </h4>
+      </div>
     </div>
-    <div class="col-xs-4">
-      <p><span>credit limit: </span>{{ctrl.customer.creditLimit}}</p>
-    </div>
-    <div class="col-xs-4">
-      <p><span>balance: </span>{{ctrl.customer.balance}}</p>
-    </div>
-  
-    <div class="col-xs-4">
-      <p><span>tax id: </span>{{ctrl.customer.taxId}}</p>
-    </div>
-    <div class="col-xs-4">
-      <p><span>invoice method: </span>{{ctrl.customer.invoiceMethod}}</p>
-    </div>
-    <div class="col-xs-4">
-      <p><span>requirePOD: </span>{{ctrl.customer.requiredPod}}</p>
-    </div>
-  
-    <div class="col-xs-4">
-      <p><span>currency: </span>{{ctrl.customer.currency}}</p>
-    </div>
-
-    <div class="col-xs-4">
-      <p><span>terms: </span>{{ctrl.customer.terms}}</p>
-    </div>
-
-    <div class="col-xs-4" >
-      <p><span>rating: </span>{{ctrl.customer.rating}}</p>
-    </div>
-  </div>
-
-  <div class="bill_to"> BILL TO </div>
-
-
-  <div class='row'>
-    <div class="col-xs-4">
-      <label class="control-label">import customs broker</label>
-      <span>{{ctrl.customer.importCustomsBrokerId}}</span>
-    </div>
-
-    <div class="col-xs-4">
-      <label class="control-label">export customs broker</label>
-      <span>{{ctrl.customer.exportCustomsBrokerId}}</span>
-    </div>
-
-    <div class="col-xs-4">
-      <label class="control-label">currency risk factor</label>
-      <span>{{ctrl.customer.currencyRiskFactor}}</span>
-    </div>
-  
-    <div class='col-xs-8'>
-      <div class="form-group">
-        <label for="customer_notes" class="col-sm-2 control-label">Notes</label>
-        <div class="col-sm-10">
-          <p>{{ctrl.customer.note}}</p>
+    <div class="lane" ng-repeat='lane in ctrl.carrier.lanes' >
+      <div class="row">
+        <div class="col-xs-3"></div>
+        <div class="col-xs-3">
+          <p><span>term1: </span>{{lane.term1.name}} - ({{lane.term1.code}})</p>
+        </div>
+        <div class="col-xs-3">
+          <p><span>term2: </span>{{lane.term2.name}} - ({{lane.term2.code}})</p>
+        </div>
+        <div class="col-xs-3">
+          <p><span>note: </span>{{lane.serviceNote}}</p>
         </div>
       </div>
     </div>
+  </div>
+  <hr>
 
-    <div class='col-xs-4'>
-      <div>
-        <label class="control-label">sales rep</label>
-        <span>{{ctrl.customer.salesRepId}}</span>
+  <div class='row'>
+    <div class="col-xs-4">
+      <p><span>currency: </span>{{ctrl.carrier.currency}}</p>
+    </div>
+    <div class='col-xs-8'>
+      <div class="form-group">
+        <label for="carrier_notes" class="col-sm-2 control-label">Notes</label>
+        <div class="col-sm-10">
+          <p>{{ctrl.carrier.note}}</p>
+        </div>
       </div>
-      <div>
-        <label class="control-label">territory</label>
-        <span>{{ctrl.customer.territoryId}}</span>
-      </div>        
     </div>
   </div>
   <div class="row">

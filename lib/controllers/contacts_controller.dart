@@ -44,9 +44,6 @@ class ContactsController {
     }
   }
 
-  void todo() {
-    window.alert("TODO");
-  }
   void _config_data_form(){
     _contactService.form().then((data){
       this.locations = data["locations"];

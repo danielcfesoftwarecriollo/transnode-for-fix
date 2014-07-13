@@ -124,6 +124,10 @@ class CarrierController {
       if (response == null) return false;
     });
   }
+
+  void to_index(){
+    _router.go('carriers', {});
+  }
   
   bool get has_carriers => this.carriers.isNotEmpty;
   bool _isEditPath() => _routeProvider.routeName == 'carrier_edit';

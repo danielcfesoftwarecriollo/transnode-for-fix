@@ -132,14 +132,6 @@ class CustomerController {
     });
   }
   
-//  void _load_form_customers() {
-//    var response = this._customerService.index();
-//    response.then((HttpResponse response) {
-//      response.data.forEach(_add_customer);
-//      if (response == null) return false;
-//    });
-//  }
-  
   void _loadForm_step2(Map formData) {
     this.billTo = formData['bill_to'];
     this.billTos = formData['bill_tos'];
@@ -186,6 +178,10 @@ class CustomerController {
     Customer customer = new Customer();
     customer.loadWithJson(json);
     this.customers.add(customer);
+  }
+
+  void to_index(){
+    _router.go('carriers', {});
   }
 
   bool _isEditPath() => _routeProvider.routeName == 'customer_edit';
