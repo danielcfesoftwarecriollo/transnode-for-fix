@@ -594,7 +594,23 @@
             </table>
           </div>
         </div>
+
         <div class="row">
+          <div id="rate" class="col-md-6 rates">
+            <h3>Rate this shipment</h3>
+            <div>
+              <label for="speed-rating">Speed:</label>
+              <rating id="speed-rating" max-rating="5" rating="ctrl.shipment.speed_rating">
+            </div>
+            <div>
+              <label for="quality-rating">Quality:</label>
+              <rating id="quality-rating" max-rating="5" rating="ctrl.shipment.quality_rating">
+            </div>
+            <div>
+              <label for="price-rating">Price:</label>
+              <rating id="price-rating" max-rating="5" rating="ctrl.shipment.price_rating">
+            </div>
+          </div>
           <div class="col-md-offset-6 col-md-1">
             <button class="btn btn-primary">
               Save

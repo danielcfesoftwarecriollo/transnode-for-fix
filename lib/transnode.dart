@@ -21,6 +21,7 @@ part 'services/custom_header.dart';
 part 'services/location_service.dart';
 part 'services/customer_service.dart';
 part 'services/carrier_service.dart';
+part 'services/shipment_service.dart';
 part 'services/session_service.dart';
 part 'services/users_service.dart';
 
@@ -30,6 +31,7 @@ part 'controllers/carrier_controller.dart';
 part 'controllers/contacts_controller.dart';
 part 'controllers/login_controller.dart';
 part 'controllers/messages_controller.dart';
+part 'controllers/shipment_controller.dart';
 part 'controllers/shipment_order_controller.dart';
 part 'controllers/users_controller.dart';
 part 'controllers/locations_list_controller.dart';
@@ -44,7 +46,7 @@ part 'models/price.dart';
 part 'models/customer.dart';
 part 'models/carrier.dart';
 part 'models/location.dart';
-part 'models/shipment_order.dart';
+part 'models/shipment.dart';
 part 'models/shipper.dart';
 part 'models/user.dart';
 part 'models/city.dart';
@@ -73,12 +75,16 @@ class TransnodeModule extends Module {
     type(ContactsController);
     type(MessagesController);
     type(ShipmentOrderController);
+    type(ShipmentsController);
     type(CustomerController);
     type(CarrierController);
     type(UsersController);
+    
+    type(RatingComponent);
 
     type(UserService);
     type(ApiService);
+    type(ShipmentService);
     type(MessagesService);
     type(SessionService);
     type(ContactService);
