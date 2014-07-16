@@ -126,3 +126,6 @@ body{background-color:#eee;font-size:16px;padding-bottom:20px}nav .navbar-user{d
   width: 80px;
 }
 
+.rates label{
+  width: 60px;
+}
