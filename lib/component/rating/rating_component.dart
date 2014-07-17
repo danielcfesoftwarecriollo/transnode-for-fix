@@ -3,7 +3,6 @@ part of transnode;
     selector: 'rating',
     templateUrl: 'packages/transnode/component/rating/rating_component.html',
     cssUrl: 'packages/transnode/component/rating/rating_component.css',
-
     publishAs: 'cmp')
 class RatingComponent {
   static const String _STAR_ON_CHAR = "\u2605";

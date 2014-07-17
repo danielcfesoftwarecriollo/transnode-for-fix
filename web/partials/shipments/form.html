@@ -40,7 +40,7 @@
           </div>
         </div>
       </div>
-      <div class="step1" ng-show="false">
+      <div class="step1" ng-show="ctrl.inStep(1)">
         <div class="row" style="margin-bottom: 0;" >
           <div class="col-md-2">
             <div class="row">
@@ -147,7 +147,7 @@
               <div class="row">
                 <div class="col-xs-8">
                   <div class="col-xs-12">
-                    <label class="title-label" for="lanecode">Shipper</label>
+                    <label class="title-label" for="lanecode">Shipper 1</label>
                     <select style="width:70%" ng-model='location.laneCode' id="lanecode" class="form-control">
                       <option value="" disabled selected>Lane Code</option>
                       <option selected >ABC</option>
@@ -420,17 +420,145 @@
             </div>
           </div>
           <div class="col-md-2">
-            <button class="btn-primary">
+            <button ng-click="ctrl.toStep(2)" class="btn-primary">
               Next Page
             </button>
           </div>
         </div>
       </div>
-      <div class="step2">
+      <div class="step2" ng-show="ctrl.inStep(2)">
         <div class="row">
           <div class="col-md-12">
             <div class="resumen-step1">
               resumen form step1
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-6 container-info">
+              <div class="" >
+                <div class="row">
+                  <div class="col-xs-7">
+                    <div class="col-xs-12">
+                      <label class="title-label" for="lanecode">Shipper 2</label>
+                      <select style="width:70%" ng-model='location.laneCode' id="lanecode" class="form-control">
+                        <option value="" disabled selected>Lane Code</option>
+                        <option selected >ABC</option>
+                      </select>
+                    </div>
+                    <div class="col-xs-12">
+                      <label for="">Name</label>
+                    </div>
+                    <div class="col-xs-12">
+                      <label for="">Address</label>
+                    </div>
+                    <div class="col-xs-12">
+                      <label for="">City, Zip, Country</label>
+                    </div>
+                    <div class="col-xs-12">
+                      <label for="">Contact Name</label>
+                    </div>
+                  </div>
+                  <div class="col-xs-5">
+                    <button class="btn-primary btn-vertical" >Add New Shipper</button>
+                    <button class="btn-primary btn-vertical" >View Carrier & Prices</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 container-info">
+              <div class="row">
+                <div class="col-md-3">
+                  <label class="title-align" style="line-height: 60px;" >Various info</label>
+                </div>
+                <div class="col-md-4">
+                  <select ng-model='location.customer' id="customer" class="form-control">
+                    <option value="" disabled selected>Lane Code</option>
+                    <option selected >ABC</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <select ng-model='location.customer' id="customer" class="form-control">
+                    <option value="" disabled selected>Lane Code</option>
+                    <option selected >ABC</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <select ng-model='location.customer' id="customer" class="form-control" style="margin-top: 10px;">
+                    <option value="" disabled selected>Lane Code</option>
+                    <option selected >ABC</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <label for="">Insure. Amt</label>
+                </div>
+                <div class="col-md-3">
+                  <input type="text" style="width: 100%;" >
+                </div>
+                <div class="col-md-3">
+                  <label for="">Other</label>
+                </div>
+                <div class="col-md-3">
+                  <input type="text" style="width: 100%;">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-6 container-info">
+              <div class="" >
+                <div class="row">
+                  <div class="col-xs-7">
+                    <div class="col-xs-12">
+                      <label class="title-label" for="lanecode">Shipper</label>
+                      <select style="width:70%" ng-model='location.laneCode' id="lanecode" class="form-control">
+                        <option value="" disabled selected>Lane Code</option>
+                        <option selected >ABC</option>
+                      </select>
+                    </div>
+                    <div class="col-xs-12">
+                      <label for="">Name</label>
+                    </div>
+                    <div class="col-xs-12">
+                      <label for="">Address</label>
+                    </div>
+                    <div class="col-xs-12">
+                      <label for="">City, Zip, Country</label>
+                    
+                    </div>
+                    <div class="col-xs-12">
+                      <label for="">Contact Name</label>
+                    </div>
+                  </div>
+                  <div class="col-xs-5">
+                    <button class="btn-primary btn-vertical" >Add New Shipper</button>
+                    <button class="btn-primary btn-vertical" >Add New location for an existings</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 container-info">
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="title-align" for="instructions">Instructions</label>
+                </div>
+                <div class="col-md-12">
+                  <textarea rows="3" class="form-control" ></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="title-align" for="appointment">Appointment</label>
+                  <input type="text" >
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -462,7 +590,6 @@
                   </div>
                   <div class="col-xs-5">
                     <button class="btn-primary btn-vertical" >Add New Shipper</button>
-                    <button class="btn-primary btn-vertical" >View Carrier & Prices</button>
                   </div>
 
                 </div>
@@ -470,45 +597,55 @@
             </div>
             <div class="col-md-6 container-info">
               <div class="row">
-                <div class="col-md-12">
-                  <label class="title-align" for="instructions">Instructions</label>
-                  <input type="text" id="instructions">
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-5">
-                  <label for="" class="title-label title-align">Ready Date</label>
-                  <input type="text" class="input-label" id="ready-date">
-                  <i class="fa fa-calendar"></i>
+                <div class="col-md-3">
+                  <label class="title-align" style="line-height: 60px;" >Various info</label>
                 </div>
                 <div class="col-md-4">
-                  <label for="#open-from" class="title-label" >Open from</label>
-                  <input type="text" class="input-label" id="open-from">
+                  <select ng-model='location.customer' id="customer" class="form-control">
+                    <option value="" disabled selected>Lane Code</option>
+                    <option selected >ABC</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <select ng-model='location.customer' id="customer" class="form-control">
+                    <option value="" disabled selected>Lane Code</option>
+                    <option selected >ABC</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <select ng-model='location.customer' id="customer" class="form-control" style="margin-top: 10px;">
+                    <option value="" disabled selected>Lane Code</option>
+                    <option selected >ABC</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <label for="">Insure. Amt</label>
                 </div>
                 <div class="col-md-3">
-                  <label for="#open-to" class="title-label" >To</label>
-                  <input type="text" class="input-label" id="open-to">
+                  <input type="text" style="width: 100%;" >
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <label class="title-align" for="appointment">Appointment</label>
-                  <input type="text" id="appointment">
-                  <i class="fa fa-calendar"></i>
-                  <input type="text" id="spec-handl-hour">
+                <div class="col-md-3">
+                  <label for="">Other</label>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <label class="title-align" for="spec-handl">Spec. Handl</label>
-                  <textarea id="spec-handl" class="form-control" ></textarea>
+                <div class="col-md-3">
+                  <input type="text" style="width: 100%;">
                 </div>
               </div>
             </div>
           </div>
         </div>
+
         <div class="row">
           <div class="col-md-12">
+            <button class="btn-primary btn pull-left" >Add one more Carrier</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <h3>The estimated and agreed costs and revenue</h3>
             <table  class="table table-striped table-shipment">
               <tr>
                 <th>Seq</th>
@@ -596,7 +733,7 @@
         </div>
 
         <div class="row">
-          <div id="rate" class="col-md-6 rates">
+          <div id="rate" class="col-md-5 rates">
             <h3>Rate this shipment</h3>
             <div>
               <label for="speed-rating">Speed:</label>
@@ -611,7 +748,12 @@
               <rating id="price-rating" max-rating="5" rating="ctrl.shipment.price_rating">
             </div>
           </div>
-          <div class="col-md-offset-6 col-md-1">
+          <div class="col-md-1">
+            <button ng-click="ctrl.toStep(1)" class="btn btn-primary">
+              Back
+            </button>
+          </div>
+          <div class="col-md-1">
             <button class="btn btn-primary">
               Save
             </button>
@@ -625,6 +767,71 @@
             <button class="btn btn-primary">
               Make Customer Confirmation
             </button>
+          </div>
+        </div>
+      </div>
+      <div class="step3" ng-show="ctrl.inStep(3)">
+        <div class="row">
+          <div class="col-md-7">
+            <div class="row">
+              <div class="col-md-12">
+                <label class="title-align" for="spec-handl">Notes</label>
+                <textarea id="spec-handl" class="form-control" ></textarea>
+                <div class="row">
+                  <div class="col-md-12">
+                    <button class="btn-primary btn pull-right" style="margin-top: 15px;" >Save</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <span>22/22/2014</span>
+                <span>Author</span>
+              </div>
+              <div class="col-md-9">
+                <p>orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+              </div>
+            </div>
+            <div class="row">
+              <h3>Documents Uploaded</h3>
+              <table class="table">
+                <tr>
+                  <td>
+                    <i class="fa fa-file-pdf-o"></i>
+                  </td>
+                  <td>Date: Mar 17</td>
+                  <td>Document type: Inv</td>
+                  <td>
+                    <a href="#">View Download</a>
+                  </td>
+                </tr>
+              </table>              
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <button class="btn-primary btn" >Add New</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="row">
+              <div class="col-md-12">
+                <h3>Emails</h3>
+                <table class="table">
+                  <tr>
+                    <th>Date</th>
+                    <th>From</th>
+                    <th>Subject</th>
+                  </tr>
+                  <tr>
+                    <td>03/10/2014</td>
+                    <td>Jhon M</td>
+                    <td><a href="#">About the Quote</a></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>

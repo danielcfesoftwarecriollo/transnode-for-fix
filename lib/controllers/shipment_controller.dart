@@ -9,9 +9,11 @@ class ShipmentsController {
   @NgTwoWay("shipment")
   Shipment shipment;
   List<Shipment> shipments;
+  int  step;
 
   ShipmentsController(this._shipmentService, this._routeProvider, this._router) {
     this.shipment = new Shipment();
+    this.step = 2;
 
    if (_isEditPath()) {
      _shipmentService.get(_routeProvider.parameters['shipmentId']).then((_) =>
@@ -25,6 +27,9 @@ class ShipmentsController {
    }
 
   }
+
+  bool inStep(int step) => step == this.step;  
+  void toStep(int step) => this.step = step;
 
   void load_form(){
     _shipmentService.loadForm().then((response){
