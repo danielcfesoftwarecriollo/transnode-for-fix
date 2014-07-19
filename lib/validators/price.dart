@@ -8,7 +8,6 @@ class PriceValidator extends Validator {
 
   bool run_validations() {
     this.clean_errors();
-    required_field(_price.laneId, "laneid");
     required_field(_price.unit, "unit");
     required_field(_price.number, "number");
     required_field(_price.price, "price");

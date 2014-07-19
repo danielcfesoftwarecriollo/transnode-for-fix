@@ -34,7 +34,7 @@ class Lane extends RecordModelNested{
   Map to_map() {
     return {
       'id' : id,
-      'term1_id' : term1.id,
+      'term1_id' : term1Id,
       'term2_id' : term2Id,
       'service_note' : serviceNote,
       '_destroy':_destroy

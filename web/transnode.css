@@ -1,1 +1,115 @@
 body{background-color:#eee;font-size:16px;padding-bottom:20px}nav .navbar-user{display:inline-block;padding-top:10px}table .id{width:100px}table .actions{text-align:center;width:140px}table .role{width:150px}input,select,textarea,.btn{border-radius:0!important}hr{border-top:1px solid #aaa}select{-webkit-appearance:none;appearance:none;background-image:url(style/img/flechas.png)!important;background-repeat:no-repeat;background-position-x:right;background-color:#fff;background-position-y:6px}[messages-controller]{z-index:10;position:fixed;right:10px}[messages-controller] .alert{padding:8px;margin-bottom:10px;width:350px}.form-signin{max-width:330px;padding:15px;margin:0 auto}.form-signin .form-signin-heading,.form-signin .checkbox{margin-bottom:10px}.form-signin .checkbox{font-weight:400}.form-signin .form-control{position:relative;height:auto;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;padding:10px;font-size:16px}.form-signin .form-control:focus{z-index:2}.form-signin input[type=email]{margin-bottom:-1px;border-bottom-right-radius:0;border-bottom-left-radius:0}.form-signin input[type=password]{margin-bottom:10px;border-top-left-radius:0;border-top-right-radius:0}form .row{display:block;margin-bottom:20px}form p.error{color:#a94442}.form-horizontal .control-label{text-align:left}.table-users{margin-top:40px}.form-new-user .email{width:360px}.form-new-user .password{width:360px}.form-new-user .role{width:300px}.form-new-user .btn-add-user{float:right}form .locations,form .contacts{position:relative}form .locations .btn.add,form .contacts .btn.add{position:relative;margin-left:90%;bottom:0 right:0}form p.field{line-height:2em}.icon-img-pluss{background-image:url(style/img/pluss.png)!important;height:25px;width:25px;display:inline-block;margin-bottom:-5px;margin-right:10px;margin-left:-10px}.btn{padding:6px 20px}.not-margin{margin:0!important}.not-paddin{padding:0!important}.text-v-center{padding-left:0;line-height:30px}.btn-primary{background-color:#6f7d8a;border-color:#56616b;font-weight:100;font-size:18px}.btn-primary:hover,.btn-primary:focus,.btn-primary:active,.btn-primary.active,.open .dropdown-toggle.btn-primary{color:#fff;background-color:#606C77;border-color:#4C555E}.change-inner-content>div{margin-top:20px}.margintitle{margin-bottom:50px}.marginlabeltop{padding-top:25px}#customer_show p>span,#carrier_show p>span{margin-right:10px;font-weight:700;width:120px}.item-lane{padding-top:15px;border-bottom:1px solid #ccc}
+
+.btn-vertical{
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.lanes{
+  margin-top: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.title-align{
+  min-width: 100px;
+}
+
+.title-label{
+  float: left;
+  margin-right: 5px;
+}
+
+.input-label{
+  width: 40%;
+}
+
+.container-info{
+  padding-top: 15px;
+  padding-bottom: 0;
+  border: 1px solid #c1c1c1;
+  background-color: #fff;
+}
+
+.credit-info{
+  padding-top: 15px;
+  padding-bottom: 0;
+  border: 1px solid #c1c1c1;
+  background-color: #fff;
+}
+.credit-info .form-group {
+  margin-bottom: 0; 
+}
+.credit-info .form-group label{
+  float: left;
+  margin-right: 5px;
+}
+.credit-info .form-group select{
+  width: 60%;
+}
+.credit-info .form-group input{
+  width: 75px;
+}
+.info-shipment{
+  background-color: #F5F5F5;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border: 1px solid #c1c1c1;
+}
+
+.container-lanes .lane{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 1px;
+}
+
+.container-lanes.shippers .lane, .shippers .container-info{
+  background-color: #FFD569;
+}
+.container-lanes.consignees .lane, .consignees .container-info{
+  background-color: #B6D7A8;
+}
+
+.container-lanes .lane select{
+  height: 26px;
+  padding: 2px 12px;
+  background-position-y: 3px;
+}
+
+.container-lanes .lanes span{
+ font-size: 13px;
+}
+
+.container-lanes .col-mod{
+  padding-right: 5px;
+  padding-left: 5px;
+}
+.container-lanes .col-mod span{
+  width: 30%;
+  padding-right: 5px;
+  padding-left: 5px;
+  line-height: 24px;
+}
+.container-lanes .lanes input{
+  width: 70%;
+}
+
+.container-lanes span{
+  float: left;
+}
+.container-lanes .ln-number{
+  width: 5%;
+}
+
+.container-lanes .ln-number span{
+  width: 100%;
+}
+
+.container-lanes .ln-delete{
+  width: 2.333333%;
+}
+
+.inner-without-padding > div{
+  padding-left: 0;
+  padding-right: 0;
+}
