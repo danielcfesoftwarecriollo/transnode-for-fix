@@ -3,10 +3,14 @@ library transnode;
 import 'dart:async';
 import 'dart:html';
 import 'dart:convert';
+
+
 import 'package:angular/angular.dart';
 import 'package:angular/routing/module.dart';
 import 'package:ctrl_alt_foo/keys.dart';
 import "dart:mirrors"; 
+
+part 'component/rating/rating_component.dart';
 
 part 'routes/transnode_routes.dart';
 part 'services/api_service.dart';
