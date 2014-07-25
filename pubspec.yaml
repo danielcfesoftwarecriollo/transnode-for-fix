@@ -10,5 +10,6 @@ dependencies:
   ctrl_alt_foo: any
   route_hierarchical: 0.4.15
   dquery: any
+  html_components: any
 dev_dependencies:
     dartmocks: ">= 0.5.0"

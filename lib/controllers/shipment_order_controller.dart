@@ -4,9 +4,9 @@ part of transnode;
     selector: '[shipment-order-controller]',
     publishAs: 'shipment_order_controller')
 class ShipmentOrderController {
-  ShipmentOrder shipment_order;
+//  ShipmentOrder shipment_order;
 
   ShipmentOrderController() {
-    this.shipment_order = new ShipmentOrder();
+//    this.shipment_order = new ShipmentOrder();
   }
 }
