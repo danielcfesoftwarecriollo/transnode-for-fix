@@ -21,9 +21,21 @@ class ShipmentService {
   
   Future load_data(String stringUrl) {
     return _api.request("post", url + stringUrl)
-      .then((HttpResponse response) => response.data);
+      .then((HttpResponse response){
+      return response.data;
+    });
   }
-  
+
+  Future load_consigneLocations(int customerId){
+    String urlService = "/consignee_locations/"+customerId.toString();
+    return load_data(urlService);    
+  }
+
+  Future load_location(int locationId){
+    String urlService = "/location/"+locationId.toString();
+    return load_data(urlService);    
+  }
+
   Future<Shipment> get(String shipmentId) {
     return _api.request("get", url + "/" + shipmentId.toString())
       .then((HttpResponse response) => _loadShipment(response.data));

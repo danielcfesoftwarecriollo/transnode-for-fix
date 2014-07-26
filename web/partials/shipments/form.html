@@ -218,35 +218,35 @@
                   <div class="col-md-12 lane">
                     <div class="col-mod col-md-1 col-xs-4 ln-number" ><span>Ln 1</span></div>
                     <div class="col-mod col-md-1 col-xs-4"><span>H</span>
-                      <input type="text">
+                      <input ng-model="line.height" type="text">
                     </div>
                     <div class="col-mod col-md-1 col-xs-4"><span>W</span>
-                      <input type="text">
+                      <input ng-model="line.width" type="text">
                     </div>
                     <div class="col-mod col-md-1 col-xs-4"><span>L</span>
-                      <input type="text">
+                      <input ng-model="line.length" type="text">
                     </div>
                     <div class="col-mod col-md-1 col-xs-4"><span>Pcs</span>
-                      <input type="text">
+                      <input ng-model="line.num_pcs" type="text">
                     </div>
                     <div class="col-mod col-md-2 col-xs-4"><span>Weight</span>
-                      <input type="text">
+                      <input ng-model="line.weight" type="text">
                     </div>
                     <div class="col-mod col-md-3 col-xs-4 inner-without-padding">
                       <div class="col-md-4">
                         <span style="width: 100%;">Haz class</span>
                       </div>
                       <div class="col-md-8">
-                        <select ng-model='location.laneCode' id="lanecode" class="form-control">
+                        <select ng-model='line.hazClass' id="lanecode" class="form-control">
                           <option value="" disabled selected>Select Class</option>
                           <option selected >ABC</option>
                         </select>
                       </div>
                     </div>
                     <div class="col-mod col-md-2 col-xs-4">
-                      <select ng-model='location.laneCode' id="lanecode" class="form-control">
-                        <option value="" disabled selected>Select Consignee</option>
-                        <option selected >ABC</option>
+                      <select ng-change="ctrl.change_line(line)" ng-model='line.consigneId' id="consignee" class="form-control">
+                        <option value="" disabled selected>Select consignee</option>
+                        <option ng-repeat='consignee in ctrl.consignees' ng-value='consignee.id' ng-selected="consignee.locationCustomer.id == line.consigneId">{{consignee.consigneeName}}({{consignee.locationCustomer}})</option>
                       </select>
                       </div>
                     <div class="col-mod col-md-1 col-xs-4 ln-delete">
@@ -259,12 +259,12 @@
           </div>
           <div class="row">
             <div class="col-md-7">
-              <button type="button" ng-click="ctrl.addSecondShipper()" ng-show="ctrl.hasValidShipper()" class="btn btn-primary btn-lg">
+              <button type="button" ng-click="ctrl.addSecondShipper()" ng-hide="ctrl.hasValidShipper()" class="btn btn-primary btn-lg">
                 <i class="fa fa-plus"></i> Second Shipper
               </button>
             </div>
             <div class="col-md-3">
-              <button type="button" class="btn btn-primary btn-lg">
+              <button type="button" ng-hide="ctrl.hasValidConsignee()" class="btn btn-primary btn-lg">
                 <i class="fa fa-plus"></i> New Consignee Location
               </button>
             </div>
@@ -274,8 +274,23 @@
               </button>
             </div>
           </div>
+          <div class="col-md-5 pull-right" style=" background-color: #fff;padding: 10px;margin-bottom: 15px; border: 1px solid #ccc; margin-top: -15px;">
+
+            <label class="title-label" for="lanecode">Consignee</label>
+            <select ng-model='ctrl.consignee_id' ng-change="ctrl.change_consignee()" id="consignee" class="form-control">
+              <option value="" disabled selected>Select consignee</option>
+              <option ng-repeat='consignee in ctrl.consignees_to_select' ng-value='consignee[0]' ng-selected="consignee[0] == ctrl.consignee_id">{{consignee[1]}}</option>
+            </select>
+
+            <label class="title-label" for="lanecode">Location</label>
+            <select ng-model='ctrl.consigneeLocation_id' id="location" class="form-control">
+              <option value="" disabled selected>Select Location</option>
+              <option ng-repeat='location in ctrl.consigne_locations' ng-value='location[0]' ng-selected="location[0] == ctrl.consigneeLocation_id">{{location[1]}}</option>
+            </select>
+            <button class="btn btn-primary" ng-click="ctrl.addConsignee()" >Add Consignee Location</button>
+          </div>
         </div>
-        <div class="row consignees container-lanes clear-margin-bottom">
+        <div ng-repeat="consignee in ctrl.consignees" class="row consignees container-lanes clear-margin-bottom">
           <div class="col-md-6 container-info">
             <div class="" >
               <div class="row">
@@ -284,17 +299,21 @@
                     <label class="title-label" for="lanecode">Consignee</label>
                   </div>
                   <div class="col-xs-12">
-                    <label for="">Name: </label>
+                    <label for="">Name: {{consignee.locationCustomer.name}}</label>
                   </div>
                   <div class="col-xs-12">
-                    <label for="">Address: </label>
+                    <label for="">Address 1:{{consignee.locationCustomer.address1}} </label>
                   </div>
                   <div class="col-xs-12">
-                    <label for="">City, Zip, Country: </label>
+                    <label for="">Address 2:{{consignee.locationCustomer.address2}} </label>
                   </div>
                   <div class="col-xs-12">
-                    <label for="">Contact Name: </label>
+                    <label for="">City: {{consignee.locationCustomer.city}}, Zip:{{consignee.locationCustomer.zip}}, Country:{{consignee.locationCustomer.country['name']}} </label>
                   </div>
+                  <div class="col-xs-12">
+                    <label for="">Contact Name: {{consignee.locationCustomer.contacts.first.name}}</label>
+                  </div>
+
                   <div class="col-xs-12">
                     <label for="">Open from: </label>
                     <input type="text">
@@ -343,32 +362,32 @@
             </div>
           </div>
           <div class="row clear-margin-bottom">
-            <div class="col-md-12">
+            <div ng-repeat="line in consignee.lines" class="col-md-12">
               <div class="lanes" style="margin-top: 15px;">
                 <div class="row">
                   <div class="col-md-12 lane">
                     <div class="col-mod col-md-1 col-xs-4 ln-number" ><span>Ln 1</span></div>
                     <div class="col-mod col-md-1 col-xs-4"><span>H</span>
-                      <input type="text">
+                      <input ng-model="line.height" readonly type="text">
                     </div>
                     <div class="col-mod col-md-1 col-xs-4"><span>W</span>
-                      <input type="text">
+                      <input ng-model="line.width" readonly type="text">
                     </div>
                     <div class="col-mod col-md-1 col-xs-4"><span>L</span>
-                      <input type="text">
+                      <input ng-model="line.length" readonly type="text">
                     </div>
                     <div class="col-mod col-md-1 col-xs-4"><span>Pcs</span>
-                      <input type="text">
+                      <input ng-model="line.num_pcs" readonly type="text">
                     </div>
                     <div class="col-mod col-md-2 col-xs-4"><span>Weight</span>
-                      <input type="text">
+                      <input ng-model="line.weight" readonly type="text">
                     </div>
                     <div class="col-mod col-md-3 col-xs-4 inner-without-padding">
                       <div class="col-md-4">
                         <span style="width: 100%;">Haz class</span>
                       </div>
                       <div class="col-md-8">
-                        <input type="text">
+                        <input ng-model="line.hazClass" readonly type="text">
                       </div>
                     </div>
                   </div>

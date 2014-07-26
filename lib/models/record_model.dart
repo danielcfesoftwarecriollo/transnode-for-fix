@@ -5,7 +5,7 @@ abstract class RecordModel {
   Validator _validator;
 
   bool is_valid(){
-   return _validator.run_validations();    
+   return _validator.run_validations();
   }
   
   bool is_new() => id == null;

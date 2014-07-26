@@ -1,7 +1,8 @@
 part of transnode;
 
 class Consignee extends RecordModel{
-  String code;
+  int id;
+  String consigneeName;
   String openFrom;
   String openTo;
   String instructions;
@@ -11,10 +12,12 @@ class Consignee extends RecordModel{
   String receivedBy;
   String receivedDate;
   String receivedHour;
+  Customer customer;
+  Location locationCustomer;
   List<Line> lines;
   
   Consignee(){
-    this.lines = [new Line()]; 
+    this.lines = []; 
   }
   
   void addNewLane(){

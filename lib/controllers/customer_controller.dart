@@ -154,7 +154,7 @@ class CustomerController {
        print(currentLocation.states);
      });
   }
-  
+
   List getStatesByCountry(String countryId) {
     if(countryId.toString() != 'null'){
       return this.statesOfCountries[countryId]['states'];

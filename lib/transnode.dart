@@ -6,7 +6,7 @@ import 'dart:convert';
 
 import 'package:polymer/polymer.dart';
 import 'package:html_components/html_components.dart' show DialogComponent, GrowlComponent;
-
+import 'data/user.dart' as data;
 
 import 'package:angular/angular.dart';
 import 'package:angular/routing/module.dart';
@@ -52,6 +52,7 @@ part 'models/location.dart';
 part 'models/shipment.dart';
 part 'models/line.dart';
 part 'models/shipper.dart';
+part 'models/consignee.dart';
 part 'models/user.dart';
 part 'models/city.dart';
 

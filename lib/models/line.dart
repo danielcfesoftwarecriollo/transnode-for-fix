@@ -6,9 +6,9 @@ class Line extends RecordModelNested{
   var height;
   var weight;
   var width; 
-  int num_pcs;
-  int hazClass;
-  int consigneId;
+  var num_pcs;
+  var hazClass;
+  var consigneId;
    
   Line(){
 //    this._validator = new LineValidator(this);
