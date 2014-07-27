@@ -1,5 +1,5 @@
 part of transnode;
-@NgComponent(
+@Component(
     selector: 'rating',
     templateUrl: 'packages/transnode/component/rating/rating_component.html',
     cssUrl: 'packages/transnode/component/rating/rating_component.css',

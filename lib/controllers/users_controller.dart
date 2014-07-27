@@ -1,6 +1,6 @@
 part of transnode;
 
-@NgController(
+@Controller(
     selector: '[users-controller]',
     publishAs: 'usersCtrl')
 class UsersController {

@@ -1,6 +1,6 @@
 part of  transnode;
 
-@NgController(selector: '[location-controller]', publishAs: 'ctrl')
+@Controller(selector: '[location-controller]', publishAs: 'ctrl')
 class LocationController{
   Location _location;
   LocationService _location_service;

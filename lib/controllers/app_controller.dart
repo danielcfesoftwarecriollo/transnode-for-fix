@@ -1,8 +1,9 @@
 part of transnode;
 
-@NgController(
+@Controller(
     selector: '[transnode]',
     publishAs: 'app')
+    
 class AppController {
   UserService _user_service;
   Router _router;

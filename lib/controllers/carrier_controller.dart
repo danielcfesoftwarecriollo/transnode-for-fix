@@ -1,6 +1,6 @@
 part of transnode;
 
-@NgController(selector: '[carrier-controller]', publishAs: 'ctrl')
+@Controller(selector: '[carrier-controller]', publishAs: 'ctrl')
 class CarrierController {
   @NgTwoWay("carrier")
   Carrier carrier;

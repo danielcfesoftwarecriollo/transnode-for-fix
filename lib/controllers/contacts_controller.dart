@@ -1,6 +1,6 @@
 part of transnode;
 
-@NgController(selector: '[contact-controller]', publishAs: 'ctrl')
+@Controller(selector: '[contact-controller]', publishAs: 'ctrl')
 class ContactsController {
   @NgTwoWay("contact")
   Contact contact;

@@ -267,6 +267,14 @@
               <button type="button" ng-hide="ctrl.hasValidConsignee()" class="btn btn-primary btn-lg">
                 <i class="fa fa-plus"></i> New Consignee Location
               </button>
+              <div ng-hide="ctrl.hasValidConsignee()">
+                <div >
+                  <button type="button" ng-click="ctrl.open()" class="btn btn-primary btn-lg">
+                    <i class="fa fa-plus"></i> New Consignee Location
+                  </button>
+                </div>
+              </div>
+
             </div>
             <div class="col-md-2">
               <button type="button" ng-click='shipper.addNewLane()' class="btn btn-primary btn-lg">
@@ -274,7 +282,7 @@
               </button>
             </div>
           </div>
-          <div class="col-md-5 pull-right" style=" background-color: #fff;padding: 10px;margin-bottom: 15px; border: 1px solid #ccc; margin-top: -15px;">
+          <div  ng-show='false' class="col-md-5 pull-right" style=" background-color: #fff;padding: 10px;margin-bottom: 15px; border: 1px solid #ccc; margin-top: -15px;">
 
             <label class="title-label" for="lanecode">Consignee</label>
             <select ng-model='ctrl.consignee_id' ng-change="ctrl.change_consignee()" id="consignee" class="form-control">

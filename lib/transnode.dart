@@ -1,17 +1,26 @@
 library transnode;
 
 import 'dart:async';
-import 'dart:html';
+ import 'dart:html';
 import 'dart:convert';
+//import 'dart:html' as dom;
+import 'dart:math' as math;
+// import 'package:polymer/polymer.dart';
+// import 'package:html_components/html_components.dart' show DialogComponent, GrowlComponent;
+// import 'data/user.dart' as data;
 
-import 'package:polymer/polymer.dart';
-import 'package:html_components/html_components.dart' show DialogComponent, GrowlComponent;
-import 'data/user.dart' as data;
+import 'package:angular_ui/utils/extend.dart';
+import 'package:angular_ui/utils/injectable_service.dart';
 
 import 'package:angular/angular.dart';
 import 'package:angular/routing/module.dart';
 import 'package:ctrl_alt_foo/keys.dart';
 import "dart:mirrors"; 
+
+
+import 'package:angular/application_factory.dart';
+import 'package:angular_ui/angular_ui.dart';
+import 'package:angular_ui/utils/utils.dart';
 
 part 'component/rating/rating_component.dart';
 
@@ -67,38 +76,43 @@ part 'validators/lane.dart';
 
 
 class TransnodeModule extends Module {
+
   TransnodeModule() {
     type(RouteInitializerFn, implementedBy: TransnodeRouterInitializer);
-
-    factory(NgRoutingUsePushState,
-        (_) => new NgRoutingUsePushState.value(false));
-
+    factory(NgRoutingUsePushState,(_) => new NgRoutingUsePushState.value(false));
     type(HttpDefaultHeaders, implementedBy: HeadersWithToken);
 
-    type(AppController);
-    type(LoginController);
-    type(ContactsController);
-    type(MessagesController);
-    type(ShipmentOrderController);
-    type(ShipmentsController);
-    type(CustomerController);
-    type(CarrierController);
-    type(UsersController);
-    
-    type(RatingComponent);
+    install(new AngularUIModule());
+    //
+//    bind(ModalCtrlTemplate);
 
-    type(UserService);
-    type(ApiService);
-    type(ShipmentService);
-    type(MessagesService);
-    type(SessionService);
-    type(ContactService);
-    type(CustomerService);
-    type(CarrierService);
-    type(UsersService);
+    bind(AppController);
+    bind(LoginController);
+    bind(ContactsController);
+    bind(MessagesController);
+    bind(ShipmentOrderController);
+    bind(ShipmentsController);
+    bind(CustomerController);
+    bind(CarrierController);
+    bind(UsersController);
+    
+    bind(RatingComponent);
+
+    bind(UserService);
+    bind(ApiService);
+    bind(ShipmentService);
+    bind(MessagesService);
+    bind(SessionService);
+    bind(ContactService);
+    bind(CustomerService);
+    bind(CarrierService);
+    bind(UsersService);
   }
 }
 
 start() {
-  ngBootstrap(module: new TransnodeModule());
+//  ngBootstrap(module: new TransnodeModule());
+  applicationFactory()
+    .addModule(new TransnodeModule())
+    .run();
 }

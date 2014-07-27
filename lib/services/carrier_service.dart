@@ -1,6 +1,6 @@
 part of transnode;
 
-@NgInjectableService()
+@InjectableService()
 class CarrierService {
   static String url = '/carriers';
   UserService user;

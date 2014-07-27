@@ -1,6 +1,6 @@
 part of transnode;
 
-@NgController(
+@Controller(
     selector: '[shipment-order-controller]',
     publishAs: 'shipment_order_controller')
 class ShipmentOrderController {

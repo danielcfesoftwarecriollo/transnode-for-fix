@@ -1,6 +1,6 @@
 part of transnode;
 
-@NgController(selector: '[customer-controller]', publishAs: 'ctrl')
+@Controller(selector: '[customer-controller]', publishAs: 'ctrl')
 class CustomerController {
   @NgTwoWay("customer")
   Customer customer;

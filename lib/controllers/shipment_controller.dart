@@ -1,6 +1,18 @@
 part of transnode;
 
-@NgController(selector: '[shipment-controller]', publishAs: 'ctrl')
+
+// @Controller(selector: '[modal-ctrl-tmpl]', publishAs: 'ctrl')
+// class ModalCtrlTemplate {
+
+  
+//   ModalCtrlTemplate();
+  
+
+// }
+
+
+
+@Controller(selector: '[shipment-controller]', publishAs: 'ctrl')
 class ShipmentsController {
   RouteProvider _routeProvider;
   Router _router;
@@ -15,30 +27,99 @@ class ShipmentsController {
   int consignee_id;
   int consigneeLocation_id;
 
-
   @NgTwoWay("shipment")
   Shipment shipment;
   List<Shipment> shipments;
   int  step;
 
-  ShipmentsController(this._shipmentService, this._routeProvider, this._router) {
+  List<String> items = ["1111", "2222", "3333", "4444"];
+  String selected;
+  String tmp;
+  Modal modal;
+  ModalInstance modalInstance;
+  Scope scope;
+  
+  String template = """
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h4 class="modal-title">I'm a modal! DANIEL</h4>
+</div>
+<div class="modal-body">
+  <div style="padding: 10px" >
+
+    <label class="title-label" for="lanecode">Consignee</label>
+    <select ng-model='ctrl.consignee_id' ng-change="ctrl.change_consignee()" id="consignee" class="form-control">
+      <option value="" disabled selected>Select consignee</option>
+      <option ng-repeat='consignee in ctrl.consignees_to_select' ng-value='consignee[0]' ng-selected="consignee[0] == ctrl.consignee_id">{{consignee[1]}}</option>
+    </select>
+
+    <label class="title-label" for="lanecode">Location</label>
+    <select ng-model='ctrl.consigneeLocation_id' id="location" class="form-control">
+      <option value="" disabled selected>Select Location</option>
+      <option ng-repeat='location in ctrl.consigne_locations' ng-value='location[0]' ng-selected="location[0] == ctrl.consigneeLocation_id">{{location[1]}}</option>
+    </select>
+    <button class="btn btn-primary" ng-click="ctrl.addConsignee()" >Add Consignee Location</button>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  <button type="button" class="btn btn-primary" ng-click="ctrl.ok(ctrl.tmp)">OK</button>
+</div>
+""";
+
+  ShipmentsController(this.modal, this.scope,this._shipmentService, this._routeProvider, this._router) {
     this.shipment = new Shipment();
     this.step = 1;
     this.shippers = [new Shipper()];
     this.consignees = [];
-   if (_isEditPath()) {
-//     _shipmentService.get(_routeProvider.parameters['shipmentId']).then((_) => this.shipment = _);
-    load_form();
-   } else if (_isIndexPath()) {
-     this.shipments = [];
-   }
-   else{
-    load_form();
-   }
-
+     if (_isEditPath()) {
+  //     _shipmentService.get(_routeProvider.parameters['shipmentId']).then((_) => this.shipment = _);
+      load_form();
+     } else if (_isIndexPath()) {
+       this.shipments = [];
+     }
+     else{
+      load_form();
+     }
   }
 
-  bool inStep(int step) => step == this.step;  
+  ModalInstance getModalInstance() {
+    return modal.open(new ModalOptions(template:template), scope);
+  }
+  
+  void open() {
+    modalInstance = getModalInstance();
+    
+    modalInstance.opened
+      ..then((v) {
+        print('Opened');
+      }, onError: (e) {
+        print('Open error is $e');
+      });
+    
+    // Override close to add you own functionality 
+    modalInstance.close = (result) { 
+      selected = result;
+      print('Closed with selection $selected');
+      modal.hide();
+    };
+    // Override dismiss to add you own functionality 
+    modalInstance.dismiss = (String reason) { 
+      print('Dismissed with $reason');
+      modal.hide();
+   };
+  }
+  
+  void ok(sel) {
+    modalInstance.close(sel);
+  }
+
+
+
+
+
+
+  bool inStep(int step) => step == this.step;
   int toStep(int step) => this.step = step;
 
   void load_form(){
