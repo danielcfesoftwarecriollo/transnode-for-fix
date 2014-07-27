@@ -1,17 +1,5 @@
 part of transnode;
 
-
-// @Controller(selector: '[modal-ctrl-tmpl]', publishAs: 'ctrl')
-// class ModalCtrlTemplate {
-
-  
-//   ModalCtrlTemplate();
-  
-
-// }
-
-
-
 @Controller(selector: '[shipment-controller]', publishAs: 'ctrl')
 class ShipmentsController {
   RouteProvider _routeProvider;
@@ -24,6 +12,8 @@ class ShipmentsController {
   List consigne_locations;
   List consignees;
   List consignees_to_select;
+  List shippers_to_select;
+  int shipper_id;
   int consignee_id;
   int consigneeLocation_id;
 
@@ -42,7 +32,7 @@ class ShipmentsController {
   String template = """
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-  <h4 class="modal-title">I'm a modal! DANIEL</h4>
+  <h4 class="modal-title">Add New Consignee</h4>
 </div>
 <div class="modal-body">
   <div style="padding: 10px" >
@@ -58,7 +48,6 @@ class ShipmentsController {
       <option value="" disabled selected>Select Location</option>
       <option ng-repeat='location in ctrl.consigne_locations' ng-value='location[0]' ng-selected="location[0] == ctrl.consigneeLocation_id">{{location[1]}}</option>
     </select>
-    <button class="btn btn-primary" ng-click="ctrl.addConsignee()" >Add Consignee Location</button>
   </div>
 </div>
 <div class="modal-footer">
@@ -111,13 +100,9 @@ class ShipmentsController {
   }
   
   void ok(sel) {
+    addConsignee();
     modalInstance.close(sel);
   }
-
-
-
-
-
 
   bool inStep(int step) => step == this.step;
   int toStep(int step) => this.step = step;
@@ -126,30 +111,27 @@ class ShipmentsController {
     _shipmentService.loadForm().then((response){
       customers = response['customer'];
       consignees_to_select = response['customer'];
+      shippers_to_select = response['customer'];
       billtos = response['bill_tos'];
       customsbrokers = response['custom_brokers'];
-
-      // shippers = response['shippers'];
-      
     });
     // add events
     new Timer(const Duration(milliseconds: 1000), () {
 
     });
   }
+
   void add_new_shipper(){
     this.shippers.add(new Shipper());
   }
+
   void addSecondShipper(){
     if(! hasValidShipper()){
       add_new_shipper();
     }    
   }
-  bool hasValidShipper() => this.shippers.length > 1 || this.consignees.length > 1;
-  bool hasValidConsignee() => this.consignees.length > 1 || this.consignees.length > 0 && this.shippers.length > 1;
-  bool hasValidShipment() => hasValidShipper() && hasValidConsignee();
   
-  bool addConsignee() {
+  void addConsignee() {
     if(this.consigneeLocation_id != null){
       var response = this._shipmentService.load_location(consigneeLocation_id);
       Location location = new Location();
@@ -160,10 +142,8 @@ class ShipmentsController {
         consignee.locationCustomer = location;
         this.consignees.add(consignee);
         return true;
-      }); 
-      return false;
+      }).catchError((e) => false);
     }
-    return false;
   }
 
   void change_consignee() {
@@ -176,13 +156,22 @@ class ShipmentsController {
     });
   }
 
-  void change_line(Line line) {
+  void change_shipper() {
     new Timer(const Duration(milliseconds: 1000), () {
-      Consignee consignee = this.consignees.firstWhere((e)=> e.id == line.consigneId);
-      consignee.lines.add(line);
+      // var response = this._shipmentService.load_consigneLocations(this.consignee_id);
+      response.then((response) {
+        print(response);
+        // this.consigne_locations = response['locations'];
+      });
     });
   }
 
+  void change_line(Line line) {
+    new Timer(const Duration(milliseconds: 1000), () {
+      Consignee consignee = this.consignees.firstWhere((e)=> e.locationCustomer.id == line.consigneId);
+      consignee.lines.add(line);
+    });
+  }
   
   void save() {
     if (this.shipment.is_valid()) {
@@ -193,7 +182,10 @@ class ShipmentsController {
       });
     }
   }
-
+  
+  bool hasValidShipper() => this.shippers.length > 1 || this.consignees.length > 1;
+  bool hasValidConsignee() => this.consignees.length > 1 || this.consignees.length > 0 && this.shippers.length > 1;
+  bool hasValidShipment() => hasValidShipper() && hasValidConsignee();
   bool _isEditPath() => _routeProvider.routeName == 'shipment_edit';
   bool _isNewPath() => _routeProvider.routeName == 'shipment_new';
   bool _isIndexPath() => _routeProvider.routeName == 'shipment_list';

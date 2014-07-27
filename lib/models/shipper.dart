@@ -10,7 +10,7 @@ class Shipper extends RecordModel{
   String custom_broker;
   String ready_date;
   List<Line> lines;
-  
+  Location locationCustomer;
   Shipper(){
     this.lines = [new Line()]; 
   }
