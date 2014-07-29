@@ -1,6 +1,6 @@
 part of transnode;
 
-class Shipper extends RecordModel{
+class Shipper extends RecordModelNested{
   String code;
   String name;
   String city;

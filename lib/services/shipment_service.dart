@@ -19,6 +19,13 @@ class ShipmentService {
       .then((HttpResponse response) => response.data);
   }
   
+
+
+  Future load_customers(String query_str){
+    String urlService = "/customers/"+query_str;
+    return load_data(urlService);    
+  }
+
   Future load_data(String stringUrl) {
     return _api.request("post", url + stringUrl)
       .then((HttpResponse response){

@@ -21,13 +21,17 @@ class ShipmentsController {
   Shipment shipment;
   List<Shipment> shipments;
   int  step;
-
-  List<String> items = ["1111", "2222", "3333", "4444"];
-  String selected;
-  String tmp;
   Modal modal;
   ModalInstance modalInstance;
   Scope scope;
+  
+
+  Http _http;
+  var selected;
+  var asyncSelected;
+  var customSelected;
+
+  bool loadingLocations = false;
   
   String template = """
 <div class="modal-header">
@@ -43,8 +47,10 @@ class ShipmentsController {
       <option ng-repeat='consignee in ctrl.consignees_to_select' ng-value='consignee[0]' ng-selected="consignee[0] == ctrl.consignee_id">{{consignee[1]}}</option>
     </select>
 
+
+
     <label class="title-label" for="lanecode">Location</label>
-    <select ng-model='ctrl.consigneeLocation_id' id="location" class="form-control">
+    <select ng-disabled="! ctrl.hasConsigneeLocations()" ng-model='ctrl.consigneeLocation_id' id="location" class="form-control">
       <option value="" disabled selected>Select Location</option>
       <option ng-repeat='location in ctrl.consigne_locations' ng-value='location[0]' ng-selected="location[0] == ctrl.consigneeLocation_id">{{location[1]}}</option>
     </select>
@@ -52,15 +58,17 @@ class ShipmentsController {
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-  <button type="button" class="btn btn-primary" ng-click="ctrl.ok(ctrl.tmp)">OK</button>
+  <button type="button" class="btn btn-primary" ng-click="ctrl.ok(null)">OK</button>
 </div>
 """;
 
-  ShipmentsController(this.modal, this.scope,this._shipmentService, this._routeProvider, this._router) {
+  ShipmentsController(this._http, this.modal, this.scope,this._shipmentService, this._routeProvider, this._router) {
     this.shipment = new Shipment();
+    this.shipment.shippers = [new Shipper()];
+    this.shipment.consignees = [];
+
     this.step = 1;
-    this.shippers = [new Shipper()];
-    this.consignees = [];
+    this.consigne_locations = [];
      if (_isEditPath()) {
   //     _shipmentService.get(_routeProvider.parameters['shipmentId']).then((_) => this.shipment = _);
       load_form();
@@ -70,6 +78,12 @@ class ShipmentsController {
      else{
       load_form();
      }
+  }
+
+  void load_customers(val) {
+    _shipmentService.load_customers().then((response){
+      print(res);
+    });
   }
 
   ModalInstance getModalInstance() {
@@ -87,9 +101,8 @@ class ShipmentsController {
       });
     
     // Override close to add you own functionality 
-    modalInstance.close = (result) { 
-      selected = result;
-      print('Closed with selection $selected');
+    modalInstance.close = (result) {
+      print(result);
       modal.hide();
     };
     // Override dismiss to add you own functionality 
@@ -99,9 +112,9 @@ class ShipmentsController {
    };
   }
   
-  void ok(sel) {
+  void ok(result) {
     addConsignee();
-    modalInstance.close(sel);
+    modalInstance.close(result);
   }
 
   bool inStep(int step) => step == this.step;
@@ -122,7 +135,7 @@ class ShipmentsController {
   }
 
   void add_new_shipper(){
-    this.shippers.add(new Shipper());
+    this.shipment.shippers.add(new Shipper());
   }
 
   void addSecondShipper(){
@@ -140,7 +153,7 @@ class ShipmentsController {
         Consignee consignee = new Consignee();
         consignee.consigneeName =  data['consignee'];
         consignee.locationCustomer = location;
-        this.consignees.add(consignee);
+        this.shipment.consignees.add(consignee);
         return true;
       }).catchError((e) => false);
     }
@@ -168,11 +181,19 @@ class ShipmentsController {
 
   void change_line(Line line) {
     new Timer(const Duration(milliseconds: 1000), () {
-      Consignee consignee = this.consignees.firstWhere((e)=> e.locationCustomer.id == line.consigneId);
+      Consignee consignee = this.shipment.consignees.firstWhere((e)=> e.locationCustomer.id == line.consigneId);
       consignee.lines.add(line);
     });
   }
+
+  void deleteLine(Line element){
+    element.delete();
+  }
   
+  void deleteConsignee(Consignee consignee){
+    // this.shipment.consignee
+  }
+
   void save() {
     if (this.shipment.is_valid()) {
       var response = this._shipmentService.save(this.shipment);
@@ -183,8 +204,11 @@ class ShipmentsController {
     }
   }
   
-  bool hasValidShipper() => this.shippers.length > 1 || this.consignees.length > 1;
-  bool hasValidConsignee() => this.consignees.length > 1 || this.consignees.length > 0 && this.shippers.length > 1;
+  bool get has_shippers => this.shippers.isNotEmpty;
+  bool get has_consignees => this.consignees.isNotEmpty;
+  bool hasConsigneeLocations() => this.consigne_locations.length > 0;
+  bool hasValidShipper() => this.shipment.shippers.length > 1 || this.shipment.consignees.length > 1;
+  bool hasValidConsignee() => this.shipment.consignees.length > 1 || this.shipment.consignees.length > 0 && this.shipment.shippers.length > 1;
   bool hasValidShipment() => hasValidShipper() && hasValidConsignee();
   bool _isEditPath() => _routeProvider.routeName == 'shipment_edit';
   bool _isNewPath() => _routeProvider.routeName == 'shipment_new';

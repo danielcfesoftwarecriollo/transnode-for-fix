@@ -1,6 +1,6 @@
 part of transnode;
 
-class Consignee extends RecordModel{
+class Consignee extends RecordModelNested{
   int id;
   String consigneeName;
   String openFrom;

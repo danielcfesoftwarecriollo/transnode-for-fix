@@ -4,6 +4,18 @@
     <h1 ng-if="!ctrl.shipment.is_new()">Edit Shipment</h1>
   </div>
 
+    <input type="text" ng-model="ctrl.asyncSelected"  placeholder="Locations loaded via $http" 
+           typeahead-min-length="3"
+           typeahead="customers for customers in ctrl.load_customers($viewValue)" typeahead-loading="loadingLocations"
+           class="form-control">
+    <i ng-show="ctrl.loadingLocations" class="glyphicon glyphicon-refresh"></i>
+
+    
+</div>
+
+
+
+
   <div class="col-md-12"> 
     <form class='form-horizontal smart-form' novalidate ng-submit="ctrl.save()">
       <div class="row">
@@ -65,6 +77,8 @@
               <div class="col-md-12">
                 <div class="col-xs-3 form-group">
                   <label for="customer">Customer: </label>
+
+
                   <select ng-model='shipment.id' id="customer" class="form-control">
                     <option value="" disabled selected>Select Customer</option>
                     <option ng-repeat='customer in ctrl.customers' ng-value='customer[0]' ng-selected="customer[0] == shipment.id">{{customer[1]}}</option>
@@ -141,7 +155,7 @@
             </div>
           </div>
         </div>
-        <div  ng-repeat='shipper in ctrl.shippers'  class="row shippers container-lanes clear-margin-bottom">
+        <div  ng-repeat='shipper in ctrl.shipment.shippers'  class="row shippers container-lanes clear-margin-bottom">
           <div class="col-md-6 container-info">
             <div class="" >
               <div class="row">
@@ -217,7 +231,7 @@
           </div>
           <div class="row clear-margin-bottom">
             <div class="col-md-12">
-              <div class="lanes" ng-repeat="line in shipper.lines" style="margin-top: 15px;">
+              <div class="lanes" ng-hide="line.pending_to_delete()" ng-repeat="line in shipper.lines" style="margin-top: 15px;">
                 <div class="row" >
                   <div class="col-md-12 lane">
                     <div class="col-mod col-md-1 col-xs-4 ln-number" ><span>Ln 1</span></div>
@@ -250,11 +264,13 @@
                     <div class="col-mod col-md-2 col-xs-4">
                       <select ng-change="ctrl.change_line(line)" ng-model='line.consigneId' id="consignee" class="form-control">
                         <option value="" disabled selected>Select consignee</option>
-                        <option ng-repeat='consignee in ctrl.consignees' ng-value='consignee.locationCustomer.id' ng-selected="consignee.locationCustomer.id == line.consigneId">{{consignee.consigneeName}}({{consignee.locationCustomer}})</option>
+                        <option ng-repeat='consignee in ctrl.shipment.consignees' ng-value='consignee.locationCustomer.id' ng-selected="consignee.locationCustomer.id == line.consigneId">{{consignee.consigneeName}}({{consignee.locationCustomer.name}})</option>
                       </select>
                       </div>
                     <div class="col-mod col-md-1 col-xs-4 ln-delete">
-                      <i class="fa fa-times"></i>
+                      <button ng-click="ctrl.deleteLine(line)" >
+                        <i  class="fa fa-times"></i>
+                      </button>                      
                     </div>
                   </div>
                 </div>
@@ -296,7 +312,7 @@
             <button class="btn btn-primary" >Add Consignee Location</button>
           </div>
         </div>
-        <div ng-repeat="consignee in ctrl.consignees" class="row consignees container-lanes clear-margin-bottom">
+        <div ng-repeat="consignee in ctrl.shipment.consignees" ng-hide="consignee.pending_to_delete()" style="margin-top:20px;" class="row consignees container-lanes clear-margin-bottom">
           <div class="col-md-6 container-info">
             <div class="" >
               <div class="row">
@@ -333,6 +349,9 @@
           <div class="col-md-6 container-info">
             <div class="row">
               <div class="col-md-12">
+                <button ng-click="ctrl.shipment.delete_consignee(consignee)" class="ng-binding pull-right">
+                  <i class="fa fa-times"></i>
+                </button>
                 <label class="title-align" for="instructions">Instructions</label>
                 <input type="text" id="instructions">
               </div>
@@ -368,7 +387,7 @@
             </div>
           </div>
           <div class="row clear-margin-bottom">
-            <div ng-repeat="line in consignee.lines" class="col-md-12">
+            <div ng-repeat="line in consignee.lines" ng-hide="line.pending_to_delete()" class="col-md-12">
               <div class="lanes" style="margin-top: 15px;">
                 <div class="row">
                   <div class="col-md-12 lane">

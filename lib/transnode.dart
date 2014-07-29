@@ -83,9 +83,7 @@ class TransnodeModule extends Module {
     type(HttpDefaultHeaders, implementedBy: HeadersWithToken);
 
     install(new AngularUIModule());
-    //
-//    bind(ModalCtrlTemplate);
-
+    
     bind(AppController);
     bind(LoginController);
     bind(ContactsController);
