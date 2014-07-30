@@ -16,6 +16,10 @@ class ShipmentsController {
   int shipper_id;
   int consignee_id;
   int consigneeLocation_id;
+  
+  Customer customer;
+  Customer billto;
+  Location billtoLocation;
 
   @NgTwoWay("shipment")
   Shipment shipment;
@@ -24,13 +28,11 @@ class ShipmentsController {
   Modal modal;
   ModalInstance modalInstance;
   Scope scope;
+   var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
   
 
   Http _http;
-  var selected;
   var asyncSelected;
-  var customSelected;
-
   bool loadingLocations = false;
   
   String template = """
@@ -46,8 +48,6 @@ class ShipmentsController {
       <option value="" disabled selected>Select consignee</option>
       <option ng-repeat='consignee in ctrl.consignees_to_select' ng-value='consignee[0]' ng-selected="consignee[0] == ctrl.consignee_id">{{consignee[1]}}</option>
     </select>
-
-
 
     <label class="title-label" for="lanecode">Location</label>
     <select ng-disabled="! ctrl.hasConsigneeLocations()" ng-model='ctrl.consigneeLocation_id' id="location" class="form-control">
@@ -79,15 +79,44 @@ class ShipmentsController {
       load_form();
      }
   }
-
-  void load_customers(val) {
-    _shipmentService.load_customers().then((response){
-      print(res);
+  
+  load_customers(val) {
+   return _http.post('http://localhost:3000/shipments/customers/'+val,'').then((response){
+      return response.data['customers'];
     });
   }
 
   ModalInstance getModalInstance() {
     return modal.open(new ModalOptions(template:template), scope);
+  }
+  
+  formated(model){
+    print(model);
+    return model['value'];
+  }
+  
+  onSelect($item, $model, $label){
+    var response = _shipmentService.load_customer($item['value'].toString());
+    response.then((customerData){
+      loadCustomer(customerData);
+    });
+    return $label['label'];
+  }
+
+  void loadCustomer(data){
+    Customer customer = new Customer();
+    Customer billto = new Customer();
+    Location location = new Location();
+    customer.loadWithJson(data['customer']);
+    billto.loadWithJson(data['bill_to_customer']);
+    location.loadWithJson(data['bill_to_location']['location']);
+    customer.mainLocation();
+    this.customer = customer;
+    this.shipment.customerId = customer.id;
+    this.shipment.billToId = customer.billToId;
+    this.billto = billto;
+    billtos = customer.locations;
+    this.billtoLocation = location;
   }
   
   void open() {
@@ -125,7 +154,6 @@ class ShipmentsController {
       customers = response['customer'];
       consignees_to_select = response['customer'];
       shippers_to_select = response['customer'];
-      billtos = response['bill_tos'];
       customsbrokers = response['custom_brokers'];
     });
     // add events
@@ -207,6 +235,7 @@ class ShipmentsController {
   bool get has_shippers => this.shippers.isNotEmpty;
   bool get has_consignees => this.consignees.isNotEmpty;
   bool hasConsigneeLocations() => this.consigne_locations.length > 0;
+  bool hasMoreOneShipperLocations() => this.shipment.shippers.length > 1;
   bool hasValidShipper() => this.shipment.shippers.length > 1 || this.shipment.consignees.length > 1;
   bool hasValidConsignee() => this.shipment.consignees.length > 1 || this.shipment.consignees.length > 0 && this.shipment.shippers.length > 1;
   bool hasValidShipment() => hasValidShipper() && hasValidConsignee();

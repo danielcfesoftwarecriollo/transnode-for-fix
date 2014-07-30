@@ -8,8 +8,11 @@ class Shipment extends RecordModel{
   String file_created;
   String credit_check;
   int customerId;
-  int billtoId;
+  int billToId;
   int customsbrokerId;
+  Customer customer;
+  Location billto;
+  Customer customsbroker;
 
   List<Shipper> shippers;
   List<Consignee> consignees;
@@ -26,6 +29,15 @@ class Shipment extends RecordModel{
       consignee.lines.remove(consignee.locationCustomer);
     } else {
       consignee.delete();
+    }
+  }
+
+  void delete_shipper(Shipper shipper) {
+    if (shipper.is_new()) {
+      shippers.remove(shipper);
+      shipper.lines.remove(shipper.locationCustomer);
+    } else {
+      shipper.delete();
     }
   }
 

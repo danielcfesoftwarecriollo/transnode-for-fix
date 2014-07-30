@@ -129,3 +129,8 @@ body{background-color:#eee;font-size:16px;padding-bottom:20px}nav .navbar-user{d
 .rates label{
   width: 60px;
 }
+
+/* fixed temp*/
+ul.dropdown-menu.ng-binding {
+position: fixed;
+}

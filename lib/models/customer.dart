@@ -44,6 +44,11 @@ class Customer extends Entity {
       location.delete();
     }
   }
+  
+  Location mainLocation(){
+    Location location = this.locations.firstWhere((e)=> e.roles.contains('main') );
+    return location;
+  }
 
   bool valid_step1() {
     bool result = _validator.run_validations_step1();

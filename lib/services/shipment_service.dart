@@ -18,11 +18,14 @@ class ShipmentService {
     return _api.request("post", url + "/form")
       .then((HttpResponse response) => response.data);
   }
-  
-
 
   Future load_customers(String query_str){
     String urlService = "/customers/"+query_str;
+    return load_data(urlService);    
+  }
+
+  Future load_customer(String query_str){
+    String urlService = "/customer_by_id/"+query_str;
     return load_data(urlService);    
   }
 
