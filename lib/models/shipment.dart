@@ -17,6 +17,21 @@ class Shipment extends RecordModel{
   List<Shipper> shippers;
   List<Consignee> consignees;
 
+  void loadCustomer(Customer customer){
+    this.customer = customer;
+    this.customerId = customer.id;
+  }
+
+  void loadBillTo(Location billto){
+    this.billto = billto;
+    this.billToId = billto.id;
+  }
+
+  void loadCustomsbroker(Customer customsbroker){
+    this.customsbroker = customsbroker;
+    this.customsbrokerId = customsbroker.id;
+  }
+
   Shipment() {
     speed_rating = 1;
     quality_rating = 1;

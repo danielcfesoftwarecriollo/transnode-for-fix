@@ -11,6 +11,9 @@ class Shipper extends RecordModelNested{
   String ready_date;
   List<Line> lines;
   Location locationCustomer;
+
+  List locationsCustomer;
+
   Shipper(){
     this.lines = [new Line()]; 
   }

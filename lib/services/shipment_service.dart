@@ -40,6 +40,11 @@ class ShipmentService {
     String urlService = "/consignee_locations/"+customerId.toString();
     return load_data(urlService);    
   }
+  
+  Future load_billToLocations(int customerId){
+    String urlService = "/billto_location/"+customerId.toString();
+    return load_data(urlService);    
+  }
 
   Future load_location(int locationId){
     String urlService = "/location/"+locationId.toString();

@@ -5,9 +5,6 @@ class ShipmentsController {
   RouteProvider _routeProvider;
   Router _router;
   final ShipmentService _shipmentService;
-  List customers;
-  List billtos;
-  List customsbrokers;
   List<Shipper> shippers;
   List consigne_locations;
   List consignees;
@@ -17,54 +14,37 @@ class ShipmentsController {
   int consignee_id;
   int consigneeLocation_id;
   
-  Customer customer;
+  List customers;
+  List billtos;
+  List customsbrokers;
+
+  Customer custombroker;
   Customer billto;
   Location billtoLocation;
 
+  int step;
   @NgTwoWay("shipment")
   Shipment shipment;
+
   List<Shipment> shipments;
-  int  step;
+  
+
+  String textForModal;
+  String typeModal;
   Modal modal;
   ModalInstance modalInstance;
-  Scope scope;
-   var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
   
+  Scope scope;
 
   Http _http;
   var asyncSelected;
   bool loadingLocations = false;
   
-  String template = """
-<div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-  <h4 class="modal-title">Add New Consignee</h4>
-</div>
-<div class="modal-body">
-  <div style="padding: 10px" >
+  String functionss = 'test()';
 
-    <label class="title-label" for="lanecode">Consignee</label>
-    <select ng-model='ctrl.consignee_id' ng-change="ctrl.change_consignee()" id="consignee" class="form-control">
-      <option value="" disabled selected>Select consignee</option>
-      <option ng-repeat='consignee in ctrl.consignees_to_select' ng-value='consignee[0]' ng-selected="consignee[0] == ctrl.consignee_id">{{consignee[1]}}</option>
-    </select>
-
-    <label class="title-label" for="lanecode">Location</label>
-    <select ng-disabled="! ctrl.hasConsigneeLocations()" ng-model='ctrl.consigneeLocation_id' id="location" class="form-control">
-      <option value="" disabled selected>Select Location</option>
-      <option ng-repeat='location in ctrl.consigne_locations' ng-value='location[0]' ng-selected="location[0] == ctrl.consigneeLocation_id">{{location[1]}}</option>
-    </select>
-  </div>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-  <button type="button" class="btn btn-primary" ng-click="ctrl.ok(null)">OK</button>
-</div>
-""";
-
-  ShipmentsController(this._http, this.modal, this.scope,this._shipmentService, this._routeProvider, this._router) {
+  ShipmentsController(this._http,this.scope, this.modal,this._shipmentService, this._routeProvider, this._router) {
     this.shipment = new Shipment();
-    this.shipment.shippers = [new Shipper()];
+    this.shipment.shippers = [];
     this.shipment.consignees = [];
 
     this.step = 1;
@@ -79,76 +59,8 @@ class ShipmentsController {
       load_form();
      }
   }
-  
-  load_customers(val) {
-   return _http.post('http://localhost:3000/shipments/customers/'+val,'').then((response){
-      return response.data['customers'];
-    });
-  }
 
-  ModalInstance getModalInstance() {
-    return modal.open(new ModalOptions(template:template), scope);
-  }
   
-  formated(model){
-    print(model);
-    return model['value'];
-  }
-  
-  onSelect($item, $model, $label){
-    var response = _shipmentService.load_customer($item['value'].toString());
-    response.then((customerData){
-      loadCustomer(customerData);
-    });
-    return $label['label'];
-  }
-
-  void loadCustomer(data){
-    Customer customer = new Customer();
-    Customer billto = new Customer();
-    Location location = new Location();
-    customer.loadWithJson(data['customer']);
-    billto.loadWithJson(data['bill_to_customer']);
-    location.loadWithJson(data['bill_to_location']['location']);
-    customer.mainLocation();
-    this.customer = customer;
-    this.shipment.customerId = customer.id;
-    this.shipment.billToId = customer.billToId;
-    this.billto = billto;
-    billtos = customer.locations;
-    this.billtoLocation = location;
-  }
-  
-  void open() {
-    modalInstance = getModalInstance();
-    
-    modalInstance.opened
-      ..then((v) {
-        print('Opened');
-      }, onError: (e) {
-        print('Open error is $e');
-      });
-    
-    // Override close to add you own functionality 
-    modalInstance.close = (result) {
-      print(result);
-      modal.hide();
-    };
-    // Override dismiss to add you own functionality 
-    modalInstance.dismiss = (String reason) { 
-      print('Dismissed with $reason');
-      modal.hide();
-   };
-  }
-  
-  void ok(result) {
-    addConsignee();
-    modalInstance.close(result);
-  }
-
-  bool inStep(int step) => step == this.step;
-  int toStep(int step) => this.step = step;
-
   void load_form(){
     _shipmentService.loadForm().then((response){
       customers = response['customer'];
@@ -162,47 +74,58 @@ class ShipmentsController {
     });
   }
 
-  void add_new_shipper(){
-    this.shipment.shippers.add(new Shipper());
+  void save() {
+    if (this.shipment.is_valid()) {
+      var response = this._shipmentService.save(this.shipment);
+      response.then((HttpResponse response) {
+        if (response == null) return false;
+        _router.go('shipment_list', {});
+      });
+    }
   }
+
+// begin Autocomplete Customer
+  
+  load_customers(val) {
+   return _http.post('http://localhost:3000/shipments/customers/'+val,'').then((response){
+      return response.data['customers'];
+    });
+  }
+
+  formated(model){
+    print(model);
+    return model['value'];
+  }
+  
+  onSelect($item, $model, $label){
+    var response = _shipmentService.load_customer($item['value'].toString());
+    response.then((customerData){
+      loadAllBillData(customerData);
+    });
+    return $model['value'];
+  }
+
+// End Autocomplete Customer
+
+
+// begin shippers consignee Logic
+
+  // void add_new_shipper(){
+  //   this.shipment.shippers.add(new Shipper());
+  // }
 
   void addSecondShipper(){
     if(! hasValidShipper()){
       add_new_shipper();
     }    
   }
-  
-  void addConsignee() {
-    if(this.consigneeLocation_id != null){
-      var response = this._shipmentService.load_location(consigneeLocation_id);
-      Location location = new Location();
-      response.then((data){
-        location.loadWithJson(data['location']);
-        Consignee consignee = new Consignee();
-        consignee.consigneeName =  data['consignee'];
-        consignee.locationCustomer = location;
-        this.shipment.consignees.add(consignee);
-        return true;
-      }).catchError((e) => false);
-    }
-  }
 
-  void change_consignee() {
+  void change_shipper(shipper) {
     new Timer(const Duration(milliseconds: 1000), () {
-      var response = this._shipmentService.load_consigneLocations(this.consignee_id);
+      var response = this._shipmentService.load_consigneLocations(shipper.id);
       response.then((response) {
         print(response);
-        this.consigne_locations = response['locations'];
-      });
-    });
-  }
-
-  void change_shipper() {
-    new Timer(const Duration(milliseconds: 1000), () {
-      // var response = this._shipmentService.load_consigneLocations(this.consignee_id);
-      response.then((response) {
-        print(response);
-        // this.consigne_locations = response['locations'];
+        shipper.locationsCustomer = response['locations'];
       });
     });
   }
@@ -222,18 +145,144 @@ class ShipmentsController {
     // this.shipment.consignee
   }
 
-  void save() {
-    if (this.shipment.is_valid()) {
-      var response = this._shipmentService.save(this.shipment);
-      response.then((HttpResponse response) {
-        if (response == null) return false;
-        _router.go('shipment_list', {});
-      });
+// End shippers consignee Logic
+
+// Begin Modal Windows
+
+  void addConsignee() {
+    if(this.consigneeLocation_id != null){
+      var response = this._shipmentService.load_location(consigneeLocation_id);
+      Location location = new Location();
+      response.then((data){
+        location.loadWithJson(data['location']);
+        Consignee consignee = new Consignee();
+        consignee.consigneeName =  data['consignee'];
+        consignee.locationCustomer = location;
+        this.shipment.consignees.add(consignee);
+        return true;
+      }).catchError((e) => false);
     }
+    modalInstance.close(null);
   }
+
+  void change_consignee() {
+    new Timer(const Duration(milliseconds: 1000), () {
+      var response = this._shipmentService.load_consigneLocations(this.consignee_id);
+      response.then((response) {
+        print(response);
+        this.consigne_locations = response['locations'];
+      });
+    });
+  }
+
+  List <Location> loadLocationsWithJson(data){
+    return data.map((attr) {
+      Location l = new Location();
+      l.loadWithJson(attr);
+      return l;
+    });
+  }
+
+  void changeBillTo(){
+    var response = this._shipmentService.load_customer(this.consignee_id.toString());
+    response.then((data) {
+      _loadbillto(data['bill_to_location']['location']);
+      _loadBilltoCustomer(data['bill_to_customer']);
+    });
+    modalInstance.close(null);
+  }
+
+  void addShipper(){
+    var response = this._shipmentService.load_location(this.consigneeLocation_id);
+    response.then((data) {
+      Shipper s = new Shipper();
+      Location l = new Location();
+      l.loadWithJson(data['location']);
+      s.locationCustomer = l;
+      shipment.shippers.add(s);      
+    });
+    modalInstance.close(null);
+  }
+
+  void changeBillToModal(){
+    new Timer(const Duration(milliseconds: 1000), () {
+      var response = this._shipmentService.load_billToLocations(this.consignee_id);
+      response.then((response) {
+        this.consigne_locations = response['locations'];
+      });
+    });
+  }
+
+  void loadAllBillData(data){
+    _loadbillto(data['bill_to_location']['location']);
+    _loadBilltoCustomer(data['bill_to_customer']);
+    _loadCustomsbroker(data['custom_broker']);
+    _loadCustomer(data['customer']);    
+  }
+
+  void changeCustomsBroker(){
+    var response = this._shipmentService.load_customer(this.consignee_id.toString());
+    response.then((data) {
+      _loadCustomsbroker(data['custom_broker']);
+    });    
+    modalInstance.close(null);
+  }
+
+  void open(String templateUrl) {
+    modalInstance = modal.open(new ModalOptions(templateUrl:templateUrl),scope);
+  }
+
+  void modalAddShipper(){
+    open('partials/shipments/modal/add_shipper.html');
+  }
+
+  void modalConsignee(){
+    open('partials/shipments/modal/consignee_location.html');
+  }
+
+  void modalBillTo(){
+    open('partials/shipments/modal/billto_location.html');
+  }
+
+  void modalCustomBroker(){
+    open('partials/shipments/modal/customsbroker_location.html');
+  }
+
+// End Modal Windows
+
+  void _loadCustomsbroker(data){
+    Customer custombroker = new Customer();
+    custombroker.loadWithJson(data);
+    this.shipment.customsbroker = custombroker;
+  }
+
+  void _loadBilltoCustomer(data){
+    Customer billto = new Customer();
+    billto.loadWithJson(data);
+    this.billto = billto;
+  }
+
+  void _loadbillto(data){
+    Location location = new Location();
+    location.loadWithJson(data);
+    this.shipment.loadBillTo(location);
+  }
+  void _loadCustomer(data){
+    Customer customer = new Customer();
+    customer.loadWithJson(data);
+    this.shipment.loadCustomer(customer);
+  }
+
+
+// to change
+  bool internationalShipments() => true;
+// 
   
-  bool get has_shippers => this.shippers.isNotEmpty;
-  bool get has_consignees => this.consignees.isNotEmpty;
+  bool has_shippers() => this.shipment.shippers.isNotEmpty;
+  // bool get has_consignees => this.consignees.isNotEmpty;
+  bool otherCustomerInBillTo() => this.billto != null && this.billto.id != this.shipment.customerId;
+  bool inStep(int step) => step == this.step;
+  int toStep(int step) => this.step = step;
   bool hasConsigneeLocations() => this.consigne_locations.length > 0;
   bool hasMoreOneShipperLocations() => this.shipment.shippers.length > 1;
   bool hasValidShipper() => this.shipment.shippers.length > 1 || this.shipment.consignees.length > 1;
