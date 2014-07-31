@@ -110,16 +110,6 @@ class ShipmentsController {
 
 // begin shippers consignee Logic
 
-  // void add_new_shipper(){
-  //   this.shipment.shippers.add(new Shipper());
-  // }
-
-  void addSecondShipper(){
-    if(! hasValidShipper()){
-      add_new_shipper();
-    }    
-  }
-
   void change_shipper(shipper) {
     new Timer(const Duration(milliseconds: 1000), () {
       var response = this._shipmentService.load_consigneLocations(shipper.id);
@@ -132,8 +122,7 @@ class ShipmentsController {
 
   void change_line(Line line) {
     new Timer(const Duration(milliseconds: 1000), () {
-      Consignee consignee = this.shipment.consignees.firstWhere((e)=> e.locationCustomer.id == line.consigneId);
-      consignee.lines.add(line);
+      this.shipment.addLineToConsignee(line);
     });
   }
 

@@ -182,7 +182,7 @@
               <div class="row">
                 <div class="col-xs-8">
                   <div class="col-xs-12">
-                    <label class="title-label" for="lanecode">Shipper 1</label>
+                    <label class="title-label" for="lanecode">Shipper {{ ctrl.shipment.shippers.indexOf(shipper) + 1}}</label>
                   </div>
                   <div class="col-xs-12">
                     <label for="">Name: {{shipper.locationCustomer.name}}</label>
@@ -256,19 +256,19 @@
                   <div class="col-md-12 lane">
                     <div class="col-mod col-md-1 col-xs-4 ln-number" ><span>Ln 1</span></div>
                     <div class="col-mod col-md-1 col-xs-4"><span>H</span>
-                      <input ng-model="line.height" type="text">
+                      <input ng-model="line.height" type="number">
                     </div>
                     <div class="col-mod col-md-1 col-xs-4"><span>W</span>
-                      <input ng-model="line.width" type="text">
+                      <input ng-model="line.width" type="number">
                     </div>
                     <div class="col-mod col-md-1 col-xs-4"><span>L</span>
-                      <input ng-model="line.length" type="text">
+                      <input ng-model="line.length" type="number">
                     </div>
-                    <div class="col-mod col-md-1 col-xs-4"><span>Pcs</span>
-                      <input ng-model="line.num_pcs" type="text">
+                    <div class="col-mod col-md-1 col-xs-4" ><span>Pcs</span>
+                      <input ng-model="line.num_pcs" ng-change="ctrl.shipment.checkTotal()" type="number">
                     </div>
                     <div class="col-mod col-md-2 col-xs-4"><span>Weight</span>
-                      <input ng-model="line.weight" type="text">
+                      <input ng-model="line.weight" ng-change="ctrl.shipment.checkTotal()" type="number">
                     </div>
                     <div class="col-mod col-md-3 col-xs-4 inner-without-padding">
                       <div class="col-md-4">
@@ -447,32 +447,27 @@
           <div class="col-md-12 info-shipment">
             <div class="col-md-2">
               <div>
-                #IM0001001
+                
               </div>
             </div>
             <div class="col-md-2">
               <div>
-                Current Date
+                Total
+              </div>
+            </div>
+            <div class="col-md-1">
+              <div>
+                Pcs:{{ctrl.shipment.totalPcs()}}
               </div>
             </div>
             <div class="col-md-2">
               <div>
-                QuoteNum : # 00110
+                Weight:{{ctrl.shipment.totalWeight()}}
               </div>
             </div>
             <div class="col-md-2">
               <div>
-                Sales Rep: Peter
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div>
-                CSR: Jenny
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div>
-                Status: NEW
+                More Info?
               </div>
             </div>
           </div>

@@ -13,6 +13,8 @@ class Shipment extends RecordModel{
   Customer customer;
   Location billto;
   Customer customsbroker;
+  double _totalWeight;
+  int _totalpcs;
 
   List<Shipper> shippers;
   List<Consignee> consignees;
@@ -36,6 +38,16 @@ class Shipment extends RecordModel{
     speed_rating = 1;
     quality_rating = 1;
     price_rating = 1;
+    _totalWeight = 0.0;
+    _totalpcs = 0;
+  }
+
+  void addLineToConsignee(Line line){
+    Consignee consignee = this.consignees.firstWhere((e)=> e.locationCustomer.id == line.consigneId);
+      if(consignee != null){
+        consignee.lines.add(line);
+        checkTotal();
+      }
   }
 
   void delete_consignee(Consignee consignee) {
@@ -63,6 +75,24 @@ class Shipment extends RecordModel{
       'quality_rating' : quality_rating,
       'price_rating'   : price_rating
     };
+  }
+
+  totalWeight() => _totalWeight;
+  int totalPcs() => _totalpcs;
+  
+  void checkTotal(){
+    _totalpcs = 0;
+    _totalWeight = 0.0;
+    consignees.forEach((e){
+      e.lines.forEach((l){
+        this._sumLine(l);
+      });
+    });
+  }
+
+  void _sumLine(Line line){
+    _totalWeight += line.weight;
+    _totalpcs += line.num_pcs;
   }
 
 }
