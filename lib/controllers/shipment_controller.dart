@@ -44,20 +44,18 @@ class ShipmentsController {
 
   ShipmentsController(this._http,this.scope, this.modal,this._shipmentService, this._routeProvider, this._router) {
     this.shipment = new Shipment();
-    this.shipment.shippers = [];
-    this.shipment.consignees = [];
+    this.addNewCarrier();
+    this.step = 3;
 
-    this.step = 1;
     this.consigne_locations = [];
-     if (_isEditPath()) {
-  //     _shipmentService.get(_routeProvider.parameters['shipmentId']).then((_) => this.shipment = _);
+    if (_isEditPath()) {
       load_form();
-     } else if (_isIndexPath()) {
-       this.shipments = [];
-     }
-     else{
+    } else if (_isIndexPath()) {
+      this.shipments = [];
+    }
+    else{
       load_form();
-     }
+    }
   }
 
   
@@ -91,11 +89,6 @@ class ShipmentsController {
       return response.data['customers'];
     });
   }
-
-  formated(model){
-    print(model);
-    return model['value'];
-  }
   
   onSelect($item, $model, $label){
     var response = _shipmentService.load_customer($item['value'].toString());
@@ -105,35 +98,27 @@ class ShipmentsController {
     return $model['value'];
   }
 
+  onSelectCarrier(sCarrier,$item, $model, $label){
+    var response = _shipmentService.load_customer($item['value'].toString());
+    response.then((data){
+      _loadCarrierInShipperCarrier(data['customer'],sCarrier);
+    });
+  }
+
+
 // End Autocomplete Customer
 
 
 // begin shippers consignee Logic
-
-  void change_shipper(shipper) {
-    new Timer(const Duration(milliseconds: 1000), () {
-      var response = this._shipmentService.load_consigneLocations(shipper.id);
-      response.then((response) {
-        print(response);
-        shipper.locationsCustomer = response['locations'];
-      });
-    });
-  }
-
   void change_line(Line line) {
     new Timer(const Duration(milliseconds: 1000), () {
       this.shipment.addLineToConsignee(line);
     });
   }
 
-  void deleteLine(Line element){
-    element.delete();
+  void deleteLine(Line l){
+    l.delete();
   }
-  
-  void deleteConsignee(Consignee consignee){
-    // this.shipment.consignee
-  }
-
 // End shippers consignee Logic
 
 // Begin Modal Windows
@@ -239,6 +224,19 @@ class ShipmentsController {
 
 // End Modal Windows
 
+// Begin page 2
+  void addNewCarrier(){
+    this.shipment.carriers.add(new ShipmentCarrier());
+  }
+
+// End page 2
+
+  void _loadCarrierInShipperCarrier( data ,  ShipmentCarrier sc){
+    Carrier carrier = new Carrier();
+    carrier.loadWithJson(data);
+    sc.carrier = carrier;
+  }
+
   void _loadCustomsbroker(data){
     Customer custombroker = new Customer();
     custombroker.loadWithJson(data);
@@ -273,6 +271,7 @@ class ShipmentsController {
   bool inStep(int step) => step == this.step;
   int toStep(int step) => this.step = step;
   bool hasConsigneeLocations() => this.consigne_locations.length > 0;
+  bool hasMoreThanOneCarrier() => this.shipment.carriers.length > 1;  
   bool hasMoreOneShipperLocations() => this.shipment.shippers.length > 1;
   bool hasValidShipper() => this.shipment.shippers.length > 1 || this.shipment.consignees.length > 1;
   bool hasValidConsignee() => this.shipment.consignees.length > 1 || this.shipment.consignees.length > 0 && this.shipment.shippers.length > 1;

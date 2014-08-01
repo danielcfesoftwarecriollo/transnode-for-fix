@@ -1,7 +1,6 @@
 part of transnode;
 
 class Shipment extends RecordModel{
-  int id;
   int speed_rating;
   int quality_rating;
   int price_rating;
@@ -10,14 +9,19 @@ class Shipment extends RecordModel{
   int customerId;
   int billToId;
   int customsbrokerId;
+  bool multipleCarriers;
+
+
   Customer customer;
   Location billto;
   Customer customsbroker;
   double _totalWeight;
   int _totalpcs;
 
+  List<Note> notes;
   List<Shipper> shippers;
   List<Consignee> consignees;
+  List<ShipmentCarrier> carriers;
 
   void loadCustomer(Customer customer){
     this.customer = customer;
@@ -40,6 +44,14 @@ class Shipment extends RecordModel{
     price_rating = 1;
     _totalWeight = 0.0;
     _totalpcs = 0;
+    shippers = [];
+    consignees = [];
+    carriers = [];
+    Note note = new Note();
+    note.dateCreated = '22/22/2014';
+    note.author = 'Daniel Castillo';
+    note.description = """Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.""";
+    notes = [note];
   }
 
   void addLineToConsignee(Line line){
@@ -67,6 +79,14 @@ class Shipment extends RecordModel{
       shipper.delete();
     }
   }
+
+   void delete_carrier(ShipmentCarrier sc) {
+     if (sc.is_new()) {
+       carriers.remove(sc);
+     } else {
+       sc.delete();
+     }
+   }
 
   Map to_map() {
     return {

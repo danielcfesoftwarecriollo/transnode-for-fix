@@ -44,11 +44,6 @@ class Customer extends Entity {
       location.delete();
     }
   }
-  
-  Location mainLocation(){
-    Location location = this.locations.firstWhere((e)=> e.roles.contains('main') );
-    return location;
-  }
 
   Location getLocationById(int id){
     Location location = this.locations.firstWhere((e)=> e.id == id );

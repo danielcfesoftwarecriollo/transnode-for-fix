@@ -1,17 +1,22 @@
 part of transnode;
 
 class Consignee extends RecordModelNested{
-  int id;
-  String consigneeName;
+
+  String instructions;
+  String ready_date;
   String openFrom;
   String openTo;
-  String instructions;
-  String eta;
   String appointmentDate;
   String appointmentHour;
-  String receivedBy;
-  String receivedDate;
-  String receivedHour;
+  String specHandl;
+
+  String consigneeName;
+
+  // String eta;
+  // String receivedBy;
+  // String receivedDate;
+  // String receivedHour;
+
   Customer customer;
   Location locationCustomer;
   List<Line> lines;

@@ -64,6 +64,8 @@ part 'models/shipper.dart';
 part 'models/consignee.dart';
 part 'models/user.dart';
 part 'models/city.dart';
+part 'models/note.dart';
+part 'models/shipment_carrier.dart';
 
 part 'validators/validator.dart';
 part 'validators/location.dart';
