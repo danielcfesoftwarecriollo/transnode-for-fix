@@ -1,6 +1,6 @@
 part of transnode;
 
-@NgInjectableService()
+@InjectableService()
 class MessagesService {
   List<MessageItem> _messages;
 

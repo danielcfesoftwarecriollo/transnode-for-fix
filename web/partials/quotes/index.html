@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="col-md-12" style="margin-top:20px">
+    <form class='form-horizontal smart-form'>
+      <div class="row">
+        <div class="col-md-2">
+          <select ng-model='ctrl.shipment.billto.id' id="billto" class="form-control">
+            <option value="" disabled selected> Only mine</option>
+            <option ng-repeat='billto in ctrl.billto.locations' ng-value='billto.id' ng-selected="billto.id == ctrl.shipment.billto.id">{{billto.name}}</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <select ng-model='ctrl.shipment.billto.id' id="billto" class="form-control">
+            <option value="" disabled selected>Today</option>
+            <option value="">Yesterday</option>
+            <option value="">This Week</option>
+            <option value="">Older</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <input type="text" ng-model="ctrl.asyncSelected"
+           typeahead-min-length="3"
+           typeahead-on-select="ctrl.onSelectCustomer($item, $model, $label)"
+           typeahead="customers as customers['label'] for customers in ctrl.load_customers($viewValue)"
+           typeahead-wait-ms="300"
+           typeahead-loading="ctrl.loadingLocations"
+           class="form-control">
+           
+        </div>
+      </div>
+      <div class="row">
+        
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+<table class="table table-hover">
+  <tr>
+    <th>Num</th>
+    <th>Customer Name</th>
+    <th>Date</th>
+    <th>From To</th>
+    <th>Carrier</th>
+    <th>Price</th>
+    <th>weight</th>
+    <th>Status</th>
+    <th>CSR</th>
+    <th>Note</th>
+    <th>Action</th>
+  </tr>
+
+  <tr>
+    <td>001</td>
+    <td>
+      <a href="#"  popover="I appeared on mouse enter!" popover-trigger="mouseenter" >Carrier Name</a>
+    </td>
+    
+    <td>Feb 27</td>
+    <td>TOR-LAX</td>
+    <td>TEST 1</td>
+    <td>1500.00</td>
+    <td>450</td>
+    <td>quote</td>
+    <td>Peter</td>
+    <td><i class="fa fa-file-text-o fa-lg"></i></td>
+    <td>
+      <a href="#">View</a>
+      <a href="">Edit</a>
+    </td>
+  </tr>
+</table>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -45,6 +45,11 @@ class Customer extends Entity {
     }
   }
 
+  Location getLocationById(int id){
+    Location location = this.locations.firstWhere((e)=> e.id == id );
+    return location;
+  }
+
   bool valid_step1() {
     bool result = _validator.run_validations_step1();
     this.locations.forEach((location) => result = location.full_valid() && result);

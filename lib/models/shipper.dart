@@ -1,12 +1,23 @@
 part of transnode;
 
-class Shipper {
-  String code;
-  String name;
-  String city;
-  String state;
-  String csr_rep;
-  String term;
-  String custom_broker;
+class Shipper extends RecordModelNested{
+
+  String instructions;
   String ready_date;
+  String openFrom;
+  String openTo;
+  String appointmentDate;
+  String appointmentHour;
+  String specHandl;
+
+  List<Line> lines;
+  Location locationCustomer;
+
+  Shipper(){
+    this.lines = [new Line()]; 
+  }
+  
+  void addNewLane(){
+    this.lines.add(new Line());
+  }
 }

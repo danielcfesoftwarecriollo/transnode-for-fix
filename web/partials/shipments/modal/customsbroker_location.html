@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h4 class="modal-title">Change CustomsBroker</h4>
+</div>
+<div class="modal-body">
+  <div style="padding: 10px" >
+
+    <label class="title-label" for="lanecode">Custom Broker</label>
+    <select ng-model='ctrl.consignee_id' id="consignee" class="form-control">
+      <option value="" disabled selected>Select Custom Broker</option>
+      <option ng-repeat='consignee in ctrl.consignees_to_select' ng-value='consignee[0]' ng-selected="consignee[0] == ctrl.consignee_id">{{consignee[1]}}</option>
+    </select>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  <button type="button" class="btn btn-primary" ng-click="ctrl.changeCustomsBroker()">OK</button>
+</div>

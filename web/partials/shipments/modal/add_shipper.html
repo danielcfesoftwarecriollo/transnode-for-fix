@@ -1,0 +1,24 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h4 class="modal-title">Add Shipper</h4>
+</div>
+<div class="modal-body">
+  <div style="padding: 10px" >
+
+    <label class="title-label" for="lanecode">Customer Shipper</label>
+    <select ng-model='ctrl.consignee_id' ng-change="ctrl.change_consignee()" id="consignee" class="form-control">
+      <option value="" disabled selected>Select Customer Shipper</option>
+      <option ng-repeat='consignee in ctrl.consignees_to_select' ng-value='consignee[0]' ng-selected="consignee[0] == ctrl.consignee_id">{{consignee[1]}}</option>
+    </select>
+    
+    <label class="title-label" for="lanecode">Location Shipper</label>
+    <select ng-disabled="! ctrl.hasConsigneeLocations()" ng-model='ctrl.consigneeLocation_id' id="location" class="form-control">
+      <option value="" disabled selected>Select Shipper</option>
+      <option ng-repeat='location in ctrl.consigne_locations' ng-value='location[0]' ng-selected="location[0] == ctrl.consigneeLocation_id">{{location[1]}}</option>
+    </select>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  <button type="button" class="btn btn-primary" ng-click="ctrl.addShipper()">OK</button>
+</div>

@@ -1,6 +1,6 @@
 part of transnode;
 
-@NgController(selector: '[messages-controller]', publishAs: 'messagesCtrl')
+@Controller(selector: '[messages-controller]', publishAs: 'messagesCtrl')
 class MessagesController {
   MessagesService _messagesService;
 

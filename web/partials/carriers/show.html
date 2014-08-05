@@ -1,0 +1,134 @@
+<div carrier-controller id='carrier_show' style="background-color: #fff;
+padding: 20px;
+border-radius: 5px;">
+<button class="btn btn-info" ng-click="ctrl.to_index()" style="
+    float: right;
+    margin-top: 20px;
+">Back</button>
+
+  <h2>Carrier  <h3>{{ctrl.carrier.name}}-#{{ctrl.carrier.id}}</h3> </h2>
+  
+  <div class="locations" style="margin: 40px 10px;" >
+    <h4>Locations </h4>
+    <div class="location" ng-repeat="location in ctrl.carrier.locations" >
+      <div class="row">
+        <div class="col-xs-3">
+          <p><span>name: </span>{{location.name}}</p>
+        </div>
+        <div class="col-xs-3">
+          <p><span>zip: </span>{{location.zip}}</p>
+        </div>
+        <div class="col-xs-3">
+          <p><span>country: </span>{{location.country.name}} ({{location.country.iso}})</p>
+        </div>
+      
+        <div class="col-xs-3">
+          <p><span>address: </span>{{location.address1}}</p>
+        </div>
+      
+        <div class="col-xs-3">
+          <p><span>address 2: </span>{{location.address2}}</p>
+        </div>
+        <div class="col-xs-3">
+          <p><span>city: </span>{{location.city}}</p>
+        </div>
+      
+        <div class="col-xs-3">
+          <p><span>phone: </span>{{loction.phone}}</p>
+        </div>
+        <div class="col-xs-3">
+          <p><span>email: </span>{{location.email}}</p>
+        </div>
+        <div class="col-xs-3">
+          <p><span>fax: </span>{{location.fax}}</p>
+        </div>
+      
+        <div class="col-xs-3">
+          <p><span>freight class: </span>{{location.freightClass}}</p>
+        </div>
+        <div class="col-xs-3">
+          <p><span>NAICS: </span>{{location.naics}}</p>
+        </div>
+      
+        <div class="col-xs-3">
+          <p><span>hours: </span>{{location.hours}}</p>
+        </div>
+        <div class="col-xs-3">
+          <p><span>lane code: </span>{{location.laneCode}}</p>
+        </div>
+        <div class="col-xs-3">
+
+          <label class="control-label">email opt out</label>
+          <input type='checkbox' value='true' disabled="disabled" ng-model='location.emailOptOut'>
+        </div>
+      </div>
+
+      <div class="contacts">
+        <div class="row">
+          <div class="col-xs-3 col-xs-offset-1">
+            <h4>Contacts: </h4>
+          </div>
+        </div>
+
+        <div class="contact" ng-repeat='contact in location.contacts' >
+          <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-3">
+              <p><span>name: </span>{{contact.name}}</p>
+            </div>
+            <div class="col-xs-3">
+              <p><span>phone: </span>{{contact.phone}}</p>
+            </div>
+            <div class="col-xs-3">
+              <p><span>email: </span>{{contact.email}}</p>
+            </div>
+          </div>
+        </div>
+     </div>
+      <hr>
+    </div>
+  </div>
+
+  <div class="lanes">
+    <div class="row">
+      <div class="col-xs-3 col-xs-offset-1">
+        <h4>Lanes: </h4>
+      </div>
+    </div>
+    <div class="lane" ng-repeat='lane in ctrl.carrier.lanes' >
+      <div class="row">
+        <div class="col-xs-3"></div>
+        <div class="col-xs-3">
+          <p><span>term1: </span>{{lane.term1.name}} - ({{lane.term1.code}})</p>
+        </div>
+        <div class="col-xs-3">
+          <p><span>term2: </span>{{lane.term2.name}} - ({{lane.term2.code}})</p>
+        </div>
+        <div class="col-xs-3">
+          <p><span>note: </span>{{lane.serviceNote}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+
+  <div class='row'>
+    <div class="col-xs-4">
+      <p><span>currency: </span>{{ctrl.carrier.currency}}</p>
+    </div>
+    <div class='col-xs-8'>
+      <div class="form-group">
+        <label for="carrier_notes" class="col-sm-2 control-label">Notes</label>
+        <div class="col-sm-10">
+          <p>{{ctrl.carrier.note}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 text-right">
+      <button class='btn btn-info' ng-click='ctrl.to_index()' >Back</button>
+    </div>
+  </div>
+
+</div>

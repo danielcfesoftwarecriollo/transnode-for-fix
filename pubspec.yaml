@@ -2,13 +2,10 @@ name: transnode
 version: 0.0.1
 description: A transnode web application
 dependencies:
-  angular: '0.9.9'
-  angular_ui: "any"
-  browser: "0.9.1"
+  angular_ui: "0.5.0"
   unittest: any
-  di: "0.0.32"
   ctrl_alt_foo: any
-  route_hierarchical: 0.4.15
   dquery: any
+  html_components: any
 dev_dependencies:
     dartmocks: ">= 0.5.0"

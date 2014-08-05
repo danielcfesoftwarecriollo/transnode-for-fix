@@ -1,6 +1,6 @@
 part of transnode;
 
-@NgInjectableService()
+@InjectableService()
 class UsersService {
   ApiService _api;
 

@@ -1,6 +1,6 @@
 part of transnode;
 
-@NgInjectableService()
+@InjectableService()
 class LocationService {
   ApiService _api;
   Router _router;

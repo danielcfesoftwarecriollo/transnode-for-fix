@@ -1,8 +1,9 @@
 part of transnode;
 
-@NgController(
+@Controller(
     selector: '[transnode]',
     publishAs: 'app')
+    
 class AppController {
   UserService _user_service;
   Router _router;
@@ -14,6 +15,7 @@ class AppController {
         'Ctrl+3': ()=> _router.go('shipment_order', {}),
         'Ctrl+4': ()=> _router.go('users', {}),
         'Ctrl+5': ()=> _router.go('contact_list', {}),
+        'Ctrl+6': ()=> _router.go('carriers', {}),
     });
   }
 

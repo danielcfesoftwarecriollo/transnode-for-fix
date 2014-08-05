@@ -39,7 +39,12 @@ class Entity extends RecordModel {
     this.locations.add(location);
     return location;
   }
-
+  
+  Location mainLocation(){
+    Location location = this.locations.firstWhere((e)=> e.roles.contains('main') );
+    return location;
+  }
+  
   void delete_location(Location location) {
     locations.remove(location);
   }
@@ -55,6 +60,8 @@ class Entity extends RecordModel {
     this.locations.forEach((location) => locations_map.add(location.to_map()));
     return locations_map;
   }
+
+
 
   List roles_to_list() {
     List roles_return = [];

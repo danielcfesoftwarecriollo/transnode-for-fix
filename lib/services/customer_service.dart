@@ -1,6 +1,6 @@
 part of transnode;
 
-@NgInjectableService()
+@InjectableService()
 class CustomerService {
   static String url = '/customers';
   UserService user;

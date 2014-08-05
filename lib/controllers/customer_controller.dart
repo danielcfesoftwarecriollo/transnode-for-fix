@@ -1,6 +1,6 @@
 part of transnode;
 
-@NgController(selector: '[customer-controller]', publishAs: 'ctrl')
+@Controller(selector: '[customer-controller]', publishAs: 'ctrl')
 class CustomerController {
   @NgTwoWay("customer")
   Customer customer;
@@ -40,8 +40,10 @@ class CustomerController {
     } else if (_isIndexPath()) {
       this.customers = [];
       this._load_customers();
+    } else if(_isNewPath()){
+      load_form();
     }
-  
+    this.step = 1;
   }
 
   void load_form(){
@@ -54,7 +56,6 @@ class CustomerController {
       List countries = querySelectorAll('.countries');
       countries.forEach((element) => dispachChange(element));
     });
-    this.step = 1;
   }
   
   int stepForm(int step) => this.step = step;
@@ -131,14 +132,6 @@ class CustomerController {
     });
   }
   
-//  void _load_form_customers() {
-//    var response = this._customerService.index();
-//    response.then((HttpResponse response) {
-//      response.data.forEach(_add_customer);
-//      if (response == null) return false;
-//    });
-//  }
-  
   void _loadForm_step2(Map formData) {
     this.billTo = formData['bill_to'];
     this.billTos = formData['bill_tos'];
@@ -161,9 +154,13 @@ class CustomerController {
        print(currentLocation.states);
      });
   }
-  
+
   List getStatesByCountry(String countryId) {
-    return this.statesOfCountries[countryId]['states'];
+    if(countryId.toString() != 'null'){
+      return this.statesOfCountries[countryId]['states'];
+    }else{
+      return [];
+    }
   }
 
   void change_bill_to() {
@@ -181,6 +178,10 @@ class CustomerController {
     Customer customer = new Customer();
     customer.loadWithJson(json);
     this.customers.add(customer);
+  }
+
+  void to_index(){
+    _router.go('carriers', {});
   }
 
   bool _isEditPath() => _routeProvider.routeName == 'customer_edit';

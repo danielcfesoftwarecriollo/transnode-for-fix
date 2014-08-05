@@ -73,7 +73,59 @@ class TransnodeRouterInitializer {
             'user_edit': ngRoute(
                 path: '/edit',
                 view: 'partials/users/edit.html'),
-          })
+          }),
+          'carriers': ngRoute(
+              path: '/carriers',
+              view: 'partials/carriers/index.html',
+              preEnter: authenticatedAccess),
+          'carrier_new': ngRoute(
+              path: '/carriers/new',
+              view: 'partials/carriers/form.html',
+              preEnter: authenticatedAccess),
+          'carrier_show': ngRoute(
+              path: '/carriers/:carrierId',
+              view: 'partials/carriers/show.html',
+              preEnter: authenticatedAccess),
+          'carrier_edit': ngRoute(
+              path: '/carriers/:carrierId/edit',
+              view: 'partials/carriers/form.html',
+              preEnter: authenticatedAccess),
+          'shipments': ngRoute(
+              path: '/shipments',
+              view: 'partials/shipments/index.html',
+              preEnter: authenticatedAccess),
+          'shipment_test': ngRoute(
+              path: '/shipments/test',
+              view: 'partials/shipments/test.html',
+              preEnter: authenticatedAccess),
+          'shipment_new': ngRoute(
+              path: '/shipments/new',
+              view: 'partials/shipments/form.html',
+              preEnter: authenticatedAccess),
+          'shipment_show': ngRoute(
+              path: '/shipments/:shipmentId',
+              view: 'partials/shipments/show.html',
+              preEnter: authenticatedAccess),
+          'shipment_edit': ngRoute(
+              path: '/shipments/:carrierId/edit',
+              view: 'partials/shipments/form.html',
+              preEnter: authenticatedAccess),
+          'quotes': ngRoute(
+              path: '/quotes',
+              view: 'partials/quotes/index.html',
+              preEnter: authenticatedAccess),
+          'quote_new': ngRoute(
+              path: '/quotes/new',
+              view: 'partials/quotes/form.html',
+              preEnter: authenticatedAccess),
+          'quote_show': ngRoute(
+              path: '/quotes/:quoteId',
+              view: 'partials/quotes/show.html',
+              preEnter: authenticatedAccess),
+          'quote_edit': ngRoute(
+              path: '/quotes/:carrierId/edit',
+              view: 'partials/quotes/form.html',
+              preEnter: authenticatedAccess),
     });
   }
 

@@ -1,6 +1,6 @@
 part of transnode;
 
-@NgController(selector: '[login-controller]', publishAs: 'login')
+@Controller(selector: '[login-controller]', publishAs: 'login')
 class LoginController {
   SessionService _sessionService;
   MessagesService _messagesService;

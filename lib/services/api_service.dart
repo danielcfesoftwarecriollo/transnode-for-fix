@@ -1,6 +1,6 @@
 part of transnode;
 
-@NgInjectableService()
+@InjectableService()
 class ApiService {
   static String api_url;
   final Http _http;
