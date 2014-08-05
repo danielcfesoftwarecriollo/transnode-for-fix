@@ -36,6 +36,7 @@ part 'services/carrier_service.dart';
 part 'services/shipment_service.dart';
 part 'services/session_service.dart';
 part 'services/users_service.dart';
+part 'services/quote_service.dart';
 
 part 'controllers/app_controller.dart';
 part 'controllers/customer_controller.dart';
@@ -48,6 +49,7 @@ part 'controllers/shipment_order_controller.dart';
 part 'controllers/users_controller.dart';
 part 'controllers/locations_list_controller.dart';
 part 'controllers/location_controller.dart';
+part 'controllers/quotes_controller.dart';
 
 part 'models/record_model.dart';
 part 'models/record_model_nested.dart';
@@ -65,6 +67,7 @@ part 'models/consignee.dart';
 part 'models/user.dart';
 part 'models/city.dart';
 part 'models/note.dart';
+part 'models/quote.dart';
 part 'models/shipment_carrier.dart';
 
 part 'validators/validator.dart';
@@ -95,6 +98,7 @@ class TransnodeModule extends Module {
     bind(CustomerController);
     bind(CarrierController);
     bind(UsersController);
+    bind(QuotesController);
     
     bind(RatingComponent);
 
@@ -107,6 +111,7 @@ class TransnodeModule extends Module {
     bind(CustomerService);
     bind(CarrierService);
     bind(UsersService);
+    bind(QuoteService);
   }
 }
 

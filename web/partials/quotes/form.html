@@ -1,0 +1,225 @@
+<div class="row" quote-controller >
+  <div class="col-md-12">
+    <h1 ng-if="ctrl.quote.is_new()">New Request for Quote</h1>
+    <h1 ng-if="!ctrl.quote.is_new()">Edit Request for Quote</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12" style="margin-top:20px">
+      <form class='form-horizontal smart-form'>
+        <div class="row">
+          <div class="col-md-2">
+            <b>Customer</b>
+          </div>
+          <div class="col-md-2">
+            <input  type="text" ng-model="ctrl.asyncSelected"
+           typeahead-min-length="3"
+           typeahead-on-select="ctrl.onSelectCustomer($item, $model, $label)"
+           typeahead="customers as customers['label'] for customers in ctrl.load_customers($viewValue)"
+           typeahead-wait-ms="300"
+           typeahead-loading="ctrl.loadingLocations"
+           class="form-control" >
+          </div>
+          <div class="col-md-2">
+            <select ng-model='ctrl.quote.id' id="location" class="form-control">
+              <option value="" disabled selected> Select Bill To</option>
+              <option ng-repeat='location in ctrl.locations' ng-value='location.id' ng-selected="location.id == ctrl.quote.locationId">{{location.name}}</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-primary" >New Customer</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <fieldset>
+              <legend>New Customer</legend>
+
+            </fieldset>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">To</label>
+              <div class="col-sm-10">
+                <select ng-model='ctrl.quote.fromCountry' id="fromCountry" class="form-control">
+                  <option value="" disabled selected> Select Country</option>
+                  <option ng-repeat='country in ctrl.countries' ng-value='country.id' ng-selected="country.id == ctrl.quote.fromCountry">{{country.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Zip</label>
+              <div class="col-sm-9">
+                <input type="number" ng-model="ctrl.quote.fromZip" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="col-sm-3 control-label">City</label>
+              <div class="col-sm-9">
+                <input type="text" ng-model="ctrl.quote.fromCity" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">From</label>
+              <div class="col-sm-10">
+                <select ng-model='ctrl.quote.toCountry' id="toCountry" class="form-control">
+                  <option value="" disabled selected> Select Country</option>
+                  <option ng-repeat='country in ctrl.countries' ng-value='country.id' ng-selected="country.id == ctrl.quote.toCountry">{{country.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Zip</label>
+              <div class="col-sm-9">
+                <input type="number" ng-model="ctrl.quote.toZip" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="col-sm-3 control-label">City</label>
+              <div class="col-sm-9">
+                <input type="text" ng-model="ctrl.quote.toCity" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="col-sm-4 readonly control-label">Number</label>
+              <div class="col-sm-8">
+                <label for="">{{ctrl.quote.totalPcs()}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Pcs</label>
+              <div class="col-sm-9">
+                <select id="billto" class="form-control">
+                  <option value="" disabled selected> Pcs</option>
+                  <option value="">skids</option>
+                  <option value="">other</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Total Weight</label>
+              <div class="col-sm-9">
+                <label for="">{{ctrl.quote.totalWeight()}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row container-lanes clear-margin-bottom">
+          <div class="col-md-12">
+            <div class="lanes" ng-hide="line.pending_to_delete()" ng-repeat="line in ctrl.quote.lines" style="margin-top: 15px;"
+            >
+              <div class="row" >
+                <div class="col-md-12 lane">
+                  <div class="col-mod col-md-1 col-xs-4 ln-number" ><span>Ln 1</span></div>
+                  <div class="col-mod col-md-1 col-xs-4"><span>H</span>
+                    <input ng-model="line.height" type="number">
+                  </div>
+                  <div class="col-mod col-md-1 col-xs-4"><span>W</span>
+                    <input ng-model="line.width" type="number">
+                  </div>
+                  <div class="col-mod col-md-1 col-xs-4"><span>L</span>
+                    <input ng-model="line.length" type="number">
+                  </div>
+                  <div class="col-mod col-md-1 col-xs-4" ><span>Pcs</span>
+                    <input ng-model="line.num_pcs" ng-change="ctrl.quote.checkTotal()" type="number">
+                  </div>
+                  <div class="col-mod col-md-2 col-xs-4"><span>Weight</span>
+                    <input ng-model="line.weight" ng-change="ctrl.quote.checkTotal()" type="number">
+                  </div>
+                  <div class="col-mod col-md-3 col-xs-4 inner-without-padding">
+                    <div class="col-md-4">
+                      <span style="width: 100%;">Haz class</span>
+                    </div>
+                    <div class="col-md-8">
+                      <select ng-model='line.hazClass' id="lanecode" class="form-control">
+                        <option value="" disabled selected>Select Class</option>
+                        <option selected >ABC</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-mod col-md-1 col-xs-4 ln-delete">
+                    <button  >
+                      <i  class="fa fa-times"></i>
+                    </button>                      
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="description" class="col-sm-1 control-label">Description</label>
+              <div class="col-sm-10">
+                <input type="text" ng-model="ctrl.quote.description" class="form-control" id="description" placeholder="Description">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="description" class="col-sm-1 control-label">Notes</label>
+              <div class="col-sm-5">
+                <textarea class="form-control" placeholder="Customer Notes" cols="30" rows="10"></textarea>
+              </div>
+              <div class="col-sm-5">
+                <textarea class="form-control" placeholder="Internal Notes" cols="30" rows="10"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="description" class="col-sm-6 control-label">Request received on</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="description" ng-model="ctrl.quote.rfq_date"  placeholder="Date">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="checkbox col-md-2">
+              <b>Source:</b>
+            </div>
+            <div class="col-md-3 checkbox" ng-repeat="source in ['email','phone','fax']">
+              <label>
+                <input type="radio" value="{{source}}" ng-checked="ctrl.quote.rFQ_src == source"> {{source}}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-1 col-md-offset-8"><button class="btn-primary btn" >Save</button></div>
+          <div class="col-md-2"><button class="btn-primary btn" >Save & Next</button></div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 part of transnode;
 
 class Price extends RecordModelNested{
-  int id;
+
   int unit;
   int number;
   double price;
