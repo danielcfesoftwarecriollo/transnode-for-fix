@@ -4,14 +4,15 @@ class Quote extends RecordModel{
 
   Customer customer;
   int locationId;
-  City fromCity;
+  String fromCity;
   String fromZip;
   int fromCountry;
-  City toCity;
+  String toCity;
   String toZip;
   int toCountry;
   String description;
-  String cust_message;
+  String custNote;
+  String internalNote;
   String status;
   int rFQ_src;
   var rfq_date;
@@ -24,13 +25,38 @@ class Quote extends RecordModel{
   int _totalpcs;
 
   Quote(){
-//    this._validator = new QuoteValidator(this);
-    this.lines = [new Line(),new Line()];
+    this._validator = new QuoteValidator(this);
+    this.lines = [new Line()];
+  }
+
+
+  List<Map> lines_to_map() {
+    List<Map> lines_map = [];
+    this.lines.forEach((line) => lines_map.add(line.to_map()));
+    return lines_map;
   }
   
   Map to_map() {
     return {
-      'id' : id
+      'id' : id,
+      'entity_id' : customer, 
+      'locationId' : locationId, 
+      'from_city_id' : fromCity, 
+      'from_zip' : fromZip, 
+      'from_country_id' : fromCountry, 
+      'to_city_id' :  toCity,
+      'to_zip' : toZip, 
+      'to_country_id' : toCountry, 
+      'description' : description, 
+      'customer_note' : custNote, 
+      'intenal_note' : internalNote,
+
+//      'status' : status, 
+//      'rFQ_src' : rFQ_src, 
+//      'rfq_date' : rfq_date, 
+//      'price' : price, 
+//      'dateValid' : dateValid,
+      'quote_lines_attributes' : lines_to_map()
     };
   } 
 

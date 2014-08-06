@@ -6,7 +6,7 @@
 
   <div class="row">
     <div class="col-md-12" style="margin-top:20px">
-      <form class='form-horizontal smart-form'>
+      <form class='form-horizontal smart-form' >
         <div class="row">
           <div class="col-md-2">
             <b>Customer</b>
@@ -21,9 +21,9 @@
            class="form-control" >
           </div>
           <div class="col-md-2">
-            <select ng-model='ctrl.quote.id' id="location" class="form-control">
-              <option value="" disabled selected> Select Bill To</option>
-              <option ng-repeat='location in ctrl.locations' ng-value='location.id' ng-selected="location.id == ctrl.quote.locationId">{{location.name}}</option>
+            <select ng-model='ctrl.quote.locationId' id="location" class="form-control">
+              <option value="" disabled selected> Select Location</option>
+              <option ng-repeat='location in ctrl.locations' ng-value='location[0]' ng-selected="location[0] == ctrl.quote.locationId">{{location[1]}}</option>
             </select>
           </div>
           <div class="col-md-2">
@@ -46,7 +46,7 @@
               <div class="col-sm-10">
                 <select ng-model='ctrl.quote.fromCountry' id="fromCountry" class="form-control">
                   <option value="" disabled selected> Select Country</option>
-                  <option ng-repeat='country in ctrl.countries' ng-value='country.id' ng-selected="country.id == ctrl.quote.fromCountry">{{country.name}}</option>
+                  <option ng-repeat='country in ctrl.countries' ng-value='country[0]' ng-selected="country[0] == ctrl.quote.fromCountry">{{country[1]}}</option>
                 </select>
               </div>
             </div>
@@ -55,7 +55,7 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">Zip</label>
               <div class="col-sm-9">
-                <input type="number" ng-model="ctrl.quote.fromZip" class="form-control">
+                <input type="text" ng-model="ctrl.quote.fromZip" class="form-control">
               </div>
             </div>
           </div>
@@ -75,7 +75,7 @@
               <div class="col-sm-10">
                 <select ng-model='ctrl.quote.toCountry' id="toCountry" class="form-control">
                   <option value="" disabled selected> Select Country</option>
-                  <option ng-repeat='country in ctrl.countries' ng-value='country.id' ng-selected="country.id == ctrl.quote.toCountry">{{country.name}}</option>
+                  <option ng-repeat='country in ctrl.countries' ng-value='country[0]' ng-selected="country[0] == ctrl.quote.toCountry">{{country[1]}}</option>
                 </select>
               </div>
             </div>
@@ -84,7 +84,7 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">Zip</label>
               <div class="col-sm-9">
-                <input type="number" ng-model="ctrl.quote.toZip" class="form-control">
+                <input type="text" ng-model="ctrl.quote.toZip" class="form-control">
               </div>
             </div>
           </div>
@@ -187,10 +187,10 @@
             <div class="form-group">
               <label for="description" class="col-sm-1 control-label">Notes</label>
               <div class="col-sm-5">
-                <textarea class="form-control" placeholder="Customer Notes" cols="30" rows="10"></textarea>
+                <textarea ng-model="ctrl.quote.custNote" class="form-control" placeholder="Customer Notes" cols="30" rows="10"></textarea>
               </div>
               <div class="col-sm-5">
-                <textarea class="form-control" placeholder="Internal Notes" cols="30" rows="10"></textarea>
+                <textarea ng-model="ctrl.quote.internalNote" class="form-control" placeholder="Internal Notes" cols="30" rows="10"></textarea>
               </div>
             </div>
           </div>
@@ -216,7 +216,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-1 col-md-offset-8"><button class="btn-primary btn" >Save</button></div>
+          <div class="col-md-1 col-md-offset-8"><button ng-click="ctrl.save()" class="btn-primary btn" >Save</button></div>
           <div class="col-md-2"><button class="btn-primary btn" >Save & Next</button></div>
         </div>
       </form>

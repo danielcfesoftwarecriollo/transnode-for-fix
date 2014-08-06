@@ -78,6 +78,7 @@ part 'validators/contact.dart';
 part 'validators/price.dart';
 part 'validators/city.dart';
 part 'validators/lane.dart';
+part 'validators/quote.dart';
 
 
 class TransnodeModule extends Module {

@@ -17,9 +17,18 @@ class QuoteService {
     return _api.request("get", url + "/" + quoteId.toString())
       .then((HttpResponse response) => _loadQuote(response.data));
   }
+  Future loadForm() {
+    return _api.request("post", url + "/form")
+      .then((HttpResponse response) => response.data);
+  }
 
   Future load_customer(String query_str){
     String urlService = "/customer_by_id/"+query_str;
+    return load_data(urlService);    
+  }
+
+  Future load_locations(String query_str){
+    String urlService = "/customer_locations/"+query_str;
     return load_data(urlService);    
   }
 
@@ -29,7 +38,7 @@ class QuoteService {
   }
 
   load_customers(val) {
-   return _api.request("post",'http://localhost:3000/shipments/customers/'+val)
+   return _api.request("post",url + '/customers/'+val)
     .then((response){
       return response.data['customers'];
     });
