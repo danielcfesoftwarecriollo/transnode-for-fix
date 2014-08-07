@@ -19,9 +19,12 @@ class QuotesController {
   QuotesController(this._quoteService, this._routeProvider, this._router) {
     this.quote = new Quote();
 
-    if (_isEditPath() && _isShowPath()) {
+    if (_isEditPath() || _isShowPath()) {
       var quote_id = _routeProvider.parameters['quoteId'];
-      _quoteService.get(quote_id).then((_) => this.quote = _);
+      _quoteService.get(quote_id).then((_){ 
+        this.quote = _; 
+        this.quote.checkTotal();
+      });
       loadForm();
     } else if (_isIndexPath()) {
       this.quotes = [];
@@ -58,6 +61,9 @@ class QuotesController {
     }
   }
 
+  void deleteLine(Line l){
+    l.delete();
+  }
 
   void _load_quotes() {
     var response = this._quoteService.index();
@@ -76,5 +82,5 @@ class QuotesController {
   bool _isShowPath() => _routeProvider.routeName == 'quote_show';
   bool _isEditPath() => _routeProvider.routeName == 'quote_edit';
   bool _isNewPath() => _routeProvider.routeName == 'quote_new';
-  bool _isIndexPath() => _routeProvider.routeName == 'quote_list';
+  bool _isIndexPath() => _routeProvider.routeName == 'quotes';
 }

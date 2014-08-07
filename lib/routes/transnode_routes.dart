@@ -123,7 +123,7 @@ class TransnodeRouterInitializer {
               view: 'partials/quotes/show.html',
               preEnter: authenticatedAccess),
           'quote_edit': ngRoute(
-              path: '/quotes/:carrierId/edit',
+              path: '/quotes/:quoteId/edit',
               view: 'partials/quotes/form.html',
               preEnter: authenticatedAccess),
     });

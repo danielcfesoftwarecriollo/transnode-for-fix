@@ -44,9 +44,9 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">To</label>
               <div class="col-sm-10">
-                <select ng-model='ctrl.quote.fromCountry' id="fromCountry" class="form-control">
+                <select ng-model='ctrl.quote.fromCountryId' id="fromCountryId" class="form-control">
                   <option value="" disabled selected> Select Country</option>
-                  <option ng-repeat='country in ctrl.countries' ng-value='country[0]' ng-selected="country[0] == ctrl.quote.fromCountry">{{country[1]}}</option>
+                  <option ng-repeat='country in ctrl.countries' ng-value='country[0]' ng-selected="country[0] == ctrl.quote.fromCountryId">{{country[1]}}</option>
                 </select>
               </div>
             </div>
@@ -55,7 +55,7 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">Zip</label>
               <div class="col-sm-9">
-                <input type="text" ng-model="ctrl.quote.fromZip" class="form-control">
+                <input type="number" ng-model="ctrl.quote.fromZip" class="form-control">
               </div>
             </div>
           </div>
@@ -63,7 +63,7 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">City</label>
               <div class="col-sm-9">
-                <input type="text" ng-model="ctrl.quote.fromCity" class="form-control">
+                <input type="number" ng-model="ctrl.quote.fromCityId" class="form-control">
               </div>
             </div>
           </div>
@@ -73,9 +73,9 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">From</label>
               <div class="col-sm-10">
-                <select ng-model='ctrl.quote.toCountry' id="toCountry" class="form-control">
+                <select ng-model='ctrl.quote.toCountryId' id="toCountryId" class="form-control">
                   <option value="" disabled selected> Select Country</option>
-                  <option ng-repeat='country in ctrl.countries' ng-value='country[0]' ng-selected="country[0] == ctrl.quote.toCountry">{{country[1]}}</option>
+                  <option ng-repeat='country in ctrl.countries' ng-value='country[0]' ng-selected="country[0] == ctrl.quote.toCountryId">{{country[1]}}</option>
                 </select>
               </div>
             </div>
@@ -84,7 +84,7 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">Zip</label>
               <div class="col-sm-9">
-                <input type="text" ng-model="ctrl.quote.toZip" class="form-control">
+                <input type="number" ng-model="ctrl.quote.toZip" class="form-control">
               </div>
             </div>
           </div>
@@ -92,7 +92,7 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">City</label>
               <div class="col-sm-9">
-                <input type="text" ng-model="ctrl.quote.toCity" class="form-control">
+                <input type="number" ng-model="ctrl.quote.toCityId" class="form-control">
               </div>
             </div>
           </div>
@@ -134,40 +134,36 @@
             >
               <div class="row" >
                 <div class="col-md-12 lane">
-                  <div class="col-mod col-md-1 col-xs-4 ln-number" ><span>Ln 1</span></div>
-                  <div class="col-mod col-md-1 col-xs-4"><span>H</span>
-                    <input ng-model="line.height" type="number">
+                  <div class="col-mod col-md-1 ln-number" ><span>Ln {{ ctrl.quote.lines.indexOf(line) + 1}}</span></div>
+                  <div class="col-mod col-md-2"><span>H</span>
+                    <input ng-model="line.height" type="text">
                   </div>
-                  <div class="col-mod col-md-1 col-xs-4"><span>W</span>
-                    <input ng-model="line.width" type="number">
+                  <div class="col-mod col-md-2"><span>W</span>
+                    <input ng-model="line.width" type="text">
                   </div>
-                  <div class="col-mod col-md-1 col-xs-4"><span>L</span>
-                    <input ng-model="line.length" type="number">
+                  <div class="col-mod col-md-2"><span>L</span>
+                    <input ng-model="line.length" type="text">
                   </div>
-                  <div class="col-mod col-md-1 col-xs-4" ><span>Pcs</span>
-                    <input ng-model="line.num_pcs" ng-change="ctrl.quote.checkTotal()" type="number">
+                  <div class="col-mod col-md-2" ><span>Pcs</span>
+                    <input ng-model="line.numPcs" ng-change="ctrl.quote.checkTotal()" type="text">
                   </div>
-                  <div class="col-mod col-md-2 col-xs-4"><span>Weight</span>
-                    <input ng-model="line.weight" ng-change="ctrl.quote.checkTotal()" type="number">
-                  </div>
-                  <div class="col-mod col-md-3 col-xs-4 inner-without-padding">
-                    <div class="col-md-4">
-                      <span style="width: 100%;">Haz class</span>
-                    </div>
-                    <div class="col-md-8">
-                      <select ng-model='line.hazClass' id="lanecode" class="form-control">
-                        <option value="" disabled selected>Select Class</option>
-                        <option selected >ABC</option>
-                      </select>
-                    </div>
+                  <div class="col-mod col-md-2"><span>Weight</span>
+                    <input ng-model="line.weight" ng-change="ctrl.quote.checkTotal()" type="text">
                   </div>
                   <div class="col-mod col-md-1 col-xs-4 ln-delete">
-                    <button  >
+                    <button ng-click="ctrl.deleteLine(line)" >
                       <i  class="fa fa-times"></i>
                     </button>                      
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <button type="button" ng-click='ctrl.quote.addNewLine()' class="btn btn-primary btn-lg">
+                <i class="fa fa-plus"></i> More Lines
+              </button>
             </div>
           </div>
         </div>
@@ -187,7 +183,7 @@
             <div class="form-group">
               <label for="description" class="col-sm-1 control-label">Notes</label>
               <div class="col-sm-5">
-                <textarea ng-model="ctrl.quote.custNote" class="form-control" placeholder="Customer Notes" cols="30" rows="10"></textarea>
+                <textarea ng-model="ctrl.quote.customerNote" class="form-control" placeholder="Customer Notes" cols="30" rows="10"></textarea>
               </div>
               <div class="col-sm-5">
                 <textarea ng-model="ctrl.quote.internalNote" class="form-control" placeholder="Internal Notes" cols="30" rows="10"></textarea>

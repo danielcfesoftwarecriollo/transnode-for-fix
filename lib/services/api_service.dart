@@ -41,6 +41,9 @@ class ApiService {
             _messages.add('danger', "We're sorry, you are not authorized for this action");
             _routes.go('home',{});
             break;
+          case 412:
+            print(error);
+            break;
           case 0:
             _messages.add('danger', "We're sorry, cannot connect to server");
             break;

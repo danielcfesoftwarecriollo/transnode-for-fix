@@ -6,7 +6,7 @@ class Line extends RecordModelNested{
   var height;
   var weight;
   var width; 
-  var num_pcs;
+  var numPcs;
   var hazClass;
   var consigneId;
    
@@ -16,13 +16,15 @@ class Line extends RecordModelNested{
   
   Map to_map() {
     return {
+      'id'    : id,
       'length': length,
       'height': height,
       'weight': weight,
-      'width': width, 
-      'num_pcs': num_pcs,
+      'width' : width, 
+      'num_pcs': numPcs,
       'hazClass': hazClass,
-      'consigneId': consigneId
+      'consigneId': consigneId,
+      '_destroy': _destroy
     };
   }
 
