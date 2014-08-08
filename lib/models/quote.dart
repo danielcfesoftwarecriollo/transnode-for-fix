@@ -15,8 +15,8 @@ class Quote extends RecordModel{
   String customerNote;
   String internalNote;
   String status;
-  int rFQ_src;
-  var rfq_date;
+  var rfqSrc;
+  var rfqDate;
   double price;
   String dateValid;
   String created_at;
@@ -76,12 +76,11 @@ class Quote extends RecordModel{
       'description' : description, 
       'customer_note' : customerNote, 
       'internal_note' : internalNote,
-
-//      'status' : status, 
-//      'rFQ_src' : rFQ_src, 
-//      'rfq_date' : rfq_date, 
-//      'price' : price, 
-//      'dateValid' : dateValid,
+      'rfq_src' : rfqSrc, 
+      'rfq_date' : rfqDate.toString(),
+      // 'status' : status,
+      // 'price' : price, 
+      // 'dateValid' : dateValid,
       'quote_lines_attributes' : lines_to_map()
     };
   }

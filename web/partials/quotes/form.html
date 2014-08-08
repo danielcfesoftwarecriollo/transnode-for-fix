@@ -23,12 +23,12 @@
            typeahead-loading="ctrl.loadingLocations"
            class="form-control" >
           </div>
-          <div class="col-md-2">
+<!--           <div class="col-md-2">
             <select ng-model='ctrl.quote.locationId' id="location" class="form-control">
               <option value="" disabled selected> Select Location</option>
               <option ng-repeat='location in ctrl.locations' ng-value='location[0]' ng-selected="location[0] == ctrl.quote.locationId">{{location[1]}}</option>
             </select>
-          </div>
+          </div> -->
           <div class="col-md-2">
             <button class="btn btn-primary" >New Customer</button>
           </div>
@@ -200,14 +200,14 @@
               <label for="description" class="col-sm-6 control-label">Request received on</label>
               <div class="col-sm-6">
                 <div class="input-group">
-                  <input type="text" class="form-control" id="description" ng-model="ctrl.quote.rfq_date"  placeholder="Date">
+                  <input type="text" class="form-control" id="description" ng-model="ctrl.quote.rfqDate"  placeholder="Date">
                   <span class="input-group-btn">
                     <button class="btn btn-default" ng-click="ctrl.toggleCalendar()" type="button">
                       <i class="fa fa-calendar"></i>
                     </button>
                   </span>
                 </div>
-                <datepicker ng-show="opened" ng-model="ctrl.quote.rfq_date" datepicker-popup="dd-MMMM-yyyy" ></datepicker>
+                <datepicker ng-show="ctrl.opened" ng-model="ctrl.quote.rfqDate" datepicker-popup="dd-MMMM-yyyy" ></datepicker>
               </div>
             </div>
           </div>
@@ -215,9 +215,9 @@
             <div class="checkbox col-md-2">
               <b>Source:</b>
             </div>
-            <div class="col-md-3 checkbox" ng-repeat="source in ['email','phone','fax']">
+            <div class="col-md-3 checkbox" ng-repeat="source in [['email','1'],['phone','2'],['fax','3']]">
               <label>
-                <input type="radio" value="{{source}}" ng-checked="ctrl.quote.rFQ_src == source"> {{source}}
+                <input type="radio" ng-value="source[1]" name="rfqSrc" ng-model="ctrl.quote.rfqSrc" > {{source[0]}}
               </label>
             </div>
           </div>

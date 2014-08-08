@@ -134,3 +134,11 @@ body{background-color:#eee;font-size:16px;padding-bottom:20px}nav .navbar-user{d
 ul.dropdown-menu.ng-binding {
 position: fixed;
 }
+
+datepicker{
+  position: absolute;
+  top: -240px;
+  left: 0px;
+  background: #fefefe;
+  border: 1px solid #ccc;
+}
