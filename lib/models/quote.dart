@@ -34,8 +34,9 @@ class Quote extends RecordModel{
 
   @override
   void loadWithJson(Map<String, dynamic> map) {
+    loadCustomer(map); 
     super.loadWithJson(map);
-    this.lines = [];
+    this.lines = [];      
     if (map.containsKey("lines_attributes")) {
       map['lines_attributes'].forEach((attr) {
         Line l = new Line();
@@ -44,7 +45,16 @@ class Quote extends RecordModel{
       });
     }
   }
-
+  
+  loadCustomer(Map customerMap ){
+    if(customerMap['customerHash'] != null){
+      Customer customer = new Customer();
+      customer.loadWithJson(customerMap['customerHash']);  
+      this.customer = customer;
+    }
+    customerMap.remove('customerHash');
+  }
+  
   List<Map> lines_to_map() {
     List<Map> lines_map = [];
     this.lines.forEach((line) => lines_map.add(line.to_map()));
@@ -52,9 +62,10 @@ class Quote extends RecordModel{
   }
 
   Map to_map() {
+    
     return {
       'id' : id,
-      'entity_id' : entityId, 
+      'entity_id' : _idObjNotNull(customer), 
       'locationId' : locationId, 
       'from_city_id' : fromCityId, 
       'from_zip' : fromZip, 
@@ -73,8 +84,11 @@ class Quote extends RecordModel{
 //      'dateValid' : dateValid,
       'quote_lines_attributes' : lines_to_map()
     };
-  } 
-
+  }
+  
+  _idObjNotNull( obj ){
+    return (obj == null)? null:obj.id ;
+  }
 
   void addNewLine(){
     Line l = new Line();

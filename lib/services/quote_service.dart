@@ -22,6 +22,12 @@ class QuoteService {
       .then((HttpResponse response) => response.data);
   }
 
+  Future seachQuotes(data) {
+    return _api.request("post", "/users/search", data:data )
+           .then((_) => _ );
+  }
+
+
   Future load_customer(String query_str){
     String urlService = "/customer_by_id/"+query_str;
     return load_data(urlService);    

@@ -5,18 +5,32 @@ class QuotesController {
   RouteProvider _routeProvider;
   Router _router;
   final QuoteService _quoteService;
+  final UsersService _usersService;
   @NgTwoWay("quote")
   Quote quote;
   List<Quote> quotes;
 
   List locations;
   List countries;
-  bool opened;
+  bool opened = false;
 
+ 
+  var idCRS;
+  var idCustomer;
+  String searchTime;
+
+  var asyncSelectedCRS;
   var asyncSelected;
   bool loadingLocations = false;
 
-  QuotesController(this._quoteService, this._routeProvider, this._router) {
+  var format = 'dd-MMMM-yyyy';
+
+  Map dateOptions = {
+    'formatYear': 'yy',
+    'startingDay': 1
+  };
+
+  QuotesController(this._quoteService, this._routeProvider, this._router,this._usersService) {
     this.quote = new Quote();
 
     if (_isEditPath() || _isShowPath()) {
@@ -34,6 +48,10 @@ class QuotesController {
     }
   }
 
+  toggleCalendar(){
+    this.opened = (this.opened)? false : true ;
+  }
+
   void loadForm(){
     _quoteService.loadForm().then((r){
       this.countries = r['countries'];
@@ -44,10 +62,48 @@ class QuotesController {
     return _quoteService.load_customers(val);
   }
 
+  load_crs(val){
+    return _usersService.search_csrs(val);
+  }
+
   onSelectCustomer(item, model, label){
     _quoteService.load_locations(model['value'].toString()).then((r){
       this.locations = r['locations'];
+      this.quote.loadCustomer(r);
     });
+  }
+
+  void changeTimesFilter() {
+    new Timer(const Duration(milliseconds: 1), () {
+      changeFilter();
+    });
+  }
+
+  onSelectCustomerFilter(item, model, label){
+    this.idCRS = model['value'].toString();
+    changeFilter();
+  }
+
+  onSelectCrsFilter(item, model, label){
+    this.idCRS = model['value'].toString();
+    changeFilter();
+  }
+
+  changeFilter(){
+    _quoteService.seachQuotes(_filtersIndexToJson()).then((r){
+      r.data;
+    });
+  }
+  _filtersIndexToJson(){
+    Map map = {
+      'crs':this.idCRS,
+      'customer':this.idCustomer,
+      'time':this.searchTime
+    };
+    return _encode(map);
+  }
+  String _encode(Map map) {
+    return JSON.encode(map);
   }
 
   void save(){

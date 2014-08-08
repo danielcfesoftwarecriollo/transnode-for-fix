@@ -8,8 +8,11 @@
     <div class="col-md-12" style="margin-top:20px">
       <form class='form-horizontal smart-form' >
         <div class="row">
-          <div class="col-md-2">
-            <b>Customer</b>
+          <div class="col-md-1">
+            <b>Customer:</b>
+          </div>
+          <div class="col-md-1">
+            <b>{{ctrl.quote.customer.name}}</b>
           </div>
           <div class="col-md-2">
             <input  type="text" ng-model="ctrl.asyncSelected"
@@ -196,7 +199,15 @@
             <div class="form-group">
               <label for="description" class="col-sm-6 control-label">Request received on</label>
               <div class="col-sm-6">
-                <input type="text" class="form-control" id="description" ng-model="ctrl.quote.rfq_date"  placeholder="Date">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="description" ng-model="ctrl.quote.rfq_date"  placeholder="Date">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" ng-click="ctrl.toggleCalendar()" type="button">
+                      <i class="fa fa-calendar"></i>
+                    </button>
+                  </span>
+                </div>
+                <datepicker ng-show="opened" ng-model="ctrl.quote.rfq_date" datepicker-popup="dd-MMMM-yyyy" ></datepicker>
               </div>
             </div>
           </div>

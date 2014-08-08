@@ -41,7 +41,10 @@ class Entity extends RecordModel {
   }
   
   Location mainLocation(){
-    Location location = this.locations.firstWhere((e)=> e.roles.contains('main') );
+    Location location;
+    if(!this.locations.isEmpty){
+      location = this.locations.firstWhere((e)=> e.roles.contains('main') );
+    }
     return location;
   }
   

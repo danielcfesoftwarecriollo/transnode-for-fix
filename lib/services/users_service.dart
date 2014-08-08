@@ -15,6 +15,12 @@ class UsersService {
            .then((_) => _deserialize(_.data['user']));
   }
 
+  Future search_csrs(strSearch) {
+    return _api.request("post", "/users/search_csrs", data:JSON.encode({"str_search":strSearch}) )
+           .then((_) => print(_));
+  }
+
+
   Future delete(User existentUser) {
     return _api.request("delete", "/users/" + existentUser.id.toString());
   }
