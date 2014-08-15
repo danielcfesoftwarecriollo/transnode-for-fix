@@ -1,0 +1,96 @@
+<div class="row" rfquote-controller>
+  <div class="col-md-12" style="margin-top:20px">
+    <form class='form-horizontal smart-form'>
+      <div class="row">
+        <div class="col-md-1">
+          <label class="col-sm-3 control-label">CRS</label>
+        </div>
+        <div class="col-md-2">
+          <input type="text" ng-model="ctrl.asyncSelectedCRS"
+           typeahead-min-length="3"
+           typeahead-on-select="ctrl.onSelectCrsFilter($item, $model, $label)"
+           typeahead="crs as crs['label'] for crs in ctrl.load_crs($viewValue)"
+           typeahead-wait-ms="300"
+           typeahead-loading="ctrl.loadingLocations"
+           class="form-control" placeholder="CRS">
+        </div>
+        <div class="col-md-1">
+          <label class="col-sm-3 control-label">Time</label>
+        </div>
+        <div class="col-md-2">
+          <select ng-model='ctrl.searchTime' id="searchTime" class="form-control">
+            <option value="" disabled selected>Today</option>
+            <option value="YESTERDAY">Yesterday</option>
+            <option value="THISWEEK">This Week</option>
+            <option value="OLDER">Older</option>
+          </select>
+        </div>
+        <div class="col-md-1">
+          <label class="col-sm-3 control-label">Customer</label>
+        </div>
+        <div class="col-md-2">
+          <input type="text" ng-model="ctrl.asyncSelected"
+           typeahead-min-length="3"
+           typeahead-on-select="ctrl.onSelectCustomerFilter($item, $model, $label)"
+           typeahead="customers as customers['label'] for customers in ctrl.load_customers($viewValue)"
+           typeahead-wait-ms="300"
+           typeahead-loading="ctrl.loadingLocations"
+           class="form-control" placeholder="Customer Name">
+           
+        </div>
+        <div class="col-md-2">
+          <button ng-click="ctrl.changeFilter()" class="btn-primary btn" >Search</button>
+        </div>
+      </div>
+      <div class="row">
+        
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+<table class="table table-hover">
+  <tr>
+    <th>Num</th>
+    <th>Customer Name</th>
+    <th>Date</th>
+    <th>From To</th>
+    <!-- <th>Carrier</th> -->
+    <th>Price</th>
+    <th>weight</th>
+    <th>Status</th>
+    <th>CSR</th>
+    <!-- <th>Note</th> -->
+    <th>Action</th>
+  </tr>
+
+  <tr ng-repeat="quote in ctrl.quotes">
+    <td>{{quote.id}}</td>
+    <td>
+      <a ng-hide="quote.customer == null" ng-href="#/quotes/{{quote.id}}/edit"  popover="{{quote.customer.mainLocation().name}},{{quote.customer.mainLocation().name}},{{quote.customer.mainLocation().phone}},{{quote.customer.mainLocation().email}} " popover-trigger="mouseenter" >{{quote.customer.name}}</a>
+    </td>    
+    <td>Feb 27</td>
+    <td>TOR-LAX</td>
+    <!-- <td>TEST 1</td> -->
+    <td>1500.00</td>
+    <td>450</td>
+    <td>quote</td>
+    <td>Peter</td>
+    <!-- <td><i class="fa fa-file-text-o fa-lg"></i></td> -->
+    <td>
+      <a class="btn btn-info" ng-href="#/quotes/{{quote.id}}">
+        <i class="glyphicon glyphicon-search"></i>
+      </a>
+
+      <a class="btn btn-warning" ng-href="#/quotes/{{quote.id}}/edit">
+        <i class="glyphicon glyphicon-pencil"></i>
+      </a>
+      <a class="btn btn-danger" ng-click='ctrl.delete(quote)'>
+        <i class="glyphicon glyphicon-remove"></i>
+      </a>
+    </td>
+  </tr>
+</table>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

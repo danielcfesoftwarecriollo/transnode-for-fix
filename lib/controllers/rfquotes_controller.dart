@@ -1,14 +1,14 @@
 part of transnode;
 
-@Controller(selector: '[quote-controller]', publishAs: 'ctrl')
-class QuotesController {
+@Controller(selector: '[rfquote-controller]', publishAs: 'ctrl')
+class RfquotesController {
   RouteProvider _routeProvider;
   Router _router;
   final QuoteService _quoteService;
   final UsersService _usersService;
   @NgTwoWay("quote")
   Quote quote;
-  List<Quote> quotes;
+  List<Rfquote> quotes;
 
   List locations;
   List countries;
@@ -30,11 +30,11 @@ class QuotesController {
     'startingDay': 1
   };
 
-  QuotesController(this._quoteService, this._routeProvider, this._router,this._usersService) {
-    this.quote = new Quote();
+  RfquotesController(this._quoteService, this._routeProvider, this._router,this._usersService) {
+    this.quote = new Rfquote();
 
     if (_isEditPath() || _isShowPath()) {
-      var quote_id = _routeProvider.parameters['quoteId'];
+      var quote_id = _routeProvider.parameters['rfquoteId'];
       _quoteService.get(quote_id).then((_){ 
         this.quote = _; 
       });
@@ -129,13 +129,13 @@ class QuotesController {
   }
 
   void _add_quote(Map<String, dynamic> json) {
-    Quote quote = new Quote();
+    Rfquote quote = new Rfquote();
     quote.loadWithJson(json);
     this.quotes.add(quote);
   }
 
-  bool _isShowPath() => _routeProvider.routeName == 'quote_show';
-  bool _isEditPath() => _routeProvider.routeName == 'quote_edit';
-  bool _isNewPath() => _routeProvider.routeName == 'quote_new';
-  bool _isIndexPath() => _routeProvider.routeName == 'quotes';
+  bool _isShowPath() => _routeProvider.routeName == 'rfquote_show';
+  bool _isEditPath() => _routeProvider.routeName == 'rfquote_edit';
+  bool _isNewPath() => _routeProvider.routeName == 'rfquote_new';
+  bool _isIndexPath() => _routeProvider.routeName == 'rfquotes';
 }

@@ -1,6 +1,6 @@
 part of transnode;
 
-class Quote extends RecordModel{
+class Rfquote extends Quote{
 
   Customer customer;
   int locationId;
@@ -22,15 +22,13 @@ class Quote extends RecordModel{
   String created_at;
   String updated_at;
 
-  String currency;
-
   List<Line> lines;
 
   double _totalWeight;
   int _totalpcs;
 
-  Quote(){
-    this._validator = new QuoteValidator(this);
+  Rfquote(){
+//    this._validator = new QuoteValidator(this);
     this.lines = [new Line()];
   }
 

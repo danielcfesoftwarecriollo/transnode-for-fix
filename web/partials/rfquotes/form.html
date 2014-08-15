@@ -1,11 +1,10 @@
-<div class="row" quote-controller >
+<div class="row" rfquote-controller >
   <h2 ng-show="ctrl.quote == null">Record not found</h2>
   <content ng-hide="ctrl.quote == null">
     <div class="col-md-12">
       <h1 ng-if="ctrl.quote.is_new()">New Request for Quote</h1>
       <h1 ng-if="!ctrl.quote.is_new()">Edit Request for Quote</h1>
     </div>
-
     <div class="row">
       <div class="col-md-12" style="margin-top:20px">
         <form class='form-horizontal smart-form' >
@@ -18,12 +17,12 @@
             </div>
             <div class="col-md-2">
               <input  type="text" ng-model="ctrl.asyncSelected"
-             typeahead-min-length="3"
-             typeahead-on-select="ctrl.onSelectCustomer($item, $model, $label)"
-             typeahead="customers as customers['label'] for customers in ctrl.load_customers($viewValue)"
-             typeahead-wait-ms="300"
-             typeahead-loading="ctrl.loadingLocations"
-             class="form-control" >
+              typeahead-min-length="3"
+              typeahead-on-select="ctrl.onSelectCustomer($item, $model, $label)"
+              typeahead="customers as customers['label'] for customers in ctrl.load_customers($viewValue)"
+              typeahead-wait-ms="300"
+              typeahead-loading="ctrl.loadingLocations"
+              class="form-control" >
             </div>
             <div class="col-md-2">
               <button class="btn btn-primary" >New Customer</button>
@@ -178,6 +177,19 @@
             </div>
           </div>
           <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="description" class="col-sm-1 control-label">Notes</label>
+                <div class="col-sm-5">
+                  <textarea ng-model="ctrl.quote.customerNote" class="form-control" placeholder="Customer Notes" cols="30" rows="10"></textarea>
+                </div>
+                <div class="col-sm-5">
+                  <textarea ng-model="ctrl.quote.internalNote" class="form-control" placeholder="Internal Notes" cols="30" rows="10"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
             <div class="col-md-4">
               <div class="form-group">
                 <label for="description" class="col-sm-6 control-label">Request received on</label>
@@ -198,102 +210,13 @@
               <div class="checkbox col-md-2">
                 <b>Source:</b>
               </div>
-              <div class="col-md-3 checkbox" ng-repeat="source in [['price','1'],['phone','2'],['fax','3']]">
+              <div class="col-md-3 checkbox" ng-repeat="source in [['email','1'],['phone','2'],['fax','3']]">
                 <label>
                   <input type="radio" ng-value="source[1]" name="rfqSrc" ng-model="ctrl.quote.rfqSrc" > {{source[0]}}
                 </label>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="form-group">
-              <label for="price" class="col-md-1 control-label">Price</label>
-              <div class="col-md-2">
-                <input type="price" class="form-control" ng-model="ctrl.quote.price" id="price" placeholder="0.0">
-              </div>
-              <div class="col-md-2">
-                <select ng-model="ctrl.quote.currency" id="currency" class="form-control">
-                  <option value="" disabled selected>Currency</option>
-                  <option value="CAD">CAD</option>
-                  <option value="USD">USD</option>
-                </select>
-              </div>
-              <label for="price" style="width: 10%;" class="col-md-1 control-label">Valid Until</label>
-              <div class="col-sm-2">
-                <div class="input-group">
-                  <input type="text" class="form-control" id="description" ng-model="ctrl.quote.rfqDate"  placeholder="Date">
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" ng-click="ctrl.toggleCalendar()" type="button">
-                      <i class="fa fa-calendar"></i>
-                    </button>
-                  </span>
-                </div>
-                <datepicker ng-show="ctrl.opened" ng-model="ctrl.quote.rfqDate" datepicker-popup="dd-MMMM-yyyy" ></datepicker>
-              </div>
-            </div>
-
-          </div>
-
-<div class="row">
-  <fieldset>
-    <legend>INTERNAL Elements of the Quote</legend>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="description" class="col-sm-1 control-label">Notes</label>
-          <div class="col-sm-5">
-            <textarea ng-model="ctrl.quote.customerNote" class="form-control" placeholder="Customer Notes" cols="30" rows="10"></textarea>
-          </div>
-          <div class="col-sm-5">
-            <textarea ng-model="ctrl.quote.internalNote" class="form-control" placeholder="Internal Notes" cols="30" rows="10"></textarea>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row container-lanes clear-margin-bottom">
-      <div class="col-md-12">
-        <div class="lanes" ng-hide="line.pending_to_delete()" ng-repeat="line in ctrl.quote.lines" style="margin-top: 15px;"
-        >
-          <div class="row" >
-            <div class="col-md-12 lane">
-              <div class="col-mod col-md-1 ln-number" ><span>Ln {{ ctrl.quote.lines.indexOf(line) + 1}}</span></div>
-              <div class="col-mod col-md-2"><span>H</span>
-                <input ng-model="line.height" type="text">
-              </div>
-              <div class="col-mod col-md-2"><span>W</span>
-                <input ng-model="line.width" type="text">
-              </div>
-              <div class="col-mod col-md-2"><span>L</span>
-                <input ng-model="line.length" type="text">
-              </div>
-              <div class="col-mod col-md-2" ><span>Pcs</span>
-                <input ng-model="line.numPcs" ng-change="ctrl.quote.checkTotal()" type="text">
-              </div>
-              <div class="col-mod col-md-2"><span>Weight</span>
-                <input ng-model="line.weight" ng-change="ctrl.quote.checkTotal()" type="text">
-              </div>
-              <div class="col-mod col-md-1 col-xs-4 ln-delete">
-                <button ng-click="ctrl.deleteLine(line)" >
-                  <i  class="fa fa-times"></i>
-                </button>                      
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <button type="button" ng-click='ctrl.quote.addNewLine()' class="btn btn-primary btn-lg">
-            <i class="fa fa-plus"></i> More Lines
-          </button>
-        </div>
-      </div>
-    </div>
-
-  </fieldset>
-</div>
-
           <div class="row">
             <div class="col-md-1 col-md-offset-8"><button ng-click="ctrl.save()" class="btn-primary btn" >Save</button></div>
             <div class="col-md-2"><button class="btn-primary btn" >Save & Next</button></div>
@@ -302,5 +225,4 @@
       </div>
     </div>
   </content>
-
 </div>

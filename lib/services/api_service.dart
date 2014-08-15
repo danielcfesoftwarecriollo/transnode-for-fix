@@ -27,6 +27,7 @@ class ApiService {
       .catchError((HttpResponse error) {
         switch (error.status) {
           case 404:
+            return null;
           case 500:
             _messages.add('danger', "We're sorry, the server encountered a problem");
             break;

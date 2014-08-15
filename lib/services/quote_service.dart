@@ -15,7 +15,7 @@ class QuoteService {
   
   Future<Quote> get(String quoteId) {
     return _api.request("get", url + "/" + quoteId.toString())
-      .then((HttpResponse response) => _loadQuote(response.data));
+      .then((HttpResponse response) => _loadQuote(response));
   }
   Future loadForm() {
     return _api.request("post", url + "/form")
@@ -73,9 +73,14 @@ class QuoteService {
       });
   }
 
-  Quote _loadQuote(map) {
+  Quote _loadQuote(response) {
+    if(response == null){
+      return null;
+    }
+    var map = response.data;
     Quote quote = new Quote();
     quote.loadWithJson(map);
+    quote.checkTotal();
     return quote;
   }
 

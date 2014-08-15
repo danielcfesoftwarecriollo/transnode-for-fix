@@ -50,6 +50,7 @@ part 'controllers/users_controller.dart';
 part 'controllers/locations_list_controller.dart';
 part 'controllers/location_controller.dart';
 part 'controllers/quotes_controller.dart';
+part 'controllers/rfquotes_controller.dart';
 
 part 'models/record_model.dart';
 part 'models/record_model_nested.dart';
@@ -68,6 +69,7 @@ part 'models/user.dart';
 part 'models/city.dart';
 part 'models/note.dart';
 part 'models/quote.dart';
+part 'models/rfquote.dart';
 part 'models/shipment_carrier.dart';
 
 part 'validators/validator.dart';
@@ -100,6 +102,7 @@ class TransnodeModule extends Module {
     bind(CarrierController);
     bind(UsersController);
     bind(QuotesController);
+    bind(RfquotesController);
     
     bind(RatingComponent);
 

@@ -1,0 +1,194 @@
+<div class="row" quote-controller >
+  <h2 ng-show="ctrl.quote == null">Record not found</h2>
+  <content ng-hide="ctrl.quote == null">
+    <div class="col-md-12">
+      <h1>Request for Quote</h1>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12" style="margin-top:20px">
+        <form class='form-horizontal smart-form' >
+          <div class="row">
+            <div class="col-md-1">
+              <b>Customer:</b>
+            </div>
+            <div class="col-md-1">
+              <b>{{ctrl.quote.customer.name}}</b>
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">To</label>
+                <div class="col-sm-10">
+                  <select readonly ng-model='ctrl.quote.fromCountryId' id="fromCountryId" class="form-control">
+                    <option value="" disabled selected> Select Country</option>
+                    <option ng-repeat='country in ctrl.countries' ng-value='country[0]' ng-selected="country[0] == ctrl.quote.fromCountryId">{{country[1]}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Zip</label>
+                <div class="col-sm-9">
+                  <input readonly type="number" ng-model="ctrl.quote.fromZip" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">City</label>
+                <div class="col-sm-9">
+                  <input readonly type="number" ng-model="ctrl.quote.fromCityId" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">From</label>
+                <div class="col-sm-10">
+                  <select readonly ng-model='ctrl.quote.toCountryId' id="toCountryId" class="form-control">
+                    <option value="" disabled selected> Select Country</option>
+                    <option ng-repeat='country in ctrl.countries' ng-value='country[0]' ng-selected="country[0] == ctrl.quote.toCountryId">{{country[1]}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Zip</label>
+                <div class="col-sm-9">
+                  <input readonly type="number" ng-model="ctrl.quote.toZip" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">City</label>
+                <div class="col-sm-9">
+                  <input readonly type="number" ng-model="ctrl.quote.toCityId" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="col-sm-4 readonly control-label">Number</label>
+                <div class="col-sm-8">
+                  <label for="">{{ctrl.quote.totalPcs()}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Pcs</label>
+                <div class="col-sm-9">
+                  <select readonly id="billto" class="form-control">
+                    <option value="" disabled selected> Pcs</option>
+                    <option value="">skids</option>
+                    <option value="">other</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Total Weight</label>
+                <div class="col-sm-9">
+                  <label for="">{{ctrl.quote.totalWeight()}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row container-lanes clear-margin-bottom">
+            <div class="col-md-12">
+              <div class="lanes" ng-hide="line.pending_to_delete()" ng-repeat="line in ctrl.quote.lines" style="margin-top: 15px;"
+              >
+                <div class="row" >
+                  <div class="col-md-12 lane">
+                    <div class="col-mod col-md-1 ln-number" ><span>Ln {{ ctrl.quote.lines.indexOf(line) + 1}}</span></div>
+                    <div class="col-mod col-md-2"><span>H</span>
+                      <input readonly  ng-model="line.height" type="text">
+                    </div>
+                    <div class="col-mod col-md-2"><span>W</span>
+                      <input readonly  ng-model="line.width" type="text">
+                    </div>
+                    <div class="col-mod col-md-2"><span>L</span>
+                      <input readonly  ng-model="line.length" type="text">
+                    </div>
+                    <div class="col-mod col-md-2" ><span>Pcs</span>
+                      <input readonly  ng-model="line.numPcs" ng-change="ctrl.quote.checkTotal()" type="text">
+                    </div>
+                    <div class="col-mod col-md-2"><span>Weight</span>
+                      <input readonly  ng-model="line.weight" ng-change="ctrl.quote.checkTotal()" type="text">
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="description" class="col-sm-1 control-label">Description</label>
+                <div class="col-sm-10">
+                  <input readonly type="text" ng-model="ctrl.quote.description" class="form-control" id="description" placeholder="Description">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="description" class="col-sm-1 control-label">Notes</label>
+                <div class="col-sm-5">
+                  <textarea readonly ng-model="ctrl.quote.customerNote" class="form-control" placeholder="Customer Notes" cols="30" rows="10"></textarea>
+                </div>
+                <div class="col-sm-5">
+                  <textarea readonly ng-model="ctrl.quote.internalNote" class="form-control" placeholder="Internal Notes" cols="30" rows="10"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="description" class="col-sm-6 control-label">Request received on</label>
+                <div class="col-sm-6">
+                  <div class="input-group">
+                    <input readonly type="text" class="form-control" id="description" ng-model="ctrl.quote.rfqDate"  placeholder="Date">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">
+                        <i class="fa fa-calendar fa-lg"></i>
+                      </button>
+                    </span>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="checkbox col-md-2">
+                <b>Source:</b>
+              </div>
+              <div class="col-md-3 checkbox" ng-repeat="source in [['email','1'],['phone','2'],['fax','3']]">
+                <label>
+                  <input type="radio" ng-value="source[1]" name="rfqSrc" ng-model="ctrl.quote.rfqSrc" > {{source[0]}}
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </content>
+</div>

@@ -13,8 +13,16 @@ class CarrierController {
   List countries;
   List cities;
   var statesOfCountries;
+
+
+  Lane laneHelper;
+  List<Price> pricesHelper;
+  Modal modal;
+  ModalInstance modalInstance;
+  Scope scope;
+
   
-  CarrierController(this._carrierService, this._routeProvider, this._router) {
+  CarrierController(this._carrierService,this.scope, this.modal, this._routeProvider, this._router) {
     this.carriers = [];
     this.cities = [];
     this.carrier = new Carrier();
@@ -34,6 +42,49 @@ class CarrierController {
     }
     
   }
+
+
+  void open(String templateUrl) {
+    modalInstance = modal.open(new ModalOptions(templateUrl:templateUrl),scope);
+  }
+
+  void modalAddNewLane(){
+    this.laneHelper = new Lane();
+    open('partials/carriers/modal/add_new_line.html');
+  }
+
+  void modalEditLane(Lane lane){
+    this.laneHelper = lane;
+    open('partials/carriers/modal/add_new_line.html');
+  }
+
+  void modalAddNewPriceList(){
+    this.pricesHelper = [];
+    open('partials/carriers/modal/add_price_list.html');
+  }
+
+  void addPrice(){
+    this.pricesHelper.add( new Price() );
+  }
+
+  void deletePrice(Price p){
+    if (p.is_new()) {
+      pricesHelper.remove(p);
+    } else {
+      p.delete();
+    }
+  }
+
+  void saveLane(){
+    Lane lane = this.laneHelper;
+    if( this.laneHelper.full_valid() ){
+      if( this.carrier.lanes.lastIndexOf(lane) == -1){
+        this.carrier.lanes.add(lane);
+      }
+      modalInstance.close(null);
+    }
+  }
+
 
   void load_form(){
     _carrierService.loadForm().then((response){

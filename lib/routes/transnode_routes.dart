@@ -126,6 +126,22 @@ class TransnodeRouterInitializer {
               path: '/quotes/:quoteId/edit',
               view: 'partials/quotes/form.html',
               preEnter: authenticatedAccess),
+          'rfquotes': ngRoute(
+              path: '/rfquotes',
+              view: 'partials/rfquotes/index.html',
+              preEnter: authenticatedAccess),
+          'rfquote_new': ngRoute(
+              path: '/rfquotes/new',
+              view: 'partials/rfquotes/form.html',
+              preEnter: authenticatedAccess),
+          'rfquote_show': ngRoute(
+              path: '/rfquotes/:rfquoteId',
+              view: 'partials/rfquotes/show.html',
+              preEnter: authenticatedAccess),
+          'rfquote_edit': ngRoute(
+              path: '/rfquotes/:rfquoteId/edit',
+              view: 'partials/rfquotes/form.html',
+              preEnter: authenticatedAccess),
     });
   }
 
