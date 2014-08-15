@@ -245,18 +245,20 @@
         <div class="col-md-6">
           <div class="list-group-item row">
             <div class="clearfix item-lane" ng-hide="lane.pending_to_delete()" ng-repeat="lane in ctrl.carrier.lanes" >
-              <div id="min-lane" ng-hide="lane.is_expanded()" class="col-md-12">
+              <div id="min-lane" class="col-md-12">
                 <button ng-click="lane.delete()" type="button" style="float: right; padding: 11px 16px;" class="btn btn-danger"><i class="glyphicon glyphicon-remove icon-btn"></i></button>
-                <button ng-click="lane.expand()" type="button" style="float: right; padding: 11px 16px;" class="btn btn-success"><i class="glyphicon glyphicon-resize-vertical icon-btn"></i></button>
+                <button ng-click="ctrl.modalEditLane(lane)" type="button" style="float: right; padding: 11px 16px;" class="btn btn-success"><i class="glyphicon glyphicon-resize-vertical icon-btn"></i></button>
                 <div class="list-group">
-                  <div class="list-group-item" style="margin-right: 110px;border-radius: 0;" >
+
+                <button ng-click="ctrl.modalEditLane(lane)" type="button" style="float: right; padding: 11px 16px;" class="btn btn-danger"><i class="fa fa-1 fa-bars"></i></i><i class="fa fa-1 fa-usd"></i></button>
+                  <div class="list-group-item" style="margin-right: 155px;border-radius: 0;" >
                     <div>
                       <span> ({{lane.term1.code}} - {{lane.term2.code}}) : {{lane.term1.name}} to {{lane.term2.name}}</span>
                     </div>
                   </div>
                 </div>
               </div>
-              <div id="detail-lane" class="col-md-12" ng-show="lane.is_expanded()">
+              <!-- <div id="detail-lane" class="col-md-12" ng-show="lane.is_expanded()">
                 <button ng-click="lane.delete()" ng-show="ctrl.carrier.has_many_lanes()" type="button" style="margin: -15px -15px;" class="btn pull-right btn-danger"><i class="glyphicon glyphicon-remove "></i></button>
                 <div class="form-group" ng-class="{'has-error':lane.has_errors('term1')}">
                   <label >Terminal 1 (origin)</label>
@@ -284,10 +286,77 @@
                 <div class="prices-lane">
                   <label >Prices</label>
                 </div>
-              </div>
+              </div> -->
+
+
+
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="form-group">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <td><b>Unit</b></td>
+            <td><b>Number</b></td>
+            <td><b>Price</b></td>
+          </tr>
+        </thead>
+        <tr ng-repeat="price in lane.prices">
+          <td>
+            <b>{{price.unit}}</b>
+          </td>
+          <td>
+            <b>{{price.number}}</b>
+          </td>
+          <td>
+            <b>{{price.price}}</b>
+          </td>
+
+        </tr>
+      </table>
+      <button ng-click="ctrl.modalAddNewPriceList()" type="button" class="btn btn-primary"><i class="fa fa-1 fa-plus"></i><span>New List of Price</span></button>
+
+
+<!--       <table class="table table-bordered">
+        <thead>
+          <tr>
+            <td>Id</td>
+            <td><b>Unit</b></td>
+            <td><b>Number</b></td>
+            <td><b>Price</b></td>
+            <td></td>
+          </tr>
+        </thead>
+        <tr>
+          <td>
+            <b>1</b>
+          </td>
+          <td>
+            <input type="text" class="form-control" >
+          </td>
+          <td>
+            <input type="text" class="form-control" >
+          </td>
+          <td>
+            <input type="text" class="form-control" >
+          </td>
+          <td>
+            <button ng-click="" type="button" class="btn btn-danger"><i class="glyphicon glyphicon-remove icon-btn"></i></button>
+          </td>
+        </tr>
+      </table> -->
+
+
+    </div>
+  </div>
+</div>
+ 
+
+
             </div>
           </div>
-          <input type="button" ng-click="ctrl.add_lane()" class='btn btn-primary' value="add lane" />
+          <input type="button" ng-click="ctrl.modalAddNewLine()" class='btn btn-primary' value="add lane" />
         </div>
         <div class="col-md-2">
           <input type="button" ng-click="ctrl.stepForm(1)" class='btn btn-primary' value="Prices list" />

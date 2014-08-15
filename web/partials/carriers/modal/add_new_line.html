@@ -1,0 +1,43 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h4 class="modal-title">Add Lane</h4>
+</div>
+<div class="modal-body">
+  <div style="padding: 10px" >
+
+
+    <div id="detail-lane" class="col-md-12" >
+      <div class="form-group" ng-class="{'has-error':ctrl.laneHelper.has_errors('term1')}">
+        <label >Terminal 1 (origin)</label>
+        <select ng-model="ctrl.laneHelper.term1Id" class="lanes form-control" >
+          <option value="" disabled selected>Terminal 1</option>
+          <option ng-repeat='citie in ctrl.cities' ng-value='citie.id' ng-selected="citie.id == ctrl.laneHelper.term1Id">{{citie.name}} ({{citie.code}})</option>
+        </select>
+        <p ng-show="ctrl.laneHelper.has_errors('term1')" class='error'>{{ctrl.laneHelper.errors_by_field('term1')}}</p>
+      </div>
+      <div class="form-group" ng-class="{'has-error':ctrl.laneHelper.has_errors('term2')}">
+        <label >Terminal 2 (destination)</label>
+        <select ng-model="ctrl.laneHelper.term2Id" class="lanes form-control" >
+          <option value="" disabled selected>Terminal 2</option>
+          <option ng-repeat='citie in ctrl.cities' ng-value='citie.id' ng-selected="citie.id == ctrl.laneHelper.term2Id">{{citie.name}} ({{citie.code}})</option>
+        </select>
+
+        <p ng-show="ctrl.laneHelper.has_errors('term2')" class='error'>{{ctrl.laneHelper.errors_by_field('term2')}}</p>
+      </div>
+      <div class="form-group" ng-class="{'has-error':ctrl.laneHelper.has_errors('service-note')}">
+        <label >Service Note</label>
+        <textarea maxlength="250" rows="10" ng-model='ctrl.laneHelper.serviceNote' class="form-control" cols="30" rows="5">                    
+        </textarea>                  
+        <p ng-show="ctrl.laneHelper.has_errors('service-note')" class='error'>{{ctrl.laneHelper.errors_by_field('service-note')}}</p>
+      </div>
+      <div class="prices-lane">
+        <label >Prices</label>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  <button type="button" class="btn btn-primary" ng-click="ctrl.saveLane()">OK</button>
+</div>

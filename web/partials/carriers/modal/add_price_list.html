@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1" style="min-height:400px;">
+    <h3>New Price List</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <td>Id</td>
+          <td><b>Unit</b></td>
+          <td><b>Number</b></td>
+          <td><b>Price</b></td>
+          <td></td>
+        </tr>
+      </thead>
+      <tr ng-repeat="price in ctrl.pricesHelper" ng-hide="price.pending_to_delete()" >
+        <td>
+          <b>{{ ctrl.pricesHelper.indexOf(price) + 1}}</b>
+        </td>
+        <td>
+          <input type="text" ng-model="price.unit" class="form-control" >
+        </td>
+        <td>
+          <input type="text" ng-model="price.number" class="form-control" >
+        </td>
+        <td>
+          <input type="text" ng-model="price.price" class="form-control" >
+        </td>
+        <td>
+          <button ng-click="ctrl.deletePrice(price)" type="button" class="btn btn-danger"><i class="glyphicon glyphicon-remove icon-btn"></i></button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-md-10 col-md-offset-1" style="padding-top: 15px;padding-bottom: 15px;">
+    <button ng-click="ctrl.addPrice()" type="button" class="btn btn-primary ng-binding pull-right" >
+      <i class="fa fa-1 fa-plus"></i>
+      <span>Save Price List</span>
+    </button>
+    <button ng-click="ctrl.addPrice()" type="button" class="btn btn-primary ng-binding pull-right" style="margin-right: 10px;">
+      <i class="fa fa-1 fa-plus"></i>
+      <span>add Price</span>
+    </button>
+  </div>
+</div>

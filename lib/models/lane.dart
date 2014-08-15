@@ -21,6 +21,14 @@ class Lane extends RecordModelNested{
     this.prices.forEach((price) => result = price.is_valid() && result);
     return result;
   }  
+
+  void delete_price(Price price) {
+    if (price.is_new()) {
+      prices.remove(price);
+    } else {
+      price.delete();
+    }
+  }
   
   bool is_expanded() {
     return is_new() || _expanded;

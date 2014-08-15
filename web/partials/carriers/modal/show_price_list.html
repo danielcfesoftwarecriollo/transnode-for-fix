@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1" style="min-height:400px;padding-top: 15px;padding-bottom: 15px;">
+    <h3>New Price List</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <td>Id</td>
+          <td><b>Unit</b></td>
+          <td><b>Number</b></td>
+          <td><b>Price</b></td>
+          <td></td>
+        </tr>
+      </thead>
+      <tr ng-repeat="price in ctrl.pricesHelper" ng-hide="price.pending_to_delete()" >
+        <td>
+          <b>{{ ctrl.pricesHelper.indexOf(price) + 1}}</b>
+        </td>
+        <td>
+          <b>{{price.unit}}</b>
+        </td>
+        <td>
+          <b>{{price.number}}</b>
+        </td>
+        <td>
+          <b>{{price.price}}</b>
+        </td>
+        <td>
+          <button ng-click="ctrl.deletePrice(price)" type="button" class="btn btn-danger"><i class="glyphicon glyphicon-remove icon-btn"></i></button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
