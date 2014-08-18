@@ -58,9 +58,19 @@ class CarrierController {
     open('partials/carriers/modal/add_new_line.html');
   }
 
-  void modalAddNewPriceList(){
+  void modalAddNewPriceList(Lane lane){
+    this.laneHelper = lane;
     this.pricesHelper = [];
     open('partials/carriers/modal/add_price_list.html');
+  }
+
+  void modalAddShowPriceList(Lane lane){
+    this.pricesHelper = lane.prices;
+    open('partials/carriers/modal/show_price_list.html');
+  }
+
+  void savePrices(){
+    this.laneHelper.prices = this.pricesHelper;
   }
 
   void addPrice(){
