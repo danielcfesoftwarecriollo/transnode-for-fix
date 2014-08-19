@@ -58,19 +58,34 @@ class CarrierController {
     open('partials/carriers/modal/add_new_line.html');
   }
 
-  void modalAddNewPriceList(Lane lane){
-    this.laneHelper = lane;
+  void modalAddNewPriceList(){
+    modalInstance.close(null);
     this.pricesHelper = [];
+    this.addPrice();
     open('partials/carriers/modal/add_price_list.html');
   }
 
   void modalAddShowPriceList(Lane lane){
+    this.laneHelper   = lane;
     this.pricesHelper = lane.prices;
     open('partials/carriers/modal/show_price_list.html');
   }
 
+  bool validatePrices(){
+    bool is_valid = true;
+    this.pricesHelper.forEach((p){ 
+      if(!p.is_valid()){
+        is_valid = false;
+      }
+    });
+    return is_valid;
+  }
+  
   void savePrices(){
-    this.laneHelper.prices = this.pricesHelper;
+    if(this.validatePrices()){
+      this.laneHelper.prices = this.pricesHelper;
+      modalInstance.close(null);
+    }
   }
 
   void addPrice(){

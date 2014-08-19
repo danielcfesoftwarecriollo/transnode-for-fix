@@ -18,7 +18,9 @@ class Lane extends RecordModelNested{
   
   bool full_valid(){
     bool result = _validator.run_validations();
-    this.prices.forEach((price) => result = price.is_valid() && result);
+    this.prices.forEach((p){
+//      result = p.is_valid() && result;
+     });
     return result;
   }  
 
@@ -38,6 +40,22 @@ class Lane extends RecordModelNested{
     _expanded = !_expanded;
   }
   
+  void loadPrices( Map map){
+    this.prices = [];
+    map['prices_attributes'].forEach((attr){
+      Price p = new Price();
+      p.loadWithJson(attr);
+      this.prices.add(p);
+    });
+  }
+
+  List<Map> prices_to_map() {
+    List<Map> prices_map = [];
+    this.prices.forEach((p){ 
+      prices_map.add(p.to_map());
+    });
+    return prices_map;
+  }
   
   Map to_map() {
     return {
@@ -45,6 +63,7 @@ class Lane extends RecordModelNested{
       'term1_id' : term1Id,
       'term2_id' : term2Id,
       'service_note' : serviceNote,
+      'prices_attributes' : prices_to_map(),
       '_destroy':_destroy
     };
   }
@@ -55,6 +74,7 @@ class Lane extends RecordModelNested{
       'term1_id'  : term1.id,
       'term2_id' : term2Id,
       'service_note' : serviceNote,
+      'prices_attributes' : prices_to_map(),
       '_destroy':_destroy
     };
   }

@@ -69,6 +69,7 @@ class CarrierService {
   }
 
   String params_update(Carrier carrier) {
+    print(carrier);
     return encode({
       "carrier": carrier.to_map(),
       "id": carrier.id

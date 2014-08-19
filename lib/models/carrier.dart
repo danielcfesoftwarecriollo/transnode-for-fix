@@ -60,6 +60,7 @@ class Carrier extends Entity {
          l.term1 = c;
          l.term2 = c2;
          l.loadWithJson(attr);
+         l.loadPrices(attr);
          this.lanes.add(l);
       });
     }
@@ -84,7 +85,9 @@ class Carrier extends Entity {
   bool full_validation() {
     bool result = _validator.run_validations();
     this.locations.forEach((location) => result = location.full_valid() && result);
-    this.lanes.forEach((lane) => result = lane.full_valid () && result);
+    this.lanes.forEach((lane){ 
+      result = lane.full_valid() && result;
+    });
     return result;
   }
 
@@ -108,12 +111,15 @@ class Carrier extends Entity {
 
   List<Map> lanes_to_map() {
     List<Map> lanes_map = [];
-    this.lanes.forEach((lane) => lanes_map.add(lane.to_map()));
+    this.lanes.forEach((lane){ 
+      lanes_map.add(lane.to_map());
+    });
     return lanes_map;
   }
   
   @override
   Map to_map() {
+    print(this);
     return {
       'id': this.id,
       'name': this.name,

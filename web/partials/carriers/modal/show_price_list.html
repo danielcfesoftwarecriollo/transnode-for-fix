@@ -8,7 +8,6 @@
           <td><b>Unit</b></td>
           <td><b>Number</b></td>
           <td><b>Price</b></td>
-          <td></td>
         </tr>
       </thead>
       <tr ng-repeat="price in ctrl.pricesHelper" ng-hide="price.pending_to_delete()" >
@@ -24,10 +23,8 @@
         <td>
           <b>{{price.price}}</b>
         </td>
-        <td>
-          <button ng-click="ctrl.deletePrice(price)" type="button" class="btn btn-danger"><i class="glyphicon glyphicon-remove icon-btn"></i></button>
-        </td>
       </tr>
     </table>
   </div>
+  <button ng-click="ctrl.modalAddNewPriceList()" type="button" class="btn btn-primary pull-right" style="margin-right: 25px;margin-bottom: 10px;"><i class="fa fa-1 fa-plus"></i><span>New List of Price</span></button>
 </div>
