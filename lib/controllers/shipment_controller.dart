@@ -85,7 +85,7 @@ class ShipmentsController {
 // begin Autocomplete Customer
   
   load_customers(val) {
-   return _http.post('http://localhost:3000/shipments/customers/'+val,'').then((response){
+   return _http.post('http://107.170.66.237:49171/shipments/customers/'+val,'').then((response){
       return response.data['customers'];
     });
   }

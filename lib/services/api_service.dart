@@ -18,8 +18,8 @@ class ApiService {
   }
 
   bool   is_production()    => ['127.0.0.1', 'localhost'].indexOf(window.location.hostname) == -1 ;
-  String development_path() => "http://0.0.0.0:3000";
-  String production_path()  => "http://107.170.66.237:49165/";
+  String development_path() => "http://107.170.66.237:49171/";
+  String production_path()  => "http://107.170.66.237:49171/";
 
   Future<HttpResponse> request(String method, String url, { Map<String, dynamic> params, String data }) {
     url = api_url + url;
