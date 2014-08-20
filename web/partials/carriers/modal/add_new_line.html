@@ -9,17 +9,18 @@
     <div id="detail-lane" class="col-md-12" >
       <div class="form-group" ng-class="{'has-error':ctrl.laneHelper.has_errors('term1')}">
         <label >Terminal 1 (origin)</label>
-        <select ng-model="ctrl.laneHelper.term1Id" class="lanes form-control" >
+        <select ng-model="ctrl.laneHelper.term1" class="lanes form-control" >
           <option value="" disabled selected>Terminal 1</option>
-          <option ng-repeat='citie in ctrl.cities' ng-value='citie.id' ng-selected="citie.id == ctrl.laneHelper.term1Id">{{citie.name}} ({{citie.code}})</option>
+          <option ng-repeat='city in ctrl.cities' ng-value='city' ng-selected="city.id == ctrl.laneHelper.term1">{{city.name}} ({{city.code}})</option>
         </select>
+<!-- $index -->
         <p ng-show="ctrl.laneHelper.has_errors('term1')" class='error'>{{ctrl.laneHelper.errors_by_field('term1')}}</p>
       </div>
       <div class="form-group" ng-class="{'has-error':ctrl.laneHelper.has_errors('term2')}">
         <label >Terminal 2 (destination)</label>
-        <select ng-model="ctrl.laneHelper.term2Id" class="lanes form-control" >
+        <select ng-model="ctrl.laneHelper.term2" class="lanes form-control" >
           <option value="" disabled selected>Terminal 2</option>
-          <option ng-repeat='citie in ctrl.cities' ng-value='citie.id' ng-selected="citie.id == ctrl.laneHelper.term2Id">{{citie.name}} ({{citie.code}})</option>
+          <option ng-repeat='city in ctrl.cities' ng-value='city' ng-selected="city.id == ctrl.laneHelper.term2">{{city.name}} ({{city.code}})</option>
         </select>
 
         <p ng-show="ctrl.laneHelper.has_errors('term2')" class='error'>{{ctrl.laneHelper.errors_by_field('term2')}}</p>

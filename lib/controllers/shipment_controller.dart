@@ -45,7 +45,7 @@ class ShipmentsController {
   ShipmentsController(this._http,this.scope, this.modal,this._shipmentService, this._routeProvider, this._router) {
     this.shipment = new Shipment();
     this.addNewCarrier();
-    this.step = 3;
+    this.step = 1;
 
     this.consigne_locations = [];
     if (_isEditPath()) {

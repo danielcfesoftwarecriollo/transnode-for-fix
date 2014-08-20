@@ -84,6 +84,12 @@ class CustomerController {
     this.customer.delete_location(location);
   }
   
+  Customer _loadCustomer(map) {
+    Customer customer = new Customer();
+    customer.loadWithJson(map);
+    return customer;
+  }
+  
 //  void add_contact() {
 //    this.customer.new_empty_contact();
 //  }
@@ -104,7 +110,7 @@ class CustomerController {
     if (this.customer.valid_step1()) {
       var responseSave = this._customerService.save(this.customer);
       responseSave.then((HttpResponse response) {
-        if (response == null) return false;
+        update_customer(response);
         var responseLoadFormStep2 = this._customerService.loadForm_step2(this.customer.id);
         this.stepForm(2);
         responseLoadFormStep2.then((response2) {
@@ -114,6 +120,14 @@ class CustomerController {
       });
     }
   }
+  
+  void update_customer( response ){
+    if(response.data.length > 0){
+      Customer c = _loadCustomer(response.data);
+      this.customer = c;
+    }
+  }
+  
   void save_step2(){
     if (this.customer.valid_step2()) {
       var response = this._customerService.save(this.customer);

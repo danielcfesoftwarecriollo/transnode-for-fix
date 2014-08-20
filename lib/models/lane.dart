@@ -60,8 +60,8 @@ class Lane extends RecordModelNested{
   Map to_map() {
     return {
       'id' : id,
-      'term1_id' : term1Id,
-      'term2_id' : term2Id,
+      'term1_id' : term1.id,
+      'term2_id' : term2.id,
       'service_note' : serviceNote,
       'prices_attributes' : prices_to_map(),
       '_destroy':_destroy
@@ -72,7 +72,7 @@ class Lane extends RecordModelNested{
     return {
       'id' : id,
       'term1_id'  : term1.id,
-      'term2_id' : term2Id,
+      'term2_id' : term2.id,
       'service_note' : serviceNote,
       'prices_attributes' : prices_to_map(),
       '_destroy':_destroy
