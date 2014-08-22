@@ -1,11 +1,11 @@
 library transnode;
 
 import 'dart:async';
- import 'dart:html';
+import 'dart:html';
 import 'dart:convert';
 //import 'dart:html' as dom;
 import 'dart:math' as math;
-// import 'package:polymer/polymer.dart';
+import 'package:polymer/polymer.dart';
 // import 'package:html_components/html_components.dart' show DialogComponent, GrowlComponent;
 // import 'data/user.dart' as data;
 
@@ -71,6 +71,7 @@ part 'models/note.dart';
 part 'models/quote.dart';
 part 'models/rfquote.dart';
 part 'models/shipment_carrier.dart';
+part 'models/renevue_cost.dart';
 
 part 'validators/validator.dart';
 part 'validators/location.dart';
@@ -81,6 +82,7 @@ part 'validators/price.dart';
 part 'validators/city.dart';
 part 'validators/lane.dart';
 part 'validators/quote.dart';
+part 'validators/shipment.dart';
 
 
 class TransnodeModule extends Module {
@@ -119,9 +121,10 @@ class TransnodeModule extends Module {
   }
 }
 
+@initMethod
 start() {
-//  ngBootstrap(module: new TransnodeModule());
   applicationFactory()
     .addModule(new TransnodeModule())
     .run();
+  initPolymer();
 }

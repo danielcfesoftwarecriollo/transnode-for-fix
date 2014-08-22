@@ -2,10 +2,18 @@ name: transnode
 version: 0.0.1
 description: A transnode web application
 dependencies:
-  angular_ui: "0.5.0"
+  angular_ui: 0.5.5
+  polymer: ">=0.12.0 <0.13.0"
   unittest: any
   ctrl_alt_foo: any
   dquery: any
   html_components: any
 dev_dependencies:
     dartmocks: ">= 0.5.0"
+dependency_overrides:
+  web_components: 0.4.0
+  analyzer: ">=0.15.6 <0.16.0"
+  html5lib: ">=0.11.0 <0.12.0"
+transformers:
+- polymer:
+    entry_points: web/index.html
