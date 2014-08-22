@@ -19,13 +19,13 @@ class ShipmentService {
       .then((HttpResponse response) => response.data);
   }
 
-  Future load_customers(String query_str){
-    String urlService = "/customers/"+query_str;
+  Future load_shipments(String query_str){
+    String urlService = "/shipments/"+query_str;
     return load_data(urlService);    
   }
 
-  Future load_customer(String query_str){
-    String urlService = "/customer_by_id/"+query_str;
+  Future load_shipment(String query_str){
+    String urlService = "/shipment_by_id/"+query_str;
     return load_data(urlService);    
   }
 
@@ -36,13 +36,13 @@ class ShipmentService {
     });
   }
 
-  Future load_consigneLocations(int customerId){
-    String urlService = "/consignee_locations/"+customerId.toString();
+  Future load_consigneLocations(int shipmentId){
+    String urlService = "/consignee_locations/"+shipmentId.toString();
     return load_data(urlService);    
   }
   
-  Future load_billToLocations(int customerId){
-    String urlService = "/billto_location/"+customerId.toString();
+  Future load_billToLocations(int shipmentId){
+    String urlService = "/billto_location/"+shipmentId.toString();
     return load_data(urlService);    
   }
 

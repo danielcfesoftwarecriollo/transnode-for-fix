@@ -10,7 +10,8 @@ class Shipment extends RecordModel{
   int billToId;
   int customsbrokerId;
   bool multipleCarriers;
-
+  String fileRef;
+  int quoteId;
 
   Customer customer;
   Location billto;
@@ -22,6 +23,26 @@ class Shipment extends RecordModel{
   List<Shipper> shippers;
   List<Consignee> consignees;
   List<ShipmentCarrier> carriers;
+  List<RevenueCost> revCosts;
+
+  Shipment() {
+    speed_rating = 1;
+    quality_rating = 1;
+    price_rating = 1;
+    _totalWeight = 0.0;
+    _totalpcs = 0;
+    shippers = [];
+    consignees = [];
+    carriers = [];
+    revCosts = [new RevenueCost()];
+    Note note = new Note();
+    note.dateCreated = '22/22/2014';
+    note.author = 'Daniel Castillo';
+    note.description = """Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.""";
+    notes = [note];
+    this._validator = new ShipmentValidator(this);
+  }
+
 
   void loadCustomer(Customer customer){
     this.customer = customer;
@@ -38,20 +59,9 @@ class Shipment extends RecordModel{
     this.customsbrokerId = customsbroker.id;
   }
 
-  Shipment() {
-    speed_rating = 1;
-    quality_rating = 1;
-    price_rating = 1;
-    _totalWeight = 0.0;
-    _totalpcs = 0;
-    shippers = [];
-    consignees = [];
-    carriers = [];
-    Note note = new Note();
-    note.dateCreated = '22/22/2014';
-    note.author = 'Daniel Castillo';
-    note.description = """Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.""";
-    notes = [note];
+  void addRevenueCost(){
+    RevenueCost revCost = new RevenueCost();
+    this.revCosts.add(revCost);
   }
 
   void addLineToConsignee(Line line){
@@ -89,11 +99,25 @@ class Shipment extends RecordModel{
    }
 
   Map to_map() {
+    print('intro');
     return {
       'id' : id,
       'speed_rating'   : speed_rating,
       'quality_rating' : quality_rating,
-      'price_rating'   : price_rating
+      'price_rating'   : price_rating,
+      'customer'     : customerId,
+      'billto'       : billToId,
+      'file_created'   : file_created,
+      'credit_check'   : credit_check,
+      'customsbrokerId' : customsbrokerId,
+      'multipleCarriers' : multipleCarriers,
+      
+      // 'quote' : quote,
+      // 'notes_attributes'      : notes,
+      // 'shippers_attributes'   : shippers,
+      // 'consignees_attributes' : consignees,
+      // 'carriers_attributes'   : carriers,
+      // 'revenue_costs_attributes' : revCosts
     };
   }
 
@@ -112,7 +136,7 @@ class Shipment extends RecordModel{
 
   void _sumLine(Line line){
     _totalWeight += line.weight;
-    _totalpcs += line.num_pcs;
+    _totalpcs += line.numPcs;
   }
 
 }

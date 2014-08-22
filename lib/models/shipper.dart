@@ -20,4 +20,20 @@ class Shipper extends RecordModelNested{
   void addNewLane(){
     this.lines.add(new Line());
   }
+
+  Map to_map() {
+    print('intro');
+    return {
+      'id' : id,
+      'instructions'    : instructions,
+      'ready_date'      : ready_date,
+      'open_from'        : openFrom,
+      'open_to'          : openTo,
+      'appointment_date' : appointmentDate,
+      'appointment_hour' : appointmentHour,
+      'spec_handl'       : specHandl
+      // 'lines_attributes' : linesToMap()
+    };
+  }
+
 }

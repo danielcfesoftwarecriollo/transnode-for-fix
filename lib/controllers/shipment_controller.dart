@@ -21,6 +21,7 @@ class ShipmentsController {
   Customer custombroker;
   Customer billto;
   Location billtoLocation;
+  RevenueCost rclineHelper;
 
   int step;
   @NgTwoWay("shipment")
@@ -45,11 +46,13 @@ class ShipmentsController {
   ShipmentsController(this._http,this.scope, this.modal,this._shipmentService, this._routeProvider, this._router) {
     this.shipment = new Shipment();
     this.addNewCarrier();
-    this.step = 1;
+    this.step = 2;
 
     this.consigne_locations = [];
     if (_isEditPath()) {
-      load_form();
+      var shipment_id = _routeProvider.parameters['shipmentId'];
+      _shipmentService.get(shipment_id).then((_) => this.shipment = _);
+//      load_form();
     } else if (_isIndexPath()) {
       this.shipments = [];
     }
@@ -77,7 +80,7 @@ class ShipmentsController {
       var response = this._shipmentService.save(this.shipment);
       response.then((HttpResponse response) {
         if (response == null) return false;
-        _router.go('shipment_list', {});
+        _router.go('shipments', {});
       });
     }
   }
@@ -85,7 +88,8 @@ class ShipmentsController {
 // begin Autocomplete Customer
   
   load_customers(val) {
-   return _http.post('http://107.170.66.237:49171/shipments/customers/'+val,'').then((response){
+   
+   return _http.post('http://127.0.0.1:3000/shipments/customers/'+val,'').then((response){
       return response.data['customers'];
     });
   }
@@ -204,6 +208,24 @@ class ShipmentsController {
 
   void open(String templateUrl) {
     modalInstance = modal.open(new ModalOptions(templateUrl:templateUrl),scope);
+  }
+
+  void editRCline(RevenueCost rcLine){
+    this.rclineHelper = rcLine;
+  }
+
+  void onSelectRCLine(itemSelected){
+    this.rclineHelper.billTo = itemSelected['label'];
+  }
+
+  void addRCLine(){
+    this.rclineHelper = new RevenueCost();
+    open('partials/shipments/modal/add_rc_line.html');
+  }
+
+  void saveRCLane(){
+    this.shipment.revCosts.add(this.rclineHelper);
+    modalInstance.close(null);
   }
 
   void modalAddShipper(){

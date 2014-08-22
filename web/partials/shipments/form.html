@@ -12,7 +12,7 @@
   </div>
 
   <div class="col-md-12"> 
-    <form class='form-horizontal smart-form' novalidate ng-submit="ctrl.save()">
+    <form class='form-horizontal smart-form' novalidate>
       <div class="row">
         <div class="col-md-12 info-shipment">
           <div class="col-md-2">
@@ -662,10 +662,10 @@
                 <th>Amt CAD</th>
                 <th>Inv</th>
                 <th>Profit</th>
-                <th></th>
+                <th>Actions</th>
               </tr>
-              <tr>
-                <td>I+1</td>
+              <tr ng-repeat=" revcost in ctrl.shipment.revCosts" >
+                <td>{{$index+1}}</td>
                 <td>
                   <select ng-model='location.billto' id="billto" class="form-control">
                     <option value="" disabled selected>BillTo</option>
@@ -716,8 +716,20 @@
                 </td>
                 <td>Inv+1</td>
                 <td>Profit</td>
-                <td>
-                  <i class="fa fa-times"></i>
+                <td class="actions">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i>
+                      Action <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a ng-click='ctrl.AddRCLine(revcost)'>
+                        <i class="glyphicon pull-left glyphicon-pencil"></i>Edit</a>
+                      </li>
+                      <li><a ng-click='ctrl.deleteRCLine(revcost)'>
+                        <i class="glyphicon pull-left glyphicon-remove"></i>Delete</a>
+                      </li>
+                    </ul>
+                  </div>
                 </td>
               </tr>
               <tr>
@@ -726,7 +738,12 @@
                 <th colspan="5" ></th>
                 <th>00</th>
                 <th colspan="3" ></th>
-                <th colspan="2" >00</th>
+                <th >00</th>
+                <th>
+                  <button type="button" ng-click='ctrl.addRCLine()' class="btn btn-primary btn-lg">
+                    <i class="fa fa-plus"></i> Add Lines
+                  </button>
+                </th>
               </tr>
             </table>
           </div>
@@ -754,7 +771,7 @@
             </button>
           </div>
           <div class="col-md-1">
-            <button class="btn btn-primary">
+            <button class="btn btn-primary"  ng-click="ctrl.save()">
               Save
             </button>
           </div>

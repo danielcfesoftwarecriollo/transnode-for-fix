@@ -1,0 +1,70 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h4 class="modal-title">Add Revenue Cost line</h4>
+</div>
+
+<div class="modal-body">
+  <div style="padding: 10px" >
+    <div class="col-md-9" >
+      <div class="form-group" ng-class="{'has-error':ctrl.rclineHelper.has_errors('billto')}">
+        <label >Bill To: <b>{{ctrl.rclineHelper.billTo}}</b> </label>
+        <input type="text" ng-model="ctrl.asyncSelected"
+           typeahead-min-length="3"
+           typeahead-on-select="ctrl.onSelectRCLine($item)"
+           typeahead="billto as billto['label'] for billto in ctrl.load_customers($viewValue)"
+           typeahead-wait-ms="300"
+           typeahead-loading="loadingLocations"
+           class="form-control">
+        <i ng-show="ctrl.loadingLocations" class="fa fa-circle-o-notch fa-spin"></i>
+        <p ng-show="ctrl.rclineHelper.has_errors('billto')" class='error'>{{ctrl.rclineHelper.errors_by_field('billto')}}</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <label>Currency</label>
+        <b>{{ctrl.rclineHelper.billTo}}</b>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group" ng-class="{'has-error':ctrl.rclineHelper.has_errors('account_code')}">
+        <label >Bill To: <b>{{ctrl.rclineHelper.account_code}}</b> </label>
+        <input type="text" ng-model="ctrl.rclineHelper.account_code"
+          >
+        <i ng-show="ctrl.loadingLocations" class="fa fa-circle-o-notch fa-spin"></i>
+        <p ng-show="ctrl.rclineHelper.has_errors('account_code')" class='error'>{{ctrl.rclineHelper.errors_by_field('account_code')}}</p>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group" ng-class="{'has-error':ctrl.rclineHelper.has_errors('amount_ca')}">
+        <label >Bill To: <b>{{ctrl.rclineHelper.amount_ca}}</b> </label>
+        <input type="text" ng-model="ctrl.rclineHelper.amount_ca"
+          >
+        <i ng-show="ctrl.loadingLocations" class="fa fa-circle-o-notch fa-spin"></i>
+        <p ng-show="ctrl.rclineHelper.has_errors('amount_ca')" class='error'>{{ctrl.rclineHelper.errors_by_field('amount_ca')}}</p>
+      </div>
+    </div>
+
+
+
+<!--       <div class="form-group" ng-class="{'has-error':ctrl.rclineHelper.has_errors('term1')}">
+        <label >Terminal 1 (origin)</label>
+
+
+
+
+        <p ng-show="ctrl.rclineHelper.has_errors('term1')" class='error'>{{ctrl.rclineHelper.errors_by_field('term1')}}</p>
+      </div> -->
+      <div class="prices-lane">
+        <label >Prices</label>
+      </div>
+
+
+
+
+
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  <button type="button" class="btn btn-primary" ng-click="ctrl.saveRCLane()">OK</button>
+</div>

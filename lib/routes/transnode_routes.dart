@@ -94,10 +94,6 @@ class TransnodeRouterInitializer {
               path: '/shipments',
               view: 'partials/shipments/index.html',
               preEnter: authenticatedAccess),
-          'shipment_test': ngRoute(
-              path: '/shipments/test',
-              view: 'partials/shipments/test.html',
-              preEnter: authenticatedAccess),
           'shipment_new': ngRoute(
               path: '/shipments/new',
               view: 'partials/shipments/form.html',
@@ -107,7 +103,7 @@ class TransnodeRouterInitializer {
               view: 'partials/shipments/show.html',
               preEnter: authenticatedAccess),
           'shipment_edit': ngRoute(
-              path: '/shipments/:carrierId/edit',
+              path: '/shipments/:shipmentId/edit',
               view: 'partials/shipments/form.html',
               preEnter: authenticatedAccess),
           'quotes': ngRoute(
