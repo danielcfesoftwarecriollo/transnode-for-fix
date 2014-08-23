@@ -83,6 +83,11 @@ class ShipmentService {
       });
   }
 
+  Future load_customer(String query_str){
+    String urlService = "/customer_by_id/"+query_str;
+    return load_data(urlService);    
+  }
+    
   Shipment _loadShipment(map) {
     Shipment shipment = new Shipment();
     shipment.loadWithJson(map);

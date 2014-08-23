@@ -3,12 +3,14 @@ part of transnode;
 class Shipper extends RecordModelNested{
 
   String instructions;
-  String ready_date;
+  String dateReady;
   String openFrom;
   String openTo;
-  String appointmentDate;
+  String dateAppointment;
   String appointmentHour;
-  String specHandl;
+  String specialHandling;
+  String createdAt;
+  String updatedAt;
 
   List<Line> lines;
   Location locationCustomer;
@@ -22,17 +24,18 @@ class Shipper extends RecordModelNested{
   }
 
   Map to_map() {
-    print('intro');
+    print('to_map ship');
     return {
       'id' : id,
       'instructions'    : instructions,
-      'ready_date'      : ready_date,
+      'date_ready'      : dateReady,
       'open_from'        : openFrom,
       'open_to'          : openTo,
-      'appointment_date' : appointmentDate,
+      'date_appointment' : dateAppointment,
       'appointment_hour' : appointmentHour,
-      'spec_handl'       : specHandl
-      // 'lines_attributes' : linesToMap()
+      'special_handling' : specialHandling,
+      'lines_attributes' : HelperList.to_map(lines),
+      '_destroy': _destroy
     };
   }
 

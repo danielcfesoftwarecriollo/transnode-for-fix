@@ -6,16 +6,31 @@ class Shipment extends RecordModel{
   int price_rating;
   String file_created;
   String credit_check;
+  
+// replace with object
   int customerId;
-  int billToId;
-  int customsbrokerId;
-  bool multipleCarriers;
-  String fileRef;
+  int billtoId;
   int quoteId;
+  int customBrokerId;
+  
+// is needed save?
+  bool multipleCarriers;
+  
+//Begin Values not use in view
+//  String fileRef;
+  
+  String shipCons;
+  String branchId;
+  String status;
+  String description;
+  String typeShipment;
+  String payStatus;
+  String currency;
+//End Values not use in view
 
   Customer customer;
   Location billto;
-  Customer customsbroker;
+  Customer customBroker;
   double _totalWeight;
   int _totalpcs;
 
@@ -43,7 +58,6 @@ class Shipment extends RecordModel{
     this._validator = new ShipmentValidator(this);
   }
 
-
   void loadCustomer(Customer customer){
     this.customer = customer;
     this.customerId = customer.id;
@@ -51,12 +65,12 @@ class Shipment extends RecordModel{
 
   void loadBillTo(Location billto){
     this.billto = billto;
-    this.billToId = billto.id;
+    this.billtoId = billto.id;
   }
 
-  void loadCustomsbroker(Customer customsbroker){
-    this.customsbroker = customsbroker;
-    this.customsbrokerId = customsbroker.id;
+  void loadCustomsbroker(Customer customBroker){
+    this.customBroker = customBroker;
+    this.customBrokerId = customBroker.id;
   }
 
   void addRevenueCost(){
@@ -98,28 +112,49 @@ class Shipment extends RecordModel{
      }
    }
 
+   
+   @override
+   void loadWithJson(Map<String, dynamic> map) {
+     super.loadWithJson(map);
+     if (map.containsKey("shippers_attributes")) {
+       map['shippers_attributes'].forEach((attr) {
+         Shipper s = new Shipper();
+         s.loadWithJson(attr);
+         this.shippers.add(s);
+       });
+     }
+
+//     if (map.containsKey("lanes_attributes")) {
+//       map['lanes_attributes'].forEach((attr) {
+//       });
+//     }
+   }
+   
+   
   Map to_map() {
     print('intro');
+    
     return {
       'id' : id,
-      'speed_rating'   : speed_rating,
-      'quality_rating' : quality_rating,
-      'price_rating'   : price_rating,
-      'customer'     : customerId,
-      'billto'       : billToId,
-      'file_created'   : file_created,
-      'credit_check'   : credit_check,
-      'customsbrokerId' : customsbrokerId,
-      'multipleCarriers' : multipleCarriers,
+      'file_ref'     : customer.id,
+      'billto_id'       : billtoId,
+      'custom_broker_id' : customBroker.id,
+//      'file_created'   : file_created,
+//      'credit_check'   : credit_check,
+//      'multipleCarriers' : multipleCarriers,
+//      'speed_rating'   : speed_rating,
+//      'quality_rating' : quality_rating,
+//      'price_rating'   : price_rating,
       
       // 'quote' : quote,
-      // 'notes_attributes'      : notes,
-      // 'shippers_attributes'   : shippers,
+      // 'notes_attributes'      : HelperList.to_map(consignees);notes,
+       'shippers_attributes'   : HelperList.to_map(shippers)
       // 'consignees_attributes' : consignees,
       // 'carriers_attributes'   : carriers,
       // 'revenue_costs_attributes' : revCosts
     };
   }
+
 
   totalWeight() => _totalWeight;
   int totalPcs() => _totalpcs;

@@ -3,7 +3,7 @@ part of transnode;
 class Consignee extends RecordModelNested{
 
   String instructions;
-  String ready_date;
+  String readyDate;
   String openFrom;
   String openTo;
   String appointmentDate;
@@ -23,6 +23,21 @@ class Consignee extends RecordModelNested{
   
   Consignee(){
     this.lines = []; 
+  }
+
+  Map to_map() {
+    print('to_map cons');
+    return {
+      'id' : id,
+      'instructions' : instructions,
+      'ready_date' : readyDate,
+      'open_from': openFrom,
+      'open_to': openTo,
+      'appointment_date' : appointmentDate,
+      'appointment_hour' : appointmentHour,
+      'spec_handl' : specHandl,
+      '_destroy' : _destroy
+    };
   }
   
   void addNewLane(){

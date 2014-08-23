@@ -32,7 +32,7 @@ abstract class RecordModel {
   }
 
   void loadWithJson(Map<String, dynamic> map) {
-    Mirror instanceMirror = reflect(this);
+    InstanceMirror instanceMirror = reflect(this);
     map.forEach((k, v) {
       if( !is_nested_model_attribute(k)){ 
         instanceMirror.setField(new Symbol(underscoreToCamelCase(k)), v);        

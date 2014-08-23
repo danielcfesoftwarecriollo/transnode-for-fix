@@ -140,22 +140,22 @@
                   </button>
                 </div>
                 <div class="col-xs-3 form-group">
-                  <label for="customsbroker">Customs Broker: {{ctrl.shipment.customsbroker.name}}</label>
+                  <label for="customBroker">Customs Broker: {{ctrl.shipment.customBroker.name}}</label>
                 </div>
                 <div ng-show='ctrl.internationalShipments()'>
                   <div class="col-xs-1">
-                    <label for="">City: {{ctrl.shipment.customsbroker.mainLocation().city}}</label>
+                    <label for="">City: {{ctrl.shipment.customBroker.mainLocation().city}}</label>
                   </div>
                   <div class="col-xs-1">
-                    <label for="">State: {{ctrl.shipment.customsbroker.mainLocation().stateId}}</label>
+                    <label for="">State: {{ctrl.shipment.customBroker.mainLocation().stateId}}</label>
                   </div>
-                  <div class="col-xs-1"><label for="">Zip: </label>{{ctrl.shipment.customsbroker.mainLocation().zip}}</div>
+                  <div class="col-xs-1"><label for="">Zip: </label>{{ctrl.shipment.customBroker.mainLocation().zip}}</div>
                   <div class="col-xs-3 form-group">
-                    <label>Credit Status pass: {{ctrl.shipment.customsbroker.creditLimit}}</label>
+                    <label>Credit Status pass: {{ctrl.shipment.customBroker.creditLimit}}</label>
                     <input type="text" value ="2500">
                   </div>
                   <div class="col-xs-2 form-group">
-                    <label>Balance: {{ctrl.shipment.customsbroker.balance}}</label>
+                    <label>Balance: {{ctrl.shipment.customBroker.balance}}</label>
                     <input type="text" value ="2500">
                   </div>
                 </div>
@@ -217,7 +217,7 @@
             <div class="row">
               <div class="col-md-5">
                 <label for="" class="title-label title-align">Ready Date</label>
-                <input type="text" class="input-label" ng-model="shipper.ready_date" id="ready-date">
+                <input type="text" class="input-label" ng-model="shipper.dateReady" id="ready-date">
                 <i class="fa fa-calendar"></i>
               </div>
               <div class="col-md-4">
@@ -232,7 +232,7 @@
             <div class="row">
               <div class="col-md-12">
                 <label class="title-align" for="appointment">Appointment</label>
-                <input type="text" id="appointment" ng-model="shipper.appointmentDate" >
+                <input type="text" id="appointment" ng-model="shipper.dateAppointment" >
                 <i class="fa fa-calendar"></i>
                 <input type="text" id="spec-handl-hour" ng-model="shipper.appointmentHour" >
               </div>
@@ -240,7 +240,7 @@
             <div class="row">
               <div class="col-md-12">
                 <label class="title-align" for="spec-handl">Spec. Handl</label>
-                <textarea id="spec-handl" class="form-control" ng-model="shipper.specHandl" ></textarea>
+                <textarea id="spec-handl" class="form-control" ng-model="shipper.specialHandling" ></textarea>
               </div>
             </div>
           </div>
@@ -374,7 +374,7 @@
             <div class="row">
               <div class="col-md-5">
                 <label for="" class="title-label title-align">Ready Date</label>
-                <input ng-model="consignee.ready_date" type="text" class="input-label" id="ready-date">
+                <input ng-model="consignee.readyDate" type="text" class="input-label" id="ready-date">
                 <i class="fa fa-calendar"></i>
               </div>
               <div class="col-md-4">

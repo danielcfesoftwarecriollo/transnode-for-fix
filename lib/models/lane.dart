@@ -58,6 +58,7 @@ class Lane extends RecordModelNested{
   }
   
   Map to_map() {
+    print('to_map lane');
     return {
       'id' : id,
       'term1_id' : term1.id,
@@ -67,15 +68,5 @@ class Lane extends RecordModelNested{
       '_destroy':_destroy
     };
   }
-  
-  Map to_map_carrier(){
-    return {
-      'id' : id,
-      'term1_id'  : term1.id,
-      'term2_id' : term2.id,
-      'service_note' : serviceNote,
-      'prices_attributes' : prices_to_map(),
-      '_destroy':_destroy
-    };
-  }
+
 }

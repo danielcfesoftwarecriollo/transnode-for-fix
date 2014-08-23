@@ -73,6 +73,8 @@ part 'models/rfquote.dart';
 part 'models/shipment_carrier.dart';
 part 'models/renevue_cost.dart';
 
+part 'models/helpers/helper_list.dart';
+
 part 'validators/validator.dart';
 part 'validators/location.dart';
 part 'validators/customer.dart';

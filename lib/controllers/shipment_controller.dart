@@ -46,13 +46,16 @@ class ShipmentsController {
   ShipmentsController(this._http,this.scope, this.modal,this._shipmentService, this._routeProvider, this._router) {
     this.shipment = new Shipment();
     this.addNewCarrier();
-    this.step = 2;
+    this.step = 1;
 
+    HelperList.loadWithMap();
+    
+    
     this.consigne_locations = [];
     if (_isEditPath()) {
       var shipment_id = _routeProvider.parameters['shipmentId'];
       _shipmentService.get(shipment_id).then((_) => this.shipment = _);
-//      load_form();
+      load_form();
     } else if (_isIndexPath()) {
       this.shipments = [];
     }
@@ -60,7 +63,6 @@ class ShipmentsController {
       load_form();
     }
   }
-
   
   void load_form(){
     _shipmentService.loadForm().then((response){
@@ -80,7 +82,7 @@ class ShipmentsController {
       var response = this._shipmentService.save(this.shipment);
       response.then((HttpResponse response) {
         if (response == null) return false;
-        _router.go('shipments', {});
+//        _router.go('shipments', {});
       });
     }
   }
