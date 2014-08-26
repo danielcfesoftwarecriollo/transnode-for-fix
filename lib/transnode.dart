@@ -17,7 +17,7 @@ import 'package:angular/routing/module.dart';
 import 'package:ctrl_alt_foo/keys.dart';
 import "dart:mirrors"; 
 
-
+import 'package:model_map/model_map.dart';
 import 'package:angular/application_factory.dart';
 import 'package:angular_ui/angular_ui.dart';
 import 'package:angular_ui/utils/utils.dart';

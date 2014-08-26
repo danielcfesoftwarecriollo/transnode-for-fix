@@ -1,6 +1,6 @@
 part of transnode;
 
-abstract class RecordModel {
+abstract class RecordModel extends ModelMap{
   int id;
   Validator _validator;
 
@@ -32,10 +32,11 @@ abstract class RecordModel {
   }
 
   void loadWithJson(Map<String, dynamic> map) {
+//    this.fromMap(map);
     InstanceMirror instanceMirror = reflect(this);
     map.forEach((k, v) {
       if( !is_nested_model_attribute(k)){ 
-        instanceMirror.setField(new Symbol(underscoreToCamelCase(k)), v);        
+        instanceMirror.setField(new Symbol(underscoreToCamelCase(k)), v);
       }
     });
   }
@@ -65,4 +66,5 @@ abstract class RecordModel {
     List<String> names = field.split("_");
     return names.last == "attributes";
   }
+
 }
