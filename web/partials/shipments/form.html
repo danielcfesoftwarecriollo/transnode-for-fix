@@ -171,7 +171,7 @@
           </div>
         </div>
 
-        <div  ng-repeat='shipper in ctrl.shipment.shippers'  class="row shippers container-lanes clear-margin-bottom">
+        <div  ng-repeat='shipper in ctrl.shipment.shippers'  class="row shippers container-lanes clear-margin-bottom" ng-hide="shipper.pending_to_delete()">
           <div class="col-md-6 container-info">
             <div class="" >
               <div class="row">

@@ -46,11 +46,7 @@ class ShipmentsController {
   ShipmentsController(this._http,this.scope, this.modal,this._shipmentService, this._routeProvider, this._router) {
     this.shipment = new Shipment();
     this.addNewCarrier();
-    this.step = 1;
-
-    HelperList.loadWithMap();
-    
-    
+    this.step = 1;    
     this.consigne_locations = [];
     if (_isEditPath()) {
       var shipment_id = _routeProvider.parameters['shipmentId'];
@@ -264,7 +260,7 @@ class ShipmentsController {
   void _loadCustomsbroker(data){
     Customer custombroker = new Customer();
     custombroker.loadWithJson(data);
-    this.shipment.customsbroker = custombroker;
+    this.shipment.customBroker = custombroker;
   }
 
   void _loadBilltoCustomer(data){
@@ -276,12 +272,12 @@ class ShipmentsController {
   void _loadbillto(data){
     Location location = new Location();
     location.loadWithJson(data);
-    this.shipment.loadBillTo(location);
+    this.shipment.billto = location;
   }
   void _loadCustomer(data){
     Customer customer = new Customer();
     customer.loadWithJson(data);
-    this.shipment.loadCustomer(customer);
+    this.shipment.customer = customer;
   }
 
 
@@ -291,7 +287,7 @@ class ShipmentsController {
   
   bool has_shippers() => this.shipment.shippers.isNotEmpty;
   // bool get has_consignees => this.consignees.isNotEmpty;
-  bool otherCustomerInBillTo() => this.billto != null && this.billto.id != this.shipment.customerId;
+  bool otherCustomerInBillTo() => this.billto != null && this.billto.id != this.shipment.customer.id;
   bool inStep(int step) => step == this.step;
   int toStep(int step) => this.step = step;
   bool hasConsigneeLocations() => this.consigne_locations.length > 0;

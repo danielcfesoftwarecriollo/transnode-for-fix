@@ -20,6 +20,8 @@ class Location extends RecordModelNested {
   String hours;
   String naics;
   String note;
+  String createdAt;
+  String updatedAt;
 
   bool emailOptOut;
   String status;

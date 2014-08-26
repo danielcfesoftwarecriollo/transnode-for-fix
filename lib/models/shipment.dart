@@ -7,18 +7,11 @@ class Shipment extends RecordModel{
   String file_created;
   String credit_check;
   
-// replace with object
-  int customerId;
-  int billtoId;
-  int quoteId;
-  int customBrokerId;
-  
 // is needed save?
   bool multipleCarriers;
   
 //Begin Values not use in view
 //  String fileRef;
-  
   String shipCons;
   String branchId;
   String status;
@@ -33,6 +26,8 @@ class Shipment extends RecordModel{
   Customer customBroker;
   double _totalWeight;
   int _totalpcs;
+  Quote quote;
+
 
   List<Note> notes;
   List<Shipper> shippers;
@@ -56,21 +51,6 @@ class Shipment extends RecordModel{
     note.description = """Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.""";
     notes = [note];
     this._validator = new ShipmentValidator(this);
-  }
-
-  void loadCustomer(Customer customer){
-    this.customer = customer;
-    this.customerId = customer.id;
-  }
-
-  void loadBillTo(Location billto){
-    this.billto = billto;
-    this.billtoId = billto.id;
-  }
-
-  void loadCustomsbroker(Customer customBroker){
-    this.customBroker = customBroker;
-    this.customBrokerId = customBroker.id;
   }
 
   void addRevenueCost(){
@@ -111,33 +91,87 @@ class Shipment extends RecordModel{
        sc.delete();
      }
    }
-
    
    @override
    void loadWithJson(Map<String, dynamic> map) {
-     super.loadWithJson(map);
-     if (map.containsKey("shippers_attributes")) {
-       map['shippers_attributes'].forEach((attr) {
-         Shipper s = new Shipper();
-         s.loadWithJson(attr);
-         this.shippers.add(s);
-       });
-     }
-
-//     if (map.containsKey("lanes_attributes")) {
-//       map['lanes_attributes'].forEach((attr) {
-//       });
-//     }
+      super.loadWithJson(map);
+      this._loadListObj(map);
    }
+  
    
-   
+  _loadListObj(map){
+    loadCustomer(map);
+    loadBillto(map);
+    loadCustomBroker(map);
+    
+    if (map.containsKey("shippers_attributes")) {
+      map['shippers_attributes'].forEach((attr) {
+        Shipper s = new Shipper();
+        s.loadWithJson(attr);
+        this.shippers.add(s);
+      });
+    }
+
+    if (map.containsKey("consignees_attributes")) {
+      map['consignees_attributes'].forEach((attr) {
+        Consignee s = new Consignee();
+        s.loadWithJson(attr);
+        this.consignees.add(s);
+      });
+    }
+    
+    if (map.containsKey("notes_attributes")) {
+      map['notes_attributes'].forEach((attr) {
+        Note s = new Note();
+        s.loadWithJson(attr);
+        this.notes.add(s);
+      });
+    }
+    
+    if (map.containsKey("carriers_attributes")) {
+      map['carriers_attributes'].forEach((attr) {
+        ShipmentCarrier s = new ShipmentCarrier();
+        s.loadWithJson(attr);
+        this.carriers.add(s);
+      });
+    }
+  }
+
+  
+    loadCustomer(Map customerMap ){
+      if(customerMap['customer'] != null){
+        Customer customer = new Customer();
+        customer.loadWithJson(customerMap['customer']);  
+        this.customer = customer;
+      }
+      customerMap.remove('customer');
+    }
+    
+    loadBillto(Map customerMap ){
+      if(customerMap['billto'] != null){
+        Location l = new Location();
+        l.loadWithJson(customerMap['billto']['location']);  
+        this.billto = l;
+      }
+      customerMap.remove('billto');
+    }
+    
+    loadCustomBroker(Map customerMap ){
+      if(customerMap['custom_broker'] != null){
+        Customer customer = new Customer();
+        customer.loadWithJson(customerMap['custom_broker']);  
+        this.customBroker = customer;
+      }
+      customerMap.remove('custom_broker');
+    }
+  
   Map to_map() {
     print('intro');
     
     return {
       'id' : id,
       'file_ref'     : customer.id,
-      'billto_id'       : billtoId,
+      'billto_id'       : billto.id,
       'custom_broker_id' : customBroker.id,
 //      'file_created'   : file_created,
 //      'credit_check'   : credit_check,

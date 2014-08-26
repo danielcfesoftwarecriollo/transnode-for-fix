@@ -22,6 +22,8 @@ class Entity extends RecordModel {
   List roles;
   Map _roles_map;
   List<Location> locations;
+  String createdAt;
+  String updatedAt;
 
   int get rating => _rating;
 
