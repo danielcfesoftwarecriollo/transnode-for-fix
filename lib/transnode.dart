@@ -85,7 +85,8 @@ part 'validators/city.dart';
 part 'validators/lane.dart';
 part 'validators/quote.dart';
 part 'validators/shipment.dart';
-
+part 'validators/line.dart';
+part 'validators/note.dart';
 
 class TransnodeModule extends Module {
 

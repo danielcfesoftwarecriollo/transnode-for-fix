@@ -7,11 +7,13 @@ class Line extends RecordModelNested{
   var weight;
   var width; 
   var numPcs;
-  var hazClass;
-  var consigneId;
+  var hazard;
+  var consigneeId;
+  var createdAt;
+  var updatedAt;
    
   Line(){
-//    this._validator = new LineValidator(this);
+    this._validator = new LineValidator(this);
   }
   
   Map to_map() {
@@ -23,8 +25,8 @@ class Line extends RecordModelNested{
       'weight': weight,
       'width' : width, 
       'num_pcs': numPcs,
-      'hazClass': hazClass,
-      'consigneId': consigneId,
+      'hazard': hazard,
+      'consignee_id': consigneeId,
       '_destroy': _destroy
     };
   }

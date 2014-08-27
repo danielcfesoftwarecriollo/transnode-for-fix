@@ -9,7 +9,7 @@ class RevenueCost extends RecordModelNested{
   String vendor;
   String description;
   String e_or_p;
-  String billTo;
+  Customer billTo;
   String invoice;
   int status;
   String created_at;

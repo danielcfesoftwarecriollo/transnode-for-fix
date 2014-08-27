@@ -6,7 +6,8 @@ class HelperList{
     l.forEach((item){
       l_map.add(item.to_map());
     });
-    return l_map;
+    
+    return (l_map.isEmpty)? null : l_map;
   }
 
   static getInstanceToString(classString){

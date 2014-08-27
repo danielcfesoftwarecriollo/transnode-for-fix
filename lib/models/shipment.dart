@@ -46,7 +46,7 @@ class Shipment extends RecordModel{
     carriers = [];
     revCosts = [new RevenueCost()];
     Note note = new Note();
-    note.dateCreated = '22/22/2014';
+    note.createdAt = '22/22/2014';
     note.author = 'Daniel Castillo';
     note.description = """Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.""";
     notes = [note];
@@ -59,7 +59,7 @@ class Shipment extends RecordModel{
   }
 
   void addLineToConsignee(Line line){
-    Consignee consignee = this.consignees.firstWhere((e)=> e.locationCustomer.id == line.consigneId);
+    Consignee consignee = this.consignees.firstWhere((e)=> e.locationCustomer.id == line.consigneeId);
       if(consignee != null){
         consignee.lines.add(line);
         checkTotal();
@@ -179,13 +179,14 @@ class Shipment extends RecordModel{
 //      'speed_rating'   : speed_rating,
 //      'quality_rating' : quality_rating,
 //      'price_rating'   : price_rating,
+//      'quote' : quote,
+//      'revenue_costs_attributes' : revCosts
       
-      // 'quote' : quote,
-      // 'notes_attributes'      : HelperList.to_map(consignees);notes,
-       'shippers_attributes'   : HelperList.to_map(shippers)
-      // 'consignees_attributes' : consignees,
-      // 'carriers_attributes'   : carriers,
-      // 'revenue_costs_attributes' : revCosts
+       'notes_attributes'      : HelperList.to_map(notes),
+       'shippers_attributes'   : HelperList.to_map(shippers),
+       'consignees_attributes' : HelperList.to_map(consignees),
+//       'carriers_attributes'   : HelperList.to_map(carriers)
+
     };
   }
 
@@ -204,8 +205,9 @@ class Shipment extends RecordModel{
   }
 
   void _sumLine(Line line){
-    _totalWeight += line.weight;
-    _totalpcs += line.numPcs;
+    _totalWeight += double.parse(line.weight.toString());
+    _totalpcs += double.parse(line.numPcs.toString());
   }
+  
 
 }
