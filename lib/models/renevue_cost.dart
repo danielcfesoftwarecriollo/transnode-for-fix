@@ -6,17 +6,29 @@ class RevenueCost extends RecordModelNested{
   String amount;
   String currency;
   double amount_ca;
+//  Carrier vendor;
   String vendor;
   String description;
   String e_or_p;
   Customer billTo;
   String invoice;
-  int status;
+  String status;
   String created_at;
   String updated_at;
   
   RevenueCost(){
-
+    account_code = "5555";
+    amount = "5.000";
+    currency = "US";
+    amount_ca = 5000.0;
+    vendor = 'Carrier';
+    description = "description";
+    e_or_p = 'N/A';
+    Customer billTo = new Customer();
+    invoice = "5555";
+    status = "Applied";
+    created_at = "20-08-2014" ;
+    updated_at = "27-08-2014" ;
   }
 
   Map to_map() {

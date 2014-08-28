@@ -5,6 +5,7 @@ class ShipmentsController {
   RouteProvider _routeProvider;
   Router _router;
   final ShipmentService _shipmentService;
+  final CarrierService _carrierService;
   List<Shipper> shippers;
   List consigne_locations;
   List consignees;
@@ -43,10 +44,10 @@ class ShipmentsController {
   
   String functionss = 'test()';
 
-  ShipmentsController(this._http,this.scope, this.modal,this._shipmentService, this._routeProvider, this._router) {
+  ShipmentsController(this._http,this.scope, this.modal,this._shipmentService, this._carrierService, this._routeProvider, this._router) {
     this.shipment = new Shipment();
-    this.addNewCarrier();
-    this.step = 1;    
+//    this.addNewCarrier();
+    this.step = 2;    
     this.consigne_locations = [];
     if (_isEditPath()) {
       var shipment_id = _routeProvider.parameters['shipmentId'];
@@ -59,6 +60,7 @@ class ShipmentsController {
       load_form();
     }
   }
+  
   
   void load_form(){
     _shipmentService.loadForm().then((response){
@@ -76,22 +78,34 @@ class ShipmentsController {
   void save() {
     if (this.shipment.is_valid()) {
       var response = this._shipmentService.save(this.shipment);
-      response.then((HttpResponse response) {
+      response.then((response) {
         if (response == null) return false;
-//        _router.go('shipments', {});
+        this.update_shipment(response);
       });
     }
   }
-
+  void update_shipment( response ){
+    if(response.data.length > 0){
+      Shipment s = this._shipmentService._loadShipment(response.data);
+      this.shipment = s;
+    }
+  }
+  
+  
 // begin Autocomplete Customer
   
-  load_customers(val) {
-   
+  loadCarriersByString(val){
+    var response = this._carrierService.getCarriersByName(val.toString());
+    return response.then((r) =>r);
+  }
+  
+  load_customers(val) {   
    return _http.post('http://127.0.0.1:3000/shipments/customers/'+val,'').then((response){
       return response.data['customers'];
     });
   }
   
+
   onSelect($item, $model, $label){
     var response = _shipmentService.load_customer($item['value'].toString());
     response.then((customerData){
@@ -100,16 +114,11 @@ class ShipmentsController {
     return $model['value'];
   }
 
-  onSelectCarrier(sCarrier,$item, $model, $label){
-    var response = _shipmentService.load_customer($item['value'].toString());
-    response.then((data){
-      _loadCarrierInShipperCarrier(data['customer'],sCarrier);
-    });
+  onSelectCarrier(ShipmentCarrier sCarrier,$item){
+    var response = this._carrierService.get($item['value'].toString());
+    response.then((_)=>sCarrier.carrier = _);
   }
-
-
 // End Autocomplete Customer
-
 
 // begin shippers consignee Logic
   void change_line(Line line) {
@@ -286,7 +295,7 @@ class ShipmentsController {
 // 
   
   bool has_shippers() => this.shipment.shippers.isNotEmpty;
-  // bool get has_consignees => this.consignees.isNotEmpty;
+  bool maxCarrier() => this.shipment.carriers.length > 1;
   bool otherCustomerInBillTo() => this.billto != null && this.billto.id != this.shipment.customer.id;
   bool inStep(int step) => step == this.step;
   int toStep(int step) => this.step = step;

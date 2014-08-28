@@ -87,6 +87,7 @@ part 'validators/quote.dart';
 part 'validators/shipment.dart';
 part 'validators/line.dart';
 part 'validators/note.dart';
+part 'validators/shipment_carrier.dart';
 
 class TransnodeModule extends Module {
 

@@ -51,7 +51,7 @@ class Consignee extends RecordModelNested{
       'date_received' : dateReceived,
       'date_appointment' : dateAppointment,
 //      'appointment_hour' : appointmentHour,
-      'location_customer' : locationCustomer,
+      'location_customer_id' : locationCustomer.id,
       '_destroy' : _destroy
     };
   }

@@ -36,20 +36,17 @@ class Shipment extends RecordModel{
   List<RevenueCost> revCosts;
 
   Shipment() {
-    speed_rating = 1;
-    quality_rating = 1;
-    price_rating = 1;
+    speed_rating = 5;
+    quality_rating = 5;
+    price_rating = 5;
     _totalWeight = 0.0;
     _totalpcs = 0;
     shippers = [];
     consignees = [];
     carriers = [];
     revCosts = [new RevenueCost()];
-    Note note = new Note();
-    note.createdAt = '22/22/2014';
-    note.author = 'Daniel Castillo';
-    note.description = """Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.""";
-    notes = [note];
+    notes = [];
+    multipleCarriers = true;
     this._validator = new ShipmentValidator(this);
   }
 
@@ -84,18 +81,19 @@ class Shipment extends RecordModel{
     }
   }
 
-   void delete_carrier(ShipmentCarrier sc) {
-     if (sc.is_new()) {
-       carriers.remove(sc);
-     } else {
-       sc.delete();
-     }
+  void delete_carrier(ShipmentCarrier sc) {
+   if (sc.is_new()) {
+     carriers.remove(sc);
+   } else {
+     sc.delete();
    }
+  }
    
    @override
    void loadWithJson(Map<String, dynamic> map) {
       super.loadWithJson(map);
       this._loadListObj(map);
+      this.loadLinesConsignee();
    }
   
    
@@ -164,7 +162,8 @@ class Shipment extends RecordModel{
       }
       customerMap.remove('custom_broker');
     }
-  
+   
+    
   Map to_map() {
     print('intro');
     
@@ -185,11 +184,18 @@ class Shipment extends RecordModel{
        'notes_attributes'      : HelperList.to_map(notes),
        'shippers_attributes'   : HelperList.to_map(shippers),
        'consignees_attributes' : HelperList.to_map(consignees),
-//       'carriers_attributes'   : HelperList.to_map(carriers)
+       'carriers_attributes'   : HelperList.to_map(carriers)
 
     };
   }
-
+  
+  void loadLinesConsignee(){
+    shippers.forEach((s){
+      s.lines.forEach((l){
+        addLineToConsignee(l);
+      });
+    });
+  }
 
   totalWeight() => _totalWeight;
   int totalPcs() => _totalpcs;

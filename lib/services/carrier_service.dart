@@ -29,6 +29,14 @@ class CarrierService {
       .then((HttpResponse response) => _loadCarrier(response.data));
   }
 
+  Future<List> getCarriersByName(String carrierString) {
+    return _api.request("get", url + "/carriers_by_name/" + carrierString.toString())
+       .then((HttpResponse response){ 
+        return response.data['carriers'];      
+      });
+//      .then((HttpResponse response) => _loadCarriers(response.data));
+  }
+
   Future<Carrier> delete(String carrierId) {
     return _api.request("delete", url + "/" + carrierId.toString())
       .then((_) => _messageServices.add("info", "carrier delete it"));
@@ -62,7 +70,13 @@ class CarrierService {
     return carrier;
   }
 
-  
+  List<Carrier> _loadCarriers(map) {
+    List<Carrier> carriers = [];
+    map.forEach((map_carrier){
+      carriers.add(_loadCarrier(map_carrier));
+    });
+    return carriers;
+  }
 
   void _loadFormData(response) {
     countries = response['countries'];

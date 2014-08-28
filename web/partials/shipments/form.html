@@ -177,7 +177,7 @@
               <div class="row">
                 <div class="col-xs-8">
                   <div class="col-xs-12">
-                    <label class="title-label" for="lanecode">Shipper {{ ctrl.shipment.shippers.indexOf(shipper) + 1}}</label>
+                    <label class="title-label" for="lanecode">Shipper {{($index + 1)}}</label>
                   </div>
                   <div class="col-xs-12">
                     <label for="">Name: {{shipper.locationCustomer.name}}</label>
@@ -503,20 +503,21 @@
             </div>
           </div>
         </div>
-        <div class="row" ng-repeat="sCarrier in ctrl.shipment.carriers">
+
+        <div class="row" ng-hide="sCarrier.pending_to_delete()" ng-repeat="sCarrier in ctrl.shipment.carriers">
           <div class="col-md-12">
             <div class="col-md-6 container-info">
               <div class="" >
                 <div class="row">
                   <div class="col-xs-7">
                     <div class="col-xs-12">
-                      <label class="title-label" for="lanecode">Carrier {{(ctrl.shipment.carriers.indexOf(ctrl.shipment.carriers)+1)}}</label>
+                      <label class="title-label" for="lanecode">Carrier {{($index+1)}}</label>
                       <input type="text" ng-model="sCarrier.helperInput"
                          typeahead-min-length="3"
-                         typeahead-on-select="ctrl.onSelectCarrier(sCarrier,$item, $model, $label)"
-                         typeahead="carrier as carrier['label'] for carrier in ctrl.load_customers($viewValue)"
+                         typeahead-on-select="ctrl.onSelectCarrier(sCarrier,$item)"
+                         typeahead="carrier as carrier['label'] for carrier in ctrl.loadCarriersByString($viewValue)"
                          typeahead-wait-ms="300"
-                         typeahead-loading="loadingLocations"
+                         typeahead-loading="ctrl.loadingLocations"
                          class="form-control">
                       <i ng-show="ctrl.loadingLocations" class="glyphicon glyphicon-refresh"></i>
                     </div>
@@ -576,13 +577,13 @@
                   <label for="">Insure. Amt</label>
                 </div>
                 <div class="col-md-3">
-                  <input type="number" ng-model='sCarrier.service' style="width: 100%;" >
+                  <input type="text" ng-model='sCarrier.insureAmt' style="width: 100%;" >
                 </div>
                 <div class="col-md-3">
                   <label for="">Other</label>
                 </div>
                 <div class="col-md-3">
-                  <input type="number" ng-model='sCarrier.service' style="width: 100%;">
+                  <input type="text" ng-model='sCarrier.other' style="width: 100%;">
                 </div>
               </div>
             </div>
@@ -652,7 +653,7 @@
 
         <div class="row">
           <div class="col-md-12">
-            <button ng-click="ctrl.addNewCarrier()" ng-show="ctrl.shipment.multipleCarriers" class="btn-primary btn pull-left" >Add one more Carrier</button>
+            <button ng-click="ctrl.addNewCarrier()" ng-show="ctrl.shipment.multipleCarriers" ng-hide="ctrl.maxCarrier()" class="btn-primary btn pull-left" >Add one more Carrier</button>
           </div>
         </div>
 
@@ -680,16 +681,18 @@
               <tr ng-repeat=" revcost in ctrl.shipment.revCosts" >
                 <td>{{$index+1}}</td>
                 <td>
-                  <select ng-model='location.billto' id="billto" class="form-control">
+                  <b>{{revcost.billTo.name}}</b>
+<!--                   <select ng-model='location.billto' id="billto" class="form-control">
                     <option value="" disabled selected>BillTo</option>
                     <option selected >ABC</option>
-                  </select>
+                  </select> -->
                 </td>
                 <td>
-                  <select ng-model='location.billto' id="billto" class="form-control">
+                  <b>{{revcost.currency}}</b>
+<!--                   <select ng-model='revcost.currency' id="currency" class="form-control">
                     <option value="" disabled selected>Code</option>
                     <option selected >ABC</option>
-                  </select>
+                  </select> -->
                 </td>
                 <td>
                   <input type="text">
@@ -704,19 +707,17 @@
                 </td>
                 <td>Inv(cant)</td>
                 <td>
-                  <select ng-model='location.billto' id="billto" class="form-control">
-                    <option value="" disabled selected>Vendor</option>
-                    <option selected >ABC</option>
-                  </select>
+                  <b>{{revcost.vendor}}</b>
                 </td>
                 <td>
-                  <select ng-model='location.billto' id="billto" class="form-control">
+                  <select ng-model='revcost.account_code' id="account_code" class="form-control">
                     <option value="" disabled selected>Code</option>
                     <option selected >ABC</option>
                   </select>
                 </td>
                 <td>
-                  <input type="text">
+                  <!-- <input type="text"> -->
+                  {{revcost.amount_ca}}
                 </td>
                 <td>
                   <select ng-model='location.billto' id="billto" class="form-control">
@@ -727,7 +728,7 @@
                 <td>
                   <input type="text">
                 </td>
-                <td>Inv+1</td>
+                <td>{{revcost.status}}</td>
                 <td>Profit</td>
                 <td class="actions">
                   <div class="btn-group">
