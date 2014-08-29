@@ -72,6 +72,7 @@ part 'models/quote.dart';
 part 'models/rfquote.dart';
 part 'models/shipment_carrier.dart';
 part 'models/renevue_cost.dart';
+part 'models/exchange_value.dart';
 
 part 'models/helpers/helper_list.dart';
 
@@ -88,6 +89,9 @@ part 'validators/shipment.dart';
 part 'validators/line.dart';
 part 'validators/note.dart';
 part 'validators/shipment_carrier.dart';
+part 'validators/shipment_consignee.dart';
+part 'validators/shipment_shipper.dart';
+part 'validators/revenue_cost.dart';
 
 class TransnodeModule extends Module {
 

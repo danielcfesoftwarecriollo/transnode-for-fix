@@ -5,30 +5,20 @@ class RevenueCost extends RecordModelNested{
   String account_code;
   String amount;
   String currency;
-  double amount_ca;
-//  Carrier vendor;
-  String vendor;
+  double amount_ca; //mount with converted if currency is not CAD
+  Carrier vendor;
   String description;
   String e_or_p;
-  Customer billTo;
+  Location billTo;
   String invoice;
-  String status;
+// Invoice invoice;
+  String status; //change to status int
+  
   String created_at;
   String updated_at;
   
   RevenueCost(){
-    account_code = "5555";
-    amount = "5.000";
-    currency = "US";
-    amount_ca = 5000.0;
-    vendor = 'Carrier';
-    description = "description";
-    e_or_p = 'N/A';
-    Customer billTo = new Customer();
-    invoice = "5555";
-    status = "Applied";
-    created_at = "20-08-2014" ;
-    updated_at = "27-08-2014" ;
+    this._validator = new RevenueCostValidator(this);
   }
 
   Map to_map() {
@@ -38,7 +28,7 @@ class RevenueCost extends RecordModelNested{
       'amount' : amount,
       'currency' : currency,
       'amount_ca' : amount_ca,
-      'vendor' : vendor,
+      'vendor' : vendor.id,
       'description' : description,
       'e_or_p' : e_or_p,
       'bill_to_id' : billTo.id,

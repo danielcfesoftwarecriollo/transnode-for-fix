@@ -22,6 +22,7 @@ class Consignee extends RecordModelNested{
   
   Consignee(){
     this.lines = []; 
+    this._validator = new ShipmentConsigneeValidator(this);
   }
 
   @override

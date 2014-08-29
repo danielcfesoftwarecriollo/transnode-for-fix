@@ -44,7 +44,7 @@ class Shipment extends RecordModel{
     shippers = [];
     consignees = [];
     carriers = [];
-    revCosts = [new RevenueCost()];
+    revCosts = [];
     notes = [];
     multipleCarriers = true;
     this._validator = new ShipmentValidator(this);
@@ -125,7 +125,7 @@ class Shipment extends RecordModel{
         this.notes.add(s);
       });
     }
-    
+
     if (map.containsKey("carriers_attributes")) {
       map['carriers_attributes'].forEach((attr) {
         ShipmentCarrier s = new ShipmentCarrier();
@@ -133,6 +133,15 @@ class Shipment extends RecordModel{
         this.carriers.add(s);
       });
     }
+
+    if (map.containsKey("revenue_costs_attributes")) {
+      map['revenue_costs_attributes'].forEach((attr) {
+        RevenueCost s = new RevenueCost();
+        s.loadWithJson(attr);
+        this.revCosts.add(s);
+      });
+    }
+    
   }
 
   
@@ -179,12 +188,11 @@ class Shipment extends RecordModel{
 //      'quality_rating' : quality_rating,
 //      'price_rating'   : price_rating,
 //      'quote' : quote,
-//      'revenue_costs_attributes' : revCosts
-      
        'notes_attributes'      : HelperList.to_map(notes),
        'shippers_attributes'   : HelperList.to_map(shippers),
        'consignees_attributes' : HelperList.to_map(consignees),
-       'carriers_attributes'   : HelperList.to_map(carriers)
+       'carriers_attributes'   : HelperList.to_map(carriers),
+       'revenue_costs_attributes': HelperList.to_map(revCosts)
 
     };
   }

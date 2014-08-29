@@ -2,8 +2,10 @@ part of transnode;
 
 @Controller(selector: '[shipment-controller]', publishAs: 'ctrl')
 class ShipmentsController {
+  static final String defaultCurrency = "CAD";
   RouteProvider _routeProvider;
   Router _router;
+  ExchangeValue _exchange;
   final ShipmentService _shipmentService;
   final CarrierService _carrierService;
   List<Shipper> shippers;
@@ -23,6 +25,7 @@ class ShipmentsController {
   Customer billto;
   Location billtoLocation;
   RevenueCost rclineHelper;
+  Customer rclineHelperCustomer;
 
   int step;
   @NgTwoWay("shipment")
@@ -46,7 +49,7 @@ class ShipmentsController {
 
   ShipmentsController(this._http,this.scope, this.modal,this._shipmentService, this._carrierService, this._routeProvider, this._router) {
     this.shipment = new Shipment();
-//    this.addNewCarrier();
+    this._exchange = new ExchangeValue();
     this.step = 2;    
     this.consigne_locations = [];
     if (_isEditPath()) {
@@ -220,9 +223,19 @@ class ShipmentsController {
   void editRCline(RevenueCost rcLine){
     this.rclineHelper = rcLine;
   }
+  
+  void loadRCLineWithCustomer(RevenueCost rc, Customer c){
+    rc.currency = c.currency;
+  }
 
   void onSelectRCLine(itemSelected){
-    this.rclineHelper.billTo = itemSelected['label'];
+    var response = _shipmentService.load_customer(itemSelected['value'].toString());
+    response.then((customerData){
+      Customer cToBillTo = new Customer();
+      cToBillTo.loadWithJson(customerData['customer']);
+      this.rclineHelperCustomer = cToBillTo;
+      loadRCLineWithCustomer(this.rclineHelper, cToBillTo);
+    });
   }
 
   void addRCLine(){
@@ -231,8 +244,10 @@ class ShipmentsController {
   }
 
   void saveRCLane(){
-    this.shipment.revCosts.add(this.rclineHelper);
-    modalInstance.close(null);
+    if(this.rclineHelper.is_valid()){
+      this.shipment.revCosts.add(this.rclineHelper);
+      modalInstance.close(null);
+    }
   }
 
   void modalAddShipper(){
@@ -283,12 +298,19 @@ class ShipmentsController {
     location.loadWithJson(data);
     this.shipment.billto = location;
   }
+  
   void _loadCustomer(data){
     Customer customer = new Customer();
     customer.loadWithJson(data);
     this.shipment.customer = customer;
   }
-
+  
+  void changeRevCost(RevenueCost revcost){
+    if(revcost.currency != defaultCurrency){
+      revcost.amount_ca = this._exchange.calculateCosts(revcost.amount);
+      revcost.e_or_p = this._exchange.calculateRevenue(revcost.amount).toString();
+    }
+  }
 
 // to change
   bool internationalShipments() => true;

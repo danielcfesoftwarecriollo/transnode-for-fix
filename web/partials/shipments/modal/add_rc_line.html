@@ -5,62 +5,99 @@
 
 <div class="modal-body">
   <div style="padding: 10px" >
-    <div class="col-md-9" >
+    <div class="col-md-6" >
+
       <div class="form-group" ng-class="{'has-error':ctrl.rclineHelper.has_errors('billto')}">
-        <label >Bill To: <b>{{ctrl.rclineHelper.billTo}}</b> </label>
+        <label >Bill To Customer: <b>{{ctrl.rclineHelperCustomer.name}}</b> </label>
         <input type="text" ng-model="ctrl.asyncSelected"
            typeahead-min-length="3"
            typeahead-on-select="ctrl.onSelectRCLine($item)"
            typeahead="billto as billto['label'] for billto in ctrl.load_customers($viewValue)"
            typeahead-wait-ms="300"
-           typeahead-loading="loadingLocations"
+           typeahead-loading="ctrl.loadingLocations"
            class="form-control">
-        <i ng-show="ctrl.loadingLocations" class="fa fa-circle-o-notch fa-spin"></i>
+           <i class="fa fa-circle-o-notch fa-spin" ng-show="ctrl.loadingLocations" ></i>
+      </div>
+
+    </div>
+
+    <div class="col-md-6" >
+      <div class="form-group" ng-class="{'has-error':ctrl.rclineHelper.has_errors('billto')}">
+        <label >Bill To Location: <b>{{ctrl.rclineHelper.billTo.name}}</b> </label>
+        <select ng-disabled="ctrl.rclineHelperCustomer == null || ctrl.rclineHelperCustomer.locations.isEmpty" ng-model='ctrl.rclineHelper.billTo' id="billto" class="form-control">
+          <option value="" disabled selected> Select Bill To</option>
+          <option ng-repeat='billto in ctrl.rclineHelperCustomer.locations' ng-value='billto' ng-selected="billto.id == ctrl.rclineHelper.billTo.id">{{billto.name}}</option>
+        </select>
         <p ng-show="ctrl.rclineHelper.has_errors('billto')" class='error'>{{ctrl.rclineHelper.errors_by_field('billto')}}</p>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="form-group">
-        <label>Currency</label>
-        <b>{{ctrl.rclineHelper.billTo}}</b>
+
+    <div class="col-md-6">
+      <div class="form-group" ng-class="{'has-error':ctrl.rclineHelper.has_errors('amount')}">
+        <label >Amount : <b>{{ctrl.rclineHelper.amount}}</b> </label>
+        <input class="form-control" type="text" ng-model="ctrl.rclineHelper.amount" ng-change="ctrl.changeRevCost(ctrl.rclineHelper)">
+        <p ng-show="ctrl.rclineHelper.has_errors('amount')" class='error'>{{ctrl.rclineHelper.errors_by_field('amount')}}</p>
       </div>
     </div>
-    <div class="col-md-12">
+
+    <div class="col-md-6">
       <div class="form-group" ng-class="{'has-error':ctrl.rclineHelper.has_errors('account_code')}">
-        <label >Bill To: <b>{{ctrl.rclineHelper.account_code}}</b> </label>
-        <input type="text" ng-model="ctrl.rclineHelper.account_code"
-          >
+        <label >Account Code: <b>{{ctrl.rclineHelper.account_code}}</b> </label>
+        <input class="form-control" type="text" ng-model="ctrl.rclineHelper.account_code" >
         <i ng-show="ctrl.loadingLocations" class="fa fa-circle-o-notch fa-spin"></i>
         <p ng-show="ctrl.rclineHelper.has_errors('account_code')" class='error'>{{ctrl.rclineHelper.errors_by_field('account_code')}}</p>
       </div>
     </div>
-    <div class="col-md-12">
-      <div class="form-group" ng-class="{'has-error':ctrl.rclineHelper.has_errors('amount_ca')}">
-        <label >Bill To: <b>{{ctrl.rclineHelper.amount_ca}}</b> </label>
-        <input type="text" ng-model="ctrl.rclineHelper.amount_ca"
-          >
-        <i ng-show="ctrl.loadingLocations" class="fa fa-circle-o-notch fa-spin"></i>
-        <p ng-show="ctrl.rclineHelper.has_errors('amount_ca')" class='error'>{{ctrl.rclineHelper.errors_by_field('amount_ca')}}</p>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Currency : </label>
+        <b>{{ctrl.rclineHelper.currency}}</b>
       </div>
     </div>
 
-
-
-<!--       <div class="form-group" ng-class="{'has-error':ctrl.rclineHelper.has_errors('term1')}">
-        <label >Terminal 1 (origin)</label>
-
-
-
-
-        <p ng-show="ctrl.rclineHelper.has_errors('term1')" class='error'>{{ctrl.rclineHelper.errors_by_field('term1')}}</p>
-      </div> -->
-      <div class="prices-lane">
-        <label >Prices</label>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Amount Ca : </label>
+        <b>{{ctrl.rclineHelper.amount_ca}}</b>
       </div>
+    </div>
 
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Invoice : </label>
+        <b>{{ctrl.rclineHelper.invoice}}-{{$index}}</b>
+      </div>
+    </div>
 
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Vendor : </label>
+        <b>({{ctrl.rclineHelper.vendor.id}})-{{ctrl.rclineHelper.vendor.name}}</b>
+        <select ng-model='ctrl.rclineHelper.vendor' id="vendor" class="form-control">
+          <option value="" disabled selected> Select Bill To</option>
+          <option ng-repeat='carrier in ctrl.shipment.carriers' ng-value='carrier.carrier' ng-selected="carrier.carrier.id == ctrl.rclineHelper.vendor.id">{{carrier.carrier.name}}</option>
+        </select>
+      </div>
+    </div>
 
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Receivable or Payable : </label>
+        <b>{{ctrl.rclineHelper.e_or_p}}</b>
+      </div>
+    </div>
 
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Status : </label>
+        <b>{{ctrl.rclineHelper.status}}</b>
+        <select  ng-model='ctrl.rclineHelper.status' id="status" class="form-control">
+          <option value="" disabled selected> Select Bill To</option>
+          <option ng-repeat="status in ['New','Wait','Applied','Closed']" ng-value='status' ng-selected="status == ctrl.rclineHelper.status">{{status}}</option>
+        </select>
+      </div>
+    </div>
 
   </div>
 </div>
