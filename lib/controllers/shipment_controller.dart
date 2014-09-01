@@ -103,7 +103,7 @@ class ShipmentsController {
   }
   
   load_customers(val) {   
-   return _http.post('http://127.0.0.1:3000/shipments/customers/'+val,'').then((response){
+   return _http.post('http://transnode-api-newt2.apps.welkeglobal.com/shipments/customers/'+val,'').then((response){
       return response.data['customers'];
     });
   }
