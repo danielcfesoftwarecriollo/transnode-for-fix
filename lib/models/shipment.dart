@@ -80,6 +80,14 @@ class Shipment extends RecordModel{
       shipper.delete();
     }
   }
+  
+  void deleteRCLine(RevenueCost rc) {
+    if (rc.is_new()) {
+      revCosts.remove(rc);
+    } else {
+      rc.delete();
+    }
+  }
 
   void delete_carrier(ShipmentCarrier sc) {
    if (sc.is_new()) {

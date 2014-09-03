@@ -676,13 +676,13 @@
                 <th class="important">Profit</th>
                 <th class="important">Actions</th>
               </tr>
-              <tr ng-repeat=" revcost in ctrl.shipment.revCosts" >
+              <tr ng-repeat=" revcost in ctrl.shipment.revCosts"  ng-hide="revcost.pending_to_delete()" >
                 <td class="important" >{{$index+1}}</td>
                 <td>
                   <b>{{revcost.billTo.name}}</b>
                 </td>
                 <td>
-                  <b>{{revcost.account_code}}</b>
+                  <b>{{revcost.accountCode}}</b>
                 </td>
                 <td>
                   <input ng-model="revcost.amount" ng-change="ctrl.changeRevCost(revcost)" type="text">
@@ -691,38 +691,38 @@
                   <b>{{revcost.currency}}</b>
                 </td>
                 <td>
-                  <b>{{revcost.amount_ca}}</b>
+                  <b>{{revcost.revenueAmountCa}}</b>
                 </td>
                 <td class="important" >
-                  <b>{{revcost.invoice}}-{{$index}}</b>
+                  <b>{{revcost.invoice}}</b>
                 </td>
                 <td>
-                  <b>{{revcost.vendor}}</b>
+                  <b>{{revcost.vendor.name}}</b>
                 </td>
                 <td>
-                  {{revcost.account_code}}
+                  {{revcost.accountCode}}
                 </td>
                 <td>
-                  <b>{{revcost.e_or_p}}</b>
+                  <b>{{revcost.amount}}</b>
                 </td>
                 <td>
                   <b>{{revcost.currency}}</b>
                 </td>
                 <td>
-                  <input type="text">
+                  <b>{{revcost.costAmountCa}}</b>
                 </td>
                 <td class="important" >{{revcost.status}}</td>
-                <td class="important" >Profit</td>
+                <td class="important" >{{revcost.profit}}</td>
                 <td class="actions important">
                   <div class="btn-group">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i>
                       Action <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                      <li><a ng-click='ctrl.AddRCLine(revcost)'>
+                      <li><a ng-click='ctrl.editRCline(revcost)'>
                         <i class="glyphicon pull-left glyphicon-pencil"></i>Edit</a>
                       </li>
-                      <li><a ng-click='ctrl.deleteRCLine(revcost)'>
+                      <li><a ng-click='ctrl.shipment.deleteRCLine(revcost)'>
                         <i class="glyphicon pull-left glyphicon-remove"></i>Delete</a>
                       </li>
                     </ul>
@@ -730,12 +730,12 @@
                 </td>
               </tr>
               <tr>
-                <th colspan="3">Total</th>
-                <th>00</th>
-                <th colspan="5" ></th>
-                <th>00</th>
-                <th colspan="3" ></th>
-                <th >00</th>
+                <th colspan="3" >Total</th>
+                <th colspan="2" >{{ctrl.helperTotal['amount'].toStringAsFixed(2)}}</th>
+                <th colspan="4" >{{ctrl.helperTotal['amountRevCa'].toStringAsFixed(2)}}</th>
+                <th colspan="2" >{{ctrl.helperTotal['amount'].toStringAsFixed(2)}}</th>
+                <th colspan="2" >{{ctrl.helperTotal['amountCostCa'].toStringAsFixed(2)}}</th>
+                <th >{{ctrl.helperTotal['profit'].toStringAsFixed(2)}}</th>
                 <th>
                   <button type="button" ng-click='ctrl.addRCLine()' class="btn btn-primary btn-lg">
                     <i class="fa fa-plus"></i> Add Lines

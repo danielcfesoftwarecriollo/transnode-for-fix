@@ -26,6 +26,7 @@ class ShipmentsController {
   Location billtoLocation;
   RevenueCost rclineHelper;
   Customer rclineHelperCustomer;
+  Map helperTotal;
 
   int step;
   @NgTwoWay("shipment")
@@ -52,9 +53,13 @@ class ShipmentsController {
     this._exchange = new ExchangeValue();
     this.step = 2;    
     this.consigne_locations = [];
+    this.helperTotal = {'amount': 0.0, 'amountRevCa': 0.0, 'amountCostCa': 0.0, 'profit': 0.0 };
     if (_isEditPath()) {
       var shipment_id = _routeProvider.parameters['shipmentId'];
-      _shipmentService.get(shipment_id).then((_) => this.shipment = _);
+      _shipmentService.get(shipment_id).then((_){ 
+        this.shipment = _;
+        checkTotalRevCosts();
+      });
       load_form();
     } else if (_isIndexPath()) {
       this.shipments = [];
@@ -103,7 +108,7 @@ class ShipmentsController {
   }
   
   load_customers(val) {   
-   return _http.post('http://transnode-api-newt2.apps.welkeglobal.com/shipments/customers/'+val,'').then((response){
+   return _http.post('http://127.0.0.1:3000/shipments/customers/'+val,'').then((response){
       return response.data['customers'];
     });
   }
@@ -222,6 +227,8 @@ class ShipmentsController {
 
   void editRCline(RevenueCost rcLine){
     this.rclineHelper = rcLine;
+    changeRevCost(rcLine);
+    open('partials/shipments/modal/add_rc_line.html');
   }
   
   void loadRCLineWithCustomer(RevenueCost rc, Customer c){
@@ -240,12 +247,24 @@ class ShipmentsController {
 
   void addRCLine(){
     this.rclineHelper = new RevenueCost();
+    _loadDefaultData();
     open('partials/shipments/modal/add_rc_line.html');
+  }
+  
+  void _loadDefaultData(){
+    this.asyncSelected = this.shipment.customer.name;
+    this.rclineHelper.billTo = this.shipment.billto;
+    this.rclineHelperCustomer = this.shipment.customer;
+    this.rclineHelper.currency = this.shipment.customer.currency;
+    this.rclineHelper.vendor =  this.shipment.carriers.first.carrier;
+    this.rclineHelper.status = 'New'; 
   }
 
   void saveRCLane(){
     if(this.rclineHelper.is_valid()){
-      this.shipment.revCosts.add(this.rclineHelper);
+      if(this.rclineHelper.is_new()){
+        this.shipment.revCosts.add(this.rclineHelper);        
+      }
       modalInstance.close(null);
     }
   }
@@ -307,9 +326,20 @@ class ShipmentsController {
   
   void changeRevCost(RevenueCost revcost){
     if(revcost.currency != defaultCurrency){
-      revcost.amount_ca = this._exchange.calculateCosts(revcost.amount);
-      revcost.e_or_p = this._exchange.calculateRevenue(revcost.amount).toString();
+      revcost.costAmountCa = this._exchange.calculateCosts(revcost.amount);
+      revcost.revenueAmountCa = this._exchange.calculateRevenue(revcost.amount);
+      revcost.calculateProfit();
+      checkTotalRevCosts();
     }
+  }
+  
+  void checkTotalRevCosts(){
+     this.shipment.revCosts.forEach((rc){
+       helperTotal['amount'] += double.parse(rc.amount);
+       helperTotal['amountRevCa'] += double.parse(rc.revenueAmountCa);
+       helperTotal['amountCostCa'] += double.parse(rc.costAmountCa);
+    });
+     helperTotal['profit'] = helperTotal['amountCostCa'] - helperTotal['amountRevCa'];
   }
 
 // to change

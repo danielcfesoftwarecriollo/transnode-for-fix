@@ -9,15 +9,18 @@ class ExchangeValue extends RecordModelNested{
     exchangeRate = 1.11;
     factor = 1.0;
   }
+  double getFactor(){
+    return (factor / 100) * exchangeRate;
+  }
   
-  double calculateCosts(amount){
-    double aux = double.parse(amount.toString()) * ( exchangeRate + factor );
-     return aux.truncateToDouble();
+  String calculateCosts(amount){
+    double aux = double.parse(amount.toString()) * ( exchangeRate + getFactor() );
+     return aux.toStringAsFixed(2);
   }
 
-  double calculateRevenue(amount){
-    double aux = double.parse(amount.toString()) * ( exchangeRate - factor );
-     return aux.truncateToDouble();
+  String calculateRevenue(amount){
+    double aux = double.parse(amount.toString()) * ( exchangeRate - getFactor() );
+     return aux.toStringAsFixed(2);
   }
   
 }
