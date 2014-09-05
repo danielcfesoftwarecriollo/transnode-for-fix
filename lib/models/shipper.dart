@@ -24,6 +24,12 @@ class Shipper extends RecordModelNested{
     this.lines.add(new Line());
   }
   
+  bool full_valid(){
+    bool result = _validator.run_validations();
+    this.lines.forEach((l) => result = l.is_valid() && result);
+    return result;
+  }
+  
   @override
   void loadWithJson(Map<String, dynamic> map) {
    loadCustomerLocation(map);

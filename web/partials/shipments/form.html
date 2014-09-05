@@ -42,7 +42,7 @@
           </div>
           <div class="col-md-2">
             <div>
-              Status: NEW
+              Status:{{ctrl.shipment.status}}
             </div>
           </div>
         </div>
@@ -69,9 +69,10 @@
         <div class="row">
           <div class="col-md-12 credit-info">
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-12" ng-class="{'has-error':ctrl.shipment.has_errors('customer')}" >
                 <div class="col-xs-1">
                   {{ctrl.shipment.customer.name}}
+                  <p ng-show="ctrl.shipment.has_errors('customer')" class='error'>{{ctrl.shipment.errors_by_field('customer')}}</p>
                 </div>
                 <div class="col-xs-3 form-group">
                   <label for="customer">Customer: </label>
@@ -106,12 +107,13 @@
                     <i class="fa fa-exchange"></i>
                   </button>
                 </div>
-                <div class="col-xs-3 form-group">
+                <div class="col-xs-3 form-group" ng-class="{'has-error':ctrl.shipment.has_errors('billto')}" >
                   <label for="billto">Bill To</label>
                   <select ng-model='ctrl.shipment.billto.id' id="billto" class="form-control">
                     <option value="" disabled selected> Select Bill To</option>
                     <option ng-repeat='billto in ctrl.billto.locations' ng-value='billto.id' ng-selected="billto.id == ctrl.shipment.billto.id">{{billto.name}}</option>
                   </select>
+                  <p ng-show="ctrl.shipment.has_errors('billto')" class='error'>{{ctrl.shipment.errors_by_field('billto')}}</p>
                 </div>
                 <div ng-hide="ctrl.otherCustomerInBillTo()">
                   <div class="col-xs-1">
@@ -139,8 +141,9 @@
                     <i class="fa fa-exchange"></i>
                   </button>
                 </div>
-                <div class="col-xs-3 form-group">
+                <div class="col-xs-3 form-group" ng-class="{'has-error':ctrl.shipment.has_errors('customBroker')}">
                   <label for="customBroker">Customs Broker: {{ctrl.shipment.customBroker.name}}</label>
+                  <p ng-show="ctrl.shipment.has_errors('customBroker')" class='error'>{{ctrl.shipment.errors_by_field('customBroker')}}</p>
                 </div>
                 <div ng-show='ctrl.internationalShipments()'>
                   <div class="col-xs-1">
@@ -216,6 +219,7 @@
               <div class="col-md-5">
                 <label for="" class="title-label title-align">Ready Date</label>
                 <input type="text" class="input-label" ng-model="shipper.dateReady" id="ready-date">
+                <!-- <datepicker  ng-model="shipper.dateReady" ></datepicker> -->
                 <i class="fa fa-calendar"></i>
               </div>
               <div class="col-md-4">
@@ -325,6 +329,13 @@
             <button class="btn btn-primary" >Add Consignee Location</button>
           </div>
         </div>
+        
+        <div class="row" ng-show="ctrl.shipment.has_errors('shippers')">
+          <div class="col-md-12  credit-info text-center">
+            <p  class='error'>{{ctrl.shipment.errors_by_field('shippers')}}</p>
+          </div>
+        </div>
+
         <div ng-repeat="consignee in ctrl.shipment.consignees" ng-hide="consignee.pending_to_delete()" style="margin-top:20px;" class="row consignees container-lanes clear-margin-bottom">
           <div class="col-md-6 container-info">
             <div class="" >
@@ -448,9 +459,14 @@
           </div>
         </div>
         
+        <div class="row" ng-show="ctrl.shipment.has_errors('consignees')">
+          <div class="col-md-12  credit-info text-center">
+            <p  class='error'>{{ctrl.shipment.errors_by_field('consignees')}}</p>
+          </div>
+        </div>
 
         <div class="row">
-          <div class="col-md-12 info-shipment">
+          <div class="col-md-12 info-shipment ">
             <div class="col-md-2">
               <div>
                 
@@ -784,7 +800,7 @@
           </div>
         </div>
       </div>
-      <div class="step3" ng-show="ctrl.inStep(3)">
+      <div class="step3" >
         <div class="row">
           <div class="col-md-7">
             <div class="row">

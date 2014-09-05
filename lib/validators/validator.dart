@@ -58,6 +58,12 @@ class Validator {
     }
   }
 
+  void list_notEmpty(List value, String name_field) {
+    if (notEmpty(value)) {
+      _add_error("The list of {name_field} can not be empty", name_field);
+    }
+  }
+  
   void format_phone(String value, String name_field, {bool required: false}) {
     if (!_valid_format(value, phone_regex, required)) {
       _add_error("format should be: +01 123 123 1234", name_field);
@@ -98,6 +104,8 @@ class Validator {
       _add_error("Should be a number", name_field);
     }
   }
+
+  bool notEmpty(List value) => value != null && value.isEmpty;
 
   bool _is_present(value) => value != null && value.toString() != "";
 

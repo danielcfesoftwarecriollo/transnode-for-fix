@@ -8,15 +8,25 @@ class ShipmentValidator extends Validator {
 
   bool run_validations() {
     this.clean_errors();
-    // required_field(_shipment.speed_rating, "speed_rating");
-    // required_field(_shipment.quality_rating, "quality_rating");
-    // required_field(_shipment.price_rating, "price_rating");
-    // required_field(_shipment.customerId, "customerId");
-    // required_field(_shipment.file_created, "file_created");
-    // required_field(_shipment.credit_check, "credit_check");
-    // required_field(_shipment.customsbrokerId, "customsbroker_id");
-    // required_field(_shipment.multipleCarriers, "multiple_carriers");
+    run_validations_step1();
+    run_validations_step2();
     return this.valid();
   }
 
+  bool run_validations_step1() {
+    this.clean_errors();
+      required_field(_shipment.customer, "customer");
+      required_field(_shipment.customBroker, "customBroker");
+      required_field(_shipment.billto, "billto");
+      list_notEmpty(_shipment.shippers,'shippers' );
+      list_notEmpty(_shipment.consignees,'consignees' );
+    return this.valid();
+  }
+  
+  bool run_validations_step2() {
+    this.clean_errors();
+    list_notEmpty(_shipment.carriers,'carriers');
+    list_notEmpty(_shipment.revCosts,'Revenue_Costs');
+    return this.valid();
+  }
 }

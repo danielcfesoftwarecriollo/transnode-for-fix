@@ -34,14 +34,13 @@ class ShipmentsController {
 
   List<Shipment> shipments;
   
-
+  bool openM;
   String textForModal;
   String typeModal;
   Modal modal;
   ModalInstance modalInstance;
   
   Scope scope;
-
   Http _http;
   var asyncSelected;
   bool loadingLocations = false;
@@ -51,7 +50,8 @@ class ShipmentsController {
   ShipmentsController(this._http,this.scope, this.modal,this._shipmentService, this._carrierService, this._routeProvider, this._router) {
     this.shipment = new Shipment();
     this._exchange = new ExchangeValue();
-    this.step = 2;    
+    openM = true;
+    this.step = 1;    
     this.consigne_locations = [];
     this.helperTotal = {'amount': 0.0, 'amountRevCa': 0.0, 'amountCostCa': 0.0, 'profit': 0.0 };
     if (_isEditPath()) {
@@ -69,6 +69,10 @@ class ShipmentsController {
     }
   }
   
+  void openModal(e){
+    print(e);
+   this.openM = true; 
+  }
   
   void load_form(){
     _shipmentService.loadForm().then((response){
@@ -342,15 +346,34 @@ class ShipmentsController {
      helperTotal['profit'] = helperTotal['amountCostCa'] - helperTotal['amountRevCa'];
   }
 
+  void toStep(int goToStep){
+    if(goToStep == 2){
+      toStep2();
+    }else if(goToStep == 3){
+      toStep3();
+    }else{
+      this.step = 1;
+    }
+  }
+  
+  toStep2(){
+    if(this.shipment.valid_step1())
+        this.step = 2;
+  }
+  
+  toStep3(){
+    if(this.shipment.valid_step1())
+        this.step = 3;
+  }
+
 // to change
   bool internationalShipments() => true;
 // 
   
   bool has_shippers() => this.shipment.shippers.isNotEmpty;
-  bool maxCarrier() => this.shipment.carriers.length > 1;
+  bool maxCarrier() => this.shipment.multipleCarriers && this.shipment.carriers.length > 1;
   bool otherCustomerInBillTo() => this.billto != null && this.billto.id != this.shipment.customer.id;
   bool inStep(int step) => step == this.step;
-  int toStep(int step) => this.step = step;
   bool hasConsigneeLocations() => this.consigne_locations.length > 0;
   bool hasMoreThanOneCarrier() => this.shipment.carriers.length > 1;  
   bool hasMoreOneShipperLocations() => this.shipment.shippers.length > 1;
