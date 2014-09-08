@@ -9,10 +9,6 @@ packages:
     description: angular
     source: hosted
     version: "0.12.0"
-  angular_node_bind:
-    description: angular_node_bind
-    source: hosted
-    version: "0.2.0"
   angular_ui:
     description: angular_ui
     source: hosted

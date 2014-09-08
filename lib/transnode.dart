@@ -6,11 +6,15 @@ import 'dart:convert';
 //import 'dart:html' as dom;
 import 'dart:math' as math;
 import 'package:polymer/polymer.dart';
-// import 'package:html_components/html_components.dart' show DialogComponent, GrowlComponent;
-// import 'data/user.dart' as data;
+
 
 import 'package:angular_ui/utils/injectable_service.dart';
-import 'package:angular_node_bind/angular_node_bind.dart';
+// import 'package:angular_node_bind/angular_node_bind.dart';
+
+
+// import 'package:html_components/html_components.dart' show DatatableComponent, GrowlComponent;
+// import 'data/car.dart' as data;
+
 
 import 'package:angular/angular.dart';
 import 'package:angular/routing/module.dart';
@@ -126,17 +130,23 @@ class TransnodeModule extends Module {
     bind(CarrierService);
     bind(UsersService);
     bind(QuoteService);
-    bind(NodeBindModule);
+    // bind(NodeBindModule);
   }
 }
 
 @initMethod
 start() {
+  initPolymer();
+  applicationFactory()
+    .addModule(new TransnodeModule())
+    .run();
+
+
   
-  initPolymer().run((){
-    applicationFactory()
-      .addModule(new TransnodeModule())
-      .run();
-  });
+  // initPolymer().run((){
+  //   applicationFactory()
+  //     .addModule(new TransnodeModule())
+  //     .run();
+  // });
  
 }

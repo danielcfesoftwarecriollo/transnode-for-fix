@@ -47,48 +47,60 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-<table class="table table-hover">
-  <tr>
-    <th>Num</th>
-    <th>Customer Name</th>
-    <th>Date</th>
-    <th>From To</th>
-    <!-- <th>Carrier</th> -->
-    <th>Price</th>
-    <th>weight</th>
-    <th>Status</th>
-    <th>CSR</th>
-    <!-- <th>Note</th> -->
-    <th>Action</th>
-  </tr>
 
-  <tr ng-repeat="quote in ctrl.quotes">
-    <td>{{quote.id}}</td>
-    <td>
-      <a ng-hide="quote.customer == null" ng-href="#/quotes/{{quote.id}}/edit"  popover="{{quote.customer.mainLocation().name}},{{quote.customer.mainLocation().name}},{{quote.customer.mainLocation().phone}},{{quote.customer.mainLocation().email}} " popover-trigger="mouseenter" >{{quote.customer.name}}</a>
-    </td>    
-    <td>Feb 27</td>
-    <td>TOR-LAX</td>
-    <!-- <td>TEST 1</td> -->
-    <td>1500.00</td>
-    <td>450</td>
-    <td>quote</td>
-    <td>Peter</td>
-    <!-- <td><i class="fa fa-file-text-o fa-lg"></i></td> -->
-    <td>
-      <a class="btn btn-info" ng-href="#/quotes/{{quote.id}}">
-        <i class="glyphicon glyphicon-search"></i>
-      </a>
+<!-- 
+<link rel="import" href="packages/polymer/polymer.html">
+<link rel="import" href="packages/html_components/data/column.html">
+<link rel="import" href="packages/html_components/data/datatable.html">
+<link rel="import" href="packages/html_components/utility/growl.html"> -->
 
-      <a class="btn btn-warning" ng-href="#/quotes/{{quote.id}}/edit">
-        <i class="glyphicon glyphicon-pencil"></i>
-      </a>
-      <a class="btn btn-danger" ng-click='ctrl.delete(quote)'>
-        <i class="glyphicon glyphicon-remove"></i>
-      </a>
-    </td>
-  </tr>
-</table>
+
+<datatable-demo></datatable-demo>
+<click-counter count="5"></click-counter>
+<h-clock size="{{size}}"></h-clock>
+
+
+
+<!--           <table class="table table-hover">
+            <tr>
+              <th>Num</th>
+              <th>Customer Name</th>
+              <th>Date</th>
+              <th>From To</th>
+              <th>Price</th>
+              <th>weight</th>
+              <th>Status</th>
+              <th>CSR</th>
+              <th>Action</th>
+            </tr>
+
+            <tr ng-repeat="quote in ctrl.quotes">
+              <td>{{quote.id}}</td>
+              <td>
+                <a ng-hide="quote.customer == null" ng-href="#/quotes/{{quote.id}}/edit"  popover="{{quote.customer.mainLocation().name}},{{quote.customer.mainLocation().name}},{{quote.customer.mainLocation().phone}},{{quote.customer.mainLocation().email}} " popover-trigger="mouseenter" >{{quote.customer.name}}</a>
+              </td>    
+              <td>Feb 27</td>
+              <td>TOR-LAX</td>
+              <td>1500.00</td>
+              <td>450</td>
+              <td>quote</td>
+              <td>Peter</td>
+              <td>
+                <a class="btn btn-info" ng-href="#/quotes/{{quote.id}}">
+                  <i class="glyphicon glyphicon-search"></i>
+                </a>
+
+                <a class="btn btn-warning" ng-href="#/quotes/{{quote.id}}/edit">
+                  <i class="glyphicon glyphicon-pencil"></i>
+                </a>
+                <a class="btn btn-danger" ng-click='ctrl.delete(quote)'>
+                  <i class="glyphicon glyphicon-remove"></i>
+                </a>
+              </td>
+            </tr>
+          </table> -->
+
+
         </div>
       </div>
     </form>
