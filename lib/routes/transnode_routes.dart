@@ -138,6 +138,10 @@ class TransnodeRouterInitializer {
               path: '/rfquotes/:rfquoteId/edit',
               view: 'partials/rfquotes/form.html',
               preEnter: authenticatedAccess),
+          'search_clp': ngRoute(
+              path: '/search_clp',
+              view: 'partials/carriers/search_clp.html',
+              preEnter: authenticatedAccess),
     });
   }
 
