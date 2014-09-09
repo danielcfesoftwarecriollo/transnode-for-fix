@@ -102,4 +102,11 @@ class CarrierService {
   String encode(Map map) {
     return JSON.encode(map);
   }
+  
+  Future<List> getCarriersLanePrice(String queryString) {
+    return _api.request("get", url + "/carriers_by_name/" + queryString.toString())
+       .then((HttpResponse response){ 
+        return response.data['carriers'];      
+      });
+  }
 }
