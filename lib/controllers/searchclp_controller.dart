@@ -16,6 +16,7 @@ class SearchclpController {
   List<City> cities;
   List<Quote> citiesToAux;
   List<Quote> citiesFromAux;
+  List carrierPrices;
 
   Quote cityToSelected;
   Quote cityFromSelected;
@@ -25,7 +26,7 @@ class SearchclpController {
   List formQuotes;
   Map loading;
   String skids;
-
+  int MAX_PRICES;
 
   // Lane laneHelper;
   // List<Price> pricesHelper;
@@ -35,10 +36,12 @@ class SearchclpController {
 
   
   SearchclpController(this._carrierService, this._cityService ,this.scope,this._routeProvider, this._quoteService, this._router) {
+    MAX_PRICES = 7;
     this.carriers = [];
     this.cities = [];
     this.citiesToAux = [];
     this.citiesFromAux = [];
+
     this.loading = {'From': true, 'To': true};
    if( _isSearchCLP()){
       this.carriersLP = [];
@@ -46,6 +49,7 @@ class SearchclpController {
       this.formQuotes = [];
       this._load_carriers();
       this._load_quotes_form();
+      this.searchCLP();
     }
     
   }
@@ -91,7 +95,7 @@ class SearchclpController {
   }
 
   void onSelectCity( Selected, model){
-    print(model);
+    Selected = model;
   }
 
   get_cities(destinyCities,value){
@@ -101,14 +105,45 @@ class SearchclpController {
   
   getCarriersLanePrice(queryString){
     var response = this._carrierService.getCarriersLanePrice(queryString.toString());
-    return response.then((r) =>loadCitiesIn(r));
+    return response.then((r){
+      loadPricesCarriers(r['carriers']);
+    });
   }
+
+  getLeftPrices(currentLenght){
+    return currentLenght - this.MAX_PRICES;
+  }
+
+  loadPricesCarriers(mapData){
+    this.carrierPrices = [];
+    mapData.forEach((cp){
+      this.carrierPrices.add({'carrier':LoadModel.loadCarrier(cp['carrier']), 'prices': loadPrices(cp['prices'])});
+    });    
+    print(this.carrierPrices);
+  }
+
+  loadPrices(List prices){
+    List aux = [];
+    prices.forEach((p){
+      aux.add( LoadModel.loadPrice(p) );
+    });
+    return aux;
+  }
+  
+  idNotNull(obj){
+    if(obj == null){
+      return null;
+    }else{
+      return obj.id;
+    }
+  }
+  
   
   searchCLP(){
-    var data = [this.quoteSelected,this.shipmentSelected,this.cityFromSelected,this.cityToSelected,this.skids];
-    getCarriersLanePrice(HelperUrl.parseToUrl(data));
+    var data = [idNotNull(this.quoteSelected), idNotNull(this.shipmentSelected), idNotNull(this.cityFromSelected), idNotNull(this.cityToSelected), this.skids];
+    var aux = HelperUrl.parseToUrl(data);
+    getCarriersLanePrice(aux);
   }
-  
   
   
   loadCitiesIn(List cities, citiesMap ){

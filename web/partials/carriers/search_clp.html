@@ -5,7 +5,7 @@
       <h1>Find Carriers and Prices</h1>
     </div>
   </div>
-  <form action="" class='form-horizontal smart-form'>
+  <form action="" class='form-horizontal smart-form' ng-submit="ctrl.searchCLP()" >
     <div class="row">
       <div class="col-sm-2">
         <select ng-model='ctrl.quoteSelected' id="fromCountryId" class="form-control">
@@ -28,7 +28,7 @@
         <div class="form-group">
           <label for="skid" class="col-sm-6 control-label">Number of skids</label>
           <div class="col-sm-6">
-            <input type="text" class="form-control" id="skid" >
+            <input type="text" class="form-control" ng-model="ctrl.skids" id="skid" >
           </div>
         </div>
       </div>
@@ -61,12 +61,17 @@
                typeahead-on-select="ctrl.onSelectCity(ctrl.cityToSelected, $model)"
                typeahead="city as city.name for city in ctrl.get_cities(ctrl.citiesToAux, $viewValue)"
                typeahead-wait-ms="300"
-               typeahead-loading="ctrl.loading['from']"
+               typeahead-loading="ctrl.loading['to']"
                class="form-control">
-            <i ng-show="ctrl.loading['from']" 
+            <i ng-show="ctrl.loading['to']" 
             class="glyphicon glyphicon-refresh"></i>
           </div>
         </div>
+      </div>
+      <div class="col-offset-md-3 col-md-3">
+        <button class="btn btn-primary">
+          Search
+        </button>
       </div>
     </div>
     <div class="col-md-8">
@@ -78,7 +83,7 @@
     No records match
   </b>
 
-  <form action="" ng-show="ctrl.carriersLP.isNotEmpty" >
+  <form action="" ng-show="ctrl.carrierPrices.isNotEmpty" >
     <table  class="table table-striped table-shipment">
       <tr>
         <th class="important">Skids:</th>
@@ -91,13 +96,23 @@
         <th class="important">7</th>
         <th class="important">Service Note</th>
         <th class="important">Rating</th>
+        <th class="important"></th>
         <th class="important">Actions</th>
       </tr>
-      <tr ng-repeat=" carrier in ctrl.carriers">
+      <tr ng-repeat=" carrierPrice in ctrl.carrierPrices">
         <td class="important" ><!-- 
-          <a ng-hide="quote.customer == null" ng-href="#/quotes/{{quote.id}}/edit"  popover="{{quote.customer.mainLocation().name}},{{quote.customer.mainLocation().name}},{{quote.customer.mainLocation().phone}},{{quote.customer.mainLocation().email}} " popover-trigger="mouseenter" >{{quote.customer.name}}</a> -->
+          <div ng-init="carrier = carrierPrice['carrier']"></div>
+          <div ng-init="price = carrierPrice['price']"></div> -->
+          <!-- {{carrierPrice['carrier'].name}} -->
+        <!-- ng-hide="carrierPrice['carrier'] == null" -->
+          <a ng-href="#/carriers/{{carrierPrice['carrier'].id}}/edit"  popover="{{carrierPrice['carrier'].name}} " popover-trigger="mouseenter" >{{quote.customer.name}}</a>
         </td>
-        <td>
+
+        <td ng-repeat="price in carrierPrice['prices']" >
+          <input type="text"  ng-model="price.price" >
+        </td>
+        <td colspan="{{(ctrl.MAX_PRICES-carrierPrice['prices'].length)}}"></td>
+<!--         <td>
           <input type="text">
         </td>
         <td>
@@ -114,10 +129,7 @@
         </td>
         <td>
           <input type="text">
-        </td>
-        <td>
-          <input type="text">
-        </td>
+        </td> -->
         <td>
           <i class="fa fa-file-text-o"></i>
         </td>
@@ -125,15 +137,11 @@
           <b>3,5,4</b>
         </td>
         <td>
-          <input type="chekbox">
+          <input type="checkbox">
         </td>
         <td>
           <b>{{revcost.costAmountCa}}</b>
-        </td>
-        <td class="important" >
           <i class="fa fa-envelope-o"></i>
-        </td>
-        <td class="important" >
           <i class="fa fa-times"></i>
         </td>
      <!--    <td class="actions important">

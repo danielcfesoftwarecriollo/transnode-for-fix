@@ -82,7 +82,7 @@ part 'models/exchange_value.dart';
 
 part 'models/helpers/helper_list.dart';
 part 'models/helpers/helper_url.dart';
-
+part 'models/helpers/helper_load_model.dart';
 
 part 'validators/validator.dart';
 part 'validators/location.dart';

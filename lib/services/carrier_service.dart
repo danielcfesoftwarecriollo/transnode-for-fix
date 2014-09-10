@@ -104,9 +104,9 @@ class CarrierService {
   }
   
   Future<List> getCarriersLanePrice(String queryString) {
-    return _api.request("get", url + "/carriers_by_name/" + queryString.toString())
+    return _api.request("get", url + "/prices_by_filters/" + queryString.toString())
        .then((HttpResponse response){ 
-        return response.data['carriers'];      
+        return response.data;
       });
   }
 }

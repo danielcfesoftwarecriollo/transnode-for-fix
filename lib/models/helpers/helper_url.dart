@@ -9,11 +9,11 @@ class HelperUrl{
     return aux;
   }
   
-  static String _stringEmpty(String val){
-    if(val == null && val.isEmpty){
+  static String _stringEmpty(val){
+    if(val == null || val == ''){
       return 'nil';
     }else{
-      return val;
+      return val.toString();
     }
   }
 
