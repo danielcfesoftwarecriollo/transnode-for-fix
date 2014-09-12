@@ -42,6 +42,7 @@ part 'services/session_service.dart';
 part 'services/users_service.dart';
 part 'services/quote_service.dart';
 part 'services/city_service.dart';
+part 'services/mail_service.dart';
 
 part 'controllers/app_controller.dart';
 part 'controllers/customer_controller.dart';
@@ -79,6 +80,7 @@ part 'models/rfquote.dart';
 part 'models/shipment_carrier.dart';
 part 'models/renevue_cost.dart';
 part 'models/exchange_value.dart';
+part 'models/mail.dart';
 
 part 'models/helpers/helper_list.dart';
 part 'models/helpers/helper_url.dart';
@@ -136,6 +138,7 @@ class TransnodeModule extends Module {
     bind(UsersService);
     bind(QuoteService);
     bind(CityService);
+    bind(MailService);
     // bind(NodeBindModule);
   }
 }
