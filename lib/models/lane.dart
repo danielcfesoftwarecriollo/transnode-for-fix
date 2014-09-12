@@ -40,6 +40,14 @@ class Lane extends RecordModelNested{
     _expanded = !_expanded;
   }
   
+  @override
+    void loadWithJson(Map<String, dynamic> map) {
+      super.loadWithJson(map);
+      if (map.containsKey("prices_attributes")) {
+        loadPrices(map);
+      }
+    }
+  
   void loadPrices( Map map){
     this.prices = [];
     map['prices_attributes'].forEach((attr){

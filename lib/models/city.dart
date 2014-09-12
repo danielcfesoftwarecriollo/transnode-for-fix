@@ -9,6 +9,11 @@ class City extends RecordModelNested{
   Lane(){
     this._validator = new CityValidator(this);
   }
+
+  @override
+  void loadWithJson(Map<String, dynamic> map) {
+   super.loadWithJson(map);
+  }
   
   bool is_expanded() {
     return is_new() || _expanded;

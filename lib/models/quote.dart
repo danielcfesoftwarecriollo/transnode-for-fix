@@ -46,6 +46,7 @@ class Quote extends RecordModel{
         this.lines.add(l);
       });
     }
+    this.checkTotal();
   }
   
   loadCustomer(Map customerMap ){

@@ -13,4 +13,16 @@ class LoadModel{
     p.loadWithJson(json);
     return p;
   }
+
+  static  loadLane(Map<String, dynamic> json) {
+    Lane l = new Lane();
+    l.loadWithJson(json);
+    return l;
+  }
+  
+  static  loadShipment(Map<String, dynamic> json) {
+    Shipment s = new Shipment();
+    s.loadWithJson(json);
+    return s;
+  }
 }
