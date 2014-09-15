@@ -145,7 +145,7 @@ class TransnodeModule extends Module {
 
 @initMethod
 start() {
-  initPolymer();
+  // initPolymer();
   applicationFactory()
     .addModule(new TransnodeModule())
     .run();
