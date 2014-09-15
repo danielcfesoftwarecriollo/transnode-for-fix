@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-2">
           <select ng-model='ctrl.searchTime' id="searchTime" class="form-control">
-            <option value="" disabled selected>Today</option>
+            <option value="TODAY" disabled selected>Today</option>
             <option value="YESTERDAY">Yesterday</option>
             <option value="THISWEEK">This Week</option>
             <option value="OLDER">Older</option>
@@ -47,21 +47,7 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-
-<!-- 
-<link rel="import" href="packages/polymer/polymer.html">
-<link rel="import" href="packages/html_components/data/column.html">
-<link rel="import" href="packages/html_components/data/datatable.html">
-<link rel="import" href="packages/html_components/utility/growl.html"> -->
-
-<!-- 
-<datatable-demo></datatable-demo>
-<click-counter count="5"></click-counter>
-<h-clock size="{{size}}"></h-clock> -->
-
-
-
-          <table class="table table-hover">
+          <table ng-hide="ctrl.quotes.isEmpty" class="table table-hover">
             <tr>
               <th>Num</th>
               <th>Customer Name</th>
@@ -78,12 +64,12 @@
               <td>{{quote.id}}</td>
               <td>
                 <a ng-hide="quote.customer == null" ng-href="#/quotes/{{quote.id}}/edit"  popover="{{quote.customer.mainLocation().name}},{{quote.customer.mainLocation().name}},{{quote.customer.mainLocation().phone}},{{quote.customer.mainLocation().email}} " popover-trigger="mouseenter" tooltip-placement="top" >{{quote.customer.name}}</a>
-              </td>    
-              <td>Feb 27</td>
-              <td>TOR-LAX</td>
+              </td>
+              <td>{{quote.createdAt}}</td>
+              <td>{{quote.fromCity.code}} - {{quote.toCity.code}}</td>
               <td>1500.00</td>
-              <td>450</td>
-              <td>quote</td>
+              <td>{{quote.totalWeight()}}</td>
+              <td>{{quote.status}}</td>
               <td>Peter</td>
               <td>
                 <a class="btn btn-info" ng-href="#/quotes/{{quote.id}}">
@@ -100,7 +86,11 @@
             </tr>
           </table>
 
-
+          <div ng-show="ctrl.quotes.isEmpty">
+            <br>
+            <h3>no records match</h3>
+            <br>
+          </div>
         </div>
       </div>
     </form>

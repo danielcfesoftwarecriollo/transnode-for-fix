@@ -1,26 +1,26 @@
-<div searchclp-controller >
+<div searchclp-controller style="padding:20px" >
 
   <div class="row">
     <div class="col-md-12">
       <h1>Find Carriers and Prices</h1>
     </div>
   </div>
-  <form action="" class='form-horizontal smart-form' ng-submit="ctrl.searchCLP()" >
+  <form action="" class='form-horizontal smart-form' >
     <div class="row">
       <div class="col-sm-2">
-        <select ng-model='ctrl.quoteSelected' ng-change="ctrl.loadLaneQuote()" id="fromCountryId" class="form-control">
+        <select ng-model='ctrlClp.quoteSelected' ng-change="ctrlClp.loadLaneQuote()" id="fromCountryId" class="form-control">
           <option value="" disabled selected> Select Quote</option>
-          <option ng-repeat='quote in ctrl.formQuotes' ng-value='quote' ng-selected="quote.id == ctrl.quoteSelected.id">{{quote.id}}</option>
+          <option ng-repeat='quote in ctrlClp.formQuotes' ng-value='quote' ng-selected="quote.id == ctrlClp.quoteSelected.id">{{quote.id}}</option>
         </select>
       </div>
       <div class="col-md-2">
-        <select ng-model='ctrl.shipmentSelected' id="shipment" class="form-control">
+        <select ng-model='ctrlClp.shipmentSelected' id="shipment" class="form-control">
           <option value="" disabled selected> Select Shipment</option>
-          <option ng-repeat='shipment in ctrl.shipments' ng-value='shipment' ng-selected="shipment.id == ctrl.shipmentSelected">{{shipment.id}}</option>
+          <option ng-repeat='shipment in ctrlClp.shipments' ng-value='shipment' ng-selected="shipment.id == ctrlClp.shipmentSelected">{{shipment.id}}</option>
         </select>
       </div>
       <div class="col-md-3 col-md-offset-3">
-        <b>Quote #: {{ctrl.quoteSelected.id}}</b>
+        <b>Quote #: {{ctrlClp.quoteSelected.id}}</b>
       </div>
     </div>
     <div class="row">
@@ -28,7 +28,7 @@
         <div class="form-group">
           <label for="skid" class="col-sm-6 control-label">Number of skids</label>
           <div class="col-sm-6">
-            <input type="text" class="form-control" ng-model="ctrl.skids" id="skid" >
+            <input type="text" class="form-control" ng-model="ctrlClp.skids" id="skid" >
           </div>
         </div>
       </div>
@@ -38,16 +38,14 @@
         <div class="form-group">
           <label for="text" class="col-sm-5 control-label">From </label>
           <div class="col-sm-7">
-            <!-- <input type="text" class="form-control" id="from" > -->
-            <!-- <label for="customer">Customer: </label> -->
-            <input type="text" ng-model="ctrl.cityFromSelected"
+            <input type="text" ng-model="ctrlClp.cityFromSelected"
                typeahead-min-length="3"
-               typeahead-on-select="ctrl.onSelectCity(ctrl.cityFromSelected, $model)"
-               typeahead="city as city.name for city in ctrl.get_cities(ctrl.citiesFromAux, $viewValue)"
+               typeahead-on-select="ctrlClp.onSelectCity(ctrlClp.cityFromSelected, $model)"
+               typeahead="city as city.name for city in ctrlClp.get_cities(ctrlClp.citiesFromAux, $viewValue)"
                typeahead-wait-ms="300"
-               typeahead-loading="ctrl.loading['from']"
+               typeahead-loading="ctrlClp.loading['from']"
                class="form-control">
-            <i ng-show="ctrl.loading['from']" 
+            <i ng-show="ctrlClp.loading['from']" 
             class="glyphicon glyphicon-refresh"></i>
           </div>
         </div>
@@ -56,20 +54,20 @@
         <div class="form-group">
           <label for="to" class="col-sm-2 control-label">To </label>
           <div class="col-sm-7">
-            <input type="text" ng-model="ctrl.cityToSelected"
+            <input type="text" ng-model="ctrlClp.cityToSelected"
                typeahead-min-length="3"
-               typeahead-on-select="ctrl.onSelectCity(ctrl.cityToSelected, $model)"
-               typeahead="city as city.name for city in ctrl.get_cities(ctrl.citiesToAux, $viewValue)"
+               typeahead-on-select="ctrlClp.onSelectCity(ctrlClp.cityToSelected, $model)"
+               typeahead="city as city.name for city in ctrlClp.get_cities(ctrlClp.citiesToAux, $viewValue)"
                typeahead-wait-ms="300"
-               typeahead-loading="ctrl.loading['to']"
+               typeahead-loading="ctrlClp.loading['to']"
                class="form-control">
-            <i ng-show="ctrl.loading['to']" 
+            <i ng-show="ctrlClp.loading['to']" 
             class="glyphicon glyphicon-refresh"></i>
           </div>
         </div>
       </div>
       <div class="col-offset-md-3 col-md-3">
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" ng-click='ctrlClp.searchCLP()'>
           Search
         </button>
       </div>
@@ -79,11 +77,11 @@
     </div>
   </form>
 
-  <b ng-hide="ctrl.carriersLP.isNotEmpty" >
+  <b ng-hide="ctrlClp.carriersLP.isNotEmpty" >
     No records match
   </b>
 
-  <form action="" ng-show="ctrl.carrierPrices.isNotEmpty" >
+  <form action="" ng-show="ctrlClp.carrierPrices.isNotEmpty" >
     <div class="row">
       <div class="col-md-12"> 
 
@@ -102,7 +100,7 @@
             <th class="important"></th>
             <th class="important">Actions</th>
           </tr>
-          <tr ng-repeat=" carrierPrice in ctrl.carrierPrices">
+          <tr ng-repeat=" carrierPrice in ctrlClp.carrierPrices">
             <td class="important" >
               <a ng-hide="carrierPrice['carrier'] == null" ng-href="#/carriers/{{carrierPrice['carrier'].id}}/edit"  popover="{{carrierPrice['carrier'].mainLocation().name}}, {{carrierPrice['carrier'].mainLocation().name}}, {{carrierPrice['carrier'].mainLocation().phone}}, {{carrierPrice['carrier'].mainLocation().email}}" popover-trigger="mouseenter" >
                 {{carrierPrice['carrier'].name}}
@@ -112,7 +110,7 @@
             <td ng-repeat="price in carrierPrice['lane'].prices" >
               <input type="text"  ng-model="price.price" >
             </td>
-            <td colspan="{{(ctrl.MAX_PRICES-carrierPrice['lane'].prices.length)}}"></td>
+            <td colspan="{{(ctrlClp.MAX_PRICES-carrierPrice['lane'].prices.length)}}"></td>
             <td>
               <i class="fa fa-file-text-o" popover="{{carrierPrice['carrier'].note}}" popover-trigger="mouseenter" ></i>
             </td>
@@ -120,46 +118,44 @@
               <b>3,5,4</b>
             </td>
             <td>
-              <input type="checkbox">
+              <input type="radio" name="carrierSelected" ng-change="ctrlClp.changeCarrierSelected()"  ng-model="carrierPrice['selected']">
             </td>
             <td>
               <b>{{revcost.costAmountCa}}</b>
               {{carrierPrice['carrier'].mainLocation().email}}
-              <i class="fa fa-envelope-o" ng-click="ctrl.openModalMail(carrierPrice['carrier'].mainLocation().email)" ></i>
-              <i class="fa fa-times" ng-click="ctrl.deleteItem(ctrl.carrierPrices, carrierPrice)" ></i>
+              <i class="fa fa-envelope-o" ng-click="ctrlClp.openModalMail(carrierPrice['carrier'].mainLocation().email)" ></i>
+              <i class="fa fa-times" ng-click="ctrlClp.deleteItem(ctrlClp.carrierPrices, carrierPrice)" ></i>
             </td>
           </tr>
         </table>
 
       </div>
     </div>
-  </form>
   <br>
   <div class="row">
     <div class="col-md-3">
       <div class="form-group">
         <label for="from" class="col-sm-6 control-label">Carrier Name </label>
         <div class="col-sm-6">
-          <input type="search" ng-model="ctrl.carrierSelected"
+          <input type="search" ng-model="ctrlClp.carrierSelected"
              typeahead-min-length="3"
-             typeahead-on-select="ctrl.onSelectCarrier($item)"
-             typeahead="carrier as carrier['label'] for carrier in ctrl.loadCarriersByString($viewValue)"
+             typeahead-on-select="ctrlClp.onSelectCarrier($item)"
+             typeahead="carrier as carrier['label'] for carrier in ctrlClp.loadCarriersByString($viewValue)"
              typeahead-wait-ms="300"
-             typeahead-loading="ctrl.loading['customer']"
+             typeahead-loading="ctrlClp.loading['customer']"
              class="form-control">
-          <i ng-show="ctrl.loading['customer']" class="glyphicon glyphicon-refresh"></i>
+          <i ng-show="ctrlClp.loading['customer']" class="glyphicon glyphicon-refresh"></i>
 
         </div>
       </div>
     </div>
     <div class="col-offset-md-3 col-md-3">
-      <button class="btn btn-primary" ng-click="ctrl.searchCLPWithName()" >
+      <button class="btn btn-primary" ng-click="ctrlClp.searchCLPWithName()" >
         Search
       </button>
     </div>
   </div>
   <br>
-  <form action="" ng-show="ctrl.carriers.isNotEmpty">
     <div class="row">
       <div class="col-md-12"> 
 
@@ -178,7 +174,7 @@
             <th class="important"></th>
             <th class="important">Actions</th>
           </tr>
-          <tr ng-repeat=" carrierPrice in ctrl.carrierPrices2">
+          <tr ng-repeat=" carrierPrice in ctrlClp.carrierPrices2">
             <td class="important" >
               <a ng-hide="carrierPrice['carrier'] == null" ng-href="#/carriers/{{carrierPrice['carrier'].id}}/edit"  popover="{{carrierPrice['carrier'].mainLocation().name}}, {{carrierPrice['carrier'].mainLocation().name}}, {{carrierPrice['carrier'].mainLocation().phone}}, {{carrierPrice['carrier'].mainLocation().email}}" popover-trigger="mouseenter" >
                 {{carrierPrice['carrier'].name}}
@@ -188,7 +184,7 @@
             <td ng-repeat="price in carrierPrice['lane'].prices" >
               <input type="text"  ng-model="price.price" >
             </td>
-            <td colspan="{{(ctrl.MAX_PRICES-carrierPrice['lane'].prices.length)}}"></td>
+            <td colspan="{{(ctrlClp.MAX_PRICES-carrierPrice['lane'].prices.length)}}"></td>
             <td>
               <i class="fa fa-file-text-o" popover="{{carrierPrice['carrier'].note}}" popover-trigger="mouseenter" ></i>
             </td>
@@ -196,12 +192,12 @@
               <b>3,5,4</b>
             </td>
             <td>
-              <input type="checkbox">
+              <input type="radio" name="carrierSelected" ng-change="ctrlClp.changeCarrierSelected()" ng-model="carrierPrice['selected']">
             </td>
             <td>
               <b>{{revcost.costAmountCa}}</b>
-              <i class="fa fa-envelope-o" ng-click="ctrl.openModalMail(carrierPrice['carrier'].mainLocation().email)" ></i>
-              <i class="fa fa-times" ng-click="ctrl.deleteItem(ctrl.carrierPrices2, carrierPrice)"></i>
+              <i class="fa fa-envelope-o" ng-click="ctrlClp.openModalMail(carrierPrice['carrier'].mainLocation().email)" ></i>
+              <i class="fa fa-times" ng-click="ctrlClp.deleteItem(ctrlClp.carrierPrices2, carrierPrice)"></i>
             </td>
           </tr>
         </table>
@@ -217,7 +213,7 @@
       </button>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-primary">
+      <button class="btn btn-primary" on-click="ctrl.getSelected(ctrlClp.carrierPrices)" >
         Attach Selected to quote
       </button>
     </div>

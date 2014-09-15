@@ -1,7 +1,8 @@
 
 part of transnode;
 
-@Controller(selector: '[searchclp-controller]', publishAs: 'ctrl')
+
+@Controller(selector: '[searchclp-controller]', publishAs: 'ctrlClp')
 class SearchclpController {
   RouteProvider _routeProvider;
   Router _router;
@@ -10,7 +11,6 @@ class SearchclpController {
   final QuoteService _quoteService;
   final CityService _cityService;
   final MailService _mailService;
-  @NgTwoWay("carriers")
 
   List<Shipment> shipments;
   List<Carrier> carriers;
@@ -31,15 +31,15 @@ class SearchclpController {
   String skids;
   int MAX_PRICES;
   Mail mailHelper;
+  var carrierLaneSelected;
 
   // Lane laneHelper;
   // List<Price> pricesHelper;
   Modal modal;
   ModalInstance modalInstance;
   Scope scope;
-
   
-  SearchclpController(this._mailService,this._carrierService, this._cityService, this._shipmentService , this.modal,this.scope,this._routeProvider, this._quoteService, this._router) {
+  SearchclpController(this.modal, this._mailService,this._carrierService, this._cityService, this._shipmentService ,this.scope,this._routeProvider, this._quoteService, this._router) {
     MAX_PRICES = 7;
     this.carriers = [];
     this.cities = [];
@@ -59,6 +59,15 @@ class SearchclpController {
     }
     
   }
+  
+  changeCarrierSelected(){   
+    carrierLaneSelected = this.getQuoteSelected();
+  }
+  
+  getQuoteSelected(){
+    Quote q = this.carrierPrices.firstWhere((e) => e['selected'] == 'on' );
+    return q;
+  }
 
   loadShipments(){
     this._shipmentService.index()
@@ -69,7 +78,6 @@ class SearchclpController {
       });
     });
   }
-  
 
   sendMail(){
     var request = _mailService.send_mail(this.mailHelper);
@@ -120,7 +128,7 @@ class SearchclpController {
     _router.go('carriers', {});
   }
     
-  bool _isSearchCLP() => _routeProvider.routeName == 'search_clp';
+  bool _isSearchCLP() => true;   //_routeProvider.routeName == 'search_clp';
 
   void dispachChange(SelectElement element){
     Event changeE = new Event('change');
@@ -186,14 +194,15 @@ class SearchclpController {
   loadPricesCarriers(mapData){
     this.carrierPrices = [];
     mapData.forEach((cp){
-      this.carrierPrices.add({'carrier':LoadModel.loadCarrier(cp['carrier']), 'lane': LoadModel.loadLane(cp['lane'])});
+      bool selected = false;
+      this.carrierPrices.add({'carrier':LoadModel.loadCarrier(cp['carrier']), 'selected': selected, 'lane': LoadModel.loadLane(cp['lane'])});
     });
   }
   
   loadPricesCarriers2(mapData){
     this.carrierPrices2 = [];
     mapData.forEach((cp){
-      this.carrierPrices2.add({'carrier':LoadModel.loadCarrier(cp['carrier']), 'lane': LoadModel.loadLane(cp['lane'])});
+      this.carrierPrices2.add({'carrier':LoadModel.loadCarrier(cp['carrier']), 'selected': true, 'lane': LoadModel.loadLane(cp['lane'])});
     });
   }
   

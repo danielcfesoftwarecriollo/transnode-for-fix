@@ -28,6 +28,13 @@ class QuoteService {
   }
 
 
+  Future<List> getSearchQuote(String queryString) {
+    return _api.request("get", url + "/search" + queryString.toString())
+       .then((HttpResponse response){ 
+        return response;
+      });
+  }
+
   Future load_customer(String query_str){
     String urlService = "/customer_by_id/"+query_str;
     return load_data(urlService);    

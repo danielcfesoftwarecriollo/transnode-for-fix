@@ -38,8 +38,7 @@ class ShipmentsController {
   String textForModal;
   String typeModal;
   Modal modal;
-  ModalInstance modalInstance;
-  
+  ModalInstance modalInstance;  
   Scope scope;
   Http _http;
   var asyncSelected;
@@ -51,7 +50,7 @@ class ShipmentsController {
     this.shipment = new Shipment();
     this._exchange = new ExchangeValue();
     openM = true;
-    this.step = 1;    
+    this.step = 2;    
     this.consigne_locations = [];
     this.helperTotal = {'amount': 0.0, 'amountRevCa': 0.0, 'amountCostCa': 0.0, 'profit': 0.0 };
     if (_isEditPath()) {

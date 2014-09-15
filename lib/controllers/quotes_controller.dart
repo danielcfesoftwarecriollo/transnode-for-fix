@@ -22,7 +22,9 @@ class QuotesController {
   var asyncSelectedCRS;
   var asyncSelected;
   bool loadingLocations = false;
-
+  Modal modal;
+  Scope scope;
+  ModalInstance modalInstance;
   var format = 'dd-MMMM-yyyy';
 
   Map dateOptions = {
@@ -30,8 +32,9 @@ class QuotesController {
     'startingDay': 1
   };
 
-  QuotesController(this._quoteService, this._routeProvider, this._router,this._usersService) {
+  QuotesController(this._quoteService, this._routeProvider, this._router,this._usersService, this.scope, this.modal) {
     this.quote = new Quote();
+    this.searchTime = "TODAY";
 
     if (_isEditPath() || _isShowPath()) {
       var quote_id = _routeProvider.parameters['quoteId'];
@@ -41,10 +44,24 @@ class QuotesController {
       loadForm();
     } else if (_isIndexPath()) {
       this.quotes = [];
-      this._load_quotes();
+      new Timer(const Duration(milliseconds: 30), () {
+        this.searchRFQ();
+      });
     }else if(_isNewPath()){
       loadForm();
     }
+  }
+  
+  getSelected(x){
+    print(x);
+  }
+
+  void open(String templateUrl) {
+    modalInstance = modal.open(new ModalOptions(templateUrl:templateUrl,windowClass:'searchclp'),scope);
+  }
+
+  modalSearchCPL(){
+    open('partials/carriers/search_clp.html');
   }
 
   toggleCalendar(){
@@ -58,10 +75,12 @@ class QuotesController {
   }
 
   load_customers(val){
+    this.idCustomer = null;
     return _quoteService.load_customers(val);
   }
 
   load_crs(val){
+    this.idCRS = null;
     return _usersService.search_csrs(val);
   }
 
@@ -74,33 +93,38 @@ class QuotesController {
 
   void changeTimesFilter() {
     new Timer(const Duration(milliseconds: 1), () {
-      changeFilter();
+      // changeFilter();
     });
   }
 
   onSelectCustomerFilter(item, model, label){
-    this.idCRS = model['value'].toString();
-    changeFilter();
+    this.idCustomer = model['value'].toString();
+    // changeFilter();
   }
 
   onSelectCrsFilter(item, model, label){
     this.idCRS = model['value'].toString();
-    changeFilter();
+    // changeFilter();
   }
 
-  changeFilter(){
-    _quoteService.seachQuotes(_filtersIndexToJson()).then((r){
-      r.data;
+  List _filtersSearchRFQ(){
+    return [this.idCRS,this.searchTime, this.idCustomer,'RFQ'];
+  }
+  
+  searchRFQ(){
+    List data = _filtersSearchRFQ();
+    var aux = HelperUrl.parseToUrl(data);
+    this.quotes = [];
+    _quoteService.getSearchQuote(aux).then((r){
+      List listAux = r.data['quotes'];
+      listAux.forEach(_add_quote);
     });
   }
-  _filtersIndexToJson(){
-    Map map = {
-      'crs':this.idCRS,
-      'customer':this.idCustomer,
-      'time':this.searchTime
-    };
-    return _encode(map);
+  
+  changeFilter(){
+    this.searchRFQ();
   }
+  
   String _encode(Map map) {
     return JSON.encode(map);
   }

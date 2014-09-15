@@ -25,4 +25,17 @@ class LoadModel{
     s.loadWithJson(json);
     return s;
   }
+
+  static loadCustomer(Map<String, dynamic> json) {
+    Customer c = new Customer();
+    c.loadWithJson(json);
+    return c;
+  }
+  
+  static loadCity(Map<String, dynamic> json) {
+    City c = new City();
+    c.loadWithJson(json);
+    return c;
+  }
+  
 }

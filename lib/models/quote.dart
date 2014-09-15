@@ -6,9 +6,11 @@ class Quote extends RecordModel{
   int locationId;
   int entityId;
   int fromCityId;
+  City fromCity;
   int fromZip;
   int fromCountryId;
   int toCityId;
+  City toCity;
   int toZip;
   int toCountryId;
   String description;
@@ -19,8 +21,8 @@ class Quote extends RecordModel{
   var rfqDate;
   double price;
   String dateValid;
-  String created_at;
-  String updated_at;
+  String createdAt;
+  String updatedAt;
 
   String currency;
 
@@ -37,6 +39,8 @@ class Quote extends RecordModel{
   @override
   void loadWithJson(Map<String, dynamic> map) {
     loadCustomer(map); 
+    loadCityTo(map);
+    loadCityFrom(map);
     super.loadWithJson(map);
     this.lines = [];      
     if (map.containsKey("lines_attributes")) {
@@ -48,6 +52,21 @@ class Quote extends RecordModel{
     }
     this.checkTotal();
   }
+  
+  loadCityFrom(Map customerMap ){
+    if(customerMap['from_city'] != null){
+      this.fromCity = LoadModel.loadCity(customerMap['from_city']);
+    }
+    customerMap.remove('from_city');
+  }  
+  
+  loadCityTo(Map customerMap ){
+    if(customerMap['to_city'] != null){
+      this.toCity = LoadModel.loadCity(customerMap['to_city']);
+    }
+    customerMap.remove('to_city');
+  }
+  
   
   loadCustomer(Map customerMap ){
     if(customerMap['customerHash'] != null){
@@ -81,7 +100,7 @@ class Quote extends RecordModel{
       'internal_note' : internalNote,
       'rfq_src' : rfqSrc, 
       'rfq_date' : rfqDate.toString(),
-      // 'status' : status,
+       'status' : status,
       // 'price' : price, 
       // 'dateValid' : dateValid,
       'quote_lines_attributes' : lines_to_map()

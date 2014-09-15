@@ -1,23 +1,23 @@
 <div style="margin:20px">
   <h3>
-  Send Mail to Customer:{{ctrl.mailHelper.to}}
+  Send Mail to Customer:{{ctrlClp.mailHelper.to}}
   </h3>
   <form class="form-horizontal" role="form">
     <div class="form-group">
         <label for="subject" class="col-sm-2 control-label">Subject</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" ng-model="ctrl.mailHelper.subject" id="subject" placeholder="Subject">
+          <input type="text" class="form-control" ng-model="ctrlClp.mailHelper.subject" id="subject" placeholder="Subject">
         </div>
       </div>
       <div class="form-group">
         <label for="body" class="col-sm-2 control-label">Mail</label>
         <div class="col-sm-10">
-          <textarea name="body" id="body" rows="10" ng-model="ctrl.mailHelper.body" style="width:100%"></textarea>
+          <textarea name="body" id="body" rows="10" ng-model="ctrlClp.mailHelper.body" style="width:100%"></textarea>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-          <button type="submit" ng-click="ctrl.sendMail()" class="btn pull-right btn-primary">Send Mail
+          <button type="submit" ng-click="ctrlClp.sendMail()" class="btn pull-right btn-primary">Send Mail
           </button>
         </div>
       </div>

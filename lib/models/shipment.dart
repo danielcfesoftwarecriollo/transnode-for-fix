@@ -166,9 +166,7 @@ class Shipment extends RecordModel{
   
     loadCustomer(Map customerMap ){
       if(customerMap['customer'] != null){
-        Customer customer = new Customer();
-        customer.loadWithJson(customerMap['customer']);  
-        this.customer = customer;
+        this.customer = LoadModel.loadCustomer(customerMap['customer']);
       }
       customerMap.remove('customer');
     }

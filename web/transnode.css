@@ -147,3 +147,7 @@ td.important, th.important{
   border-right: 1px solid #999;
   border-left: 1px solid #999;
 }
+
+modal-window .modal-dialog {
+width: 1000px;
+}
