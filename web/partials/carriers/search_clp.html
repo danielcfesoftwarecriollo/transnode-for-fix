@@ -102,28 +102,28 @@
           </tr>
           <tr ng-repeat=" carrierPrice in ctrlClp.carrierPrices">
             <td class="important" >
-              <a ng-hide="carrierPrice['carrier'] == null" ng-href="#/carriers/{{carrierPrice['carrier'].id}}/edit"  popover="{{carrierPrice['carrier'].mainLocation().name}}, {{carrierPrice['carrier'].mainLocation().name}}, {{carrierPrice['carrier'].mainLocation().phone}}, {{carrierPrice['carrier'].mainLocation().email}}" popover-trigger="mouseenter" >
-                {{carrierPrice['carrier'].name}}
+              <a ng-hide="carrierPrice.carrier == null" ng-href="#/carriers/{{carrierPrice.carrier.id}}/edit"  popover="{{carrierPrice.carrier.mainLocation().name}}, {{carrierPrice.carrier.mainLocation().name}}, {{carrierPrice.carrier.mainLocation().phone}}, {{carrierPrice.carrier.mainLocation().email}}" popover-trigger="mouseenter" >
+                {{carrierPrice.carrier.name}}
               </a>
             </td>
 
-            <td ng-repeat="price in carrierPrice['lane'].prices" >
+            <td ng-repeat="price in carrierPrice.lane.prices" >
               <input type="text"  ng-model="price.price" >
             </td>
-            <td colspan="{{(ctrlClp.MAX_PRICES-carrierPrice['lane'].prices.length)}}"></td>
+            <td colspan="{{(ctrlClp.MAX_PRICES-carrierPrice.lane.prices.length)}}"></td>
             <td>
-              <i class="fa fa-file-text-o" popover="{{carrierPrice['carrier'].note}}" popover-trigger="mouseenter" ></i>
+              <i class="fa fa-file-text-o" popover="{{carrierPrice.carrier.note}}" popover-trigger="mouseenter" ></i>
             </td>
             <td>
               <b>3,5,4</b>
             </td>
             <td>
-              <input type="radio" name="carrierSelected" ng-change="ctrlClp.changeCarrierSelected()"  ng-model="carrierPrice['selected']">
+              <input type="radio" name="carrierSelected" ng-change="ctrlClp.changeCarrierSelected()" ng-value="carrierPrice" ng-model="ctrlClp.carrierLaneSelected">
             </td>
             <td>
               <b>{{revcost.costAmountCa}}</b>
-              {{carrierPrice['carrier'].mainLocation().email}}
-              <i class="fa fa-envelope-o" ng-click="ctrlClp.openModalMail(carrierPrice['carrier'].mainLocation().email)" ></i>
+              {{carrierPrice.carrier.mainLocation().email}}
+              <i class="fa fa-envelope-o" ng-click="ctrlClp.openModalMail(carrierPrice.carrier.mainLocation().email)" ></i>
               <i class="fa fa-times" ng-click="ctrlClp.deleteItem(ctrlClp.carrierPrices, carrierPrice)" ></i>
             </td>
           </tr>
@@ -176,27 +176,27 @@
           </tr>
           <tr ng-repeat=" carrierPrice in ctrlClp.carrierPrices2">
             <td class="important" >
-              <a ng-hide="carrierPrice['carrier'] == null" ng-href="#/carriers/{{carrierPrice['carrier'].id}}/edit"  popover="{{carrierPrice['carrier'].mainLocation().name}}, {{carrierPrice['carrier'].mainLocation().name}}, {{carrierPrice['carrier'].mainLocation().phone}}, {{carrierPrice['carrier'].mainLocation().email}}" popover-trigger="mouseenter" >
-                {{carrierPrice['carrier'].name}}
+              <a ng-hide="carrierPrice.carrier == null" ng-href="#/carriers/{{carrierPrice.carrier.id}}/edit"  popover="{{carrierPrice.carrier.mainLocation().name}}, {{carrierPrice.carrier.mainLocation().name}}, {{carrierPrice.carrier.mainLocation().phone}}, {{carrierPrice.carrier.mainLocation().email}}" popover-trigger="mouseenter" >
+                {{carrierPrice.carrier.name}}
               </a>
             </td>
 
-            <td ng-repeat="price in carrierPrice['lane'].prices" >
+            <td ng-repeat="price in carrierPrice.lane.prices" >
               <input type="text"  ng-model="price.price" >
             </td>
-            <td colspan="{{(ctrlClp.MAX_PRICES-carrierPrice['lane'].prices.length)}}"></td>
+            <td colspan="{{(ctrlClp.MAX_PRICES-carrierPrice.lane.prices.length)}}"></td>
             <td>
-              <i class="fa fa-file-text-o" popover="{{carrierPrice['carrier'].note}}" popover-trigger="mouseenter" ></i>
+              <i class="fa fa-file-text-o" popover="{{carrierPrice.carrier.note}}" popover-trigger="mouseenter" ></i>
             </td>
             <td>
               <b>3,5,4</b>
             </td>
             <td>
-              <input type="radio" name="carrierSelected" ng-change="ctrlClp.changeCarrierSelected()" ng-model="carrierPrice['selected']">
+              <input type="radio" name="carrierSelected" ng-change="ctrlClp.changeCarrierSelected()" ng-value="carrierPrice" ng-model="ctrlClp.carrierLaneSelected">
             </td>
             <td>
               <b>{{revcost.costAmountCa}}</b>
-              <i class="fa fa-envelope-o" ng-click="ctrlClp.openModalMail(carrierPrice['carrier'].mainLocation().email)" ></i>
+              <i class="fa fa-envelope-o" ng-click="ctrlClp.openModalMail(carrierPrice.carrier.mainLocation().email)" ></i>
               <i class="fa fa-times" ng-click="ctrlClp.deleteItem(ctrlClp.carrierPrices2, carrierPrice)"></i>
             </td>
           </tr>
@@ -213,7 +213,7 @@
       </button>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-primary" on-click="ctrl.getSelected(ctrlClp.carrierPrices)" >
+      <button class="btn btn-primary" on-click="ctrl.getSelected(ctrlClp.carrierLaneSelected, ctrlClp.modalInstance)" >
         Attach Selected to quote
       </button>
     </div>

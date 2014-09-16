@@ -38,4 +38,15 @@ class LoadModel{
     return c;
   }
   
+  static loadQuote(Map<String, dynamic> json) {
+    Quote q = new Quote();
+    q.loadWithJson(json);
+    return q;
+  }
+  
+  static loadQuoteCost(Map<String, dynamic> json) {
+    QuoteCost q = new QuoteCost();
+    q.loadWithJson(json);
+    return q;
+  }
 }

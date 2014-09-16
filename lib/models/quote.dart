@@ -27,6 +27,7 @@ class Quote extends RecordModel{
   String currency;
 
   List<Line> lines;
+  List<QuoteCost> costs;
 
   double _totalWeight;
   int _totalpcs;
@@ -34,8 +35,10 @@ class Quote extends RecordModel{
   Quote(){
     this._validator = new QuoteValidator(this);
     this.lines = [new Line()];
+    this.costs = [];
   }
 
+  
   @override
   void loadWithJson(Map<String, dynamic> map) {
     loadCustomer(map); 
@@ -50,7 +53,16 @@ class Quote extends RecordModel{
         this.lines.add(l);
       });
     }
+    loadCosts(map);
     this.checkTotal();
+  }
+  
+  loadCosts(Map costsMap){    
+    if (costsMap.containsKey("costs_attributes")) {
+      costsMap['costs_attributes'].forEach((attr) {
+        this.costs.add(LoadModel.loadQuoteCost(attr));
+      });
+    }
   }
   
   loadCityFrom(Map customerMap ){
@@ -77,14 +89,19 @@ class Quote extends RecordModel{
     customerMap.remove('customerHash');
   }
   
+  List<Map> costs_to_map() {
+    List<Map> costs_map = [];
+    this.costs.forEach((quoteCosts) => costs_map.add(quoteCosts.to_map()));
+    return costs_map;
+  }
+
   List<Map> lines_to_map() {
     List<Map> lines_map = [];
     this.lines.forEach((line) => lines_map.add(line.to_map()));
     return lines_map;
   }
-
-  Map to_map() {
-    
+  
+  Map to_map() {    
     return {
       'id' : id,
       'entity_id' : _idObjNotNull(customer), 
@@ -100,11 +117,20 @@ class Quote extends RecordModel{
       'internal_note' : internalNote,
       'rfq_src' : rfqSrc, 
       'rfq_date' : rfqDate.toString(),
-       'status' : status,
+      'status' : status,
+      'costs_attributes' : costs_to_map(),
       // 'price' : price, 
       // 'dateValid' : dateValid,
       'quote_lines_attributes' : lines_to_map()
     };
+  }
+
+  void delete_QuoteCost(QuoteCost qc) {
+    if (qc.is_new()) {
+      costs.remove(qc);
+    } else {
+      qc.delete();
+    }
   }
   
   _idObjNotNull( obj ){

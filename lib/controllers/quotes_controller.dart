@@ -52,8 +52,21 @@ class QuotesController {
     }
   }
   
-  getSelected(x){
-    print(x);
+  getSelected(x, ModalInstance modalInstanceSPL){
+    if(x != null){
+      QuoteCost qc= _loadCostWithCarierLane(x);
+      this.quote.costs.add(qc);
+      modalInstance.close(null);
+    }
+  }
+
+  QuoteCost _loadCostWithCarierLane(carrierLane){
+    QuoteCost qc = new QuoteCost();
+    qc.vendor = carrierLane.carrier;
+    qc.what = carrierLane.lane;
+    qc.number = carrierLane.lane.prices.first.price;  
+    qc.currency = "CAD";
+    return qc;
   }
 
   void open(String templateUrl) {

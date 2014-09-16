@@ -18,8 +18,10 @@ class SearchclpController {
   List<City> cities;
   List<Quote> citiesToAux;
   List<Quote> citiesFromAux;
-  List carrierPrices;
-  List carrierPrices2;
+  @NgTwoWay("carrierPrices")
+  List<CarrierPrice> carrierPrices;
+  @NgTwoWay("carrierPrices2")
+  List<CarrierPrice> carrierPrices2;
   City cityToSelected;
   City cityFromSelected;
   Quote quoteSelected;
@@ -60,13 +62,17 @@ class SearchclpController {
     
   }
   
-  changeCarrierSelected(){   
-    carrierLaneSelected = this.getQuoteSelected();
+  changeCarrierSelected(){
+    new Timer(const Duration(milliseconds: 10), () {
+    carrierLaneSelected;
+    });
   }
   
   getQuoteSelected(){
-    Quote q = this.carrierPrices.firstWhere((e) => e['selected'] == 'on' );
-    return q;
+    new Timer(const Duration(milliseconds: 10), () {
+      CarrierPrice q = this.carrierPrices.firstWhere((e) => e.selected );
+      return q;
+    });
   }
 
   loadShipments(){
@@ -191,18 +197,27 @@ class SearchclpController {
     return currentLenght - this.MAX_PRICES;
   }
 
-  loadPricesCarriers(mapData){
+  loadPricesCarriers(List mapData){
     this.carrierPrices = [];
     mapData.forEach((cp){
       bool selected = false;
-      this.carrierPrices.add({'carrier':LoadModel.loadCarrier(cp['carrier']), 'selected': selected, 'lane': LoadModel.loadLane(cp['lane'])});
+      if(mapData.first == cp){
+        selected = true;
+      }
+      var aux = new CarrierPrice(LoadModel.loadCarrier(cp['carrier']), LoadModel.loadLane(cp['lane']), selected);
+      this.carrierPrices.add(aux);
     });
   }
   
   loadPricesCarriers2(mapData){
     this.carrierPrices2 = [];
     mapData.forEach((cp){
-      this.carrierPrices2.add({'carrier':LoadModel.loadCarrier(cp['carrier']), 'selected': true, 'lane': LoadModel.loadLane(cp['lane'])});
+      bool selected = false;
+      if(mapData.first == cp){
+        selected = true;
+      }
+      var aux = new CarrierPrice(LoadModel.loadCarrier(cp['carrier']), LoadModel.loadLane(cp['lane']), selected);
+      this.carrierPrices2.add(aux);
     });
   }
   

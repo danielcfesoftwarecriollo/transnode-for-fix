@@ -81,10 +81,12 @@ part 'models/shipment_carrier.dart';
 part 'models/renevue_cost.dart';
 part 'models/exchange_value.dart';
 part 'models/mail.dart';
+part 'models/quote_cost.dart';
 
 part 'models/helpers/helper_list.dart';
 part 'models/helpers/helper_url.dart';
 part 'models/helpers/helper_load_model.dart';
+part 'models/helpers/carrier_price.dart';
 
 part 'validators/validator.dart';
 part 'validators/location.dart';
@@ -102,6 +104,7 @@ part 'validators/shipment_carrier.dart';
 part 'validators/shipment_consignee.dart';
 part 'validators/shipment_shipper.dart';
 part 'validators/revenue_cost.dart';
+part 'validators/quote_cost.dart';
 
 class TransnodeModule extends Module {
 
