@@ -98,6 +98,10 @@ class TransnodeRouterInitializer {
               path: '/shipments/new',
               view: 'partials/shipments/form.html',
               preEnter: authenticatedAccess),
+          'shipment_new_with_quote': ngRoute(
+              path: '/shipments/new/:quoteId',
+              view: 'partials/shipments/form.html',
+              preEnter: authenticatedAccess),
           'shipment_show': ngRoute(
               path: '/shipments/:shipmentId',
               view: 'partials/shipments/show.html',
@@ -141,6 +145,10 @@ class TransnodeRouterInitializer {
           'search_clp': ngRoute(
               path: '/search_clp',
               view: 'partials/carriers/search_clp.html',
+              preEnter: authenticatedAccess),
+          'search_quote': ngRoute(
+              path: '/search_quote',
+              view: 'partials/quotes/search_quote.html',
               preEnter: authenticatedAccess),
     });
   }

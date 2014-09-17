@@ -7,7 +7,9 @@ class ShipmentsController {
   Router _router;
   ExchangeValue _exchange;
   final ShipmentService _shipmentService;
+  final QuoteService _quoteService;
   final CarrierService _carrierService;
+  final ExchangeRateService _exchangeRateService;
   List<Shipper> shippers;
   List consigne_locations;
   List consignees;
@@ -46,11 +48,11 @@ class ShipmentsController {
   
   String functionss = 'test()';
 
-  ShipmentsController(this._http,this.scope, this.modal,this._shipmentService, this._carrierService, this._routeProvider, this._router) {
+  ShipmentsController(this._quoteService,this._exchangeRateService,this._http,this.scope, this.modal,this._shipmentService, this._carrierService, this._routeProvider, this._router) {
     this.shipment = new Shipment();
-    this._exchange = new ExchangeValue();
+    this._exchange = new ExchangeValue(_exchangeRateService);
     openM = true;
-    this.step = 2;    
+    this.step = 1;    
     this.consigne_locations = [];
     this.helperTotal = {'amount': 0.0, 'amountRevCa': 0.0, 'amountCostCa': 0.0, 'profit': 0.0 };
     if (_isEditPath()) {
@@ -62,11 +64,29 @@ class ShipmentsController {
       load_form();
     } else if (_isIndexPath()) {
       this.shipments = [];
-    }
-    else{
+      this._shipmentService.index().then((List shipmentsMap){
+        shipmentsMap.forEach((sm){
+          this.shipments.add(LoadModel.loadShipment(sm));
+        });
+      });
+    }else if(_isNewWithQuotePatch()){
+      var quoteId = _routeProvider.parameters['quoteId'];
+      this._quoteService.get(quoteId).then((Quote quote){
+        this.shipment.loadShipmentWithQuote(quote);
+        loadCustomerData();
+        print('load Ready');
+      });
+      load_form();
+    }else{
       load_form();
     }
   }
+  
+  //delete with load model in form
+  loadCustomerData(){
+    onSelect(this.shipment.customer.id);
+  }
+  //delete with load model in form
   
   void openModal(e){
     print(e);
@@ -117,12 +137,12 @@ class ShipmentsController {
   }
   
 
-  onSelect($item, $model, $label){
-    var response = _shipmentService.load_customer($item['value'].toString());
+  onSelect(customerId){
+    var response = _shipmentService.load_customer(customerId.toString());
     response.then((customerData){
       loadAllBillData(customerData);
     });
-    return $model['value'];
+    return customerId;
   }
 
   onSelectCarrier(ShipmentCarrier sCarrier,$item){
@@ -382,4 +402,5 @@ class ShipmentsController {
   bool _isEditPath() => _routeProvider.routeName == 'shipment_edit';
   bool _isNewPath() => _routeProvider.routeName == 'shipment_new';
   bool _isIndexPath() => _routeProvider.routeName == 'shipment_list';
+  bool _isNewWithQuotePatch() => _routeProvider.routeName == 'shipment_new_with_quote';
 }
