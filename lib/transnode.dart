@@ -43,6 +43,7 @@ part 'services/users_service.dart';
 part 'services/quote_service.dart';
 part 'services/city_service.dart';
 part 'services/mail_service.dart';
+part 'services/exchange_rate_service.dart';
 
 part 'controllers/app_controller.dart';
 part 'controllers/customer_controller.dart';
@@ -79,14 +80,15 @@ part 'models/quote.dart';
 part 'models/rfquote.dart';
 part 'models/shipment_carrier.dart';
 part 'models/renevue_cost.dart';
-part 'models/exchange_value.dart';
 part 'models/mail.dart';
 part 'models/quote_cost.dart';
+part 'models/exchange_rate.dart';
 
 part 'models/helpers/helper_list.dart';
 part 'models/helpers/helper_url.dart';
 part 'models/helpers/helper_load_model.dart';
 part 'models/helpers/carrier_price.dart';
+part 'models/helpers/exchange_value.dart';
 
 part 'validators/validator.dart';
 part 'validators/location.dart';
@@ -105,6 +107,7 @@ part 'validators/shipment_consignee.dart';
 part 'validators/shipment_shipper.dart';
 part 'validators/revenue_cost.dart';
 part 'validators/quote_cost.dart';
+part 'validators/exchange_rate.dart';
 
 class TransnodeModule extends Module {
 
@@ -142,6 +145,7 @@ class TransnodeModule extends Module {
     bind(QuoteService);
     bind(CityService);
     bind(MailService);
+    bind(ExchangeRateService);
     // bind(NodeBindModule);
   }
 }

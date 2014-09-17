@@ -1,6 +1,6 @@
 <div shipment-controller>
   <h1>shipments</h1>
-  <div ng-show='ctrl.has_shipments'>
+  <div ng-show='ctrl.shipments.isNotEmpty'>
     <a class='btn btn-info' ng-href="#/shipments/new"> Create a shipment</a>
     <table class='table table-hover'>
       <thead>
@@ -32,7 +32,7 @@
     </table>
     
   </div>
-  <div shipment-list ng-hide='ctrl.has_shipments'>
+  <div shipment-list ng-hide='ctrl.shipments.isEmpty'>
     <a class='btn btn-info' ng-href="#/shipments/new"> Create a shipment</a>
   </div>
 </div>

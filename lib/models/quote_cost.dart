@@ -15,6 +15,10 @@ class QuoteCost extends RecordModelNested {
     this._validator = new QuoteCostValidator(this);
   }
   
+  calculateCAD(){
+    return this.number;
+  }
+  
   @override
   void loadWithJson(Map<String, dynamic> map) {
     loadVendor(map);
@@ -35,6 +39,7 @@ class QuoteCost extends RecordModelNested {
     }
     customerMap.remove('what');
   }
+  
   Map to_map() {
     print(this);
     return {

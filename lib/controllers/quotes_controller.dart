@@ -18,6 +18,7 @@ class QuotesController {
   var idCRS;
   var idCustomer;
   String searchTime;
+  String statusInSearch;
 
   var asyncSelectedCRS;
   var asyncSelected;
@@ -44,11 +45,18 @@ class QuotesController {
       loadForm();
     } else if (_isIndexPath()) {
       this.quotes = [];
-      new Timer(const Duration(milliseconds: 30), () {
+      this.statusInSearch = 'RFQ';
+      new Timer(const Duration(milliseconds: 1),(){
         this.searchRFQ();
       });
     }else if(_isNewPath()){
       loadForm();
+    }else if(_isSearchQuote()){
+      this.quotes = [];
+      this.statusInSearch = 'Quote';
+      new Timer(const Duration(milliseconds: 1),(){
+        this.searchRFQ();
+      });
     }
   }
   
@@ -121,7 +129,7 @@ class QuotesController {
   }
 
   List _filtersSearchRFQ(){
-    return [this.idCRS,this.searchTime, this.idCustomer,'RFQ'];
+    return [this.idCRS,this.searchTime, this.idCustomer,this.statusInSearch];
   }
   
   searchRFQ(){
@@ -175,4 +183,5 @@ class QuotesController {
   bool _isEditPath() => _routeProvider.routeName == 'quote_edit';
   bool _isNewPath() => _routeProvider.routeName == 'quote_new';
   bool _isIndexPath() => _routeProvider.routeName == 'quotes';
+  bool _isSearchQuote() => _routeProvider.routeName == 'search_quote';
 }

@@ -11,7 +11,8 @@ class ShipmentService {
   ShipmentService(this._api, this.user, this._messageServices);
 
   Future index() {
-    return _api.request('get', url);
+    return _api.request('get', url)
+        .then((HttpResponse response) => response.data);
   }
 
   Future loadForm() {

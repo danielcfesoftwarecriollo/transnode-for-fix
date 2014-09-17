@@ -36,6 +36,7 @@ class Shipment extends RecordModel{
   List<RevenueCost> revCosts;
 
   Shipment() {
+    status = 'new';
     speed_rating = 5;
     quality_rating = 5;
     price_rating = 5;
@@ -49,7 +50,40 @@ class Shipment extends RecordModel{
     multipleCarriers = true;
     this._validator = new ShipmentValidator(this);
   }
+  
+  // extract in another model
+  
+  loadShipmentWithQuote(Quote q){
+    this.quote = q;
+    this.customer = q.customer;
+    
+    if(q.costs.isNotEmpty){
+      ShipmentCarrier sc = new ShipmentCarrier();
+      sc.carrier = q.costs.first.vendor;
+      this.carriers.add(sc);
+    }    
+    
+    Shipper shipper = new Shipper();
+    shipper.lines.addAll(q.lines);
+    this.shippers.add(shipper);
 
+    this.revCosts = loadRevenuCostsWithQuoteCost(q.costs);
+  }
+  
+  List<RevenueCost> loadRevenuCostsWithQuoteCost(List costs){
+    List<RevenueCost> listRevCost = [];
+    costs.forEach((QuoteCost qc){
+      RevenueCost rc = new RevenueCost();
+      rc.vendor = qc.vendor;
+      rc.amount = qc.number;
+      rc.billTo = this.customer.billTo;
+      rc.currency = this.customer.currency;
+      listRevCost.add(rc);
+    });
+    return listRevCost;
+  }
+  // extract in another model
+  
   void addRevenueCost(){
     RevenueCost revCost = new RevenueCost();
     this.revCosts.add(revCost);
@@ -69,8 +103,7 @@ class Shipment extends RecordModel{
     return result;
   }
   
-  bool valid_step2(){
-    
+  bool valid_step2(){    
     return _validator.run_validations_step2();
   }
   
@@ -163,31 +196,28 @@ class Shipment extends RecordModel{
     
   }
 
+  loadCustomer(Map customerMap ){
+    if(customerMap['customer'] != null){
+      this.customer = LoadModel.loadCustomer(customerMap['customer']);
+    }
+    customerMap.remove('customer');
+  }
   
-    loadCustomer(Map customerMap ){
-      if(customerMap['customer'] != null){
-        this.customer = LoadModel.loadCustomer(customerMap['customer']);
-      }
-      customerMap.remove('customer');
+  loadBillto(Map customerMap ){
+    if(customerMap['billto'] != null){
+      Location l = new Location();
+      l.loadWithJson(customerMap['billto']['location']);  
+      this.billto = l;
     }
+    customerMap.remove('billto');
+  }
     
-    loadBillto(Map customerMap ){
-      if(customerMap['billto'] != null){
-        Location l = new Location();
-        l.loadWithJson(customerMap['billto']['location']);  
-        this.billto = l;
-      }
-      customerMap.remove('billto');
+  loadCustomBroker(Map customerMap ){
+    if(customerMap['custom_broker'] != null){
+      this.customBroker = LoadModel.loadCustomer(customerMap['custom_broker']);
     }
-    
-    loadCustomBroker(Map customerMap ){
-      if(customerMap['custom_broker'] != null){
-        Customer customer = new Customer();
-        customer.loadWithJson(customerMap['custom_broker']);  
-        this.customBroker = customer;
-      }
-      customerMap.remove('custom_broker');
-    }
+    customerMap.remove('custom_broker');
+  }
    
     
   Map to_map() {

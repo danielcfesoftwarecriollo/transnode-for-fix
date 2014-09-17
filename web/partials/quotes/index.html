@@ -1,5 +1,9 @@
 <div class="row" quote-controller>
   <div class="col-md-12" style="margin-top:20px">
+    <h1>
+      Search Request for Quotes
+    </h1>
+    <br>
     <form class='form-horizontal smart-form'>
       <div class="row">
         <div class="col-md-1">
@@ -68,19 +72,18 @@
               </td>
               <td>{{quote.createdAt}}</td>
               <td>{{quote.fromCity.code}} - {{quote.toCity.code}}</td>
-              <td>1500.00</td>
+              <td>{{quote.totalPrice().toStringAsFixed(2)}}</td>
               <td>{{quote.totalWeight()}}</td>
               <td>{{quote.status}}</td>
               <td>Peter</td>
               <td>
-                <a class="btn btn-info" ng-href="#/quotes/{{quote.id}}">
+                <a class="btn btn-info" popover="View" popover-trigger="mouseenter" ng-href="#/quotes/{{quote.id}}">
                   <i class="glyphicon glyphicon-search"></i>
                 </a>
-
-                <a class="btn btn-warning" ng-href="#/quotes/{{quote.id}}/edit">
+                <a class="btn btn-warning" popover="Edit" popover-trigger="mouseenter" ng-href="#/quotes/{{quote.id}}/edit">
                   <i class="glyphicon glyphicon-pencil"></i>
                 </a>
-                <a class="btn btn-danger" ng-click='ctrl.delete(quote)'>
+                <a class="btn btn-danger" popover="Delete" popover-trigger="mouseenter" ng-click='ctrl.delete(quote)'>
                   <i class="glyphicon glyphicon-remove"></i>
                 </a>
               </td>

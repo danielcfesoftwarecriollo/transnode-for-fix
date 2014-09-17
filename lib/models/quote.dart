@@ -23,8 +23,8 @@ class Quote extends RecordModel{
   String dateValid;
   String createdAt;
   String updatedAt;
-
   String currency;
+  User user;
 
   List<Line> lines;
   List<QuoteCost> costs;
@@ -32,12 +32,19 @@ class Quote extends RecordModel{
   double _totalWeight;
   int _totalpcs;
 
+  Carrier vendor;
   Quote(){
     this._validator = new QuoteValidator(this);
     this.lines = [new Line()];
     this.costs = [];
   }
 
+  getVendor(){
+    if(this.vendor == null){
+      this.vendor = costs.first.vendor;
+    }
+    return this.vendor;
+  }
   
   @override
   void loadWithJson(Map<String, dynamic> map) {
@@ -142,6 +149,16 @@ class Quote extends RecordModel{
     this.lines.add(l);
   }
 
+  double totalPrice(){
+    double totalPrice = 0.0;
+    costs.forEach((QuoteCost qc){
+      if (qc.number !=null ){
+        totalPrice += _toDouble(qc.number);
+      }
+    });
+    return totalPrice;
+  }
+  
   totalWeight() => _totalWeight;
   int totalPcs() => _totalpcs;
   

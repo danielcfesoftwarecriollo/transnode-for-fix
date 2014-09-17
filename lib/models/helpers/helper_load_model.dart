@@ -49,4 +49,23 @@ class LoadModel{
     q.loadWithJson(json);
     return q;
   }
-}
+  
+  static loadExchangeRate(Map<String, dynamic> json) {
+    ExchangeRate er = new ExchangeRate();
+    er.loadWithJson(json);
+    return er;
+  }
+  
+  static loadExchangeRates(List listMap) {
+    List<ExchangeRate> aux = [];
+    listMap.forEach((er){
+      aux.add(loadExchangeRate(er));
+    });
+    return aux;
+  }
+  
+  static loadLocation(Map<String, dynamic> json) {
+    Location l = new Location();
+    l.loadWithJson(json);
+    return l;
+  }}

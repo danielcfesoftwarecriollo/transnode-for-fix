@@ -1,7 +1,7 @@
 <script type="text/ng-template" id="customTemplate.html">
     <a>
-        <img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
-        <span ng-bind-html="match.label | highlight:query"></span>
+      <img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
+      <span ng-bind-html="match.label | highlight:query"></span>
     </a>
 </script>
 
@@ -17,17 +17,17 @@
         <div class="col-md-12 info-shipment">
           <div class="col-md-2">
             <div>
-              #IM0001001
+              #IM{{ctrl.shipment.id}}
             </div>
           </div>
           <div class="col-md-2">
             <div>
-              Current Date
+              {{ctrl.shipment.quote.createdAt}}
             </div>
           </div>
           <div class="col-md-2">
             <div>
-              QuoteNum : # 00110
+              QuoteNum : # {{ctrl.shipment.quote.id}}
             </div>
           </div>
           <div class="col-md-2">
@@ -78,7 +78,7 @@
                   <label for="customer">Customer: </label>
                     <input type="text" ng-model="ctrl.asyncSelected"
                        typeahead-min-length="3"
-                       typeahead-on-select="ctrl.onSelect($item, $model, $label)"
+                       typeahead-on-select="ctrl.onSelect($item[value])"
                        typeahead="customers as customers['label'] for customers in ctrl.load_customers($viewValue)"
                        typeahead-wait-ms="300"
                        typeahead-loading="loadingLocations"
@@ -800,7 +800,7 @@
           </div>
         </div>
       </div>
-      <div class="step3" >
+      <div class="step3" ng-show="ctrl.inStep(2)">
         <div class="row">
           <div class="col-md-7">
             <div class="row">

@@ -19,6 +19,9 @@ class Entity extends RecordModel {
   String territoryId;
   String sourceId;
   int billToId;
+  Location billTo;
+  Customer exportCustomsBroker;
+  Customer importCustomsBroker;
   List roles;
   Map _roles_map;
   List<Location> locations;
@@ -43,9 +46,13 @@ class Entity extends RecordModel {
   }
   
   Location mainLocation(){
+    return locationByRole('main');
+  }
+  
+  Location locationByRole(String role){
     Location location;
     if(!this.locations.isEmpty){
-      location = this.locations.firstWhere((e)=> e.roles.contains('main') );
+      location = this.locations.firstWhere((e)=> e.roles.contains(role) );
     }
     return location;
   }
@@ -66,8 +73,6 @@ class Entity extends RecordModel {
     return locations_map;
   }
 
-
-
   List roles_to_list() {
     List roles_return = [];
     _roles_map.forEach((role, has_role) {
@@ -77,8 +82,19 @@ class Entity extends RecordModel {
   }
 
   void loadWithJson(Map<String, dynamic> map) {
+    this.billTo = loadLocationByMap( map,'bill_to');
     super.loadWithJson(map);
     load_map_roles();
+    
+  }
+  
+  static Customer loadLocationByMap(map,target){
+    var aux;
+    if(map[target] != null){
+      aux = LoadModel.loadLocation(map[target]);
+      map.remove(map[target]);
+    }
+    return aux;
   }
 
   void load_map_roles() {

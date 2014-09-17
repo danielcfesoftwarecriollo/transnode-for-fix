@@ -286,7 +286,7 @@
               <b>{{quoteCost.vendor.currency}}</b>
             </td>
             <td>
-              <b>{{quoteCost.priceCAD}}</b>
+              <b>{{quoteCost.calculateCAD()}}</b>
             </td>
             <td class="actions important">
               <i class="fa fa-times pull-left fa-x1" ng-click="ctrl.quote.delete_QuoteCost(quoteCost)"></i>
@@ -382,7 +382,10 @@
 </div>
 
           <div class="row">
-            <div class="col-md-1 col-md-offset-8"><button ng-click="ctrl.save()" class="btn-primary btn" >Save</button></div>
+            <div class="col-md-1  col-md-offset-4"><button ng-click="ctrl.save()" class="btn-primary btn" >SAVE</button></div>
+            <div class="col-md-1"><button class="btn-primary btn" >Print Preview</button></div>
+            <div class="col-md-1"><button class="btn-primary btn" >SEND</button></div>
+
             <div class="col-md-2"><button class="btn-primary btn" >Save & Next</button></div>
           </div>
         </form>
