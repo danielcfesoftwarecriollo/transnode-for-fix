@@ -401,6 +401,6 @@ class ShipmentsController {
   bool hasValidShipment() => hasValidShipper() && hasValidConsignee();
   bool _isEditPath() => _routeProvider.routeName == 'shipment_edit';
   bool _isNewPath() => _routeProvider.routeName == 'shipment_new';
-  bool _isIndexPath() => _routeProvider.routeName == 'shipment_list';
+  bool _isIndexPath() => _routeProvider.routeName == 'shipments';
   bool _isNewWithQuotePatch() => _routeProvider.routeName == 'shipment_new_with_quote';
 }
