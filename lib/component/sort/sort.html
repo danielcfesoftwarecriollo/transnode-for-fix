@@ -1,0 +1,43 @@
+<link rel="import" href="packages/polymer/polymer.html">
+<link rel="import" href="packages/html_components/data/column.html">
+<link rel="import" href="packages/html_components/data/datatable.html">
+<link rel="import" href="packages/html_components/utility/growl.html">
+
+<polymer-element name="datatable-sort-demo" >
+  <template>
+    <h-datatable  paginatorPosition="bottom" rows="15" rowsPerPageTemplate="15,20,25,50" maxPageLinks="10" 
+    on-filtered="{{onColumnFiltered}}" source="http://localhost:3000/shipments/search" >      
+      <h-column property="id" type="string" sortable filterable>
+        <header>Id</header>
+          <div>
+            <a href="##3">${id}</a>
+          </div>
+        <footer>Id</footer>
+      </h-column>
+      
+      <h-column property="customer.name" type="string" sortable filterable>
+        <header>Customer</header>
+        <div>
+          ${customer_name}
+        </div>
+      </h-column>
+      
+      <h-column property="quote_id" type="string" sortable filterable>
+        <header>Quote Id</header>
+        <div>${quote_id}</div>
+      </h-column>
+      
+      <h-column property="status" type="string" sortable filterable textAlign="center">
+        <header>Status</header>
+        <div>${status}</div>
+      </h-column>
+      
+      <footer>In total there are ${datatable:totalCount} Shipments.</footer>
+    </h-datatable>
+    
+    <h-growl lifetime="5000"></h-growl>
+    
+    <shadow></shadow>
+  </template>
+  <script type="application/dart" src="sort.dart"></script>
+</polymer-element>
