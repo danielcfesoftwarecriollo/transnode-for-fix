@@ -9,22 +9,20 @@ import 'package:polymer/polymer.dart';
 
 
 import 'package:angular_ui/utils/injectable_service.dart';
-// import 'package:angular_node_bind/angular_node_bind.dart';
-
-
-// import 'package:html_components/html_components.dart' show DatatableComponent, GrowlComponent;
-// import 'data/car.dart' as data;
-
-
+import 'package:angular_ui/angular_ui.dart';
+import 'package:angular_ui/utils/utils.dart';
+import 'package:angular_node_bind/angular_node_bind.dart' show NodeBindModule;
+import 'package:html_components/html_components.dart' show DatatableComponent, GrowlComponent;
 import 'package:angular/angular.dart';
+import 'package:html_components/data/datatable/data.dart';
+
+
 import 'package:angular/routing/module.dart';
 import 'package:ctrl_alt_foo/keys.dart';
 import "dart:mirrors"; 
-
 import 'package:model_map/model_map.dart';
 import 'package:angular/application_factory.dart';
-import 'package:angular_ui/angular_ui.dart';
-import 'package:angular_ui/utils/utils.dart';
+
 
 part 'component/rating/rating_component.dart';
 
@@ -44,6 +42,7 @@ part 'services/quote_service.dart';
 part 'services/city_service.dart';
 part 'services/mail_service.dart';
 part 'services/exchange_rate_service.dart';
+part 'services/datatable_service.dart';
 
 part 'controllers/app_controller.dart';
 part 'controllers/customer_controller.dart';
@@ -146,23 +145,16 @@ class TransnodeModule extends Module {
     bind(CityService);
     bind(MailService);
     bind(ExchangeRateService);
-    // bind(NodeBindModule);
+    bind(DatatableServerDataFetcherTransApp);
   }
 }
 
 @initMethod
 start() {
-  // initPolymer();
-  applicationFactory()
+  initPolymer().run((){
+    applicationFactory()
     .addModule(new TransnodeModule())
-    .run();
-
-
-  
-  // initPolymer().run((){
-  //   applicationFactory()
-  //     .addModule(new TransnodeModule())
-  //     .run();
-  // });
- 
+    .addModule(new NodeBindModule()).run();
+    
+  });
 }

@@ -9,14 +9,14 @@ packages:
     description: angular
     source: hosted
     version: "0.12.0"
+  angular_node_bind:
+    description: angular_node_bind
+    source: hosted
+    version: "0.2.0"
   angular_ui:
     description: angular_ui
     source: hosted
     version: "0.5.5"
-  animation:
-    description: animation
-    source: hosted
-    version: "0.5.20"
   args:
     description: args
     source: hosted
@@ -32,7 +32,7 @@ packages:
   code_transformers:
     description: code_transformers
     source: hosted
-    version: "0.1.4+1"
+    version: "0.1.6"
   collection:
     description: collection
     source: hosted
@@ -56,15 +56,18 @@ packages:
   dquery:
     description: dquery
     source: hosted
-    version: "0.7.0"
+    version: "0.7.0+4"
   html5lib:
     description: html5lib
     source: hosted
     version: "0.11.0+2"
   html_components:
-    description: html_components
-    source: hosted
-    version: "0.1.4"
+    description:
+      ref: null
+      resolved-ref: "91ccf7fbad034f47520eef324f65d1d5bffd46c3"
+      url: "git@github.com:danielcfesoftwarecriollo/html-components.git"
+    source: git
+    version: "0.4.0"
   intl:
     description: intl
     source: hosted
@@ -92,11 +95,11 @@ packages:
   path:
     description: path
     source: hosted
-    version: "1.2.2"
+    version: "1.3.0"
   perf_api:
     description: perf_api
     source: hosted
-    version: "0.0.8"
+    version: "0.0.9"
   polymer:
     description: polymer
     source: hosted
@@ -108,15 +111,15 @@ packages:
   route_hierarchical:
     description: route_hierarchical
     source: hosted
-    version: "0.4.21"
+    version: "0.4.22"
   smoke:
     description: smoke
     source: hosted
-    version: "0.2.1"
+    version: "0.2.1+1"
   source_maps:
     description: source_maps
     source: hosted
-    version: "0.9.3"
+    version: "0.9.4"
   source_span:
     description: source_span
     source: hosted
@@ -125,14 +128,18 @@ packages:
     description: stack_trace
     source: hosted
     version: "0.9.3+2"
+  string_scanner:
+    description: string_scanner
+    source: hosted
+    version: "0.1.0"
   template_binding:
     description: template_binding
     source: hosted
-    version: "0.12.0+4"
+    version: "0.12.1"
   unittest:
     description: unittest
     source: hosted
-    version: "0.11.0+3"
+    version: "0.11.0+5"
   utf:
     description: utf
     source: hosted
@@ -144,4 +151,4 @@ packages:
   yaml:
     description: yaml
     source: hosted
-    version: "0.9.0+2"
+    version: "2.0.1+1"

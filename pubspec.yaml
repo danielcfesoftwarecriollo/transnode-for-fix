@@ -7,7 +7,9 @@ dependencies:
   unittest: any
   ctrl_alt_foo: any
   dquery: any
-  html_components: any
+  html_components:
+    git: git@github.com:danielcfesoftwarecriollo/html-components.git
+  angular_node_bind: "0.2.0"
   model_map: ">=0.2.6 <0.3.0"
 dev_dependencies:
     dartmocks: ">= 0.5.0"
