@@ -36,6 +36,12 @@ class Shipper extends RecordModelNested{
    super.loadWithJson(map);
    this._loadListObj(map);
   }
+  
+  void resetIdLists(){
+    this.lines.forEach((l){
+      l.id = null;
+    });
+  }
 
   loadCustomerLocation(Map customerMap ){
     if(customerMap['location_customer'] != null){

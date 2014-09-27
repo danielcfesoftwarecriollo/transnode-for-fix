@@ -1,6 +1,6 @@
 part of transnode;
 class ShipmentShipperValidator extends Validator {
-  ShipmentShipper _shipmentShipper;
+  Shipper _shipmentShipper;
 
   ShipmentShipperValidator(this._shipmentShipper) {
     this.clean_errors();

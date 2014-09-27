@@ -10,6 +10,7 @@ class ShipmentsController {
   final QuoteService _quoteService;
   final CarrierService _carrierService;
   final ExchangeRateService _exchangeRateService;
+  final CustomerService _customerService;
   List<Shipper> shippers;
   List consigne_locations;
   List consignees;
@@ -48,7 +49,7 @@ class ShipmentsController {
   
   String functionss = 'test()';
 
-  ShipmentsController(this._quoteService,this._exchangeRateService,this._http,this.scope, this.modal,this._shipmentService, this._carrierService, this._routeProvider, this._router) {
+  ShipmentsController(this._customerService, this._quoteService,this._exchangeRateService,this._http,this.scope, this.modal,this._shipmentService, this._carrierService, this._routeProvider, this._router) {
     this.shipment = new Shipment();
     this._exchange = new ExchangeValue(_exchangeRateService);
     openM = true;
@@ -59,6 +60,7 @@ class ShipmentsController {
       var shipment_id = _routeProvider.parameters['shipmentId'];
       _shipmentService.get(shipment_id).then((_){ 
         this.shipment = _;
+        loadCustomerData();
         checkTotalRevCosts();
       });
       load_form();
@@ -72,9 +74,12 @@ class ShipmentsController {
     }else if(_isNewWithQuotePatch()){
       var quoteId = _routeProvider.parameters['quoteId'];
       this._quoteService.get(quoteId).then((Quote quote){
-        this.shipment.loadShipmentWithQuote(quote);
-        loadCustomerData();
-        print('load Ready');
+        _customerService.get(quote.customer.id.toString()).then((Customer customer){
+          quote.customer = customer;
+          this.shipment.loadShipmentWithQuote(quote);
+          loadCustomerData();
+          print('load Ready');
+        });
       });
       load_form();
     }else{
@@ -391,7 +396,7 @@ class ShipmentsController {
   
   bool has_shippers() => this.shipment.shippers.isNotEmpty;
   bool maxCarrier() => this.shipment.multipleCarriers && this.shipment.carriers.length > 1;
-  bool otherCustomerInBillTo() => this.billto != null && this.billto.id != this.shipment.customer.id;
+  bool otherCustomerInBillTo() => this.billto != null && this.shipment.customer != null && this.billto.id != this.shipment.customer.id;
   bool inStep(int step) => step == this.step;
   bool hasConsigneeLocations() => this.consigne_locations.length > 0;
   bool hasMoreThanOneCarrier() => this.shipment.carriers.length > 1;  

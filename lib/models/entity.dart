@@ -88,11 +88,11 @@ class Entity extends RecordModel {
     
   }
   
-  static Customer loadLocationByMap(map,target){
+  static loadLocationByMap(map,target){
     var aux;
     if(map[target] != null){
       aux = LoadModel.loadLocation(map[target]);
-      map.remove(map[target]);
+      map.remove(target);
     }
     return aux;
   }

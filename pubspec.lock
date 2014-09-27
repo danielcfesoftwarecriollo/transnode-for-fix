@@ -64,7 +64,7 @@ packages:
   html_components:
     description:
       ref: null
-      resolved-ref: "91ccf7fbad034f47520eef324f65d1d5bffd46c3"
+      resolved-ref: "61ab2983e1732e01fb9fe774bd733afb202fcc96"
       url: "git@github.com:danielcfesoftwarecriollo/html-components.git"
     source: git
     version: "0.4.0"

@@ -42,7 +42,6 @@ part 'services/quote_service.dart';
 part 'services/city_service.dart';
 part 'services/mail_service.dart';
 part 'services/exchange_rate_service.dart';
-part 'services/datatable_service.dart';
 
 part 'controllers/app_controller.dart';
 part 'controllers/customer_controller.dart';
@@ -145,7 +144,6 @@ class TransnodeModule extends Module {
     bind(CityService);
     bind(MailService);
     bind(ExchangeRateService);
-    bind(DatatableServerDataFetcherTransApp);
   }
 }
 

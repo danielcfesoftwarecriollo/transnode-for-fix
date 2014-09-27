@@ -60,6 +60,7 @@ class RevenueCost extends RecordModelNested{
   }
   
   Map to_map() {
+    print('to_map revenue and Costs');
     return {
       'id' : id,
       'account_code' : accountCode,
@@ -71,7 +72,7 @@ class RevenueCost extends RecordModelNested{
       'vendor_id' : vendor.id,
       'description' : description,
       'e_or_p' : eOrP,
-      'bill_to_id' : billTo.id,
+      'bill_to_id' : (billTo == null)? null : billTo.id,
       'invoice' : invoice,
       'status' : status,
       '_destroy': _destroy

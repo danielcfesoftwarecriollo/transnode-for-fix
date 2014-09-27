@@ -64,7 +64,11 @@ class Shipment extends RecordModel{
     }    
     
     Shipper shipper = new Shipper();
+    if(q.customer.locations.isNotEmpty){
+      shipper.locationCustomer = q.customer.locations.first;
+    }
     shipper.lines.addAll(q.lines);
+    shipper.resetIdLists();
     this.shippers.add(shipper);
 
     this.revCosts = loadRevenuCostsWithQuoteCost(q.costs);
@@ -225,7 +229,7 @@ class Shipment extends RecordModel{
     
     return {
       'id' : id,
-      'file_ref'     : customer.id,
+      'customer_id'     : customer.id,
       'billto_id'       : billto.id,
       'custom_broker_id' : customBroker.id,
 //      'file_created'   : file_created,
@@ -234,7 +238,7 @@ class Shipment extends RecordModel{
 //      'speed_rating'   : speed_rating,
 //      'quality_rating' : quality_rating,
 //      'price_rating'   : price_rating,
-//      'quote' : quote,
+       'quote' : quote.id,
        'notes_attributes'      : HelperList.to_map(notes),
        'shippers_attributes'   : HelperList.to_map(shippers),
        'consignees_attributes' : HelperList.to_map(consignees),
