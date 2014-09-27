@@ -72,7 +72,7 @@ class QuotesController {
     QuoteCost qc = new QuoteCost();
     qc.vendor = carrierLane.carrier;
     qc.what = carrierLane.lane;
-    qc.number = carrierLane.lane.prices.first.price;  
+    qc.number = carrierLane.lane.prices.first.price;
     qc.currency = "CAD";
     return qc;
   }

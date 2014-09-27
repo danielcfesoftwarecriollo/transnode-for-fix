@@ -10,7 +10,7 @@
       <h-column property="id" type="string" sortable filterable>
         <header>Id</header>
           <div>
-            <a href="##3">${id}</a>
+            <a href="#/shipments/${id}/edit">${id}</a>
           </div>
         <footer>Id</footer>
       </h-column>
@@ -27,7 +27,7 @@
         <div>${quote_id}</div>
       </h-column>
       
-      <h-column property="status" type="string" sortable filterable textAlign="center">
+      <h-column property="status" type="list" dataFilter="['new_r','booked','dispatched']" sortable filterable textAlign="center">
         <header>Status</header>
         <div>${status}</div>
       </h-column>
