@@ -1,8 +1,12 @@
 <div customer-controller>
   <h1>Customers</h1>
   <div ng-show='ctrl.has_customers'>
+    <br>
     <a class='btn btn-info' ng-href="#/customers/new"> Create a customer</a>
-    <table class='table table-hover'>
+    <br>
+    <br>
+    <br>
+   <!--  <table class='table table-hover'>
       <thead>
         <tr>
           <th>id</th>
@@ -29,7 +33,9 @@
           </td>
         </tr>
       </tbody>
-    </table>
+    </table> -->
+
+    <search-customer></search-customer>
     
   </div>
   <div customer-list ng-hide='ctrl.has_customers'>

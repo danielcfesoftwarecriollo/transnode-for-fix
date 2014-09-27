@@ -1,0 +1,61 @@
+<link rel="import" href="packages/polymer/polymer.html">
+<link rel="import" href="packages/html_components/data/column.html">
+<link rel="import" href="packages/html_components/data/datatable.html">
+<link rel="import" href="packages/html_components/utility/growl.html">
+
+<polymer-element name="search-customer" >
+  <template>
+    <h-datatable  paginatorPosition="bottom" rows="15" rowsPerPageTemplate="15,20,25,50" maxPageLinks="10" 
+    on-filtered="{{onColumnFiltered}}" source="http://localhost:3000/customers/search" >      
+      <h-column property="id" type="string" sortable filterable>
+        <header>Id</header>
+          <div>
+            <b>${id}</b>
+          </div>
+        <footer>Id</footer>
+      </h-column>
+      
+      <h-column property="name" type="string" sortable filterable>
+        <header>Customer Name</header>
+        <div>
+          <a href="#/shipments/${id}/edit">${name}</a>
+        </div>
+      </h-column>
+      
+      <h-column property="created_at" type="string" sortable filterable >
+        <header>Date</header>
+        <div>${created_at}</div>
+      </h-column>
+      
+      <h-column property="status" type="string" sortable filterable >
+        <header>Type</header>
+        <div>${status}</div>
+      </h-column>
+      
+      <h-column property="contact" type="string" >
+        <header>City</header>
+        <div>${city}</div>
+      </h-column>
+            
+      <h-column property="user.name" type="list" >
+        <header>CSR</header>
+        <div>${csr}</div>
+      </h-column>
+                  
+      <h-column property="status" >
+        <header>Action</header>
+        <div id="">
+          <a href="#/shipments/new">Booked</a>
+        </div>
+      </h-column>
+      
+      
+      <footer>In total there are ${datatable:totalCount} Shipments.</footer>
+    </h-datatable>
+    
+    <h-growl lifetime="5000"></h-growl>
+    
+    <shadow></shadow>
+  </template>
+  <script type="application/dart" src="search_customer.dart"></script>
+</polymer-element>
