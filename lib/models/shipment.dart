@@ -1,9 +1,9 @@
 part of transnode;
 
 class Shipment extends RecordModel{
-  int speed_rating;
-  int quality_rating;
-  int price_rating;
+  Rating ratingSpeed;
+  Rating ratingQuality;
+  Rating ratingPrice;
   String file_created;
   String credit_check;
   
@@ -37,9 +37,9 @@ class Shipment extends RecordModel{
 
   Shipment() {
     status = 'new';
-    speed_rating = 5;
-    quality_rating = 5;
-    price_rating = 5;
+    ratingSpeed = new Rating(Rating.SPEED);
+    ratingQuality = new Rating(Rating.QUOALITY);
+    ratingPrice = new Rating(Rating.PRICE);
     _totalWeight = 0.0;
     _totalpcs = 0;
     shippers = [];
@@ -151,9 +151,19 @@ class Shipment extends RecordModel{
       this._loadListObj(map);
       this.loadLinesConsignee();
    }
-  
+   static loadRatingByMap(map,target){
+     var aux;
+     if(map[target] != null){
+       aux = LoadModel.loadRating(map[target]);
+       map.remove(target);
+     }
+     return aux;
+   }
    
   _loadListObj(map){
+    ratingSpeed = loadRatingByMap(map,'rating_speed');
+    ratingQuality = loadRatingByMap(map,'rating_quality');
+    ratingPrice = loadRatingByMap(map,'rating_price');
     loadCustomer(map);
     loadBillto(map);
     loadCustomBroker(map);
@@ -197,7 +207,7 @@ class Shipment extends RecordModel{
         this.revCosts.add(s);
       });
     }
-    
+    checkRating();
   }
 
   loadCustomer(Map customerMap ){
@@ -222,6 +232,12 @@ class Shipment extends RecordModel{
     }
     customerMap.remove('custom_broker');
   }
+  
+  checkRating(){
+    ratingPrice = (ratingPrice == null)? new Rating(Rating.PRICE): ratingPrice;
+    ratingQuality = (ratingQuality == null)? new Rating(Rating.QUOALITY): ratingQuality;
+    ratingSpeed = (ratingSpeed == null)? new Rating(Rating.SPEED): ratingSpeed;
+  }
    
     
   Map to_map() {
@@ -234,17 +250,14 @@ class Shipment extends RecordModel{
       'custom_broker_id' : customBroker.id,
 //      'file_created'   : file_created,
 //      'credit_check'   : credit_check,
-//      'multipleCarriers' : multipleCarriers,
-//      'speed_rating'   : speed_rating,
-//      'quality_rating' : quality_rating,
-//      'price_rating'   : price_rating,
-       'quote' : quote.id,
+      'multiple_carriers' : multipleCarriers,
+       'quote' : (quote == null)? null : quote.id,
        'notes_attributes'      : HelperList.to_map(notes),
        'shippers_attributes'   : HelperList.to_map(shippers),
        'consignees_attributes' : HelperList.to_map(consignees),
        'carriers_attributes'   : HelperList.to_map(carriers),
-       'revenue_costs_attributes': HelperList.to_map(revCosts)
-
+       'revenue_costs_attributes' : HelperList.to_map(revCosts),
+       'ratings_attributes' : HelperList.to_map([ ratingSpeed, ratingPrice, ratingQuality ]) 
     };
   }
   

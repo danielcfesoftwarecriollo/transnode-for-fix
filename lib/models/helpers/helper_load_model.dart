@@ -19,6 +19,12 @@ class LoadModel{
     l.loadWithJson(json);
     return l;
   }
+
+  static  loadRating(Map<String, dynamic> json) {
+    Rating r = new Rating(Rating.PRICE);
+    r.loadWithJson(json);
+    return r;
+  }
   
   static  loadShipment(Map<String, dynamic> json) {
     Shipment s = new Shipment();
