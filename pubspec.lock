@@ -63,9 +63,9 @@ packages:
     version: "0.11.0+2"
   html_components:
     description:
-      ref: null
+      ref: master
       resolved-ref: "61ab2983e1732e01fb9fe774bd733afb202fcc96"
-      url: "git@github.com:danielcfesoftwarecriollo/html-components.git"
+      url: "git://github.com/danielcfesoftwarecriollo/html-components.git"
     source: git
     version: "0.4.0"
   intl:
