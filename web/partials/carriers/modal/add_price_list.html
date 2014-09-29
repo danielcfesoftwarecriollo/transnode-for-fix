@@ -13,10 +13,14 @@
       </thead>
       <tr ng-repeat="price in ctrl.pricesHelper" ng-hide="price.pending_to_delete()" >
         <td>
-          <b>{{ ctrl.pricesHelper.indexOf(price) + 1}}</b>
+          <b>{{ $index }}</b>
         </td>
         <td>
-          <input type="text" ng-model="price.unit" class="form-control" >
+          <select ng-model='price.unit' id="unit{{ $index }}" class="form-control">
+            <option value="" disabled selected>Select unit</option>
+            <option value="0" ng-selected="price.unit == 0" >Pcs</option>
+            <option value="1" ng-selected="price.unit == 1" >Skids</option>
+          </select>
         </td>
         <td>
           <input type="text" ng-model="price.number" class="form-control" >

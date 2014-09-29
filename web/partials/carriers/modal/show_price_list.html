@@ -15,7 +15,9 @@
           <b>{{ ctrl.pricesHelper.indexOf(price) + 1}}</b>
         </td>
         <td>
-          <b>{{price.unit}}</b>
+          {{price.unit}}
+          <b ng-if="price.unit == '0'">Pcs</b>
+          <b ng-if="price.unit == 1">Skids</b>
         </td>
         <td>
           <b>{{price.number}}</b>
