@@ -10,7 +10,7 @@ class Location extends RecordModelNested {
   List  states;
   int stateId;
   int countryId;
-  String city;
+  City city;
   String zip;
   String on;
   String phone;
@@ -80,6 +80,7 @@ class Location extends RecordModelNested {
   
   @override
   void loadWithJson(Map<String, dynamic> map) {
+    loadCity(map);
     super.loadWithJson(map);
     if (map.containsKey("contacts_attributes")) {
       this.contacts = [];
@@ -90,6 +91,14 @@ class Location extends RecordModelNested {
       });
     }
   }
+  
+  loadCity(Map customerMap ){
+    if(customerMap['city'] != null){
+      this.city = LoadModel.loadCity(customerMap['city']);
+    }
+    customerMap.remove('city');
+  }
+  
   void delete_contact(Contact contact) {
     if (contact.is_new()) {
       contacts.remove(contact);
@@ -156,7 +165,7 @@ class Location extends RecordModelNested {
       'address_2': address2,
       'country_id': countryId,
       'state_id': stateId,
-      'city': city,
+      'city': city.id,
       'zip': zip,
       'on': on,
       'phone': phone,

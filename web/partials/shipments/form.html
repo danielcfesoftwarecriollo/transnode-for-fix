@@ -86,7 +86,7 @@
                     <i ng-show="ctrl.loadingLocations" class="glyphicon glyphicon-refresh"></i>
                 </div>
                 <div class="col-xs-1">
-                  <label for="">City: {{ctrl.shipment.customer.mainLocation().city}}</label>
+                  <label for="">City: {{ctrl.shipment.customer.mainLocation().city.name}}</label>
                 </div>
                 <div class="col-xs-1">
                   <label for="">State: {{ctrl.shipment.customer.mainLocation().stateId}}</label>
@@ -117,10 +117,10 @@
                 </div>
                 <div ng-hide="ctrl.otherCustomerInBillTo()">
                   <div class="col-xs-1">
-                    <label for="">City: {{ctrl.shipment.billto.city}}</label>
+                    <label for="">City: {{ctrl.shipment.billto.city.name}}</label>
                   </div>
                   <div class="col-xs-1">
-                    <label for="">State: {{ctrl.shipment.billto.city}}</label>
+                    <label for="">State: {{ctrl.shipment.billto.city.name}}</label>
                   </div>
                   <div class="col-xs-1"><label for="">Zip: </label>{{ctrl.shipment.billto.zip}}</div>
                   <div class="col-xs-3 form-group">
@@ -147,7 +147,7 @@
                 </div>
                 <div ng-show='ctrl.internationalShipments()'>
                   <div class="col-xs-1">
-                    <label for="">City: {{ctrl.shipment.customBroker.mainLocation().city}}</label>
+                    <label for="">City: {{ctrl.shipment.customBroker.mainLocation().city.name}}</label>
                   </div>
                   <div class="col-xs-1">
                     <label for="">State: {{ctrl.shipment.customBroker.mainLocation().stateId}}</label>
@@ -198,7 +198,7 @@
                     <label for="">Address 2:{{shipper.locationCustomer.address2}} </label>
                   </div>
                   <div class="col-xs-12">
-                    <label for="">City: {{shipper.locationCustomer.city}}, Zip:{{shipper.locationCustomer.zip}}, Country:{{shipper.locationCustomer.country['name']}} </label>
+                    <label for="">City: {{shipper.locationCustomer.city.name}}, Zip:{{shipper.locationCustomer.zip}}, Country:{{shipper.locationCustomer.country['name']}} </label>
                   </div>
                   <div class="col-xs-12">
                     <label for="">Contact Name: {{shipper.locationCustomer.contacts.first.name}}</label>
@@ -362,7 +362,7 @@
                     <label for="">Address 2:{{consignee.locationCustomer.address2}} </label>
                   </div>
                   <div class="col-xs-12">
-                    <label for="">City: {{consignee.locationCustomer.city}}, Zip:{{consignee.locationCustomer.zip}}, Country:{{consignee.locationCustomer.country['name']}} </label>
+                    <label for="">City: {{consignee.locationCustomer.city.name}}, Zip:{{consignee.locationCustomer.zip}}, Country:{{consignee.locationCustomer.country['name']}} </label>
                   </div>
                   <div class="col-xs-12">
                     <label for="">Contact Name: {{consignee.locationCustomer.contacts.first.name}}</label>
@@ -550,7 +550,7 @@
                       <label for="">Address 1 : {{sCarrier.carrier.mainLocation().address1}}</label>
                     </div>
                     <div class="col-xs-12">
-                      <label for="">City: {{sCarrier.carrier.mainLocation().city}}, Zip:{{sCarrier.carrier.mainLocation().zip}}, Country:{{sCarrier.carrier.mainLocation().countryId}} </label>
+                      <label for="">City: {{sCarrier.carrier.mainLocation().city.name}}, Zip:{{sCarrier.carrier.mainLocation().zip}}, Country:{{sCarrier.carrier.mainLocation().countryId}} </label>
                     </div>
                     <div class="col-xs-12">
                       <label for="">Contact Name: {{sCarrier.carrier.mainLocation().contacts.first.name}}</label>

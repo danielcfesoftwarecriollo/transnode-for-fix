@@ -12,7 +12,6 @@
           <div>
             <b>${id}</b>
           </div>
-        <footer>Id</footer>
       </h-column>
       
       <h-column property="name" type="string" sortable filterable>
@@ -27,7 +26,7 @@
         <div>${created_at}</div>
       </h-column>
       
-      <h-column property="status" type="string" sortable filterable >
+      <h-column property="status" type="list" dataFilter="['new_lead','new_prospect','new_approved','regular_customer']" sortable filterable >
         <header>Type</header>
         <div>${status}</div>
       </h-column>
