@@ -12,10 +12,19 @@
         </div>
       </div>
     <div class="row">
-      <div class="col-sm-4 " ng-class="{'has-error':ctrl.carrier.has_errors('name')}">
-        <label for="entity_name">Name</label>
-        <input type="text" class="form-control" id="entity_name" ng-model='ctrl.carrier.name' placeholder="Name">
-        <p ng-show="ctrl.carrier.has_errors('name')" class='error'>{{ctrl.carrier.errors_by_field('name')}}</p>
+      <div class="col-sm-4 control-label" ng-class="{'has-error':ctrl.carrier.has_errors('name')}">
+        <div class="form-group">
+          <label for="entity_name">Name</label>
+          <input type="text" class="form-control" id="entity_name" ng-model='ctrl.carrier.name' placeholder="Name">
+          <p ng-show="ctrl.carrier.has_errors('name')" class='error'>{{ctrl.carrier.errors_by_field('name')}}</p>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="checkbox" style="margin-top:25px" >
+          <label>
+            <input ng-model="ctrl.carrier.isVendor" type="checkbox"> Is Vendor
+          </label>
+        </div>
       </div>
     </div>
     <div class="step1" >

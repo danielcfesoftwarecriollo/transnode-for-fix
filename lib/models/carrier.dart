@@ -6,6 +6,7 @@ class Carrier extends Entity {
   Map<String, List<String>> errors;
   List<Lane> lanes;
   String note;
+  bool isVendor;
   
   Carrier() {
     this.roles = ["carrier"];
@@ -122,6 +123,7 @@ class Carrier extends Entity {
     print(this);
     return {
       'id': this.id,
+      'is_vendor' : isVendor,
       'name': this.name,
       'currency': this.currency,
       'note': this.note,

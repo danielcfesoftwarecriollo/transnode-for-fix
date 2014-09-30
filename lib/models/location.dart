@@ -165,7 +165,7 @@ class Location extends RecordModelNested {
       'address_2': address2,
       'country_id': countryId,
       'state_id': stateId,
-      'city': city.id,
+      'city_id': city.id,
       'zip': zip,
       'on': on,
       'phone': phone,
