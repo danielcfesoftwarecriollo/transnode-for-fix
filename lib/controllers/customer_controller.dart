@@ -24,10 +24,12 @@ class CustomerController {
   List territoryIds;
   List locations;
   List sources;
+  List cities;
   int billToId;
   
   CustomerController(this._customerService, this._routeProvider, this._router) {
     this.customer = new Customer();
+    this.cities = [];
     this.billTos = [];
     if (_isEditPath()) {
       var customer_id = _routeProvider.parameters['customerId'];
@@ -49,12 +51,22 @@ class CustomerController {
   void load_form(){
     _customerService.loadForm().then((response){
       this.countries = response['countries'];
-      this.statesOfCountries = response['states_of_countries'];      
+      this.statesOfCountries = response['states_of_countries'];
+      load_cities(response['cities']);
     });
     
     new Timer(const Duration(milliseconds: 1000), () {
       List countries = querySelectorAll('.countries');
       countries.forEach((element) => dispachChange(element));
+    });
+  }
+  
+  void load_cities(List cities ){
+    cities.forEach(( city_attr ){
+      City new_city = new City();
+      new_city.loadWithJson(city_attr);
+      
+      this.cities.add(new_city);
     });
   }
   
@@ -88,6 +100,10 @@ class CustomerController {
     Customer customer = new Customer();
     customer.loadWithJson(map);
     return customer;
+  }
+  
+  has_many_locations(){
+    customer.has_many_locations();
   }
   
 //  void add_contact() {

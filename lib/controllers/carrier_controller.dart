@@ -43,7 +43,6 @@ class CarrierController {
     
   }
 
-
   void open(String templateUrl) {
     modalInstance = modal.open(new ModalOptions(templateUrl:templateUrl),scope);
   }
@@ -120,7 +119,7 @@ class CarrierController {
     new Timer(const Duration(milliseconds: 1000), () {
       List countries = querySelectorAll('.countries');
       countries.forEach((element) => dispachChange(element));
-    });    
+    });
   }
   
   void dispachChange(SelectElement element){
@@ -135,6 +134,10 @@ class CarrierController {
       
       this.cities.add(new_city);
     });
+  }
+  
+  has_many_locations(){
+    carrier.has_many_locations();
   }
   
   void save(){
