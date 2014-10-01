@@ -13,6 +13,7 @@ class SessionService {
       .then((HttpResponse response){
         _user_service.email = email.trim();
         _user_service.token = response.data['token'];
+        _user_service.user = response.data['user'];
         _router.go('home',{});
       });
   }
