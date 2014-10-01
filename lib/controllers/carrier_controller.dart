@@ -9,6 +9,7 @@ class CarrierController {
   RouteProvider _routeProvider;
   Router _router;
   final CarrierService _carrierService;
+  final UserService _userService;
   List locations;
   List countries;
   List cities;
@@ -20,11 +21,13 @@ class CarrierController {
   Modal modal;
   ModalInstance modalInstance;
   Scope scope;
+  User current_user;
 
   
-  CarrierController(this._carrierService,this.scope, this.modal, this._routeProvider, this._router) {
+  CarrierController(this._userService,this._carrierService,this.scope, this.modal, this._routeProvider, this._router) {
     this.carriers = [];
     this.cities = [];
+    this.current_user = _userService.user;
     this.carrier = new Carrier();
     if (_isEditPath()) {
       var carrier_id = _routeProvider.parameters['carrierId'];

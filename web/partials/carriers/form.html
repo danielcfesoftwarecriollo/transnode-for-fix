@@ -19,7 +19,7 @@
           <p ng-show="ctrl.carrier.has_errors('name')" class='error'>{{ctrl.carrier.errors_by_field('name')}}</p>
         </div>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-4" ng-if="ctrl.current_user.is_admin()">
         <div class="checkbox" style="margin-top:25px" >
           <label>
             <input ng-model="ctrl.carrier.isVendor" type="checkbox"> Is Vendor
