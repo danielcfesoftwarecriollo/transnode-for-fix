@@ -7,8 +7,8 @@ class ExchangeRateFactor extends RecordModel{
   String name;
   double value;
 
-  ExchangeRate(){
-    this._validator = new ExchangeRateValidator(this);
+  ExchangeRateFactor(){
+//    this._validator = new ExchangeRateValidator(this);
   }
   
   Map to_map() {

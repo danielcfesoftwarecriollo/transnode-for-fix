@@ -42,6 +42,7 @@ part 'services/quote_service.dart';
 part 'services/city_service.dart';
 part 'services/mail_service.dart';
 part 'services/exchange_rate_service.dart';
+part 'services/exchange_rate_factor_service.dart';
 
 part 'controllers/app_controller.dart';
 part 'controllers/customer_controller.dart';
@@ -82,6 +83,7 @@ part 'models/mail.dart';
 part 'models/quote_cost.dart';
 part 'models/exchange_rate.dart';
 part 'models/rating.dart';
+part 'models/exchange_rate_factor.dart';
 
 part 'models/helpers/helper_list.dart';
 part 'models/helpers/helper_url.dart';
@@ -145,6 +147,7 @@ class TransnodeModule extends Module {
     bind(CityService);
     bind(MailService);
     bind(ExchangeRateService);
+    bind(ExchangeRateFactorService);
   }
 }
 

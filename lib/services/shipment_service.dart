@@ -15,6 +15,11 @@ class ShipmentService {
         .then((HttpResponse response) => response.data);
   }
 
+  Future customerByName( val ) {
+    return _api.request("post", url + "/customers/"+val)
+      .then((HttpResponse response) =>  response.data['customers']);
+  }
+  
   Future loadForm() {
     return _api.request("post", url + "/form")
       .then((HttpResponse response) => response.data);

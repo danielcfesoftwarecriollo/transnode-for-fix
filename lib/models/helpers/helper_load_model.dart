@@ -56,16 +56,16 @@ class LoadModel{
     return q;
   }
   
-  static loadExchangeRate(Map<String, dynamic> json) {
-    ExchangeRate er = new ExchangeRate();
+  static loadExchangeRateFactor(Map<String, dynamic> json) {
+    ExchangeRateFactor er = new ExchangeRateFactor();
     er.loadWithJson(json);
     return er;
   }
   
-  static loadExchangeRates(List listMap) {
-    List<ExchangeRate> aux = [];
+  static loadExchangeRateFactors(List listMap) {
+    List<ExchangeRateFactor> aux = [];
     listMap.forEach((er){
-      aux.add(loadExchangeRate(er));
+      aux.add(loadExchangeRateFactor(er));
     });
     return aux;
   }

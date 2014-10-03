@@ -12,7 +12,14 @@ class ExchangeRateFactorService {
   Future index() {
     return _api.request('get', url);
   }
-
+  
+  Future getFactorExchange(String from, String to){
+    return _api.request("get", url + "/exchange_rate/" + from.toString() + '/' + to.toString())
+         .then((HttpResponse response) { 
+            return response.data;
+          });
+  }
+  
   Future<ExchangeRateFactor> get(String exchangeRateFactorId) {
     return _api.request("get", url + "/" + exchangeRateFactorId.toString())
       .then((HttpResponse response) => response.data);

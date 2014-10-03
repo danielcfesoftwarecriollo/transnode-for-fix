@@ -9,7 +9,7 @@ class ShipmentsController {
   final ShipmentService _shipmentService;
   final QuoteService _quoteService;
   final CarrierService _carrierService;
-  final ExchangeRateService _exchangeRateService;
+  final ExchangeRateFactorService _exchangeRateFactorService;
   final CustomerService _customerService;
   List<Shipper> shippers;
   List consigne_locations;
@@ -49,9 +49,9 @@ class ShipmentsController {
   
   String functionss = 'test()';
 
-  ShipmentsController(this._customerService, this._quoteService,this._exchangeRateService,this._http,this.scope, this.modal,this._shipmentService, this._carrierService, this._routeProvider, this._router) {
+  ShipmentsController(this._customerService, this._quoteService,this._exchangeRateFactorService,this._http,this.scope, this.modal,this._shipmentService, this._carrierService, this._routeProvider, this._router) {
     this.shipment = new Shipment();
-    this._exchange = new ExchangeValue(_exchangeRateService);
+    this._exchange = new ExchangeValue(_exchangeRateFactorService);
     openM = true;
     this.step = 1;    
     this.consigne_locations = [];
@@ -136,12 +136,11 @@ class ShipmentsController {
   }
   
   load_customers(val) {   
-   return _http.post('http://transnode-api-newt2.apps/shipments/customers/'+val,'').then((response){
-      return response.data['customers'];
+   return _shipmentService.customerByName(val).then((customer){
+      return customer;
     });
   }
   
-
   onSelect(customerId){
     var response = _shipmentService.load_customer(customerId.toString());
     response.then((customerData){
@@ -351,13 +350,17 @@ class ShipmentsController {
     customer.loadWithJson(data);
     this.shipment.customer = customer;
   }
-  
+
   void changeRevCost(RevenueCost revcost){
-    if(revcost.currency != defaultCurrency){
-      revcost.costAmountCa = this._exchange.calculateCosts(revcost.amount);
-      revcost.revenueAmountCa = this._exchange.calculateRevenue(revcost.amount);
-      revcost.calculateProfit();
-      checkTotalRevCosts();
+    if(revcost.currency != defaultCurrency){      
+      this._exchange.calculateCosts( revcost.amount,'CAD','A1').then((e){
+        revcost.costAmountCa = e;
+        this._exchange.calculateRevenue( revcost.amount,'USD','A1').then((e){
+          revcost.revenueAmountCa = e;
+          revcost.calculateProfit();
+          checkTotalRevCosts();
+        });
+      });
     }
   }
   
