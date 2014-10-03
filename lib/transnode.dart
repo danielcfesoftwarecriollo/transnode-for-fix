@@ -78,12 +78,15 @@ part 'models/note.dart';
 part 'models/quote.dart';
 part 'models/rfquote.dart';
 part 'models/shipment_carrier.dart';
-part 'models/renevue_cost.dart';
+part 'models/revenue_cost.dart';
+part 'models/revenue.dart';
+part 'models/cost.dart';
 part 'models/mail.dart';
 part 'models/quote_cost.dart';
 part 'models/exchange_rate.dart';
 part 'models/rating.dart';
 part 'models/exchange_rate_factor.dart';
+part 'models/invoice.dart';
 
 part 'models/helpers/helper_list.dart';
 part 'models/helpers/helper_url.dart';

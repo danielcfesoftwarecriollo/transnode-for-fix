@@ -74,4 +74,18 @@ class LoadModel{
     Location l = new Location();
     l.loadWithJson(json);
     return l;
-  }}
+  }
+  
+  static loadCost(Map<String, dynamic> json) {
+    Cost q = new Cost();
+    q.loadWithJson(json);
+    return q;
+  }
+  
+  static loadRevenue(Map<String, dynamic> json) {
+    Revenue q = new Revenue();
+    q.loadWithJson(json);
+    return q;
+  }
+  
+}

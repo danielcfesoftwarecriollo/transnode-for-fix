@@ -259,7 +259,7 @@ class ShipmentsController {
   }
   
   void loadRCLineWithCustomer(RevenueCost rc, Customer c){
-    rc.currency = c.currency;
+    rc.revenue.currency = c.currency;
   }
 
   void onSelectRCLine(itemSelected){
@@ -275,22 +275,22 @@ class ShipmentsController {
   void addRCLine(){
     this.rclineHelper = new RevenueCost();
     _loadDefaultData();
-    open('partials/shipments/modal/add_rc_line.html');
+    this.shipment.revCosts.add(this.rclineHelper);
+//    open('partials/shipments/modal/add_rc_line.html');
   }
   
   void _loadDefaultData(){
     this.asyncSelected = this.shipment.customer.name;
-    this.rclineHelper.billTo = this.shipment.billto;
+    this.rclineHelper.revenue.billTo = this.shipment.billto;
     this.rclineHelperCustomer = this.shipment.customer;
-    this.rclineHelper.currency = this.shipment.customer.currency;
-    this.rclineHelper.vendor =  this.shipment.carriers.first.carrier;
-    this.rclineHelper.status = 'New'; 
+    this.rclineHelper.revenue.currency = this.shipment.customer.currency;
+    this.rclineHelper.cost.vendor =  this.shipment.carriers.first.carrier;
   }
 
   void saveRCLane(){
     if(this.rclineHelper.is_valid()){
       if(this.rclineHelper.is_new()){
-        this.shipment.revCosts.add(this.rclineHelper);        
+        this.shipment.revCosts.add(this.rclineHelper);
       }
       modalInstance.close(null);
     }
@@ -351,12 +351,30 @@ class ShipmentsController {
     this.shipment.customer = customer;
   }
 
+  void changeRevenue(RevenueCost revcost){
+    if(revcost.revenue.currency != defaultCurrency){      
+      this._exchange.calculateRevenue( revcost.revenue.amount,'USD','A1').then((e){
+        revcost.revenue.amountCa = double.parse(e);
+        revcost.calculateProfit();
+        checkTotalRevCosts();
+      });
+    }
+  }
+  
+  void changeCost(RevenueCost revcost){
+    if(revcost.revenue.currency != defaultCurrency){      
+      this._exchange.calculateCosts( revcost.cost.amount,'CAD','A1').then((e){
+        revcost.cost.amountCa = double.parse(e);
+      });
+    }
+  }
+  
   void changeRevCost(RevenueCost revcost){
-    if(revcost.currency != defaultCurrency){      
-      this._exchange.calculateCosts( revcost.amount,'CAD','A1').then((e){
-        revcost.costAmountCa = e;
-        this._exchange.calculateRevenue( revcost.amount,'USD','A1').then((e){
-          revcost.revenueAmountCa = e;
+    if(revcost.revenue.currency != defaultCurrency){      
+      this._exchange.calculateCosts( revcost.cost.amount,'CAD','A1').then((e){
+        revcost.cost.amountCa = double.parse(e);
+        this._exchange.calculateRevenue( revcost.revenue.amount,'USD','A1').then((e){
+          revcost.revenue.amountCa = double.parse(e);
           revcost.calculateProfit();
           checkTotalRevCosts();
         });
@@ -371,6 +389,10 @@ class ShipmentsController {
        helperTotal['amountCostCa'] += double.parse(rc.costAmountCa);
     });
      helperTotal['profit'] = helperTotal['amountCostCa'] - helperTotal['amountRevCa'];
+  }
+  
+  String showInvoiceStatus(Invoice invoice){
+    return (invoice == null)? invoice.status : 'N/P';
   }
 
   void toStep(int goToStep){

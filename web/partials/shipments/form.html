@@ -767,39 +767,39 @@
               <tr ng-repeat=" revcost in ctrl.shipment.revCosts"  ng-hide="revcost.pending_to_delete()" >
                 <td class="important" >{{$index+1}}</td>
                 <td>
-                  <b>{{revcost.billTo.name}}</b>
+                  <b>{{revcost.revenue.billTo.name}}</b>
                 </td>
                 <td>
-                  <b>{{revcost.accountCode}}</b>
+                  <b>{{revcost.revenue.accountCode}}</b>
                 </td>
                 <td>
-                  <input ng-model="revcost.amount" ng-change="ctrl.changeRevCost(revcost)" type="text">
+                  <input ng-model="revcost.revenue.amount" ng-change="ctrl.changeRevenue(revcost.revenue)" type="text">
                 </td>
                 <td>
-                  <b>{{revcost.currency}}</b>
+                  <b>{{revcost.revenue.currency}}</b>
                 </td>
                 <td>
-                  <b>{{revcost.revenueAmountCa}}</b>
+                  <b>{{revcost.revenue.amountCa}}</b>
                 </td>
                 <td class="important" >
-                  <b>{{revcost.invoice}}</b>
+                  <b>{{showInvoiceStatus(revcost.revenue.invoice)}}</b>
                 </td>
                 <td>
-                  <b>{{revcost.vendor.name}}</b>
+                  <b>{{revcost.cost.vendor.name}}</b>
                 </td>
                 <td>
-                  {{revcost.accountCode}}
+                  {{revcost.cost.accountCode}}
                 </td>
                 <td>
-                  <b>{{revcost.amount}}</b>
+                  <input ng-model="revcost.cost.amount" ng-change="ctrl.changeCost(revcost.cost)" type="text">
                 </td>
                 <td>
-                  <b>{{revcost.currency}}</b>
+                  <b>{{revcost.cost.currency}}</b>
                 </td>
                 <td>
-                  <b>{{revcost.costAmountCa}}</b>
+                  <b>{{revcost.cost.amountCa}}</b>
                 </td>
-                <td class="important" >{{revcost.status}}</td>
+                <td class="important" >{{showInvoiceStatus(revcost.cost.invoice)}}</td>
                 <td class="important" >{{revcost.profit}}</td>
                 <td class="actions important">
                   <div class="btn-group">
