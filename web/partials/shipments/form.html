@@ -773,7 +773,7 @@
                 <td ng-class="{'has-error':revcost.revenue.has_errors('accountCode')}" >
                   <select ng-model='revcost.revenue.accountCode' id="accountCode{{$index}}" class="form-control">
                     <option value="" disabled selected> Select Code</option>
-                    <option ng-repeat='accountCode in ctrl.accountCodes' ng-value='accountCode' ng-selected="accountCode == revcost.revenue">{{accountCode}}</option>
+                    <option ng-repeat='accountCode in ctrl.accountCodes' ng-value='accountCode' ng-selected="accountCode == revcost.revenue">{{accountCode.toUpperCase()}}</option>
                   </select>
                    <p ng-show="revcost.revenue.has_errors('accountCode')" class='error'>{{revcost.revenue.errors_by_field('accountCode')}}</p>
                 </td>
@@ -799,7 +799,7 @@
                 <td ng-class="{'has-error':revcost.cost.has_errors('accountCode')}">
                   <select ng-model='revcost.cost.accountCode' id="accountCode{{$index}}" class="form-control">
                     <option value="" disabled selected> Select Code</option>
-                    <option ng-repeat='accountCode in ctrl.accountCodes' ng-value='accountCode' ng-selected="accountCode == revcost.cost">{{accountCode}}</option>
+                    <option ng-repeat='accountCode in ctrl.accountCodes' ng-value='accountCode' ng-selected="accountCode == revcost.cost">{{accountCode.toUpperCase()}}</option>
                   </select>
                   <p ng-show="revcost.cost.has_errors('accountCode')" class='error'>{{revcost.cost.errors_by_field('accountCode')}}</p>
                 </td>

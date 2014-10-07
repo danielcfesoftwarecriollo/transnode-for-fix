@@ -56,7 +56,7 @@ class ShipmentsController {
     openM = true;
     this.step = 1;
     this.consigne_locations = [];
-    this.accountCodes = ['FREIGHT','STORAGE','HANDLING','DELIVERY','MISC','CUSTOMS','DOC','W_TIME','MISS_APPT'];
+    this.accountCodes = ['freight','storage','handling','delivery','misc','customs','doc','w_time','miss_appt'];
 
     resetTotalRevCost();
     if (_isEditPath()) {
