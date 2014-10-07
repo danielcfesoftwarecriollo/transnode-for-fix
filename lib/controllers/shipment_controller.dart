@@ -11,6 +11,7 @@ class ShipmentsController {
   final CarrierService _carrierService;
   final ExchangeRateFactorService _exchangeRateFactorService;
   final CustomerService _customerService;
+  final UserService _userService;
   List<Shipper> shippers;
   List consigne_locations;
   List consignees;
@@ -48,14 +49,15 @@ class ShipmentsController {
   Http _http;
   var asyncSelected;
   bool loadingLocations = false;
-  
-  String functionss = 'test()';
+  User current_user;
 
-  ShipmentsController(this._customerService, this._quoteService,this._exchangeRateFactorService,this._http,this.scope, this.modal,this._shipmentService, this._carrierService, this._routeProvider, this._router) {
+  ShipmentsController(this._userService,this._customerService, this._quoteService,this._exchangeRateFactorService,this._http,this.scope, this.modal,this._shipmentService, this._carrierService, this._routeProvider, this._router) {
     this.shipment = new Shipment();
     this._exchange = new ExchangeValue(_exchangeRateFactorService);
+    this.helperNote = new Note();
+    this.current_user = _userService.user;
     openM = true;
-    this.step = 1;
+    this.step = 2;
     this.consigne_locations = [];
     this.accountCodes = ['freight','storage','handling','delivery','misc','customs','doc','w_time','miss_appt'];
 
@@ -383,6 +385,18 @@ class ShipmentsController {
         checkTotalRevCosts();
       });
     }
+  }
+  
+  void addNote(){
+    if(helperNote.is_valid()){
+      helperNote.author = current_user.email;
+      this.shipment.notes.add(helperNote);
+      helperNote = new Note();
+    }
+  }
+  
+  void deleteNote(Note n){
+    this.shipment.deleteNote(n);
   }
   
   void changeRevCost(RevenueCost revcost){

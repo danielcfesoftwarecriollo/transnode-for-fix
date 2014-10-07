@@ -140,6 +140,14 @@ class Shipment extends RecordModel{
     }
   }
 
+  void deleteNote(Note n) {
+    if (n.is_new()) {
+      notes.remove(n);
+    } else {
+      n.delete();
+    }
+  }
+  
   void delete_carrier(ShipmentCarrier sc) {
    if (sc.is_new()) {
      carriers.remove(sc);
