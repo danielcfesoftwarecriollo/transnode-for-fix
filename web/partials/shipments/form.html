@@ -773,7 +773,7 @@
                   <b>{{revcost.revenue.accountCode}}</b>
                 </td>
                 <td>
-                  <input ng-model="revcost.revenue.amount" ng-change="ctrl.changeRevenue(revcost.revenue)" type="text">
+                  <input ng-model="revcost.revenue.amount" ng-change="ctrl.changeRevenue(revcost)" type="text">
                 </td>
                 <td>
                   <b>{{revcost.revenue.currency}}</b>
@@ -791,7 +791,7 @@
                   {{revcost.cost.accountCode}}
                 </td>
                 <td>
-                  <input ng-model="revcost.cost.amount" ng-change="ctrl.changeCost(revcost.cost)" type="text">
+                  <input ng-model="revcost.cost.amount" ng-change="ctrl.changeCost(revcost)" type="text">
                 </td>
                 <td>
                   <b>{{revcost.cost.currency}}</b>
@@ -819,9 +819,9 @@
               </tr>
               <tr>
                 <th colspan="3" >Total</th>
-                <th colspan="2" >{{ctrl.helperTotal['amount'].toStringAsFixed(2)}}</th>
+                <th colspan="2" >{{ctrl.helperTotal['RevAmount'].toStringAsFixed(2)}}</th>
                 <th colspan="4" >{{ctrl.helperTotal['amountRevCa'].toStringAsFixed(2)}}</th>
-                <th colspan="2" >{{ctrl.helperTotal['amount'].toStringAsFixed(2)}}</th>
+                <th colspan="2" >{{ctrl.helperTotal['CostAmount'].toStringAsFixed(2)}}</th>
                 <th colspan="2" >{{ctrl.helperTotal['amountCostCa'].toStringAsFixed(2)}}</th>
                 <th >{{ctrl.helperTotal['profit'].toStringAsFixed(2)}}</th>
                 <th>

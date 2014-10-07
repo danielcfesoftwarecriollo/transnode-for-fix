@@ -93,6 +93,8 @@ part 'models/helpers/helper_url.dart';
 part 'models/helpers/helper_load_model.dart';
 part 'models/helpers/carrier_price.dart';
 part 'models/helpers/exchange_value.dart';
+part 'models/helpers/parser_number.dart';
+
 
 part 'validators/validator.dart';
 part 'validators/location.dart';

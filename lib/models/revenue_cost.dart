@@ -42,16 +42,21 @@ class RevenueCost extends RecordModelNested{
   }
   
   void calculateProfit(){
-    var aux = this.revenue.amountCa - this.cost.amountCa;
-    this.profit = aux.toStringAsFixed(2);
+    double aux;
+    if(this.revenue.amountCa != null && this.cost.amountCa != null){
+      aux = this.revenue.amountCa - this.cost.amountCa;
+      this.profit = aux.toStringAsFixed(2);
+    }else{
+      this.profit = '0.0';
+    }
   }
 
   Map to_map() {
     print('to_map revenue and Costs');
     return {
       'id' : id,
-      'revenue' : this.revenue.to_map(),
-      'cost' : this.cost.to_map(),
+      'revenue_attributes' : this.revenue.to_map(),
+      'cost_attributes' : this.cost.to_map(),
       '_destroy': _destroy
     };
   }

@@ -74,7 +74,7 @@ class ExchangeValue extends RecordModelNested{
   Future<String> calculateCosts(amount,fromCurrency,factorName){    
      var completer = new Completer();
       loadRateExchange(fromCurrency).then((exchangeRate){
-         double aux = double.parse(amount.toString()) * ( exchangeRate + getFactor(factorName) );
+         double aux = ParserNumber.toDouble(amount.toString()) * ( exchangeRate - getFactor(factorName) );
          completer.complete( aux.toStringAsFixed(2) );
        });     
      return completer.future;
@@ -83,7 +83,7 @@ class ExchangeValue extends RecordModelNested{
   Future<String> calculateRevenue(amount,fromCurrency,factorName){    
      var completer = new Completer();
       loadRateExchange(fromCurrency).then((exchangeRate){
-        double aux = double.parse(amount.toString()) * ( exchangeRate - getFactor(factorName) );
+        double aux = ParserNumber.toDouble(amount.toString()) * ( exchangeRate + getFactor(factorName) );
          completer.complete( aux.toStringAsFixed(2) );
        });     
      return completer.future;

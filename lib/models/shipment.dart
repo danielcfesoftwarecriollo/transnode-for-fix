@@ -78,10 +78,10 @@ class Shipment extends RecordModel{
     List<RevenueCost> listRevCost = [];
     costs.forEach((QuoteCost qc){
       RevenueCost rc = new RevenueCost();
-      rc.vendor = qc.vendor;
-      rc.amount = qc.number;
-      rc.billTo = this.customer.billTo;
-      rc.currency = this.customer.currency;
+      rc.cost.vendor = qc.vendor;
+      rc.cost.amount = qc.number;
+      rc.revenue.billTo = this.customer.billTo;
+      rc.cost.currency = this.customer.currency;
       listRevCost.add(rc);
     });
     return listRevCost;

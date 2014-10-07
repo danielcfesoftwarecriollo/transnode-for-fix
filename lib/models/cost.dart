@@ -14,7 +14,9 @@ class Cost extends RecordModelNested{
   String updatedAt;
   
   Cost(){
-    status = 'New';
+    status = 'new_c';
+    amount = '0.0';
+    amountCa = 0.0;
 //    this._validator = new RevenueCostValidator(this);
   }
   

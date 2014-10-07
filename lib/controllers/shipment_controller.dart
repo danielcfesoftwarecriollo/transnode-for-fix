@@ -55,7 +55,7 @@ class ShipmentsController {
     openM = true;
     this.step = 1;    
     this.consigne_locations = [];
-    this.helperTotal = {'amount': 0.0, 'amountRevCa': 0.0, 'amountCostCa': 0.0, 'profit': 0.0 };
+    resetTotalRevCost();
     if (_isEditPath()) {
       var shipment_id = _routeProvider.parameters['shipmentId'];
       _shipmentService.get(shipment_id).then((_){ 
@@ -85,6 +85,10 @@ class ShipmentsController {
     }else{
       load_form();
     }
+  }
+  
+  void resetTotalRevCost(){
+    this.helperTotal = {'RevAmount': 0.0, 'CostAmount': 0.0,'amountRevCa': 0.0, 'amountCostCa': 0.0, 'profit': 0.0 };
   }
   
   //delete with load model in form
@@ -362,9 +366,11 @@ class ShipmentsController {
   }
   
   void changeCost(RevenueCost revcost){
-    if(revcost.revenue.currency != defaultCurrency){      
-      this._exchange.calculateCosts( revcost.cost.amount,'CAD','A1').then((e){
+    if(revcost.cost.currency != defaultCurrency){
+      this._exchange.calculateCosts( revcost.cost.amount,'USD','A1').then((e){
         revcost.cost.amountCa = double.parse(e);
+        revcost.calculateProfit();
+        checkTotalRevCosts();
       });
     }
   }
@@ -383,12 +389,14 @@ class ShipmentsController {
   }
   
   void checkTotalRevCosts(){
+     this.resetTotalRevCost();
      this.shipment.revCosts.forEach((rc){
-       helperTotal['amount'] += double.parse(rc.amount);
-       helperTotal['amountRevCa'] += double.parse(rc.revenueAmountCa);
-       helperTotal['amountCostCa'] += double.parse(rc.costAmountCa);
+       helperTotal['RevAmount'] += ParserNumber.toDouble(rc.revenue.amount);
+       helperTotal['CostAmount'] += ParserNumber.toDouble(rc.cost.amount);
+       helperTotal['amountRevCa'] += rc.revenue.amountCa;
+       helperTotal['amountCostCa'] += rc.cost.amountCa;
     });
-     helperTotal['profit'] = helperTotal['amountCostCa'] - helperTotal['amountRevCa'];
+     helperTotal['profit'] = helperTotal['amountRevCa'] - helperTotal['amountCostCa'];
   }
   
   String showInvoiceStatus(Invoice invoice){

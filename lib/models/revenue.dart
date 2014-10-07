@@ -14,7 +14,9 @@ class Revenue extends RecordModelNested{
   String updatedAt;
   
   Revenue(){
-    status = 'New';
+    status = 'new_r';
+    amount = '0.0';
+    amountCa = 0.0;
 //    this._validator = new RevenueValidator(this);
   }
   
