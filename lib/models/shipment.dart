@@ -108,7 +108,9 @@ class Shipment extends RecordModel{
   }
   
   bool valid_step2(){    
-    return _validator.run_validations_step2();
+    bool result = _validator.run_validations_step2();
+    this.revCosts.forEach((rc) => result = rc.full_valid() && result);
+    return result;
   }
   
   void delete_consignee(Consignee consignee) {

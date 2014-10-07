@@ -17,7 +17,7 @@ class Revenue extends RecordModelNested{
     status = 'new_r';
     amount = '0.0';
     amountCa = 0.0;
-//    this._validator = new RevenueValidator(this);
+    this._validator = new RevenueValidator(this);
   }
   
   @override

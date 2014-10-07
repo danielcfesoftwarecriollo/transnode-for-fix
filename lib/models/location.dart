@@ -20,6 +20,7 @@ class Location extends RecordModelNested {
   String hours;
   String naics;
   String note;
+  String currency;
   String createdAt;
   String updatedAt;
 

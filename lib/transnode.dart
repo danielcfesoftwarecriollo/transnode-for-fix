@@ -114,6 +114,8 @@ part 'validators/shipment_shipper.dart';
 part 'validators/revenue_cost.dart';
 part 'validators/quote_cost.dart';
 part 'validators/exchange_rate.dart';
+part 'validators/revenue.dart';
+part 'validators/cost.dart';
 
 class TransnodeModule extends Module {
 

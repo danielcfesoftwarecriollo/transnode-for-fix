@@ -30,6 +30,7 @@ class CustomerController {
   CustomerController(this._customerService, this._routeProvider, this._router) {
     this.customer = new Customer();
     this.cities = [];
+    this.customers = [];
     this.billTos = [];
     if (_isEditPath()) {
       var customer_id = _routeProvider.parameters['customerId'];

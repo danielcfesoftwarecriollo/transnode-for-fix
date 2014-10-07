@@ -23,6 +23,7 @@ class ShipmentsController {
   List customers;
   List billtos;
   List customsbrokers;
+  List accountCodes;
 
   Customer custombroker;
   Customer billto;
@@ -118,7 +119,7 @@ class ShipmentsController {
   }
 
   void save() {
-    if (this.shipment.is_valid()) {
+    if (this.shipment.valid_step1() && this.shipment.valid_step2()) {
       var response = this._shipmentService.save(this.shipment);
       response.then((response) {
         if (response == null) return false;
@@ -291,6 +292,7 @@ class ShipmentsController {
     this.rclineHelperCustomer = this.shipment.customer;
     this.rclineHelper.revenue.currency = this.shipment.customer.currency;
     this.rclineHelper.cost.vendor =  this.shipment.carriers.first.carrier;
+    this.rclineHelper.cost.currency =  this.shipment.carriers.first.carrier.currency;
   }
 
   void saveRCLane(){
@@ -395,14 +397,14 @@ class ShipmentsController {
      this.shipment.revCosts.forEach((rc){
        helperTotal['RevAmount'] += ParserNumber.toDouble(rc.revenue.amount);
        helperTotal['CostAmount'] += ParserNumber.toDouble(rc.cost.amount);
-       helperTotal['amountRevCa'] += rc.revenue.amountCa;
-       helperTotal['amountCostCa'] += rc.cost.amountCa;
+       helperTotal['amountRevCa'] += ParserNumber.toDouble(rc.revenue.amountCa);
+       helperTotal['amountCostCa'] += ParserNumber.toDouble(rc.cost.amountCa);
     });
      helperTotal['profit'] = helperTotal['amountRevCa'] - helperTotal['amountCostCa'];
   }
   
   String showInvoiceStatus(Invoice invoice){
-    return (invoice == null)? invoice.status : 'N/P';
+    return (invoice != null)? invoice.status : 'N/P';
   }
 
   void toStep(int goToStep){

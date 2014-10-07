@@ -94,7 +94,7 @@
           </div>
           <div class="col-md-4">
             <div class="col-md-12" ng-repeat="shipper in ctrl.shipment.shippers">
-              <label for="inputEmail3" class="col-sm-6 control-label">Date Eta:</label>
+              <label for="inputEmail3" class="col-sm-6 control-label">Date Ready:</label>
               <div class="col-sm-6">
                 <p class="form-control-static">{{shipper.dateReady}}</p>
               </div>
@@ -766,8 +766,9 @@
               </tr>
               <tr ng-repeat=" revcost in ctrl.shipment.revCosts"  ng-hide="revcost.pending_to_delete()" >
                 <td class="important" >{{$index+1}}</td>
-                <td>
+                <td ng-class="{'has-error':revcost.has_errors('billTo')}" >
                   <b>{{revcost.revenue.billTo.name}}</b>
+                  <p ng-show="revcost.revenue.has_errors('billTo')" class='error'>{{revcost.revenue.errors_by_field('billTo')}}</p>
                 </td>
                 <td ng-class="{'has-error':revcost.revenue.has_errors('accountCode')}" >
                   <select ng-model='revcost.revenue.accountCode' id="accountCode{{$index}}" class="form-control">
@@ -776,20 +777,24 @@
                   </select>
                    <p ng-show="revcost.revenue.has_errors('accountCode')" class='error'>{{revcost.revenue.errors_by_field('accountCode')}}</p>
                 </td>
-                <td>
+                <td ng-class="{'has-error':revcost.revenue.has_errors('amount')}" >
                   <input ng-model="revcost.revenue.amount" ng-change="ctrl.changeRevenue(revcost)" type="text">
+                  <p ng-show="revcost.revenue.has_errors('amount')" class='error'>{{revcost.revenue.errors_by_field('amount')}}</p>
                 </td>
-                <td>
+                <td ng-class="{'has-error':revcost.revenue.has_errors('currency')}" >
                   <b>{{revcost.revenue.currency}}</b>
+                  <p ng-show="revcost.revenue.has_errors('currency')" class='error'>{{revcost.revenue.errors_by_field('currency')}}</p>
                 </td>
-                <td>
+                <td ng-class="{'has-error':revcost.revenue.has_errors('amountCa')}" >
                   <b>{{revcost.revenue.amountCa}}</b>
+                  <p ng-show="revcost.revenue.has_errors('amountCa')" class='error'>{{revcost.revenue.errors_by_field('amountCa')}}</p>
                 </td>
                 <td class="important" >
-                  <b>{{showInvoiceStatus(revcost.revenue.invoice)}}</b>
+                  <b>{{ctrl.showInvoiceStatus(revcost.revenue.invoice)}}</b>
                 </td>
-                <td>
+                <td ng-class="{'has-error':revcost.cost.has_errors('vendor')}">
                   <b>{{revcost.cost.vendor.name}}</b>
+                  <p ng-show="revcost.cost.has_errors('vendor')" class='error'>{{revcost.cost.errors_by_field('vendor')}}</p>
                 </td>
                 <td ng-class="{'has-error':revcost.cost.has_errors('accountCode')}">
                   <select ng-model='revcost.cost.accountCode' id="accountCode{{$index}}" class="form-control">
@@ -798,17 +803,25 @@
                   </select>
                   <p ng-show="revcost.cost.has_errors('accountCode')" class='error'>{{revcost.cost.errors_by_field('accountCode')}}</p>
                 </td>
-                <td>
+                <td ng-class="{'has-error':revcost.cost.has_errors('amount')}">
                   <input ng-model="revcost.cost.amount" ng-change="ctrl.changeCost(revcost)" type="text">
+                  <p ng-show="revcost.cost.has_errors('amount')" class='error'>{{revcost.cost.errors_by_field('amount')}}</p>
                 </td>
-                <td>
+                <td ng-class="{'has-error':revcost.cost.has_errors('currency')}">
                   <b>{{revcost.cost.currency}}</b>
+                  <p ng-show="revcost.cost.has_errors('currency')" class='error'>{{revcost.cost.errors_by_field('currency')}}</p>
                 </td>
-                <td>
+                <td ng-class="{'has-error':revcost.cost.has_errors('amountCa')}">
                   <b>{{revcost.cost.amountCa}}</b>
+                  <p ng-show="revcost.cost.has_errors('amountCa')" class='error'>{{revcost.cost.errors_by_field('amountCa')}}</p>
                 </td>
-                <td class="important" >{{showInvoiceStatus(revcost.cost.invoice)}}</td>
-                <td class="important" >{{revcost.profit}}</td>
+                <td class="important" >
+                  <b>{{ctrl.showInvoiceStatus(revcost.cost.invoice)}}</b>
+                </td>
+                <td class="important" ng-class="{'has-error':revcost.has_errors('profit')}" >
+                  {{revcost.profit}}
+                  <p ng-show="revcost.has_errors('profit')" class='error'>{{revcost.errors_by_field('profit')}}</p>
+                </td>
                 <td class="actions important">
                   <div class="btn-group">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i>

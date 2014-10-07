@@ -9,7 +9,7 @@ class RevenueCost extends RecordModelNested{
   RevenueCost(){
     revenue = new Revenue();
     cost = new Cost();
-//    this._validator = new RevenueCostValidator(this);
+    this._validator = new RevenueCostValidator(this);
   }
   
   @override
@@ -21,6 +21,7 @@ class RevenueCost extends RecordModelNested{
   _loadListObj(map){
     loadRevenue(map);
     loadCost(map);
+    calculateProfit();
   }
   
   loadRevenue(Map vendorMap ){
@@ -41,10 +42,17 @@ class RevenueCost extends RecordModelNested{
     shipmentMap.remove('cost');
   }
   
+  bool full_valid(){
+    bool result = _validator.run_validations();
+    result = this.revenue.is_valid() && result;
+    result = this.cost.is_valid() && result;
+    return result;
+  } 
+  
   void calculateProfit(){
     double aux;
     if(this.revenue.amountCa != null && this.cost.amountCa != null){
-      aux = this.revenue.amountCa - this.cost.amountCa;
+      aux = ParserNumber.toDouble(this.revenue.amountCa) - ParserNumber.toDouble(this.cost.amountCa);
       this.profit = aux.toStringAsFixed(2);
     }else{
       this.profit = '0.0';

@@ -17,7 +17,7 @@ class Cost extends RecordModelNested{
     status = 'new_c';
     amount = '0.0';
     amountCa = 0.0;
-//    this._validator = new RevenueCostValidator(this);
+    this._validator = new CostValidator(this);
   }
   
   @override
