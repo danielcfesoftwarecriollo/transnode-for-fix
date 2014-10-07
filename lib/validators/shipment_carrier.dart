@@ -13,7 +13,7 @@ class ShipmentCarrierValidator extends Validator {
 //    required_field(_shipmentCarrier.booked, "booked");
 //    required_field(_shipmentCarrier.insureAmt, "insureAmt");
 //    required_field(_shipmentCarrier.other, "other");
-//    required_field(_shipmentCarrier.carrier, "carrier");
+    required_field(_shipmentCarrier.carrier, "carrier");
     return this.valid();
   }
 

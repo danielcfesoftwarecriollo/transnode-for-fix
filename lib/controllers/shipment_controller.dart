@@ -31,6 +31,7 @@ class ShipmentsController {
   RevenueCost rclineHelper;
   Customer rclineHelperCustomer;
   Map helperTotal;
+  Note helperNote;
 
   int step;
   @NgTwoWay("shipment")
@@ -369,6 +370,11 @@ class ShipmentsController {
     }
   }
   
+  void deleteRCLine(RevenueCost rc){
+    this.shipment.deleteRCLine(rc);
+    checkTotalRevCosts();
+  }
+  
   void changeCost(RevenueCost revcost){
     if(revcost.cost.currency != defaultCurrency){
       this._exchange.calculateCosts( revcost.cost.amount,'USD','A1').then((e){
@@ -395,10 +401,12 @@ class ShipmentsController {
   void checkTotalRevCosts(){
      this.resetTotalRevCost();
      this.shipment.revCosts.forEach((rc){
-       helperTotal['RevAmount'] += ParserNumber.toDouble(rc.revenue.amount);
-       helperTotal['CostAmount'] += ParserNumber.toDouble(rc.cost.amount);
-       helperTotal['amountRevCa'] += ParserNumber.toDouble(rc.revenue.amountCa);
-       helperTotal['amountCostCa'] += ParserNumber.toDouble(rc.cost.amountCa);
+       if(! rc.pending_to_delete()){
+         helperTotal['RevAmount'] += ParserNumber.toDouble(rc.revenue.amount);
+         helperTotal['CostAmount'] += ParserNumber.toDouble(rc.cost.amount);
+         helperTotal['amountRevCa'] += ParserNumber.toDouble(rc.revenue.amountCa);
+         helperTotal['amountCostCa'] += ParserNumber.toDouble(rc.cost.amountCa);
+       }
     });
      helperTotal['profit'] = helperTotal['amountRevCa'] - helperTotal['amountCostCa'];
   }

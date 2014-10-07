@@ -60,7 +60,7 @@ class Validator {
 
   void list_notEmpty(List value, String name_field) {
     if (notEmpty(value)) {
-      _add_error("The list of {name_field} can not be empty", name_field);
+      _add_error("The list of ${name_field} can not be empty", name_field);
     }
   }
   

@@ -596,7 +596,7 @@
               <div class="" >
                 <div class="row">
                   <div class="col-xs-7">
-                    <div class="col-xs-12">
+                    <div class="col-xs-12" ng-class="{'has-error':sCarrier.has_errors('carrier')}" >
                       <label class="title-label" for="lanecode">Carrier {{($index+1)}}</label>
                       <input type="text" ng-model="sCarrier.helperInput"
                          typeahead-min-length="3"
@@ -606,6 +606,8 @@
                          typeahead-loading="ctrl.loadingLocations"
                          class="form-control">
                       <i ng-show="ctrl.loadingLocations" class="glyphicon glyphicon-refresh"></i>
+                      <p ng-show="sCarrier.has_errors('carrier')" class='error'>{{sCarrier.errors_by_field('carrier')}}</p>
+                </td>
                     </div>
                     <div class="col-xs-12">
                       <label for="">Name:{{sCarrier.carrier.name}}</label>
@@ -677,62 +679,62 @@
         </div>
 
 
-<!--Begin multiple carriers -->
-<!--    <div class="row">
-          <div class="col-md-12">
-            <div class="col-md-6 container-info">
-              <div class="" >
-                <div class="row">
-                  <div class="col-xs-7">
-                    <div class="col-xs-12">
-                      <label class="title-label" for="lanecode">Shipper</label>
-                      <select style="width:70%" ng-model='location.laneCode' id="lanecode" class="form-control">
-                        <option value="" disabled selected>Lane Code</option>
-                        <option selected >ABC</option>
-                      </select>
-                    </div>
-                    <div class="col-xs-12">
-                      <label for="">Name</label>
-                    </div>
-                    <div class="col-xs-12">
-                      <label for="">Address</label>
-                    </div>
-                    <div class="col-xs-12">
-                      <label for="">City, Zip, Country</label>
-                    
-                    </div>
-                    <div class="col-xs-12">
-                      <label for="">Contact Name</label>
-                    </div>
-                  </div>
-                  <div class="col-xs-5">
-                    <button class="btn-primary btn-vertical" >Add New Shipper</button>
-                    <button class="btn-primary btn-vertical" >Add New location for an existings</button>
-                  </div>
+        <!--Begin multiple carriers -->
+        <!--    <div class="row">
+                  <div class="col-md-12">
+                    <div class="col-md-6 container-info">
+                      <div class="" >
+                        <div class="row">
+                          <div class="col-xs-7">
+                            <div class="col-xs-12">
+                              <label class="title-label" for="lanecode">Shipper</label>
+                              <select style="width:70%" ng-model='location.laneCode' id="lanecode" class="form-control">
+                                <option value="" disabled selected>Lane Code</option>
+                                <option selected >ABC</option>
+                              </select>
+                            </div>
+                            <div class="col-xs-12">
+                              <label for="">Name</label>
+                            </div>
+                            <div class="col-xs-12">
+                              <label for="">Address</label>
+                            </div>
+                            <div class="col-xs-12">
+                              <label for="">City, Zip, Country</label>
+                            
+                            </div>
+                            <div class="col-xs-12">
+                              <label for="">Contact Name</label>
+                            </div>
+                          </div>
+                          <div class="col-xs-5">
+                            <button class="btn-primary btn-vertical" >Add New Shipper</button>
+                            <button class="btn-primary btn-vertical" >Add New location for an existings</button>
+                          </div>
 
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 container-info">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label class="title-align" for="instructions">Instructions</label>
+                        </div>
+                        <div class="col-md-12">
+                          <textarea rows="3" class="form-control" ></textarea>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label class="title-align" for="appointment">Appointment</label>
+                          <input type="text" >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="col-md-6 container-info">
-              <div class="row">
-                <div class="col-md-12">
-                  <label class="title-align" for="instructions">Instructions</label>
-                </div>
-                <div class="col-md-12">
-                  <textarea rows="3" class="form-control" ></textarea>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <label class="title-align" for="appointment">Appointment</label>
-                  <input type="text" >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
- -->
-<!--End multiple carriers -->
+         -->
+        <!--End multiple carriers -->
 
 
 
@@ -746,6 +748,12 @@
         <div class="row">
           <div class="col-md-12">
             <h3>The estimated and agreed costs and revenue</h3>
+            <div ng-show="ctrl.shipment.has_errors('revenue_and_costs')" ng-class="{'has-error':ctrl.shipment.has_errors('revenue_and_costs')}" >
+              <br>
+              <p  class='error'>{{ctrl.shipment.errors_by_field('revenue_and_costs')}}</p>
+              <br>
+              <br>
+            </div>
             <table  class="table table-striped table-shipment">
               <tr>
                 <th class="important">Seq</th>
@@ -828,10 +836,7 @@
                       Action <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                      <li><a ng-click='ctrl.editRCline(revcost)'>
-                        <i class="glyphicon pull-left glyphicon-pencil"></i>Edit</a>
-                      </li>
-                      <li><a ng-click='ctrl.shipment.deleteRCLine(revcost)'>
+                      <li><a ng-click='ctrl.deleteRCLine(revcost)'>
                         <i class="glyphicon pull-left glyphicon-remove"></i>Delete</a>
                       </li>
                     </ul>
@@ -902,7 +907,7 @@
                 <textarea id="spec-handl" class="form-control" ></textarea>
                 <div class="row">
                   <div class="col-md-12">
-                    <button class="btn-primary btn pull-right" style="margin-top: 15px;" >Save</button>
+                    <button class="btn-primary btn pull-right" style="margin-top: 15px;" ng-click="ctrl.save(note)" >Save</button>
                   </div>
                 </div>
               </div>

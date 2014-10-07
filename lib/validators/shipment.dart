@@ -26,7 +26,7 @@ class ShipmentValidator extends Validator {
   bool run_validations_step2() {
     this.clean_errors();
     list_notEmpty(_shipment.carriers,'carriers');
-    list_notEmpty(_shipment.revCosts,'Revenue_Costs');
+    list_notEmpty(_shipment.revCosts,'revenue_and_costs');
     return this.valid();
   }
 }

@@ -110,6 +110,7 @@ class Shipment extends RecordModel{
   bool valid_step2(){    
     bool result = _validator.run_validations_step2();
     this.revCosts.forEach((rc) => result = rc.full_valid() && result);
+    this.carriers.forEach((c) => result = c.is_valid() && result);
     return result;
   }
   
