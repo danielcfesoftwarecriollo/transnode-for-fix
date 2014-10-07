@@ -53,8 +53,10 @@ class ShipmentsController {
     this.shipment = new Shipment();
     this._exchange = new ExchangeValue(_exchangeRateFactorService);
     openM = true;
-    this.step = 1;    
+    this.step = 1;
     this.consigne_locations = [];
+    this.accountCodes = ['FREIGHT','STORAGE','HANDLING','DELIVERY','MISC','CUSTOMS','DOC','W_TIME','MISS_APPT'];
+
     resetTotalRevCost();
     if (_isEditPath()) {
       var shipment_id = _routeProvider.parameters['shipmentId'];

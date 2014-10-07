@@ -769,8 +769,12 @@
                 <td>
                   <b>{{revcost.revenue.billTo.name}}</b>
                 </td>
-                <td>
-                  <b>{{revcost.revenue.accountCode}}</b>
+                <td ng-class="{'has-error':revcost.revenue.has_errors('accountCode')}" >
+                  <select ng-model='revcost.revenue.accountCode' id="accountCode{{$index}}" class="form-control">
+                    <option value="" disabled selected> Select Code</option>
+                    <option ng-repeat='accountCode in ctrl.accountCodes' ng-value='accountCode' ng-selected="accountCode == revcost.revenue">{{accountCode}}</option>
+                  </select>
+                   <p ng-show="revcost.revenue.has_errors('accountCode')" class='error'>{{revcost.revenue.errors_by_field('accountCode')}}</p>
                 </td>
                 <td>
                   <input ng-model="revcost.revenue.amount" ng-change="ctrl.changeRevenue(revcost)" type="text">
@@ -787,8 +791,12 @@
                 <td>
                   <b>{{revcost.cost.vendor.name}}</b>
                 </td>
-                <td>
-                  {{revcost.cost.accountCode}}
+                <td ng-class="{'has-error':revcost.cost.has_errors('accountCode')}">
+                  <select ng-model='revcost.cost.accountCode' id="accountCode{{$index}}" class="form-control">
+                    <option value="" disabled selected> Select Code</option>
+                    <option ng-repeat='accountCode in ctrl.accountCodes' ng-value='accountCode' ng-selected="accountCode == revcost.cost">{{accountCode}}</option>
+                  </select>
+                  <p ng-show="revcost.cost.has_errors('accountCode')" class='error'>{{revcost.cost.errors_by_field('accountCode')}}</p>
                 </td>
                 <td>
                   <input ng-model="revcost.cost.amount" ng-change="ctrl.changeCost(revcost)" type="text">
