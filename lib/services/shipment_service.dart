@@ -76,7 +76,7 @@ class ShipmentService {
     } else {
       method = 'put';
       parameters = params_update(shipment);
-      path = url + "/" + shipment.id.toString() ; 
+      path = url + "/" + shipment.id.toString();
     }
     
     return _api.request(method, path, data: parameters)
@@ -89,6 +89,11 @@ class ShipmentService {
       });
   }
 
+  Future sendFile( data) {
+    return _api.request("post", url ,params: {'file':data} )
+           .then((_) => _ );
+  }
+  
   Future load_customer(String query_str){
     String urlService = "/customer_by_id/"+query_str;
     return load_data(urlService);    

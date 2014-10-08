@@ -50,6 +50,7 @@ class ShipmentsController {
   var asyncSelected;
   bool loadingLocations = false;
   User current_user;
+  Monitoring _fileMonitor;
 
   ShipmentsController(this._userService,this._customerService, this._quoteService,this._exchangeRateFactorService,this._http,this.scope, this.modal,this._shipmentService, this._carrierService, this._routeProvider, this._router) {
     this.shipment = new Shipment();
@@ -91,6 +92,39 @@ class ShipmentsController {
     }else{
       load_form();
     }
+   
+    new Timer(const Duration(milliseconds: 4000), () {
+      initInputSelect();
+    });
+
+  } 
+  
+  void initInputSelect(){
+    InputElement uploadInput = document.querySelector("#files");
+    uploadInput.onChange.listen((e) {
+      final files = uploadInput.files;
+      if (files.length == 1) {
+        final file = files[0];
+        String fileName=files[0].name;
+        String fileType = files[0].type;
+        final reader = new FileReader();
+         reader.onLoad.listen((e) {
+          addFile(e,reader.result,fileName, fileType);
+        });
+        reader.readAsDataUrl(file);
+
+      }
+    });
+  }
+
+  addFile(var e,dynamic data,String fileName,String fileType) {
+    print(e);
+    final req = new HttpRequest();
+    req.overrideMimeType('application/json');
+    req.open("POST", "http://127.0.0.1:3000/shipments/upload_file");
+    req.setRequestHeader('Authorization', "Token token=${window.localStorage['user-token']}");
+    req.setRequestHeader('Content-Type', "application/json");
+    req.send(JSON.encode({'file_upload':data}));
   }
   
   void resetTotalRevCost(){
