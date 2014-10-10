@@ -14,7 +14,6 @@ import 'package:angular_ui/utils/utils.dart';
 import 'package:angular_node_bind/angular_node_bind.dart' show NodeBindModule;
 import 'package:html_components/html_components.dart' show DatatableComponent, GrowlComponent;
 import 'package:angular/angular.dart';
-import 'package:html_components/data/datatable/data.dart';
 
 
 import 'package:angular/routing/module.dart';
@@ -138,6 +137,7 @@ class TransnodeModule extends Module {
     bind(QuotesController);
     bind(RfquotesController);
     bind(SearchclpController);
+    bind(LocationController);
     
     bind(RatingComponent);
 

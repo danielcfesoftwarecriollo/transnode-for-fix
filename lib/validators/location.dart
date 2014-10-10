@@ -16,6 +16,7 @@ class LocationValidator extends Validator {
     format_zip(_location.zip, "zip", required: true);
     format_phone(_location.phone, "phone", required: true);
     format_phone(_location.fax, "fax", required: false);
+    list_notEmpty(_location.roles,'roles');
     return this.valid();
   }
 }

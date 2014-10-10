@@ -23,6 +23,7 @@ class Location extends RecordModelNested {
   String currency;
   String createdAt;
   String updatedAt;
+  int customerId;
 
   bool emailOptOut;
   String status;

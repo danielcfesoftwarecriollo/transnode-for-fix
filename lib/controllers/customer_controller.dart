@@ -45,6 +45,10 @@ class CustomerController {
       this._load_customers();
     } else if(_isNewPath()){
       load_form();
+      if(_isNewRolePath()){        
+        this.customer.roles.add(_routeProvider.parameters['role']);
+        this.customer.locations.first.roles.add(_routeProvider.parameters['role']);
+      }
     }
     this.step = 1;
   }
@@ -214,9 +218,10 @@ class CustomerController {
   void to_index(){
     _router.go('carriers', {});
   }
-
+  
+  bool _isNewRolePath() => _routeProvider.routeName  == 'customer_new_role';
   bool _isEditPath() => _routeProvider.routeName == 'customer_edit';
   bool _isShowPath() => _routeProvider.routeName == 'customer_show';
-  bool _isNewPath() => _routeProvider.routeName == 'customer_new';
+  bool _isNewPath() => (_routeProvider.routeName == 'customer_new' || _isNewRolePath());
   bool _isIndexPath() => _routeProvider.routeName == 'customers';
 }

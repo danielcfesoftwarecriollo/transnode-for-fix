@@ -50,7 +50,8 @@ class ShipmentsController {
   var asyncSelected;
   bool loadingLocations = false;
   User current_user;
-  Monitoring _fileMonitor;
+  int customerToAddLocation;
+//  Monitoring _fileMonitor;
 
   ShipmentsController(this._userService,this._customerService, this._quoteService,this._exchangeRateFactorService,this._http,this.scope, this.modal,this._shipmentService, this._carrierService, this._routeProvider, this._router) {
     this.shipment = new Shipment();
@@ -58,7 +59,7 @@ class ShipmentsController {
     this.helperNote = new Note();
     this.current_user = _userService.user;
     openM = true;
-    this.step = 2;
+    this.step = 1;
     this.consigne_locations = [];
     this.accountCodes = ['freight','storage','handling','delivery','misc','customs','doc','w_time','miss_appt'];
 
@@ -219,7 +220,7 @@ class ShipmentsController {
       Location location = new Location();
       response.then((data){
         location.loadWithJson(data['location']);
-        Consignee consignee = new Consignee();
+        Consignee consignee = new Consignee();        
         consignee.consigneeName =  data['consignee'];
         consignee.locationCustomer = location;
         this.shipment.consignees.add(consignee);
@@ -261,6 +262,9 @@ class ShipmentsController {
     response.then((data) {
       Shipper s = new Shipper();
       Location l = new Location();
+      Customer c = new Customer();
+      c.loadWithJson( data['customer'] );
+      s.customer = c;
       l.loadWithJson(data['location']);
       s.locationCustomer = l;
       shipment.shippers.add(s);      
@@ -364,6 +368,31 @@ class ShipmentsController {
     this.shipment.carriers.add(new ShipmentCarrier());
   }
 
+  void addCarrier(){
+    window.open('/index.html#/carriers/new', 'New Carrier');
+  }
+  
+  void addCustomer(){
+    window.open('/index.html#/customers/new/shipper', 'New Customer');
+  }
+  
+//  void addLocationToCustomer(customerId){
+//    window.open("/index.html#/locations/add/${customerId}", 'New Customer');
+//  }
+//  
+  
+  void addLocationToCustomer(Shipper shipper){
+    this.customerToAddLocation = shipper.locationCustomer.customerId;
+    open('partials/locations/add_location.html');
+  }
+  
+  
+  void saveLocationNew(controllerCustom){
+    controllerCustom.save();
+    modalInstance.close(null);
+  }
+
+  
 // End page 2
 
   void _loadCarrierInShipperCarrier( data ,  ShipmentCarrier sc){
@@ -498,7 +527,7 @@ class ShipmentsController {
   bool hasValidConsignee() => this.shipment.consignees.length > 1 || this.shipment.consignees.length > 0 && this.shipment.shippers.length > 1;
   bool hasValidShipment() => hasValidShipper() && hasValidConsignee();
   bool _isEditPath() => _routeProvider.routeName == 'shipment_edit';
-  bool _isNewPath() => _routeProvider.routeName == 'shipment_new';
+  bool _isNewPath() => (_routeProvider.routeName == 'shipment_new') ;
   bool _isIndexPath() => _routeProvider.routeName == 'shipments';
   bool _isNewWithQuotePatch() => _routeProvider.routeName == 'shipment_new_with_quote';
 }

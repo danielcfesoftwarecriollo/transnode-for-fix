@@ -14,25 +14,27 @@ class Shipper extends RecordModelNested{
 
   List<Line> lines;
   Location locationCustomer;
+  Customer customer;
 
   Shipper(){
     this.lines = [];
     this._validator = new ShipmentShipperValidator(this);
   }
-  
+
   void addNewLane(){
     this.lines.add(new Line());
   }
-  
+
   bool full_valid(){
     bool result = _validator.run_validations();
     this.lines.forEach((l) => result = l.is_valid() && result);
     return result;
   }
-  
+
   @override
   void loadWithJson(Map<String, dynamic> map) {
    loadCustomerLocation(map);
+   loadCustomer(map);
    super.loadWithJson(map);
    this._loadListObj(map);
   }
@@ -42,8 +44,15 @@ class Shipper extends RecordModelNested{
       l.id = null;
     });
   }
-
-  loadCustomerLocation(Map customerMap ){
+  
+  loadCustomer( Map customerMap ){
+    if(customerMap['customer'] != null){ 
+      this.customer = LoadModel.loadCustomer(customerMap['customer']);
+    }
+    customerMap.remove('customer');
+  }
+  
+  loadCustomerLocation( Map customerMap ){
     if(customerMap['location_customer'] != null){
       Location l = new Location();
       l.loadWithJson(customerMap['location_customer']);  
