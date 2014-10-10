@@ -6,7 +6,7 @@
 <polymer-element name="search-customer" >
   <template>
     <h-datatable  paginatorPosition="bottom" rows="15" rowsPerPageTemplate="15,20,25,50" maxPageLinks="10" 
-    on-filtered="{{onColumnFiltered}}" source="http://transnode-api-newt2.apps/customers/search" >      
+    on-filtered="{{onColumnFiltered}}" source="http://localhost:3000/customers/search" >      
       <h-column property="id" type="string" sortable filterable>
         <header>Id</header>
           <div>
@@ -17,7 +17,7 @@
       <h-column property="name" type="string" sortable filterable>
         <header>Customer Name</header>
         <div>
-          <a href="#/shipments/${id}/edit">${name}</a>
+          <a href="#/customers/${id}/edit">${name}</a>
         </div>
       </h-column>
       
