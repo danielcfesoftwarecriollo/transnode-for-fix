@@ -392,7 +392,6 @@ class ShipmentsController {
     modalInstance.close(null);
   }
 
-  
 // End page 2
 
   void _loadCarrierInShipperCarrier( data ,  ShipmentCarrier sc){
@@ -493,18 +492,33 @@ class ShipmentsController {
   }
 
   void toStep(int goToStep){
-    if(goToStep == 2){
+    print('ok');
+    if(goToStep == 2 && _checkStep(2)){
       toStep2();
-    }else if(goToStep == 3){
+    }else if(goToStep == 3 && _checkStep(3)){
       toStep3();
     }else{
       this.step = 1;
     }
   }
   
+  _checkStep(int step){
+    switch(step) {
+      case 1:
+        return true;
+      case 2:
+        return this.shipment.valid_step1();
+      case 3:
+        return this.shipment.valid_step2();
+      default:
+        return false;
+    }
+  }
+  
   toStep2(){
-    if(this.shipment.valid_step1())
-        this.step = 2;
+    if(this.shipment.valid_step1()){
+      this.step = 2;
+    }        
   }
   
   toStep3(){

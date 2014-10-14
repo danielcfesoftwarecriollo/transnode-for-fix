@@ -6,9 +6,20 @@
 </script>
 
 <div class="row" shipment-controller >
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h1 ng-if="ctrl.shipment.is_new()">Add a new Shipment</h1>
     <h1 ng-if="!ctrl.shipment.is_new()">Edit Shipment</h1>
+  </div>
+  <div class="col-md-6" style="padding-top: 20px;">
+    <div class="col-md-3">
+      <button class="btn btn-primary" ng-click="ctrl.toStep(1)" >Step 1</button>
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-primary" ng-click="ctrl.toStep(2)" >Step 2</button>
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-primary" ng-click="ctrl.toStep(3)" >Docs & Notes</button>
+    </div>
   </div>
 
   <div class="col-md-12"> 
