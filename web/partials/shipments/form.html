@@ -302,6 +302,7 @@
               <div class="col-md-5">
                 <label for="" class="title-label title-align">Ready Date</label>
                 <input type="text" class="input-label" ng-model="shipper.dateReady" id="ready-date">
+                <p ng-show="shipper.has_errors('dateReady')" class='error'>{{shipper.errors_by_field('dateReady')}}</p>
                 <!-- <datepicker  ng-model="shipper.dateReady" ></datepicker> -->
                 <i class="fa fa-calendar"></i>
               </div>
@@ -331,24 +332,34 @@
           </div>
           <div class="row clear-margin-bottom">
             <div class="col-md-12">
+              <div class="row" ng-show="shipper.has_errors('lines')">
+                <div class="col-md-12  credit-info text-center">
+                  <p  class='error'>{{shipper.errors_by_field('lines')}}</p>
+                </div>
+              </div>
               <div class="lanes" ng-hide="line.pending_to_delete()" ng-repeat="line in shipper.lines" style="margin-top: 15px;">
                 <div class="row" >
                   <div class="col-md-12 lane">
-                    <div class="col-mod col-md-1 col-xs-4 ln-number" ><span>Ln 1</span></div>
-                    <div class="col-mod col-md-1 col-xs-4"><span>H</span>
+                    <div class="col-mod col-md-1 col-xs-4 ln-number" ><span>Ln {{$index + 1}}</span></div>
+                    <div class="col-mod col-md-1 col-xs-4" ><span>H</span>
                       <input ng-model="line.height" type="text">
+                      <p ng-show="line.has_errors('height')" class='error'>{{line.errors_by_field('height')}}</p>
                     </div>
                     <div class="col-mod col-md-1 col-xs-4"><span>W</span>
                       <input ng-model="line.width" type="text">
+                      <p ng-show="line.has_errors('width')" class='error'>{{line.errors_by_field('width')}}</p>
                     </div>
                     <div class="col-mod col-md-1 col-xs-4"><span>L</span>
                       <input ng-model="line.length" type="text">
+                      <p ng-show="line.has_errors('length')" class='error'>{{line.errors_by_field('length')}}</p>
                     </div>
                     <div class="col-mod col-md-1 col-xs-4" ><span>Pcs</span>
                       <input ng-model="line.numPcs" ng-change="ctrl.shipment.checkTotal()" type="text">
+                      <p ng-show="line.has_errors('numPcs')" class='error'>{{line.errors_by_field('numPcs')}}</p>
                     </div>
                     <div class="col-mod col-md-2 col-xs-4"><span>Weight</span>
                       <input ng-model="line.weight" ng-change="ctrl.shipment.checkTotal()" type="text">
+                      <p ng-show="line.has_errors('weight')" class='error'>{{line.errors_by_field('weight')}}</p>
                     </div>
                     <div class="col-mod col-md-3 col-xs-4 inner-without-padding">
                       <div class="col-md-4">
@@ -359,6 +370,7 @@
                           <option value="" disabled selected>Select Class</option>
                           <option selected >ABC</option>
                         </select>
+                        <p ng-show="line.has_errors('hazard')" class='error'>{{line.errors_by_field('hazard')}}</p>
                       </div>
                     </div>
                     <div class="col-mod col-md-2 col-xs-4">
@@ -366,7 +378,8 @@
                         <option value="" disabled selected>Select consignee</option>
                         <option ng-repeat='consignee in ctrl.shipment.consignees' ng-value='consignee.locationCustomer.id' ng-selected="consignee.locationCustomer.id == line.consigneeId">{{consignee.consigneeName}}({{consignee.locationCustomer.name}})</option>
                       </select>
-                      </div>
+                      <p ng-show="line.has_errors('consigneeId')" class='error'>{{line.errors_by_field('consigneeId')}}</p>
+                    </div>
                     <div class="col-mod col-md-1 col-xs-4 ln-delete">
                       <button ng-click="ctrl.deleteLine(line)" >
                         <i  class="fa fa-times"></i>
@@ -511,9 +524,11 @@
               <div class="lanes" style="margin-top: 15px;">
                 <div class="row">
                   <div class="col-md-12 lane">
-                    <div class="col-mod col-md-1 col-xs-4 ln-number" ><span>Ln 1</span></div>
+                    <div class="col-mod col-md-1 col-xs-4 ln-number" >
+                      <span>Ln {{$index+1}}</span>
+                    </div>
                     <div class="col-mod col-md-1 col-xs-4"><span>H</span>
-                      <input ng-model="line.height" readonly type="text">
+                      <input ng-model="line.height" readonly type="text">s
                     </div>
                     <div class="col-mod col-md-1 col-xs-4"><span>W</span>
                       <input ng-model="line.width" readonly type="text">
