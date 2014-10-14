@@ -158,6 +158,10 @@ class TransnodeRouterInitializer {
               path: '/search_quote',
               view: 'partials/quotes/search_quote.html',
               preEnter: authenticatedAccess),
+          'invoice_preview': ngRoute(
+              path: '/invoices/preview/:shipmentId',
+              view: 'partials/invoices/preview.html',
+              preEnter: authenticatedAccess),
     });
   }
 

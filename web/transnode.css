@@ -151,3 +151,10 @@ td.important, th.important{
 modal-window .modal-dialog {
 width: 1000px;
 }
+
+.content-document{
+  margin-top: 20px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  padding: 10px;
+}

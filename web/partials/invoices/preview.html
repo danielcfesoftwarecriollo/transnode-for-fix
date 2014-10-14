@@ -1,0 +1,219 @@
+<div class="row" invoice-controller >
+  <div class="col-md-10 credit-info  col-md-offset-1" style="padding-bottom: 30px;">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h1>Invoice Preview</h1>
+        </div>
+        <div class="col-md-12">
+          header
+        </div>
+        <div class="col-md-12">
+          {{ctrl.shipment.customer.name}}
+        </div>
+        <div class="col-md-12">
+          {{ctrl.shipment.customer.mainLocation().address1}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="row text-center">
+          <h2 class="col-md-4 text-left" >INVOICE, For</h2>
+        </div>
+        <div ng-repeat="revCost in ctrl.shipment.revCosts">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-4">
+                Name: {{revCost.cost.vendor.name}}
+              </div>
+              <div class="col-md-8">
+                Invoice: {{revCosts.cost.invoice.id}}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-4">
+                Address: {{revCosts.cost.vendor.address}}
+              </div>
+              <div class="col-md-8">
+                File Num: {{ctrl.shipment.id}}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-4">
+                City: {{ctrl.shipment.shippers.first.locationCustomer.city.name}}
+              </div>
+              <div class="col-md-8">
+                Due Date: {{ctrl.shipment.shippers.first.dateReady}}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-4">
+                Country: {{ctrl.shipment.shippers.first.locationCustomer.country.name}}
+              </div>
+              <div class="col-md-8">
+                Invoice Number: {{shipment.revCosts.first.cost.invoice.id}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" ng-repeat=" shipper in ctrl.shipment.shippers">
+        <div class="row text-center">
+          <h2 class="col-md-4 text-left" >Shipper</h2>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              BillTo Legal Name: {{shipper.customer.name}}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              address: {{shipper.locationCustomer.address1}}
+            </div>
+            <div class="col-md-8">
+              skip date:
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              City: {{shipper.locationCustomer.city.name}}
+            </div>
+            <div class="col-md-8">
+              Delivery Date: {{shipper.dateReady}}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              Country: {{shipper.locationCustomer.country.name}}
+            </div>
+            <div class="col-md-offset-4 col-md-8">
+              Num Pcs: {{shipper.lines.length}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-offset-4 col-md-8">
+              Gross Wheight:
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-offset-4 col-md-8">
+              Volume Weight: {{shipper.totalWeight()}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" ng-repeat="consignee in ctrl.shipment.consignees">
+        <div class="row text-center">
+          <h2 class="col-md-4 text-left" >Consignee</h2>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-md-12">
+                  Name: {{consignee.customer.name}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  Address: {{consignee.locationCustomer.address1}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  City: {{consignee.locationCustomer.city.name}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  Country: {{consignee.locationCustomer.country.name}}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <label for="">Message to the Customer</label>
+              <textarea class="form-control" cols="30" rows="10"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-12">
+              <table style="margin-top:20px" class="table table-condensed table-bordered" >
+                <tr>
+                  <td>Code</td>
+                  <td>To - From</td>
+                  <td>Amount</td>
+                  <td>Currency</td>
+                </tr>
+                <tr ng-repeat="revCost in ctrl.shipment.revCosts">
+                  <td>{{revCost.revenue.accountCode}}</td>
+                  <td>HST - GST</td>
+                  <td>{{revCost.revenue.amount}}</td>
+                  <td>{{revCost.revenue.currency}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label for="">Internal Notes</label>
+              <textarea class="form-control" cols="30" rows="10"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row content-document">
+            <label for="">Document required by customer</label>
+            <div class="col-md-12">
+              <label for="">POD</label>
+            </div>
+            <div class="col-md-11">
+              <a href="#">Preview</a>
+            </div>
+            <div class="col-md-12">              
+              <label for="">Backup</label>
+            </div>
+            <div class="col-md-12">
+              <div class="col-md-6">
+                <b>None</b>
+              </div>
+              <div class="col-md-6">
+                <button class="btn btn-primary" >upload</button>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label for="">Other, not mandatory</label>
+              <div class="col-md-6">
+                <b>None</b>
+              </div>
+              <div class="col-md-6">
+                <button class="btn btn-primary" >upload</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-md-offset-8">
+          <button class="btn btn-primary">BACK</button>
+          <button class="btn btn-primary">Create & View PDF</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

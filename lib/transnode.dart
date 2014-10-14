@@ -57,6 +57,7 @@ part 'controllers/location_controller.dart';
 part 'controllers/quotes_controller.dart';
 part 'controllers/rfquotes_controller.dart';
 part 'controllers/searchclp_controller.dart';
+part 'controllers/invoices_controller.dart';
 
 part 'models/record_model.dart';
 part 'models/record_model_nested.dart';
@@ -138,6 +139,7 @@ class TransnodeModule extends Module {
     bind(RfquotesController);
     bind(SearchclpController);
     bind(LocationController);
+    bind(InvoiceController);
     
     bind(RatingComponent);
 

@@ -71,6 +71,14 @@ class Shipper extends RecordModelNested{
     }
   }
   
+  double totalWeight(){
+    double _totalWeight = 0.0;
+    lines.forEach((l){
+      _totalWeight += double.parse(l.weight.toString());
+    });
+    return _totalWeight;
+  }
+
   Map to_map() {
     print('to_map ship');
     return {
