@@ -87,5 +87,23 @@ class LoadModel{
     q.loadWithJson(json);
     return q;
   }
+
+  static Note loadNote(Map<String, dynamic> json) {
+    Note n = new Note();
+    n.loadWithJson(json);
+    return n;
+  }
+
+  static Contact loadContact(Map<String, dynamic> json) {
+    Contact c = new Contact();
+    c.loadWithJson(json);
+    return c;
+  }
+  
+  static User loadUser(Map<String, dynamic> json) {
+    User u = new User();
+    u.loadWithJson(json);
+    return u;
+  }
   
 }

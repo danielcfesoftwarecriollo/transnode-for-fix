@@ -1,0 +1,12 @@
+<div class="col-md-3">
+  <b>Create: {{note.createdAt}}</b>
+  <b>Author: {{note.author}}</b>
+</div>
+<div class="col-md-7">
+  <p>{{note.description}}</p>
+</div>
+<div class="col-md-2" >
+  <button ng-show="note.is_new()" ng-click="ctrl.deleteNote(note)" >
+    <i  class="fa fa-times"></i>
+  </button> 
+</div>

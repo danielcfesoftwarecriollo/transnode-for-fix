@@ -29,7 +29,8 @@ class Shipment extends RecordModel{
   Quote quote;
 
 
-  List<Note> notes;
+  List<Note> internalNotes;
+  List<Note> externalNotes;
   List<Shipper> shippers;
   List<Consignee> consignees;
   List<ShipmentCarrier> carriers;
@@ -46,7 +47,8 @@ class Shipment extends RecordModel{
     consignees = [];
     carriers = [];
     revCosts = [];
-    notes = [];
+    internalNotes = [];
+    externalNotes = [];
     multipleCarriers = true;
     this._validator = new ShipmentValidator(this);
   }
@@ -140,9 +142,10 @@ class Shipment extends RecordModel{
     }
   }
 
-  void deleteNote(Note n) {
+  void deleteNote( Note n) {
     if (n.is_new()) {
-      notes.remove(n);
+      internalNotes.remove(n);
+      externalNotes.remove(n);
     } else {
       n.delete();
     }
@@ -171,10 +174,24 @@ class Shipment extends RecordModel{
      return aux;
    }
    
+   static loadNotesByMap(map,target){
+     var aux = [];
+     if(map[target] != null){
+       map[target].forEach((attr){
+         aux.add(LoadModel.loadNote(attr));
+       });       
+       map.remove(target);
+     }
+     return aux;
+   }
+   
   _loadListObj(map){
     ratingSpeed = loadRatingByMap(map,'rating_speed');
     ratingQuality = loadRatingByMap(map,'rating_quality');
     ratingPrice = loadRatingByMap(map,'rating_price');
+    internalNotes = loadNotesByMap(map,'internal_notes_attributes');
+    externalNotes = loadNotesByMap(map,'external_notes_attributes');
+    
     loadCustomer(map);
     loadBillto(map);
     loadCustomBroker(map);
@@ -195,14 +212,6 @@ class Shipment extends RecordModel{
       });
     }
     
-    if (map.containsKey("notes_attributes")) {
-      map['notes_attributes'].forEach((attr) {
-        Note s = new Note();
-        s.loadWithJson(attr);
-        this.notes.add(s);
-      });
-    }
-
     if (map.containsKey("carriers_attributes")) {
       map['carriers_attributes'].forEach((attr) {
         ShipmentCarrier s = new ShipmentCarrier();
@@ -263,7 +272,8 @@ class Shipment extends RecordModel{
 //      'credit_check'   : credit_check,
       'multiple_carriers' : multipleCarriers,
        'quote' : (quote == null)? null : quote.id,
-       'notes_attributes'      : HelperList.to_map(notes),
+       'internal_notes_attributes'      : HelperList.to_map(internalNotes),
+       'external_notes_attributes'      : HelperList.to_map(externalNotes),
        'shippers_attributes'   : HelperList.to_map(shippers),
        'consignees_attributes' : HelperList.to_map(consignees),
        'carriers_attributes'   : HelperList.to_map(carriers),

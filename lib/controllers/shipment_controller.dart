@@ -32,7 +32,8 @@ class ShipmentsController {
   RevenueCost rclineHelper;
   Customer rclineHelperCustomer;
   Map helperTotal;
-  Note helperNote;
+  Note helperInNote;
+  Note helperExNote;
 
   int step;
   @NgTwoWay("shipment")
@@ -56,10 +57,11 @@ class ShipmentsController {
   ShipmentsController(this._userService,this._customerService, this._quoteService,this._exchangeRateFactorService,this._http,this.scope, this.modal,this._shipmentService, this._carrierService, this._routeProvider, this._router) {
     this.shipment = new Shipment();
     this._exchange = new ExchangeValue(_exchangeRateFactorService);
-    this.helperNote = new Note();
+    this.helperExNote = new Note();
+    this.helperInNote = new Note();
     this.current_user = _userService.user;
     openM = true;
-    this.step = 1;
+    this.step = 3;
     this.consigne_locations = [];
     this.accountCodes = ['freight','storage','handling','delivery','misc','customs','doc','w_time','miss_appt'];
 
@@ -449,12 +451,26 @@ class ShipmentsController {
     }
   }
   
-  void addNote(){
+  void addInternalNote(){
+    if(_idValidNote(helperInNote)){
+      this.shipment.internalNotes.add(helperInNote);
+      helperInNote = new Note();
+    }    
+  }
+  
+  void addExternalNote(){
+    if(_idValidNote(helperExNote)){
+      this.shipment.externalNotes.add(helperExNote);
+      helperExNote = new Note();
+    }   
+  }
+  
+  bool _idValidNote(Note helperNote){
     if(helperNote.is_valid()){
       helperNote.author = current_user.email;
-      this.shipment.notes.add(helperNote);
-      helperNote = new Note();
+      return true;
     }
+    return false;
   }
   
   void deleteNote(Note n){

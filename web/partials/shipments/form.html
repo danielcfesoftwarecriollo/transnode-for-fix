@@ -933,34 +933,45 @@
       <div class="step3" ng-show="ctrl.inStep(3)">
         <div class="row">
           <div class="col-md-7">
-            <div class="row">
-              <div class="col-md-12">
-                <label class="title-align" for="spec-handl">Notes</label>
-                <textarea ng-class="{'has-error':ctrl.helperNote.has_errors('description')}" ng-model="ctrl.helperNote.description" id="spec-handl" class="form-control" ></textarea>
-                  <p ng-show="ctrl.helperNote.has_errors('description')" class='error'>{{ctrl.helperNote.errors_by_field('description')}}</p>
-                </td>
+            <div id="external-notes">
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="title-align" for="spec-handl">External Notes</label>
+                  <textarea ng-class="{'has-error':ctrl.helperExNote.has_errors('description')}" ng-model="ctrl.helperExNote.description" id="spec-handl" class="form-control" ></textarea>
+                    <p ng-show="ctrl.helperExNote.has_errors('description')" class='error'>{{ctrl.helperExNote.errors_by_field('description')}}</p>
+                  </td>
 
-                <div class="row">
-                  <div class="col-md-12">
-                    <button class="btn-primary btn pull-right" style="margin-top: 15px;" ng-click="ctrl.addNote()" >Add Note</button>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <button class="btn-primary btn pull-right" style="margin-top: 15px;" ng-click="ctrl.addExternalNote()" >Add Note</button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="row" ng-repeat="note in ctrl.shipment.notes">
-              <div class="col-md-3">
-                <span>{{note.createdAt}}</span>
-                <span>{{note.author}}</span>
-              </div>
-              <div class="col-md-7">
-                <p>{{note.description}}</p>
-              </div>
-              <div class="col-md-2" >
-                <button ng-show="note.is_new()" ng-click="ctrl.deleteNote(note)" >
-                  <i  class="fa fa-times"></i>
-                </button> 
+              <div class="row" ng-repeat="note in ctrl.shipment.externalNotes">
+                <div ng-include="partials/notes/_note.html"></div>
               </div>
             </div>
+            <div id="internal-notes" ng-if="ctrl.current_user.is_csr_admin()" >
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="title-align" for="spec-handl">Internal Notes</label>
+                  <textarea ng-class="{'has-error':ctrl.helperInNote.has_errors('description')}" ng-model="ctrl.helperInNote.description" id="spec-handl" class="form-control" ></textarea>
+                    <p ng-show="ctrl.helperInNote.has_errors('description')" class='error'>{{ctrl.helperInNote.errors_by_field('description')}}</p>
+                  </td>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <button class="btn-primary btn pull-right" style="margin-top: 15px;" ng-click="ctrl.addInternalNote()" >Add Note</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row" ng-repeat="note in ctrl.shipment.internalNotes">
+                <div ng-include="partials/notes/_note.html"></div>
+              </div>
+            </div>
+
             <div class="row">
               <h3>Documents Uploaded</h3>
               <table class="table">
