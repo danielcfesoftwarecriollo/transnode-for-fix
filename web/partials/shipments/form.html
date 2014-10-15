@@ -802,7 +802,13 @@
               <tr ng-repeat=" revcost in ctrl.shipment.revCosts"  ng-hide="revcost.pending_to_delete()" >
                 <td class="important" >{{$index+1}}</td>
                 <td ng-class="{'has-error':revcost.has_errors('billTo')}" >
-                  <b>{{revcost.revenue.billTo.name}}</b>
+                  <input type="text" ng-model="revcost.revenue.billToSelected"
+                   typeahead-min-length="3"
+                   typeahead-on-select="ctrl.onSelectBillToRevenue(revcost.revenue, $item['value'])"
+                   typeahead="billto as billto['label'] for billto in ctrl.loadBillToCustomer($viewValue)"
+                   typeahead-wait-ms="700"
+                   typeahead-loading="revcost.revenue.loading"
+                   class="form-control">
                   <p ng-show="revcost.revenue.has_errors('billTo')" class='error'>{{revcost.revenue.errors_by_field('billTo')}}</p>
                 </td>
                 <td ng-class="{'has-error':revcost.revenue.has_errors('accountCode')}" >

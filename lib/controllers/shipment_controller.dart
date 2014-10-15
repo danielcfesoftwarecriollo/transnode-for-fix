@@ -556,8 +556,25 @@ class ShipmentsController {
     }else{
       return [];
     }
-
   }
+  
+  loadBillToCustomer(String val){
+    if(val.isNotEmpty){
+      var response = _customerService.getLocationByNameAndRole('bill_to',val.toString());
+      return response.then((r) =>r);
+    }else{
+      return [];
+    }
+  }
+  
+  onSelectBillToRevenue(Revenue rev, var billToId){
+      var response = _customerService.getLocation(billToId.toString());
+      response.then((billTo){
+        rev.billTo = billTo;
+        rev.billToSelected = billTo.name;
+      });
+      return billToId;
+    }
   
   onSelectVendor(Cost cost, var vendorId){
     var response = _carrierService.get(vendorId.toString());

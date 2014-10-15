@@ -28,10 +28,22 @@ class CustomerService {
     String urlService = "/bill_to_location/"+customerId.toString();
     return load_data(urlService);    
   }
+  
+  Future<List> getLocationByNameAndRole(String role, String vendorName) {
+    return _api.request("get", url + "/locations_by_role/${role}/${vendorName.toString()}")
+       .then((HttpResponse response){ 
+        return response.data['customers'];      
+      });
+  }
 
   Future load_data(String stringUrl) {
     return _api.request("post", url + stringUrl)
       .then((HttpResponse response) => response.data);
+  }
+  
+  Future<Location> getLocation(String locationId) {
+    return _api.request("get", url + "/location_by_id/${locationId.toString()}" )
+      .then((HttpResponse response) => LoadModel.loadLocation(response.data));
   }
   
   Future<Customer> get(String customerId) {

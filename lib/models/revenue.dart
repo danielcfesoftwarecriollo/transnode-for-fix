@@ -13,11 +13,16 @@ class Revenue extends RecordModelNested{
   String createdAt;
   String updatedAt;
   
+  String billToSelected;
+  bool loading; 
+  
   Revenue(){
     status = 'new_r';
     amount = '0.0';
     amountCa = 0.0;
+    loading = false;
     this._validator = new RevenueValidator(this);
+    
   }
   
   @override
@@ -35,6 +40,7 @@ class Revenue extends RecordModelNested{
       Location l = new Location();
       l.loadWithJson(shipmentMap['bill_to']);  
       this.billTo = l;
+      this.billToSelected = l.name;
     }
     shipmentMap.remove('bill_to');
   }
