@@ -60,7 +60,7 @@ class ShipmentsController {
     this.helperInNote = new Note();
     this.current_user = _userService.user;
     openM = true;
-    this.step = 2;
+    this.step = 1;
     this.consigne_locations = [];
     this.accountCodes = ['freight','storage','handling','delivery','misc','customs','doc','w_time','miss_appt'];
 
@@ -367,6 +367,10 @@ class ShipmentsController {
 // Begin page 2
   void addNewCarrier(){
     this.shipment.carriers.add(new ShipmentCarrier());
+  }
+  
+  void pdfBooked(){
+    window.open('http://localhost:3000/shipments/download_booked/${this.shipment.id}/booked_confirmation.pdf', 'New Carrier');
   }
 
   void addCarrier(){
