@@ -13,10 +13,14 @@ class Cost extends RecordModelNested{
   String createdAt;
   String updatedAt;
   
+  bool loading;  
+  String vendorSelected;
+  
   Cost(){
     status = 'new_c';
     amount = '0.0';
     amountCa = 0.0;
+    loading = false;
     this._validator = new CostValidator(this);
   }
   
@@ -35,6 +39,7 @@ class Cost extends RecordModelNested{
       Carrier vendor = new Carrier();
       vendor.loadWithJson(vendorMap['vendor']);  
       this.vendor = vendor;
+      this.vendorSelected = vendor.name;
     }
     vendorMap.remove('vendor');
   }

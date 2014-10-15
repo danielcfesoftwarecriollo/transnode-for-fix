@@ -828,7 +828,13 @@
                   <b>{{ctrl.showInvoiceStatus(revcost.revenue.invoice)}}</b>
                 </td>
                 <td ng-class="{'has-error':revcost.cost.has_errors('vendor')}">
-                  <b>{{revcost.cost.vendor.name}}</b>
+                  <input type="text" ng-model="revcost.cost.vendorSelected"
+                   typeahead-min-length="3"
+                   typeahead-on-select="ctrl.onSelectVendor(revcost.cost, $item['value'])"
+                   typeahead="vendor as vendor['label'] for vendor in ctrl.load_vendorsByString($viewValue)"
+                   typeahead-wait-ms="700"
+                   typeahead-loading="revcost.cost.loading"
+                   class="form-control">
                   <p ng-show="revcost.cost.has_errors('vendor')" class='error'>{{revcost.cost.errors_by_field('vendor')}}</p>
                 </td>
                 <td ng-class="{'has-error':revcost.cost.has_errors('accountCode')}">

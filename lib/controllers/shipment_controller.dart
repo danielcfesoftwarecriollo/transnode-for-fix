@@ -52,7 +52,6 @@ class ShipmentsController {
   bool loadingLocations = false;
   User current_user;
   int customerToAddLocation;
-//  Monitoring _fileMonitor;
 
   ShipmentsController(this._userService,this._customerService, this._quoteService,this._exchangeRateFactorService,this._http,this.scope, this.modal,this._shipmentService, this._carrierService, this._routeProvider, this._router) {
     this.shipment = new Shipment();
@@ -61,7 +60,7 @@ class ShipmentsController {
     this.helperInNote = new Note();
     this.current_user = _userService.user;
     openM = true;
-    this.step = 3;
+    this.step = 2;
     this.consigne_locations = [];
     this.accountCodes = ['freight','storage','handling','delivery','misc','customs','doc','w_time','miss_appt'];
 
@@ -548,6 +547,24 @@ class ShipmentsController {
   toStep3(){
     if(this.shipment.valid_step1())
         this.step = 3;
+  }
+  
+  load_vendorsByString(String val){
+    if(val.isNotEmpty){
+      var response = _carrierService.getVendorsByName(val.toString());
+      return response.then((r) =>r);
+    }else{
+      return [];
+    }
+
+  }
+  
+  onSelectVendor(Cost cost, var vendorId){
+    var response = _carrierService.get(vendorId.toString());
+    response.then((carrier){
+      cost.vendor = carrier;
+    });
+    return vendorId;
   }
 
 // to change

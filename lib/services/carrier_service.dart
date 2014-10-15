@@ -34,7 +34,13 @@ class CarrierService {
        .then((HttpResponse response){ 
         return response.data['carriers'];      
       });
-//      .then((HttpResponse response) => _loadCarriers(response.data));
+  }
+  
+  Future<List> getVendorsByName(String vendorName) {
+    return _api.request("get", url + "/vendors_by_name/" + vendorName.toString())
+       .then((HttpResponse response){ 
+        return response.data['carriers'];      
+      });
   }
 
   Future<Carrier> delete(String carrierId) {
