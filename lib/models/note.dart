@@ -12,7 +12,9 @@ class Note extends RecordModelNested{
     this._validator = new NoteValidator(this);
   }
   
-  String get author => (user.contact != null)? user.contact.name : user.email;
+  String author(){
+    return (user != null || user.contact != null)? user.contact.name : user.email;
+   }
   
   @override
   void loadWithJson(Map<String, dynamic> map) {

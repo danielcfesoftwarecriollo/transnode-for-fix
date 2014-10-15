@@ -467,10 +467,18 @@ class ShipmentsController {
   
   bool _idValidNote(Note helperNote){
     if(helperNote.is_valid()){
-      helperNote.author = current_user.email;
+      helperNote.user = current_user;
+      helperNote.createdAt = currentDay();
       return true;
     }
     return false;
+  }
+  
+  String currentDay(){
+    var now = new DateTime.now();
+    var formatter = new DateFormat('dd/MM/yyyy');
+    String formatted = formatter.format(now);
+    return formatted;
   }
   
   void deleteNote(Note n){

@@ -6,7 +6,7 @@ import 'dart:convert';
 //import 'dart:html' as dom;
 import 'dart:math' as math;
 import 'package:polymer/polymer.dart';
-
+import 'package:intl/intl.dart';
 
 import 'package:angular_ui/utils/injectable_service.dart';
 import 'package:angular_ui/angular_ui.dart';

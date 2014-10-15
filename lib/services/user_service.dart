@@ -33,9 +33,7 @@ class UserService {
   }
   
   User loadUser( json_user ){
-    User user = new User();
-    user.loadWithJson(json_user);
-    return user;
+    return LoadModel.loadUser(json_user);
   }
 
   User get user => loadUser(JSON.decode(_user));
