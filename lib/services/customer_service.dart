@@ -46,6 +46,11 @@ class CustomerService {
       .then((HttpResponse response) => LoadModel.loadLocation(response.data));
   }
   
+  Future<Invoice> getInvoice(String billToId) {
+    return _api.request("get", url + "/consolidated_invoice/${billToId.toString()}" )
+      .then((HttpResponse response) => LoadModel.loadInvoice(response.data));
+  }
+  
   Future<Customer> get(String customerId) {
     return _api.request("get", url + "/" + customerId.toString())
       .then((HttpResponse response) => _loadCustomer(response.data));

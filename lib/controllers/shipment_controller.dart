@@ -429,14 +429,12 @@ class ShipmentsController {
     this.shipment.customer = customer;
   }
 
-  void changeRevenue(RevenueCost revcost){
-    if(revcost.revenue.currency != defaultCurrency){      
-      this._exchange.calculateRevenue( revcost.revenue.amount,'USD','A1').then((e){
-        revcost.revenue.amountCa = double.parse(e);
-        revcost.calculateProfit();
-        checkTotalRevCosts();
-      });
-    }
+  void changeRevenue(RevenueCost revcost){    
+    this._exchange.calculateRevenue( revcost.revenue.amount,'USD','A1').then((e){
+      revcost.revenue.amountCa = double.parse(e);
+      revcost.calculateProfit();
+      checkTotalRevCosts();
+    });
   }
   
   void deleteRCLine(RevenueCost rc){
@@ -445,13 +443,11 @@ class ShipmentsController {
   }
   
   void changeCost(RevenueCost revcost){
-    if(revcost.cost.currency != defaultCurrency){
-      this._exchange.calculateCosts( revcost.cost.amount,'USD','A1').then((e){
-        revcost.cost.amountCa = double.parse(e);
-        revcost.calculateProfit();
-        checkTotalRevCosts();
-      });
-    }
+    this._exchange.calculateCosts( revcost.cost.amount,'USD','A1').then((e){
+      revcost.cost.amountCa = double.parse(e);
+      revcost.calculateProfit();
+      checkTotalRevCosts();
+    });
   }
   
   void addInternalNote(){

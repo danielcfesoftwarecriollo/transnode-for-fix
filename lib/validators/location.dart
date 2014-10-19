@@ -12,7 +12,7 @@ class LocationValidator extends Validator {
     required_string(_location.address1, "address1");
     required_field(_location.countryId, "countryId");
     required_field(_location.stateId, "stateId");
-    required_string(_location.city, "city");
+    required_field(_location.city, "city");
     format_zip(_location.zip, "zip", required: true);
     format_phone(_location.phone, "phone", required: true);
     format_phone(_location.fax, "fax", required: false);

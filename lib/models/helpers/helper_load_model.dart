@@ -105,5 +105,16 @@ class LoadModel{
     u.loadWithJson(json);
     return u;
   }
+
+  static Invoice loadInvoice(Map<String, dynamic> json) {
+    Invoice i = new Invoice();
+    i.loadWithJson(json);
+    return i;
+  }
   
+  static InvoiceItem loadInvoiceItem(Map<String, dynamic> json) {
+    InvoiceItem i = new InvoiceItem();
+    i.loadWithJson(json);
+    return i;
+  }
 }

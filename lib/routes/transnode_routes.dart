@@ -162,21 +162,21 @@ class TransnodeRouterInitializer {
               path: '/invoices/preview/:shipmentId',
               view: 'partials/invoices/preview.html',
               preEnter: authenticatedAccess),
+          'invoice_consolidated': ngRoute(
+              path: '/invoices/consolidate/:billToId',
+              view: 'partials/invoices/consolidated.html',
+              preEnter: authenticatedAccess),
     });
   }
 
   void authenticatedAccess(RoutePreEnterEvent e) {
     Future<bool> allow;
-
     if (!this._userService.isAuthenticated) {
       this._messagesService.add('warning', "We're sorry, but you need to login first");
-
       allow = new Future<bool>.value(false).whenComplete(() =>  _router.go("login",{}));
-    }
-    else {
+    }else {
       allow = new Future<bool>.value(true);
     }
-
     e.allowEnter(allow);
   }
 

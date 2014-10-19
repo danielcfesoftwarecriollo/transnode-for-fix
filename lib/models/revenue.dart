@@ -3,7 +3,7 @@ part of transnode;
 class Revenue extends RecordModelNested{
 
   String accountCode;
-  String amount;
+  double amount;
   String currency;
   double amountCa; //mount with converted if currency is not CAD
   String description;
@@ -18,7 +18,7 @@ class Revenue extends RecordModelNested{
   
   Revenue(){
     status = 'new_r';
-    amount = '0.0';
+    amount = 0.0;
     amountCa = 0.0;
     loading = false;
     this._validator = new RevenueValidator(this);

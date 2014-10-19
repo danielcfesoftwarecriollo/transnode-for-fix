@@ -87,6 +87,7 @@ part 'models/exchange_rate.dart';
 part 'models/rating.dart';
 part 'models/exchange_rate_factor.dart';
 part 'models/invoice.dart';
+part 'models/invoice_item.dart';
 
 part 'models/helpers/helper_list.dart';
 part 'models/helpers/helper_url.dart';
