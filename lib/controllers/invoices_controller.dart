@@ -10,14 +10,16 @@ class InvoiceController {
   Router _router;
   final ShipmentService _shipmentService;
   final CustomerService _customerService;
+  final InvoiceService _invoiceService;
   Shipment shipment;
+  int step;
   
   
   var asyncSelected;
   bool loadingBillTos;
   
-  InvoiceController(this._customerService, this._shipmentService, this._routeProvider, this._router) {
-    
+  InvoiceController(this._invoiceService, this._customerService, this._shipmentService, this._routeProvider, this._router) {
+    this.step = 1;
     if (_isPreviewPath()){
       var shipment_id = _routeProvider.parameters['shipmentId'];
       _loadShipment(shipment_id);
@@ -31,7 +33,7 @@ class InvoiceController {
   
   onSelectBillTo(var billToId){
     _loadInvoice(billToId);
-    }
+  }
   
   loadBillToCustomer(String val){
       if(val.isNotEmpty){
@@ -54,8 +56,30 @@ class InvoiceController {
       this.invoice.changeSelectedItems();
     }
 
+  _checkIsNew(){
+    if (this.invoice.is_new()){
+      this.invoice.dueDate = DateHelper.addDate(30);
+      this.invoice.exportDate = DateHelper.currentDate();
+      this.invoice.currency = this.invoice.billTo.currency;
+    }
+  }
 
-
+  void save() {
+    if (this.invoice.is_valid()) {
+      var response = this._invoiceService.save(this.invoice);
+      response.then((response) {
+        if (response == null) return false;
+        this.update_shipment(response);
+      });
+    }
+  }
+  
+  void update_shipment( response ){
+    if(response.data.length > 0){
+      Invoice i = LoadModel.loadInvoice(response.data);
+      this.invoice = i;
+    }
+  }
 
   _loadShipment(String shipment_id){
     _shipmentService.get(shipment_id).then((_){
@@ -64,11 +88,23 @@ class InvoiceController {
   }
   
   _loadInvoice(String bill_to_id){
-    _customerService.getInvoice(bill_to_id).then((_){
+    _invoiceService.getInvoice(bill_to_id).then((_){
       this.invoice = _;
+      _checkIsNew();
     });
   }
   
+  void toStep(int goToStep){
+    if(goToStep == 2 && _isValidInvoice()){
+      this.step = 2;
+    }else{
+      this.step = 1;
+    }
+  }
+  
+  bool _isValidInvoice() => this.invoice.is_valid();
+  
+  bool inStep(int step) => step == this.step;
   bool _isPreviewPath() => _routeProvider.routeName == 'invoice_preview';
   bool _isConsolidatedPatch() => _routeProvider.routeName == 'invoice_consolidated';
 }

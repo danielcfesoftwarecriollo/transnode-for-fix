@@ -1,133 +1,140 @@
 <div invoice-controller class="container-fluid container-invoice">
-  <h1>Customer Invoice</h1>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="col-md-3">
-        <label for="customer">Customer: {{ctrl.invoice.billTo.name}}</label>
-          <input type="search" ng-model="ctrl.asyncSelected"
-             typeahead-min-length="3"
-             typeahead-on-select="ctrl.onSelectBillTo($item['value'])"
-             typeahead="billto as billto['label'] for billto in ctrl.loadBillToCustomer($viewValue)"
-             typeahead-wait-ms="700"
-             typeahead-loading="ctrl.loadingBillTos"
-             class="form-control">
-          <i ng-show="ctrl.loadingBillTos" class="glyphicon glyphicon-refresh"></i>
-      </div>
-      <div class="col-md-5 col-md-offset-1">
-        <div class="col-md-12">
-          <label for="">Name: {{ctrl.invoice.billTo.name}}</label>
-        </div>
-        <div class="col-md-12">
-          <label for="">Address 1: {{ctrl.invoice.billTo.address1}}</label>
-        </div>
-        <div class="col-md-12">
-          <label for="">Address 2:{{ctrl.invoice.billTo.address2}} </label>
-        </div>
-        <div class="col-md-12">
-          <label for="">City: {{ctrl.invoice.billTo.city.name}}, Zip:{{ctrl.invoice.billTo.zip}}, Country:{{ctrl.invoice.billTo.country['name']}} </label>
-        </div>
-        <div class="col-md-12">
-          <label for="">Contact Name: {{ctrl.invoice.billTo.contacts.first.name}}</label>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="col-md-3">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <label for="inv-date">Inv. Date</label>
-              <input type="date" id="inv-date" ng-model="ctrl.invoice.exportDate" class="form-control" ng-model="">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <label for="inv-date">Due. Date</label>
-              <input type="date" id="inv-date" ng-model="ctrl.invoice.dueDate" class="form-control" ng-model="">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-5 col-md-offset-1">
-        <p>Optional Message to customer:</p>
-        <textarea name="" id="" class="form-control"  rows="5"></textarea>
-      </div>
-      <div class="col-md-2">
-        <label for="currency">Currency</label>
-        <select id="currency" ng-model="ctrl.invoice.currency" class="form-control">
-          <option value="" disabled selected>Currency</option>
-          <option value="select">CAD</option>
-          <option value="select">USD</option>
-        </select>
-      </div>
-    </div>
-  </div>
-  
-  <div class="row margin-top margin-bottom">
-    <div class="col-md-12">
+  <div class="step1" ng-show="ctrl.inStep(1)" >
+    <h1>Customer Invoice</h1>
+    <div class="row">
       <div class="col-md-12">
-        <table class="table table-bordered table-striped">
-          <thead>
-            <th>File ref.</th>
-            <th>Date</th>
-            <th>Code</th>
-            <th>Doc Upl</th>
-            <th>From-to</th>
-            <th>Num</th>
-            <th>Weight Lbs</th>
-            <th>Status</th>
-            <th>Est. Rev</th>
-            <th>
-              Copy
-            </th>
-            <th>Inv. Amount</th>
-          </thead>
+        <div class="col-md-3">
+          <label for="customer">Customer: {{ctrl.invoice.billTo.name}}</label>
+            <input type="search" ng-model="ctrl.asyncSelected"
+               typeahead-min-length="3"
+               typeahead-on-select="ctrl.onSelectBillTo($item['value'])"
+               typeahead="billto as billto['label'] for billto in ctrl.loadBillToCustomer($viewValue)"
+               typeahead-wait-ms="700"
+               typeahead-loading="ctrl.loadingBillTos"
+               class="form-control">
+            <i ng-show="ctrl.loadingBillTos" class="glyphicon glyphicon-refresh"></i>
+        </div>
+        <div class="col-md-5 col-md-offset-1">
+          <div class="col-md-12">
+            <label for="">Name: {{ctrl.invoice.billTo.name}}</label>
+          </div>
+          <div class="col-md-12">
+            <label for="">Address 1: {{ctrl.invoice.billTo.address1}}</label>
+          </div>
+          <div class="col-md-12">
+            <label for="">Address 2:{{ctrl.invoice.billTo.address2}} </label>
+          </div>
+          <div class="col-md-12">
+            <label for="">City: {{ctrl.invoice.billTo.city.name}}, Zip:{{ctrl.invoice.billTo.zip}}, Country:{{ctrl.invoice.billTo.country['name']}} </label>
+          </div>
+          <div class="col-md-12">
+            <label for="">Contact Name: {{ctrl.invoice.billTo.contacts.first.name}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-3">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="inv-date">Inv. Date</label>
+                <input type="date"  id="inv-date" ng-model="ctrl.invoice.exportDate" class="form-control" ng-model="">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="inv-date">Due. Date</label>
+                <input type="date" id="inv-date" ng-model="ctrl.invoice.dueDate" class="form-control" ng-model="">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 col-md-offset-1">
+          <p>Optional Message to customer:</p>
+          <textarea name="" id="" class="form-control"  rows="5"></textarea>
+        </div>
+        <div class="col-md-2">
+          <label for="currency">Currency</label>
+          <select id="currency" ng-model="ctrl.invoice.currency" class="form-control">
+            <option value="" disabled selected>Currency</option>
+            <option ng-repeat=" currency in ['CAD','USD']" ng-selected="currency == ctrl.invoice.currency" ng-value="ctrl.invoice.currency">{{currency}}</option>
+          </select>
+        </div>
+      </div>
+    </div>  
+    <div class="row margin-top margin-bottom">
+      <div class="col-md-12">
+        <div class="col-md-12">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <th>File ref.</th>
+              <th>Date</th>
+              <th>Code</th>
+              <th>Doc Upl</th>
+              <th>From-to</th>
+              <th>Num</th>
+              <th>Weight Lbs</th>
+              <th>Status</th>
+              <th>Est. Rev</th>
+              <th>
+                Copy
+              </th>
+              <th>Inv. Amount</th>
+            </thead>
 
-          <tbody>
-            <tr ng-repeat="invoiceItem in ctrl.invoice.items">
-              <td>{{invoiceItem.fileRef}}</td>
-              <td>{{invoiceItem.shipmentDateCreated}}</td>
-              <td>{{invoiceItem.revenue.accountCode}}</td>
-              <td>{{invoiceItem.docs}}</td>
-              <td>{{invoiceItem.from.city.code}} - {{invoiceItem.to.city.code}}</td>
-              <td>{{invoiceItem.numPcs}}</td>
-              <td>{{invoiceItem.weight}}</td>
-              <td>{{invoiceItem.statusShipment}}</td>
-              <td>{{invoiceItem.revenue.amount}}</td>
-              <td>
-                <button ng-show="invoiceItem.selected" >
-                  <i ng-click="ctrl.DeselectAmount(invoiceItem)" class="fa fa-arrow-left btn-primary"></i>
-                </button>
-                <button ng-hide="invoiceItem.selected"  >
-                  <i ng-click="ctrl.SelectedAmount(invoiceItem)" class="fa fa-arrow-right btn-primary"></i>
-                </button>
-              </td>
-              <td><input type="text" readonly ng-model="invoiceItem.amount" ></td>
-            </tr>
+            <tbody>
+              <tr ng-repeat="invoiceItem in ctrl.invoice.items">
+                <td>{{invoiceItem.fileRef}}</td>
+                <td>{{invoiceItem.shipmentDateCreated}}</td>
+                <td>{{invoiceItem.revenue.accountCode}}</td>
+                <td>{{invoiceItem.docs}}</td>
+                <td>{{invoiceItem.from.city.code}} - {{invoiceItem.to.city.code}}</td>
+                <td>{{invoiceItem.numPcs}}</td>
+                <td>{{invoiceItem.weight}}</td>
+                <td>{{invoiceItem.statusShipment}}</td>
+                <td>{{invoiceItem.revenue.amount}}</td>
+                <td>
+                  <button ng-show="invoiceItem.selected" >
+                    <i ng-click="ctrl.DeselectAmount(invoiceItem)" class="fa fa-arrow-left btn-primary"></i>
+                  </button>
+                  <button ng-hide="invoiceItem.selected"  >
+                    <i ng-click="ctrl.SelectedAmount(invoiceItem)" class="fa fa-arrow-right btn-primary"></i>
+                  </button>
+                </td>
+                <td><input type="text" readonly ng-model="invoiceItem.amount" ></td>
+              </tr>
 
-          </tbody>
+            </tbody>
 
-          <tfoot>
-            <td colspan="10"> Total Selected</td>
-            <td>{{ctrl.invoice.totalSelected}}</td>
-          </tfoot>
-        </table>
+            <tfoot>
+              <td colspan="10"> Total Selected</td>
+              <td>{{ctrl.invoice.totalSelected}}</td>
+            </tfoot>
+          </table>
+        </div>
+        <div ng-show="ctrl.invoice.has_errors('selectedItems')"  class="alert alert-danger col-md-12" role="alert">
+          <p class='error'>{{ctrl.invoice.errors_by_field('selectedItems')}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="row margin-bottom">
+      <div class="col-md-12">
+        <div class="col-md-6">
+          <p>Internal note about invoice</p>
+          <textarea name="" id="" class="form-control" rows="5"></textarea>
+        </div>
+        <div class="col-md-6">
+          <button ng-click="ctrl.toStep(2)" class="btn margin-bottom btn-primary">Next</button>
+        </div>
       </div>
     </div>
   </div>
-  <div class="row margin-bottom">
-    <div class="col-md-12">
-      <div class="col-md-6">
-        <p>Internal note about invoice</p>
-        <textarea name="" id="" class="form-control" rows="5"></textarea>
-      </div>
-      <div class="col-md-6">
-        <button class="btn margin-bottom btn-primary">Next</button>
-      </div>
-    </div>
+
+  <div class="step2" ng-show="ctrl.inStep(2)">
+    <div ng-include="partials/invoices/_confirmation.html"></div>
   </div>
 </div>

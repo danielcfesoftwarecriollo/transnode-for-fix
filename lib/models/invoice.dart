@@ -5,9 +5,9 @@ class Invoice extends RecordModelNested{
   String status;
   Location billTo;
   Shipment shipment;
-  String dueDate;
+  DateTime dueDate;
   String currency;
-  String exportDate;
+  DateTime exportDate;
   String createdAt;
   String updatedAt;
   List<InvoiceItem> items;
@@ -17,8 +17,11 @@ class Invoice extends RecordModelNested{
     status = 'New';
     items = [];
     totalSelected = 0;
-//    this._validator = new InvoiceValidator(this);
+    this._validator = new InvoiceValidator(this);
   }
+  
+  exportDateFormated() => DateHelper.formated(this.exportDate);
+  dueDateFormated() => DateHelper.formated(this.dueDate);
   
   @override
   void loadWithJson(Map<String, dynamic> map) {
@@ -44,14 +47,27 @@ class Invoice extends RecordModelNested{
     }
   }
   
+  Map to_map() {
+    print('to_map invoice');
+    return {
+      'id' : id,
+      'status' : status,
+      'bill_to_id' : billTo.id,
+      'due_date' : dueDate.toIso8601String(),
+      'export_date': exportDate.toIso8601String(),
+      'currency' : currency,
+      'items_attributes' : HelperList.to_map(items)
+    };
+  }
+  
   changeSelectedItems(){
     this.totalSelected = sumTotals();
   }
   
-  List get selectedItems => items.map((i) => i.selected); 
+  List get selectedItems => items.where((i) => i.selected); 
   
   sumTotals(){
-   return selectedItems.fold(0.0,(p,e){ p+ ParserNumber.toDouble(e.amount);});
+   return selectedItems.fold(0.0,(p,e)=> p+ ParserNumber.toDouble(e.amount));
   }
 
 }

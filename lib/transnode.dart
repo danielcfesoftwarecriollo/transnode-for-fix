@@ -42,6 +42,7 @@ part 'services/city_service.dart';
 part 'services/mail_service.dart';
 part 'services/exchange_rate_service.dart';
 part 'services/exchange_rate_factor_service.dart';
+part 'services/invoice_service.dart';
 
 part 'controllers/app_controller.dart';
 part 'controllers/customer_controller.dart';
@@ -95,6 +96,7 @@ part 'models/helpers/helper_load_model.dart';
 part 'models/helpers/carrier_price.dart';
 part 'models/helpers/exchange_value.dart';
 part 'models/helpers/parser_number.dart';
+part 'models/helpers/date_helper.dart';
 
 
 part 'validators/validator.dart';
@@ -117,6 +119,7 @@ part 'validators/quote_cost.dart';
 part 'validators/exchange_rate.dart';
 part 'validators/revenue.dart';
 part 'validators/cost.dart';
+part 'validators/invoice.dart';
 
 class TransnodeModule extends Module {
 
@@ -158,6 +161,7 @@ class TransnodeModule extends Module {
     bind(MailService);
     bind(ExchangeRateService);
     bind(ExchangeRateFactorService);
+    bind(InvoiceService);
   }
 }
 

@@ -25,6 +25,18 @@ class InvoiceItem extends RecordModelNested{
 //    this._validator = new InvoiceValidator(this);
   }
   
+  
+  Map to_map() {
+    print('to_map invoice_item');
+    return {
+      'id' : id,
+      'amount' : amount,
+      'rev_cost_id' : revenue.id,
+      'tax' : tax,
+      '_destroy': _destroy
+    };
+  }
+    
   @override
   void loadWithJson(Map<String, dynamic> map) {
     this.revenue = loadRevenueByMap(map,'revenue');

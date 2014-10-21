@@ -1,0 +1,111 @@
+<h1>Confirmation Customer Consolidate Invoice</h1>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="col-md-3">
+        <label for="customer">Customer: {{ctrl.invoice.billTo.name}}</label>
+      </div>
+      <div class="col-md-5 col-md-offset-1">
+        <div class="col-md-12">
+          <label for="">Name: {{ctrl.invoice.billTo.name}}</label>
+        </div>
+        <div class="col-md-12">
+          <label for="">Address 1: {{ctrl.invoice.billTo.address1}}</label>
+        </div>
+        <div class="col-md-12">
+          <label for="">Address 2:{{ctrl.invoice.billTo.address2}} </label>
+        </div>
+        <div class="col-md-12">
+          <label for="">City: {{ctrl.invoice.billTo.city.name}}, Zip:{{ctrl.invoice.billTo.zip}}, Country:{{ctrl.invoice.billTo.country['name']}} </label>
+        </div>
+        <div class="col-md-12">
+          <label for="">Contact Name: {{ctrl.invoice.billTo.contacts.first.name}}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="col-md-3">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="inv-date">Inv. Date: </label>
+              <b>{{ctrl.invoice.exportDateFormated()}}</b>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="inv-date">Due. Date: </label>
+              <b>{{ctrl.invoice.dueDateFormated()}}</b>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5 col-md-offset-1">
+        <p>Optional Message to customer:</p>
+        <div></div>
+      </div>
+      <div class="col-md-2">
+        <label for="currency">Currency</label>
+        <b>{{ctrl.invoice.billTo.currency}}</b>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row margin-top margin-bottom">
+    <div class="col-md-12">
+      <div class="col-md-12">
+        <table class="table table-bordered table-striped">
+          <thead>
+            <th>File ref.</th>
+            <th>Date</th>
+            <th>Code</th>
+            <th>Doc Upl</th>
+            <th>From-to</th>
+            <th>Num</th>
+            <th>Weight Lbs</th>
+            <th>Status</th>
+            <th>Amount</th>
+            <th>Tax</th>
+            <th>Total</th>
+          </thead>
+
+          <tbody>
+            <tr ng-repeat="invoiceItem in ctrl.invoice.items">
+              <td>{{invoiceItem.fileRef}}</td>
+              <td>{{invoiceItem.shipmentDateCreated}}</td>
+              <td>{{invoiceItem.revenue.accountCode}}</td>
+              <td>{{invoiceItem.docs}}</td>
+              <td>{{invoiceItem.from.city.code}} - {{invoiceItem.to.city.code}}</td>
+              <td>{{invoiceItem.numPcs}}</td>
+              <td>{{invoiceItem.weight}}</td>
+              <td>{{invoiceItem.statusShipment}}</td>
+              <td>{{invoiceItem.revenue.amount}}</td>
+              <td>
+              </td>
+              <td>{{invoiceItem.amount}}</td>
+            </tr>
+
+          </tbody>
+
+          <tfoot>
+            <td colspan="10"> Total Selected</td>
+            <td>{{ctrl.invoice.totalSelected}}</td>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row margin-bottom">
+    <div class="col-md-12">
+      <div class="col-md-6">
+        <p>Internal note about invoice</p>
+        <div></div>
+      </div>
+      <div class="col-md-6">
+        <button ng-click="ctrl.save()" class="btn margin-bottom btn-primary">Create & View PDF.</button>
+      </div>
+    </div>
+  </div>
