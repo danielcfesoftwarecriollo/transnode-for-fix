@@ -96,11 +96,15 @@ class Shipment extends RecordModel{
   }
 
   void addLineToConsignee(Line line){
-    Consignee consignee = this.consignees.firstWhere((e)=> e.locationCustomer.id == line.consigneeId);
+    try{
+    Consignee consignee = this.consignees.firstWhere((e)=> e.id == line.consigneeId);
       if(consignee != null){
         consignee.lines.add(line);
         checkTotal();
       }
+    }catch(e){
+      print(e);
+    }
   }
 
   bool valid_step1() {

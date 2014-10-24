@@ -376,7 +376,7 @@
                     <div class="col-mod col-md-2 col-xs-4">
                       <select ng-change="ctrl.change_line(line)" ng-model='line.consigneeId' id="consignee" class="form-control">
                         <option value="" disabled selected>Select consignee</option>
-                        <option ng-repeat='consignee in ctrl.shipment.consignees' ng-value='consignee.locationCustomer.id' ng-selected="consignee.locationCustomer.id == line.consigneeId">{{consignee.consigneeName}}({{consignee.locationCustomer.name}})</option>
+                        <option ng-repeat='consignee in ctrl.shipment.consignees' ng-value='consignee.id' ng-selected="consignee.id == line.consigneeId">{{consignee.consigneeName}}({{consignee.locationCustomer.name}})</option>
                       </select>
                       <p ng-show="line.has_errors('consigneeId')" class='error'>{{line.errors_by_field('consigneeId')}}</p>
                     </div>

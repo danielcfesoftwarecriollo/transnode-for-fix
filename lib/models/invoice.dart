@@ -25,6 +25,8 @@ class Invoice extends RecordModelNested{
   
   @override
   void loadWithJson(Map<String, dynamic> map) {
+    this.exportDate = loadDate(map, 'export_date');
+    this.dueDate = loadDate(map, 'due_date');
     this.billTo = loadLocationByMap(map,'bill_to');
     super.loadWithJson(map);
     loadItems(map);
@@ -58,6 +60,19 @@ class Invoice extends RecordModelNested{
       'currency' : currency,
       'items_attributes' : HelperList.to_map(items)
     };
+  }
+  
+  loadDate(Map map, key){
+    DateTime aux;
+    if(map.containsKey(key)){
+      aux = LoadModel.loadDateTime(map[key]);
+      map.remove(key);      
+    }
+    return aux;
+  }
+  
+  void selectedItemsLoaded(){
+    this.items.forEach((i) => i.selected = true );
   }
   
   changeSelectedItems(){

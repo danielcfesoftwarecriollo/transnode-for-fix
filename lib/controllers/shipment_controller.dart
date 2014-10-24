@@ -123,7 +123,7 @@ class ShipmentsController {
     print(e);
     final req = new HttpRequest();
     req.overrideMimeType('application/json');
-    req.open("POST", "http://127.0.0.1:3000/shipments/upload_file");
+    req.open("POST", "${ApiService.api_url}/shipments/upload_file");
     req.setRequestHeader('Authorization', "Token token=${window.localStorage['user-token']}");
     req.setRequestHeader('Content-Type', "application/json");
     req.send(JSON.encode({'file_upload':data}));

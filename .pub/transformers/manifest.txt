@@ -1,0 +1,2 @@
+1.7.2
+di,observe,polymer/src/build/mirrors_remover,smoke/src/default_transformer

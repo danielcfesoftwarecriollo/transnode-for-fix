@@ -117,4 +117,11 @@ class LoadModel{
     i.loadWithJson(json);
     return i;
   }
+  
+  static DateTime loadDateTime( String date ){
+    if(date != null){
+      return DateTime.parse( date );
+    }
+    return null;
+  }
 }
