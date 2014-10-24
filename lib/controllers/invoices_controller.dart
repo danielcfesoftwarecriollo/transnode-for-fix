@@ -63,21 +63,28 @@ class InvoiceController {
       this.invoice.currency = this.invoice.billTo.currency;
     }
   }
+  
+  void viewPDF(){
+    if(this.invoice.id != null){
+      window.open("${ApiService.api_url}/customer_invoices/download_consolidated/${this.invoice.id}/invoice.pdf", 'Invoice Consolidate');
+    }
+  }
 
   void save() {
     if (this.invoice.is_valid()) {
       var response = this._invoiceService.save(this.invoice);
       response.then((response) {
         if (response == null) return false;
-        this.update_shipment(response);
+        this.updateInvoice(response);
       });
     }
   }
   
-  void update_shipment( response ){
+  void updateInvoice( response ){
     if(response.data.length > 0){
       Invoice i = LoadModel.loadInvoice(response.data);
       this.invoice = i;
+      this.invoice.selectedItemsLoaded();
     }
   }
 
