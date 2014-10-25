@@ -112,8 +112,20 @@ class LoadModel{
     return i;
   }
   
+  static InvoiceAP loadInvoiceAP(Map<String, dynamic> json) {
+    InvoiceAP i = new InvoiceAP();
+      i.loadWithJson(json);
+      return i;
+    }  
+  
   static InvoiceItem loadInvoiceItem(Map<String, dynamic> json) {
     InvoiceItem i = new InvoiceItem();
+    i.loadWithJson(json);
+    return i;
+  }
+  
+  static InvoiceItemAP loadInvoiceItemAP(Map<String, dynamic> json) {
+    InvoiceItemAP i = new InvoiceItemAP();
     i.loadWithJson(json);
     return i;
   }

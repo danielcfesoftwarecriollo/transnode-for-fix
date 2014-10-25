@@ -43,6 +43,7 @@ part 'services/mail_service.dart';
 part 'services/exchange_rate_service.dart';
 part 'services/exchange_rate_factor_service.dart';
 part 'services/invoice_service.dart';
+part 'services/invoice_ap_service.dart';
 
 part 'controllers/app_controller.dart';
 part 'controllers/customer_controller.dart';
@@ -59,6 +60,7 @@ part 'controllers/quotes_controller.dart';
 part 'controllers/rfquotes_controller.dart';
 part 'controllers/searchclp_controller.dart';
 part 'controllers/invoices_controller.dart';
+part 'controllers/carrier_invoices_controller.dart';
 
 part 'models/record_model.dart';
 part 'models/record_model_nested.dart';
@@ -88,7 +90,9 @@ part 'models/exchange_rate.dart';
 part 'models/rating.dart';
 part 'models/exchange_rate_factor.dart';
 part 'models/invoice.dart';
+part 'models/invoice_ap.dart';
 part 'models/invoice_item.dart';
+part 'models/invoice_item_ap.dart';
 
 part 'models/helpers/helper_list.dart';
 part 'models/helpers/helper_url.dart';
@@ -120,6 +124,7 @@ part 'validators/exchange_rate.dart';
 part 'validators/revenue.dart';
 part 'validators/cost.dart';
 part 'validators/invoice.dart';
+part 'validators/invoice_ap.dart';
 
 class TransnodeModule extends Module {
 
@@ -144,6 +149,7 @@ class TransnodeModule extends Module {
     bind(SearchclpController);
     bind(LocationController);
     bind(InvoiceController);
+    bind(CarrierInvoiceController);
     
     bind(RatingComponent);
 
@@ -162,6 +168,7 @@ class TransnodeModule extends Module {
     bind(ExchangeRateService);
     bind(ExchangeRateFactorService);
     bind(InvoiceService);
+    bind(InvoiceAPService);
   }
 }
 

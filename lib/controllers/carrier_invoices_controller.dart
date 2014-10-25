@@ -1,48 +1,38 @@
 part of transnode;
 
-@Controller(selector: '[invoice-controller]', publishAs: 'ctrl')
-class InvoiceController {
+@Controller(selector: '[carrier-invoice-controller]', publishAs: 'ctrl')
+class CarrierInvoiceController {
   @NgTwoWay("invoice")
-  Invoice invoice;
+  InvoiceAP invoice;
   @NgTwoWay("invoices")
-  List<Invoice> invoices;
+  List<InvoiceAP> invoices;
   RouteProvider _routeProvider;
   Router _router;
   final ShipmentService _shipmentService;
   final CustomerService _customerService;
-  final InvoiceService _invoiceService;
+  final InvoiceAPService _invoiceService;
   Shipment shipment;
-  int step;
-  
+  int step; 
   
   var asyncSelected;
-  bool loadingBillTos;
   
-  InvoiceController(this._invoiceService, this._customerService, this._shipmentService, this._routeProvider, this._router) {
+  CarrierInvoiceController(this._invoiceService, this._customerService, this._shipmentService, this._routeProvider, this._router) {
     this.step = 1;
-    if (_isPreviewPath()){
-      var shipment_id = _routeProvider.parameters['shipmentId'];
-      _loadShipment(shipment_id);
-    } else if(_isConsolidatedPatch()){
-      loadingBillTos= false;
-      var bill_to_id = _routeProvider.parameters['billToId'];
-      _loadInvoice(bill_to_id);
+    if(_isManagerAPInvoicePatch()){
+      var invoiceId = _routeProvider.parameters['invoiceId'];
+      _loadInvoice(invoiceId);
     }
     
   }
-  
-  onSelectBillTo(var billToId){
-    _loadInvoice(billToId);
-  }
-  
-  loadBillToCustomer(String val){
-      if(val.isNotEmpty){
-        var response = _customerService.getLocationByNameAndRole('bill_to',val.toString());
-        return response.then((r) =>r);
-      }else{
-        return [];
-      }
-    }
+
+//  loadBillToCustomer(String val){
+//      if(val.isNotEmpty){
+//        var response = _customerService.getLocationByNameAndRole('bill_to',val.toString());
+//        return response.then((r) =>r);
+//      }else{
+//        return [];
+//      }
+//    }
   
   void SelectedAmount(InvoiceItem invoiceItem){
     invoiceItem.selected = true;
@@ -60,8 +50,9 @@ class InvoiceController {
     if (this.invoice.is_new()){
       this.invoice.dueDate = DateHelper.addDate(30);
       this.invoice.exportDate = DateHelper.currentDate();
-      this.invoice.currency = this.invoice.billTo.currency;
+      this.invoice.currency = this.invoice.vendor.currency;
     }
+    this.invoice.changeSelectedItems();
   }
   
   void viewPDF(){
@@ -82,7 +73,7 @@ class InvoiceController {
   
   void updateInvoice( response ){
     if(response.data.length > 0){
-      Invoice i = LoadModel.loadInvoice(response.data);
+      InvoiceAP i = LoadModel.loadInvoiceAP(response.data);
       this.invoice = i;
       this.invoice.selectedItemsLoaded();
     }
@@ -94,8 +85,8 @@ class InvoiceController {
     });
   }
   
-  _loadInvoice(String bill_to_id){
-    _invoiceService.getInvoice(bill_to_id).then((_){
+  _loadInvoice(String invoice_id){
+    _invoiceService.get(invoice_id).then((_){
       this.invoice = _;
       _checkIsNew();
     });
@@ -112,7 +103,5 @@ class InvoiceController {
   bool _isValidInvoice() => this.invoice.is_valid();
   
   bool inStep(int step) => step == this.step;
-  bool _isPreviewPath() => _routeProvider.routeName == 'invoice_preview';
-  bool _isConsolidatedPatch() => _routeProvider.routeName == 'invoice_consolidated';
   bool _isManagerAPInvoicePatch() => _routeProvider.routeName == 'manager_view_invoice';
 }

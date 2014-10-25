@@ -1,13 +1,13 @@
 part of transnode;
 
-class InvoiceItem extends RecordModelNested{
+class InvoiceItemAP extends RecordModelNested{
 
   String status;
   String createdAt;
   String updatedAt;
   double amount;
   double tax;
-  Revenue revenue;
+  Cost cost;
   String fileRef;
   String shipmentDateCreated;
   String docs;
@@ -16,30 +16,39 @@ class InvoiceItem extends RecordModelNested{
   String statusShipment;
   Location from;
   Location to;
+  bool acepted;
   
   bool selected;
     
-  InvoiceItem(){
+  InvoiceItemAP(){
     status = 'New';
     selected = false;
 //    this._validator = new InvoiceValidator(this);
   }
   
+  void acepte(){
+    this.acepted = true;
+  }
+  
+  void rejecte(){
+    this.acepted = false;
+  }
   
   Map to_map() {
     print('to_map invoice_item');
     return {
       'id' : id,
       'amount' : amount,
-      'rev_cost_id' : revenue.id,
+      'rev_cost_id' : cost.id,
       'tax' : tax,
+      'acepted' : acepted,
       '_destroy': _destroy
     };
   }
     
   @override
   void loadWithJson(Map<String, dynamic> map) {
-    this.revenue = loadRevenueByMap(map,'revenue');
+    this.cost = loadCostByMap(map,'cost');
     this.from = loadLocatinByMap(map, 'from'); 
     this.to = loadLocatinByMap(map, 'to'); 
     super.loadWithJson(map);
@@ -54,10 +63,10 @@ class InvoiceItem extends RecordModelNested{
      return aux;
    }
   
-  Revenue loadRevenueByMap(map,target){
+  Cost loadCostByMap(map,target){
      var aux;
      if(map[target] != null){
-       aux = LoadModel.loadRevenue(map[target]);
+       aux = LoadModel.loadCost(map[target]);
        map.remove(target);
      }
      return aux;
