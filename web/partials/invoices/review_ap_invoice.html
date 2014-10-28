@@ -1,6 +1,17 @@
 <div carrier-invoice-controller class="container-fluid container-invoice">
   <div class="step1" ng-show="ctrl.inStep(1)" >
-    <h1 class="margin-bottom" >Review A/P Invoice</h1>
+    <h1 class="margin-bottom" >
+      Review A/P Invoice
+      <small ng-hide="ctrl.invoice.acepted == null">
+        <span ng-show="ctrl.invoice.acepted" class="label label-success">Acepted</span>
+        <span ng-hide="ctrl.invoice.acepted" class="label label-danger">Rejected</span>
+      </small>
+    </h1>
+    <div class="row">
+      <div ng-show="ctrl.invoice.has_errors('status_review')"  class="alert alert-danger col-md-12" role="alert">
+        <p class='error'>{{ctrl.invoice.errors_by_field('status_review')}}</p>
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-12 margin-bottom">
         <div class="col-md-4">
@@ -70,7 +81,7 @@
     <div class="row margin-top margin-bottom">
       <div class="col-md-12">
         <div class="">
-          <div class="col-md-12">
+          <div class="col-md-10">
             <table class="table table-bordered table-striped">
               <thead>
                 <th>File ref.</th>
@@ -83,10 +94,8 @@
                 <th>Status</th>
                 <th>Est. Cost</th>
                 <th>
-                  Copy
                 </th>
                 <th>Inv. Amount</th>
-                <th></th>
                 <th></th>
               </thead>
 
@@ -103,26 +112,16 @@
                   <td>{{invoiceItem.cost.amount}}</td>
                   <td>
                     <button ng-show="invoiceItem.selected" >
-                      <i ng-click="ctrl.DeselectAmount(invoiceItem)" class="fa fa-arrow-left btn-primary"></i>
+                      <i ng-click="ctrl.rejectedReview(invoiceItem)" class="fa fa-times btn-primary"></i>
                     </button>
                     <button ng-hide="invoiceItem.selected"  >
-                      <i ng-click="ctrl.SelectedAmount(invoiceItem)" class="fa fa-arrow-right btn-primary"></i>
+                      <i ng-click="ctrl.aceptedReview(invoiceItem)" class="fa fa-check btn-primary"></i>
                     </button>
                   </td>
                   <td><input type="text" readonly ng-model="invoiceItem.amount" ></td>
                   <td>
-                    <i class="fa fa-check" ng-show="invoiceItem.acepted" ></i>
-                    <i class="fa fa-times" ng-hide="invoiceItem.acepted" ></i>
-                  </td>
-                  <td>
-                    <button ng-click="invoiceItem.acepte()" class="btn btn-xs btn-primary">
-                      <span class="fa fa-check"></span>
-                      Accept
-                    </button>
-                    <button ng-click="invoiceItem.rejecte()" class="btn btn-xs btn-danger">
-                      <span class="fa fa-times"></span>
-                      Reject
-                    </button>
+                    <i class="fa fa-2 fa-check" ng-show="invoiceItem.selected" ></i>
+                    <i class="fa fa-2 fa-times" ng-hide="invoiceItem.selected" ></i>
                   </td>
                 </tr>
               </tbody>
@@ -132,6 +131,16 @@
                 <td>{{ctrl.invoice.totalSelected}}</td>
               </tfoot>
             </table>
+          </div>
+          <div class="col-md-2">
+            <button ng-click="ctrl.invoice.acepte()" class="btn btn-xs btn-primary">
+              <span class="fa fa-check"></span>
+              Accept
+            </button>
+            <button ng-click="ctrl.invoice.rejecte()" class="btn btn-xs  margin-top btn-danger">
+              <span class="fa fa-times"></span>
+              Reject
+            </button>
           </div>
           <div ng-show="ctrl.invoice.has_errors('selectedItems')"  class="alert alert-danger col-md-12" role="alert">
             <p class='error'>{{ctrl.invoice.errors_by_field('selectedItems')}}</p>
@@ -145,7 +154,7 @@
           <p>Internal note about invoice</p>
           <textarea name="" id="" class="form-control" rows="5"></textarea>
         </div>
-        <button ng-click="ctrl.save()" class="btn btn-big-submit btn-primary">Submit</button>
+        <button ng-click="ctrl.saveReview()" class="btn btn-big-submit btn-primary">Submit</button>
       </div>
     </div>
   </div>

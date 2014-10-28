@@ -102,6 +102,9 @@ part 'models/helpers/exchange_value.dart';
 part 'models/helpers/parser_number.dart';
 part 'models/helpers/date_helper.dart';
 
+part 'models/enumerates/status_invoice.dart';
+part 'models/enumerates/status_invoice_item.dart';
+
 
 part 'validators/validator.dart';
 part 'validators/location.dart';
@@ -125,6 +128,7 @@ part 'validators/revenue.dart';
 part 'validators/cost.dart';
 part 'validators/invoice.dart';
 part 'validators/invoice_ap.dart';
+part 'validators/review_invoice_ap.dart';
 
 class TransnodeModule extends Module {
 

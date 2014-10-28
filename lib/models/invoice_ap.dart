@@ -10,14 +10,21 @@ class InvoiceAP extends RecordModelNested{
   DateTime exportDate;
   String createdAt;
   String updatedAt;
+  bool acepted;
+  
   List<InvoiceItemAP> items;
   var totalSelected;
   
   InvoiceAP(){
+    acepted = null;
     status = 'New';
     items = [];
     totalSelected = 0;
     this._validator = new InvoiceApValidator(this);
+  }
+  
+  setValidatorReview(){
+    this._validator = new ReviewInvoiceApValidator(this);
   }
   
   exportDateFormated() => DateHelper.formated(this.exportDate);
@@ -31,7 +38,7 @@ class InvoiceAP extends RecordModelNested{
     super.loadWithJson(map);
     loadItems(map);
   }
-  
+
   static Carrier loadCarrierByMap(map,target){
      var aux;
      if(map[target] != null){
@@ -48,13 +55,21 @@ class InvoiceAP extends RecordModelNested{
       });
     }
   }
+  
+  bool haveItemIsRejected() => items.contains((i)=>(!i.selected));
+  
+  void checkInvoiceIssue(){
+    if(this.haveItemIsRejected()){
+      this.status = StatusInvoice.ISSUE;
+    }
+  }
 
   Map to_map() {
     print('to_map invoice');
     return {
       'id' : id,
-      'status' : status,
-      'vendor_id' : vendor.id,
+      'status' : status,      
+      'carrier_id' : vendor.id,
       'due_date' : dueDate.toIso8601String(),
       'export_date': exportDate.toIso8601String(),
       'currency' : currency,
@@ -62,6 +77,17 @@ class InvoiceAP extends RecordModelNested{
     };
   }
   
+  void acepte(){
+    this.acepted = true;
+    this.status = StatusInvoice.READY_FOR_EXPORT.value;
+  }
+  
+  void rejecte(){
+    this.acepted = false;
+    this.status = StatusInvoice.ISSUE.value;
+  }
+  
+    
   loadDate(Map map, key){
     DateTime aux;
     if(map.containsKey(key)){
@@ -79,10 +105,10 @@ class InvoiceAP extends RecordModelNested{
     this.totalSelected = sumTotals();
   }
   
-  List get selectedItems => items.where((i) => i.selected); 
-  
   sumTotals(){
-   return items.fold(0.0,(p,e)=> p+ ParserNumber.toDouble(e.amount));
+   return selectedItems.fold(0.0,(p,e)=> p+ ParserNumber.toDouble(e.amount));
   }
+  
+  List get selectedItems => items.where((i) => i.selected);
 
 }

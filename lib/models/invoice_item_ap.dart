@@ -16,9 +16,8 @@ class InvoiceItemAP extends RecordModelNested{
   String statusShipment;
   Location from;
   Location to;
-  bool acepted;
+  bool selected;  
   
-  bool selected;
     
   InvoiceItemAP(){
     status = 'New';
@@ -27,21 +26,23 @@ class InvoiceItemAP extends RecordModelNested{
   }
   
   void acepte(){
-    this.acepted = true;
+    this.selected = true;
+    this.status = StatusInvoiceItem.APPROVED.value;
   }
   
   void rejecte(){
-    this.acepted = false;
+    this.selected = false;
+    this.status = StatusInvoiceItem.REJECTED.value;
   }
   
   Map to_map() {
     print('to_map invoice_item');
     return {
       'id' : id,
+      'status' : status,
       'amount' : amount,
       'rev_cost_id' : cost.id,
       'tax' : tax,
-      'acepted' : acepted,
       '_destroy': _destroy
     };
   }

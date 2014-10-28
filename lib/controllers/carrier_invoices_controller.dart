@@ -9,43 +9,45 @@ class CarrierInvoiceController {
   RouteProvider _routeProvider;
   Router _router;
   final ShipmentService _shipmentService;
-  final CustomerService _customerService;
   final InvoiceAPService _invoiceService;
   Shipment shipment;
-  int step; 
+  int step;
+  bool loadingvendors;
   
   var asyncSelected;
   
-  CarrierInvoiceController(this._invoiceService, this._customerService, this._shipmentService, this._routeProvider, this._router) {
+  CarrierInvoiceController(this._invoiceService, this._shipmentService, this._routeProvider, this._router) {
     this.step = 1;
+    this.loadingvendors = false;
     if(_isManagerAPInvoicePatch()){
       var invoiceId = _routeProvider.parameters['invoiceId'];
-      _loadInvoice(invoiceId);
-    }
-    
+      _loadInvoice(invoiceId).then((i){
+        this.invoice.setValidatorReview();
+        this.initItemsReview();
+      });
+    }    
+  }
+  
+  void selectedAmount(InvoiceItemAP invoiceItem){
+    invoiceItem.amount = ParserNumber.toDouble(invoiceItem.cost.amount);
+    this.aceptedReview(invoiceItem);
+  }
+  
+  void deselectAmount(InvoiceItemAP invoiceItem){
+    invoiceItem.amount = null;
+    this.rejectedReview(invoiceItem);
+  }
+  
+  void aceptedReview(InvoiceItemAP invoiceItem){
+    invoiceItem.acepte();
+    this.invoice.changeSelectedItems();
   }
 
-//  loadBillToCustomer(String val){
-//      if(val.isNotEmpty){
-//        var response = _customerService.getLocationByNameAndRole('bill_to',val.toString());
-//        return response.then((r) =>r);
-//      }else{
-//        return [];
-//      }
-//    }
-  
-  void SelectedAmount(InvoiceItem invoiceItem){
-    invoiceItem.selected = true;
-    invoiceItem.amount = invoiceItem.revenue.amount;
+  void rejectedReview(InvoiceItemAP invoiceItem){
+    invoiceItem.rejecte();
     this.invoice.changeSelectedItems();
   }
   
-  void DeselectAmount(InvoiceItem invoiceItem){
-      invoiceItem.selected = false;
-      invoiceItem.amount = null;
-      this.invoice.changeSelectedItems();
-    }
-
   _checkIsNew(){
     if (this.invoice.is_new()){
       this.invoice.dueDate = DateHelper.addDate(30);
@@ -58,6 +60,32 @@ class CarrierInvoiceController {
   void viewPDF(){
     if(this.invoice.id != null){
       window.open("${ApiService.api_url}/customer_invoices/download_consolidated/${this.invoice.id}/invoice.pdf", 'Invoice Consolidate');
+    }
+  }
+    
+  initItemsReview(){
+    this.invoice.items.forEach((i){
+      rejectedReview(i);
+    });
+    this.chekStatusReview();
+  }
+  
+  chekStatusReview(){
+   if(this.invoice.status == StatusInvoice.READY_FOR_EXPORT.value) {
+    this.invoice.acepte();
+   }else if(this.invoice.status == StatusInvoice.ISSUE.value){
+    this.invoice.rejecte();  
+   }
+  }
+    
+  void saveReview(){
+    if(this.invoice.is_valid()){
+      this.invoice.checkInvoiceIssue();
+      var response = this._invoiceService.saveReview(this.invoice);
+      response.then((response) {
+        if (response == null) return false;
+        this.updateInvoice(response);
+      });
     }
   }
 
@@ -85,13 +113,16 @@ class CarrierInvoiceController {
     });
   }
   
-  _loadInvoice(String invoice_id){
+  Future _loadInvoice(String invoice_id){
+    var completer = new Completer();
     _invoiceService.get(invoice_id).then((_){
       this.invoice = _;
       _checkIsNew();
+      completer.complete( this.invoice );
     });
+    return completer.future;
   }
-  
+ 
   void toStep(int goToStep){
     if(goToStep == 2 && _isValidInvoice()){
       this.step = 2;
@@ -104,4 +135,5 @@ class CarrierInvoiceController {
   
   bool inStep(int step) => step == this.step;
   bool _isManagerAPInvoicePatch() => _routeProvider.routeName == 'manager_view_invoice';
+  bool _isAPInvoicePatch() => _routeProvider.routeName == 'ap_invoice';
 }

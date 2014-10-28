@@ -29,8 +29,11 @@ class InvoiceAPService {
   }
   
   Future<InvoiceAP> saveReview(InvoiceAP invoiceAP) {
-    return _api.request("post", url + '/review_invoice/', data:params_update(invoiceAP))
-          .then((HttpResponse response) => response.data);
+    return _api.request("post", url + "/review_invoice/${invoiceAP.id}", data:params_update(invoiceAP))
+          .then((HttpResponse response){
+            response;
+            _messageServices.add("success", "The Review Invoice has been successfully saved");
+    });
   }
   
   Future save(InvoiceAP invoice) {
