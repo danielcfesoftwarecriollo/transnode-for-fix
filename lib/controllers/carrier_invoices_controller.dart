@@ -11,13 +11,14 @@ class CarrierInvoiceController {
   final ShipmentService _shipmentService;
   final InvoiceAPService _invoiceService;
   final CarrierService _carrierService;
+  MessagesService _messageServices;
   Shipment shipment;
   int step;
   bool loadingvendors;
   
   var asyncSelected;
   
-  CarrierInvoiceController(this._invoiceService,this._carrierService, this._shipmentService, this._routeProvider, this._router) {
+  CarrierInvoiceController(this._messageServices, this._invoiceService,this._carrierService, this._shipmentService, this._routeProvider, this._router) {
     this.step = 1;
     this.loadingvendors = false;
     if(_isManagerAPInvoicePatch()){
@@ -29,8 +30,8 @@ class CarrierInvoiceController {
     }else if(_isAPInvoicePatch()){
       var carrierId = _routeProvider.parameters['carrierId'];
       _loadCarrier(carrierId.toString()).then((r){
-        _checkIsNew();
-        this.invoice.checkApAmounts();
+//        _checkIsNew();
+//        this.invoice.checkApAmounts();
       });
     }
   }
@@ -101,15 +102,17 @@ class CarrierInvoiceController {
   
   sendToManager(){
     this.invoice.checkLogic();
+    this.invoice.checkApAmounts();
     this.save();
   }
   
-  void save() {
+  void save() {    
     if (this.invoice.is_valid()) {
       var response = this._invoiceService.save(this.invoice);
       response.then((response) {
         if (response == null) return false;
         this.updateInvoice(response);
+        _messageServices.add("success", "The Invoice has been successfully saved");
       });
     }
   }
@@ -119,6 +122,7 @@ class CarrierInvoiceController {
       InvoiceAP i = LoadModel.loadInvoiceAP(response.data);
       this.invoice = i;
       this.invoice.selectedItemsLoaded();
+      this.invoice.changeSelectedItems();
     }
   }
 
@@ -157,7 +161,12 @@ class CarrierInvoiceController {
   
   Future _loadCarrier(String id){
     var response = this._invoiceService.getInvoice(id);
-    return response.then((_)=> this.invoice = _);
+    return response.then((_){
+      this.invoice = _;      
+      _checkIsNew();
+      this.invoice.checkApAmounts();
+      return this.invoice;
+     });
   }
 
   bool toManager(){

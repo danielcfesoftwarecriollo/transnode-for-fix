@@ -20,7 +20,7 @@ class InvoiceItemAP extends RecordModelNested{
   
     
   InvoiceItemAP(){
-    status = 'New';
+    status = StatusInvoiceItem.NEW_I.value;
     selected = false;
 //    this._validator = new InvoiceValidator(this);
   }
