@@ -157,7 +157,7 @@ class ShipmentsController {
     });
   }
 
-  void save() {
+  void save(){
     if (this.shipment.valid_step1() && this.shipment.valid_step2()) {
       var response = this._shipmentService.save(this.shipment);
       response.then((response) {
@@ -166,6 +166,7 @@ class ShipmentsController {
       });
     }
   }
+  
   void update_shipment( response ){
     if(response.data.length > 0){
       Shipment s = this._shipmentService._loadShipment(response.data);

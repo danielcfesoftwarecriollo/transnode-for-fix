@@ -13,8 +13,8 @@ class InvoiceAPService {
     return _api.request('get', url);
   }
 
-  Future<InvoiceAP> getInvoice(String invoiceId) {
-    return _api.request("get", url + "/review_invoice/${invoiceId.toString()}" )
+  Future<InvoiceAP> getInvoice(String carrierId) {
+    return _api.request("get", url + "/consolidated_invoice/${carrierId.toString()}" )
       .then((HttpResponse response) => LoadModel.loadInvoiceAP(response.data));
   }
   

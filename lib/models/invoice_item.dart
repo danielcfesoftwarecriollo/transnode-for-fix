@@ -62,6 +62,5 @@ class InvoiceItem extends RecordModelNested{
      }
      return aux;
    }
-  
 
 }

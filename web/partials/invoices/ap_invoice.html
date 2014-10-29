@@ -1,0 +1,177 @@
+<div carrier-invoice-controller class="container-fluid container-invoice">
+  <div class="step1" ng-show="ctrl.inStep(1)" >
+    <h1 class="margin-bottom" >
+      A/P Invoice
+      <small ng-hide="ctrl.invoice.acepted == null">
+        <span ng-show="ctrl.invoice.acepted" class="label label-success">Acepted</span>
+        <span ng-hide="ctrl.invoice.acepted" class="label label-danger">Rejected</span>
+      </small>
+    </h1>
+    <div class="row">
+      <div ng-show="ctrl.invoice.has_errors('status_review')"  class="alert alert-danger col-md-12" role="alert">
+        <p class='error'>{{ctrl.invoice.errors_by_field('status_review')}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 margin-bottom">
+        <div class="col-md-4">
+          <label for="customer">Carrier: {{ctrl.invoice.vendor.name}}</label>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-search"></i>
+              </div>
+              <input type="search" placeholder="Select Carrier" ng-model="ctrl.asyncSelected"
+               typeahead-min-length="3"
+               typeahead-on-select="ctrl.onSelectCarrier($item['value'])"
+               typeahead="vendor as vendor['label'] for vendor in ctrl.loadCarriersByString($viewValue)"
+               typeahead-wait-ms="700"
+               typeahead-loading="ctrl.loadingvendors"
+               class="form-control">
+            </div>
+          </div>
+          
+          <i ng-show="ctrl.loadingvendors" class="glyphicon glyphicon-refresh"></i>
+        </div>
+        <div class="col-md-4">
+          <div class="col-md-12">
+            <label for="">Name: {{ctrl.invoice.vendor.mainLocation().name}}</label>
+          </div>
+          <div class="col-md-12">
+            <label for="">Address 1: {{ctrl.invoice.vendor.mainLocation().address1}}</label>
+          </div>
+          <div class="col-md-12">
+            <label for="">Address 2:{{ctrl.invoice.vendor.mainLocation().address2}} </label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="col-md-12">
+            <label for="">City: {{ctrl.invoice.vendor.mainLocation().city.name}}, Zip:{{ctrl.invoice.vendor.mainLocation().zip}}, Country:{{ctrl.invoice.vendor.mainLocation().country['name']}} </label>
+          </div>
+          <div class="col-md-12">
+            <label for="">Contact Name: {{ctrl.invoice.vendor.mainLocation().contacts.first.name}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="inv-date">Inv #</label>
+            <input type="text" readonly  id="inv-date" ng-model="ctrl.invoice.id" class="form-control" ng-model="">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="inv-date">Amount</label>
+            <input type="text" readonly  id="inv-date" ng-model="ctrl.invoice.totalSelected" class="form-control" ng-model="">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="inv-date">Currency</label>
+            <select id="currency" readonly ng-model="ctrl.invoice.currency" class="form-control">
+              <option value="" disabled selected>Currency</option>
+              <option ng-repeat=" currency in ['CAD','USD']" ng-selected="currency == ctrl.invoice.currency" ng-value="ctrl.invoice.currency">{{currency}}</option>
+          </select>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="inv-date">Export. Date</label>
+            <input type="date"  id="inv-date" ng-model="ctrl.invoice.received_date" class="form-control" ng-model="">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="inv-date">Due. Date</label>
+            <input type="date" id="inv-date" ng-model="ctrl.invoice.dueDate" class="form-control" ng-model="">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="inv-date">Due. Date</label>
+            <input type="date" id="inv-date" ng-model="ctrl.invoice.dueDate" class="form-control" ng-model="">
+          </div>
+        </div>
+      </div>
+    </div>  
+    <div class="row margin-top margin-bottom">
+      <div class="col-md-12">
+        <div class="">
+          <div class="col-md-10">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <th>File ref.</th>
+                <th>Date</th>
+                <th>Code</th>
+                <th>Doc Upl</th>
+                <th>From-to</th>
+                <th>Num</th>
+                <th>Weight Lbs</th>
+                <th>Status</th>
+                <th>Est. Cost</th>
+                <th>
+                </th>
+                <th>Inv. Amount</th>
+                <th></th>
+              </thead>
+
+              <tbody>
+                <tr ng-repeat="invoiceItem in ctrl.invoice.items">
+                  <td>{{invoiceItem.fileRef}}</td>
+                  <td>{{invoiceItem.shipmentDateCreated}}</td>
+                  <td>{{invoiceItem.cost.accountCode}}</td>
+                  <td>{{invoiceItem.docs}}</td>
+                  <td>{{invoiceItem.from.city.code}} - {{invoiceItem.to.city.code}}</td>
+                  <td>{{invoiceItem.numPcs}}</td>
+                  <td>{{invoiceItem.weight}}</td>
+                  <td>{{invoiceItem.statusShipment}}</td>
+                  <td>{{invoiceItem.cost.amount}}</td>
+                  <td>
+                    <button ng-show="invoiceItem.selected" >
+                      <i ng-click="ctrl.deselectAmount(invoiceItem)" class="fa fa-times btn-primary"></i>
+                    </button>
+                    <button ng-hide="invoiceItem.selected"  >
+                      <i ng-click="ctrl.selectedAmount(invoiceItem)" class="fa fa-check btn-primary"></i>
+                    </button>
+                  </td>
+                  <td><input type="text" ng-readonly="(!invoiceItem.selected)" ng-change="ctrl.invoice.checkApAmounts()" ng-model="invoiceItem.amount" ></td>
+                  <td>
+                    <i class="fa fa-2 fa-check" ng-show="invoiceItem.selected" ></i>
+                    <i class="fa fa-2 fa-times" ng-hide="invoiceItem.selected" ></i>
+                  </td>
+                </tr>
+              </tbody>
+
+              <tfoot>
+                <td colspan="10"> Total Selected</td>
+                <td>{{ctrl.invoice.totalSelected}}</td>
+              </tfoot>
+            </table>
+          </div>
+          <div ng-show="ctrl.invoice.has_errors('selectedItems')"  class="alert alert-danger col-md-12" role="alert">
+            <p class='error'>{{ctrl.invoice.errors_by_field('selectedItems')}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row margin-bottom">
+      <div class="col-md-12">
+        <div class="col-md-6">
+          <p>Internal note about invoice</p>
+          <textarea name="" id="" class="form-control" rows="5"></textarea>
+        </div>
+        <div class="col-md-3 col-md-offset-3 margin-top">
+          <div class="col-md-12 margin-top">
+            <button ng-disabled="(!ctrl.toManager())" ng-click="ctrl.sendToManager()" class="btn btn-primary">Submit</button>
+          </div>
+          <div class="col-md-12 margin-top">
+            <button ng-disabled="ctrl.toManager()" ng-click="ctrl.sendToManager()" class="btn btn-primary">Save & Send to Mgr</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

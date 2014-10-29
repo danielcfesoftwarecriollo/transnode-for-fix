@@ -71,7 +71,16 @@ class InvoiceItemAP extends RecordModelNested{
        map.remove(target);
      }
      return aux;
-   }
+  }
+  isEqualAmount() => this.amount.toString() == this.cost.amount.toString();
   
-
+  checkEqual(){
+    if(isEqualAmount()){
+      this.status = StatusInvoiceItem.OK.value;
+    }else{
+      this.status = StatusInvoiceItem.ISSUE.value;
+    }
+    return isEqualAmount();
+  }
+  
 }

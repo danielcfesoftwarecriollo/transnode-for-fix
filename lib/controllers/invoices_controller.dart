@@ -27,8 +27,7 @@ class InvoiceController {
       loadingBillTos= false;
       var bill_to_id = _routeProvider.parameters['billToId'];
       _loadInvoice(bill_to_id);
-    }
-    
+    }    
   }
   
   onSelectBillTo(var billToId){
@@ -36,13 +35,13 @@ class InvoiceController {
   }
   
   loadBillToCustomer(String val){
-      if(val.isNotEmpty){
-        var response = _customerService.getLocationByNameAndRole('bill_to',val.toString());
-        return response.then((r) =>r);
-      }else{
-        return [];
-      }
+    if(val.isNotEmpty){
+      var response = _customerService.getLocationByNameAndRole('bill_to',val.toString());
+      return response.then((r) =>r);
+    }else{
+      return [];
     }
+  }
   
   void SelectedAmount(InvoiceItem invoiceItem){
     invoiceItem.selected = true;

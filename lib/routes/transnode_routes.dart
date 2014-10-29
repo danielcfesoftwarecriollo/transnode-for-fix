@@ -170,6 +170,10 @@ class TransnodeRouterInitializer {
               path: '/invoices/manager/:invoiceId',
               view: 'partials/invoices/review_ap_invoice.html',
               preEnter: authenticatedAccess),
+          'ap_invoice': ngRoute(
+              path: '/invoices/ap_invoice/:carrierId',
+              view: 'partials/invoices/ap_invoice.html',
+              preEnter: authenticatedAccess),
     });
   }
 

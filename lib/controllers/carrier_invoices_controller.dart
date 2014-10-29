@@ -10,13 +10,14 @@ class CarrierInvoiceController {
   Router _router;
   final ShipmentService _shipmentService;
   final InvoiceAPService _invoiceService;
+  final CarrierService _carrierService;
   Shipment shipment;
   int step;
   bool loadingvendors;
   
   var asyncSelected;
   
-  CarrierInvoiceController(this._invoiceService, this._shipmentService, this._routeProvider, this._router) {
+  CarrierInvoiceController(this._invoiceService,this._carrierService, this._shipmentService, this._routeProvider, this._router) {
     this.step = 1;
     this.loadingvendors = false;
     if(_isManagerAPInvoicePatch()){
@@ -25,17 +26,25 @@ class CarrierInvoiceController {
         this.invoice.setValidatorReview();
         this.initItemsReview();
       });
-    }    
+    }else if(_isAPInvoicePatch()){
+      var carrierId = _routeProvider.parameters['carrierId'];
+      _loadCarrier(carrierId.toString()).then((r){
+        _checkIsNew();
+        this.invoice.checkApAmounts();
+      });
+    }
   }
   
   void selectedAmount(InvoiceItemAP invoiceItem){
     invoiceItem.amount = ParserNumber.toDouble(invoiceItem.cost.amount);
     this.aceptedReview(invoiceItem);
+    this.invoice.checkApAmounts();
   }
   
   void deselectAmount(InvoiceItemAP invoiceItem){
     invoiceItem.amount = null;
     this.rejectedReview(invoiceItem);
+    this.invoice.checkApAmounts();
   }
   
   void aceptedReview(InvoiceItemAP invoiceItem){
@@ -51,7 +60,7 @@ class CarrierInvoiceController {
   _checkIsNew(){
     if (this.invoice.is_new()){
       this.invoice.dueDate = DateHelper.addDate(30);
-      this.invoice.exportDate = DateHelper.currentDate();
+      this.invoice.received_date = DateHelper.currentDate();
       this.invoice.currency = this.invoice.vendor.currency;
     }
     this.invoice.changeSelectedItems();
@@ -89,6 +98,12 @@ class CarrierInvoiceController {
     }
   }
 
+  
+  sendToManager(){
+    this.invoice.checkLogic();
+    this.save();
+  }
+  
   void save() {
     if (this.invoice.is_valid()) {
       var response = this._invoiceService.save(this.invoice);
@@ -131,8 +146,36 @@ class CarrierInvoiceController {
     }
   }
   
-  bool _isValidInvoice() => this.invoice.is_valid();
+  loadCarriersByString(val){
+    var response = this._carrierService.getCarriersByName(val.toString());
+    return response.then((r) =>r);
+  }
   
+  onSelectCarrier($item){
+    _loadCarrier($item.toString());
+  }
+  
+  Future _loadCarrier(String id){
+    var response = this._invoiceService.getInvoice(id);
+    return response.then((_)=> this.invoice = _);
+  }
+
+  bool toManager(){
+    if(inCheckedStatus('SOMENOTEQUAL') || inCheckedStatus('NOTEQUAL')){
+      return true;
+    }else if(inCheckedStatus('EQUAL')){
+      return false;
+    }
+    return true;
+  }
+  
+  bool inCheckedStatus(String status){
+    if(this.invoice == null){
+      return false;
+    }
+    return status == this.invoice.checkedStatus;
+  }
+  bool _isValidInvoice() => this.invoice.is_valid();  
   bool inStep(int step) => step == this.step;
   bool _isManagerAPInvoicePatch() => _routeProvider.routeName == 'manager_view_invoice';
   bool _isAPInvoicePatch() => _routeProvider.routeName == 'ap_invoice';

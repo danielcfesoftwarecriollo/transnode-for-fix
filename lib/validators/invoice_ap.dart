@@ -11,7 +11,7 @@ class InvoiceApValidator extends Validator {
     required_field(_invoice.vendor, "vendor");
     required_field(_invoice.currency, "currency");
     required_field(_invoice.dueDate, "dueDate");
-    required_field(_invoice.exportDate, "exportDate");
+    required_field(_invoice.received_date, "received_date");
     this.list_notEmpty(_invoice.selectedItems, "selectedItems");
     return this.valid();
   } 

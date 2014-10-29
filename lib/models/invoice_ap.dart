@@ -4,13 +4,13 @@ class InvoiceAP extends RecordModelNested{
 
   String status;
   Carrier vendor;
-//  Shipment shipment;
   DateTime dueDate;
   String currency;
-  DateTime exportDate;
+  DateTime received_date;
   String createdAt;
   String updatedAt;
   bool acepted;
+  String checkedStatus;
   
   List<InvoiceItemAP> items;
   var totalSelected;
@@ -27,12 +27,12 @@ class InvoiceAP extends RecordModelNested{
     this._validator = new ReviewInvoiceApValidator(this);
   }
   
-  exportDateFormated() => DateHelper.formated(this.exportDate);
+  receivedDateFormated() => DateHelper.formated(this.received_date);
   dueDateFormated() => DateHelper.formated(this.dueDate);
   
   @override
   void loadWithJson(Map<String, dynamic> map) {
-    this.exportDate = loadDate(map, 'export_date');
+    this.received_date = loadDate(map, 'received_date');
     this.dueDate = loadDate(map, 'due_date');
     this.vendor = loadCarrierByMap(map,'vendor');
     super.loadWithJson(map);
@@ -47,6 +47,32 @@ class InvoiceAP extends RecordModelNested{
      }
      return aux;
    }
+  
+  checkApAmounts(){
+    List itemsEquals = items.takeWhile((i) => i.amount.toString() == i.cost.amount.toString());
+    this.setcheckedStatus(itemsEquals);
+  }
+  
+  checkLogic(){
+    items.forEach((i) =>i.checkEqual());
+    if(inCheckedStatus("EQUAL")){
+      this.status = StatusInvoice.READY_FOR_EXPORT.value;
+    }
+  }
+  
+  bool inCheckedStatus(String status){
+    return status == this.checkedStatus;
+  }
+
+  setcheckedStatus(List equalsItems){
+    if(equalsItems.length == items.length){
+      this.checkedStatus = "EQUAL";
+    }else if( equalsItems.length > 0 ){
+      this.checkedStatus = "SOMENOTEQUAL";
+    } if(equalsItems.length == 0){
+      this.checkedStatus = "NOTEQUAL";
+    }
+  }
   
   void loadItems(Map map){
     if (map.containsKey("items_attributes")) {
@@ -71,7 +97,7 @@ class InvoiceAP extends RecordModelNested{
       'status' : status,      
       'carrier_id' : vendor.id,
       'due_date' : dueDate.toIso8601String(),
-      'export_date': exportDate.toIso8601String(),
+      'received_date': received_date.toIso8601String(),
       'currency' : currency,
       'items_attributes' : HelperList.to_map(items)
     };
