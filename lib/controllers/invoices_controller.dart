@@ -13,7 +13,7 @@ class InvoiceController {
   final InvoiceService _invoiceService;
   Shipment shipment;
   int step;
-  
+  bool creditNote;
   
   var asyncSelected;
   bool loadingBillTos;
@@ -25,13 +25,22 @@ class InvoiceController {
       _loadShipment(shipment_id);
     } else if(_isConsolidatedPatch()){
       loadingBillTos= false;
+      creditNote = false;
       var bill_to_id = _routeProvider.parameters['billToId'];
       _loadInvoice(bill_to_id);
-    }    
+    }else if(_isCreditNotePatch()){
+      creditNote = true;
+      var bill_to_id = _routeProvider.parameters['billToId'];
+      _loadCreditNote(bill_to_id);
+    }
   }
   
   onSelectBillTo(var billToId){
-    _loadInvoice(billToId);
+    if(this.creditNote){
+      _loadCreditNote(billToId);
+    }else{
+      _loadInvoice(billToId);
+    }
   }
   
   loadBillToCustomer(String val){
@@ -93,6 +102,13 @@ class InvoiceController {
     });
   }
   
+  _loadCreditNote(String bill_to_id){
+    _invoiceService.getCreditNote(bill_to_id).then((_){
+      this.invoice = _;
+      _checkIsNew();
+    });
+  }
+  
   _loadInvoice(String bill_to_id){
     _invoiceService.getInvoice(bill_to_id).then((_){
       this.invoice = _;
@@ -114,4 +130,5 @@ class InvoiceController {
   bool _isPreviewPath() => _routeProvider.routeName == 'invoice_preview';
   bool _isConsolidatedPatch() => _routeProvider.routeName == 'invoice_consolidated';
   bool _isManagerAPInvoicePatch() => _routeProvider.routeName == 'manager_view_invoice';
+  bool _isCreditNotePatch() => _routeProvider.routeName == 'credit_note_consolidate';
 }

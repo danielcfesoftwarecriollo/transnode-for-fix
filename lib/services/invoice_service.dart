@@ -18,6 +18,11 @@ class InvoiceService {
     return _api.request("get", url + "/consolidated_invoice/${billToId.toString()}" )
       .then((HttpResponse response) => LoadModel.loadInvoice(response.data));
   }
+
+  Future<Invoice> getCreditNote(String carrierId) {
+    return _api.request("get", url + "/consolidated_note_credit/${carrierId.toString()}" )
+      .then((HttpResponse response) => LoadModel.loadInvoice(response.data));
+  }
   
   Future<Customer> get(String customerId) {
     return _api.request("get", url + "/" + customerId.toString())

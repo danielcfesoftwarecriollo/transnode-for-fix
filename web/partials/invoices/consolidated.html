@@ -1,6 +1,7 @@
 <div invoice-controller class="container-fluid container-invoice">
   <div class="step1" ng-show="ctrl.inStep(1)" >
-    <h1>Customer Invoice</h1>
+    <h1 ng-show="ctrl.creditNote" >Credit Note</h1>
+    <h1 ng-hide="ctrl.creditNote" >Customer Invoice</h1>
     <div class="row">
       <div class="col-md-12">
         <div class="col-md-3">
@@ -124,7 +125,8 @@
     <div class="row margin-bottom">
       <div class="col-md-12">
         <div class="col-md-6">
-          <p>Internal note about invoice</p>
+          <p ng-hide="ctrl.creditNote" >Internal note about invoice</p>
+          <p ng-show="ctrl.creditNote" >Internal note about credit note</p>
           <textarea name="" id="" class="form-control" rows="5"></textarea>
         </div>
         <div class="col-md-6">

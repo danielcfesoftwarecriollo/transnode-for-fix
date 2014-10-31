@@ -166,6 +166,10 @@ class TransnodeRouterInitializer {
               path: '/invoices/consolidate/:billToId',
               view: 'partials/invoices/consolidated.html',
               preEnter: authenticatedAccess),
+          'credit_note_consolidate': ngRoute(
+              path: '/invoices/credit_note_consolidate/:billToId',
+              view: 'partials/invoices/consolidated.html',
+              preEnter: authenticatedAccess),
           'manager_view_invoice': ngRoute(
               path: '/invoices/manager/:invoiceId',
               view: 'partials/invoices/review_ap_invoice.html',

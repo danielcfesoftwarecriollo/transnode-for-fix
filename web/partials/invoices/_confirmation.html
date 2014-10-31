@@ -1,4 +1,5 @@
-<h1>Confirmation Customer Consolidate Invoice</h1>
+<h1 ng-show="ctrl.creditNote" >Confirmation of Customer Credit Note</h1>
+<h1 ng-hide="ctrl.creditNote" >Confirmation of Customer Consolidate Invoice</h1>
   <div class="row">
     <div class="col-md-12">
       <div class="col-md-3">
@@ -101,7 +102,8 @@
   <div class="row margin-bottom">
     <div class="col-md-12">
       <div class="col-md-6">
-        <p>Internal note about invoice</p>
+        <p ng-hide="ctrl.creditNote" >Internal note about invoice</p>
+        <p ng-show="ctrl.creditNote" >Internal note about credit note</p>
         <div></div>
       </div>
       <div class="col-md-6">
