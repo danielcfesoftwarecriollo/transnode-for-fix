@@ -1,0 +1,65 @@
+<div invoice-controller>
+  <h1>Search Invoices for Customers</h1>
+  <div class="col-md-3">
+    <label for="customer">Bill To: {{ctrl.invoice.billTo.name}}</label>
+      <input type="search" ng-model="ctrl.asyncSelected"
+         typeahead-min-length="3"
+         typeahead-on-select="ctrl.onSelectCustomer($item['value'])"
+         typeahead="billto as billto['label'] for billto in ctrl.loadBillToCustomer($viewValue)"
+         typeahead-wait-ms="700"
+         typeahead-loading="ctrl.loadingBillTos"
+         class="form-control" placeholder="Bill To Name">
+    <i ng-show="ctrl.loadingBillTos" class="glyphicon glyphicon-refresh"></i>
+  </div>
+  <div class="col-md-3" >
+    <label for="terms">Terms</label>
+    <select ng-change="ctrl.filterStatusChanged()" ng-model='ctrl.statusListSelected' id="terms" class="form-control"  ng-disabled="(ctrl.billToSelectedId == null)" >
+      <option value="" disabled selected>Terms</option>
+      <option value="all">All</option>
+      <option ng-seleted="status == ctrl.statusListSelected" ng-value="status" ng-repeat="status in ctrl.statusList">{{status}}</option>      
+    </select>
+  </div>
+  <div ng-show='ctrl.has_invoices'>
+    <table class='table table-hover'>
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>status</th>
+          <th>Bill To</th>
+          <th>Due Date</th>
+          <th>Export Date</th>
+          <th>Currency</th>
+          <th>Total</th>
+          <th class='col-xs-3'>actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat='invoice in ctrl.invoices'>
+          <td>{{invoice.id}}</td>
+          <td>{{invoice.status}}</td>
+          <td>{{invoice.billTo.name}}</td>
+          <td>{{invoice.dueDateFormated()}}</td>
+          <td>{{invoice.exportDateFormated()}}</td>
+          <td>{{invoice.currency}}</td>
+          <td>{{invoice.total}}</td>
+
+          <td class="actions">
+            <div class="col-md-12">
+              <a class="btn btn-info" popover="View Invoice" popover-trigger="mouseenter"  ng-href="#/invoices/{{invoice.id}}">
+                <i class="glyphicon glyphicon-search"></i>
+              </a>
+
+              <a ng-disabled="(!invoice.inStatus('canceled'))" class="btn btn-warning" popover="Reopen Invoice" popover-trigger="mouseenter"  ng-click='ctrl.reopenInvoice(invoice)'>
+                <i class="fa fa-refresh"></i>
+              </a>
+
+              <a ng-disabled="(invoice.inStatus('ready_for_export') || invoice.inStatus('canceled'))" class="btn btn-danger" popover="Cancel Invoice" popover-trigger="mouseenter" ng-click='ctrl.cancelInvoice(invoice)'>
+                <i class="glyphicon glyphicon-remove"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

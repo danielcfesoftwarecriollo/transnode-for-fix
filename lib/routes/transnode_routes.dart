@@ -162,6 +162,10 @@ class TransnodeRouterInitializer {
               path: '/invoices/preview/:shipmentId',
               view: 'partials/invoices/preview.html',
               preEnter: authenticatedAccess),
+          'invoice_view': ngRoute(
+              path: '/invoices/:id',
+              view: 'partials/invoices/show.html',
+              preEnter: authenticatedAccess),
           'invoice_consolidated': ngRoute(
               path: '/invoices/consolidate/:billToId',
               view: 'partials/invoices/consolidated.html',
@@ -177,6 +181,10 @@ class TransnodeRouterInitializer {
           'ap_invoice': ngRoute(
               path: '/invoices/ap_invoice/:carrierId',
               view: 'partials/invoices/ap_invoice.html',
+              preEnter: authenticatedAccess),
+          'invoices': ngRoute(
+              path: '/invoices',
+              view: 'partials/invoices/index.html',
               preEnter: authenticatedAccess),
     });
   }

@@ -11,20 +11,31 @@ class InvoiceController {
   final ShipmentService _shipmentService;
   final CustomerService _customerService;
   final InvoiceService _invoiceService;
+  MessagesService _messageServices;
+  Map indexFilters;
   Shipment shipment;
   int step;
   bool creditNote;
+  Scope scope;
+  Modal modal; 
+  
+  List statusList;
+  String statusListSelected;
   
   var asyncSelected;
   bool loadingBillTos;
+  String billToSelectedId;
   
-  InvoiceController(this._invoiceService, this._customerService, this._shipmentService, this._routeProvider, this._router) {
+  InvoiceController(this.modal,this.scope, this._messageServices,this._invoiceService, this._customerService, this._shipmentService, this._routeProvider, this._router) {
     this.step = 1;
+    this.statusList = StatusInvoice.toList();
+    loadingBillTos = false;
+    this.billToSelectedId = null;
+    this.indexFilters = {'status':'all'};
     if (_isPreviewPath()){
       var shipment_id = _routeProvider.parameters['shipmentId'];
       _loadShipment(shipment_id);
     } else if(_isConsolidatedPatch()){
-      loadingBillTos= false;
       creditNote = false;
       var bill_to_id = _routeProvider.parameters['billToId'];
       _loadInvoice(bill_to_id);
@@ -32,7 +43,19 @@ class InvoiceController {
       creditNote = true;
       var bill_to_id = _routeProvider.parameters['billToId'];
       _loadCreditNote(bill_to_id);
+    }else if(_isIndexPath()){
+      this.invoices = [];
+    }else if(_isViewPath()){
+      var invoice_id = _routeProvider.parameters['id'];
+      _loadInvoiceById(invoice_id);
     }
+  }
+  
+  _loadInvoiceById(String invoice_id){
+    var response =  _invoiceService.get(invoice_id);
+    response.then((invoice){
+      this.invoice = invoice;
+    });
   }
   
   onSelectBillTo(var billToId){
@@ -41,6 +64,41 @@ class InvoiceController {
     }else{
       _loadInvoice(billToId);
     }
+  }
+  
+  onSelectCustomer(var billToId){
+    this.billToSelectedId = billToId;
+    searchByBillto(billToId);
+  }
+  
+  searchByBillto(var billToId){
+    var response = this._invoiceService.getInvoicesByBillTo(billToId, this.indexFilters);
+    response.then((response) {
+      if (response == null) return false;
+      this.loadInvoices(response);
+    });
+  }
+    
+  filterStatusChanged(){
+    new Timer(const Duration(milliseconds: 1000), () {
+      this.indexFilters['status'] = statusToApi();
+      searchByBillto(this.billToSelectedId);
+    });
+  }
+
+  statusToApi(){
+    if(this.statusListSelected == "all"){
+      return this.statusListSelected;
+    }else{
+      return this.statusList.indexOf(this.statusListSelected);
+    }
+  }
+  
+  loadInvoices(List map){
+    this.invoices = [];
+    map.forEach((imap){
+      this.invoices.add(LoadModel.loadInvoice(imap));
+    });
   }
   
   loadBillToCustomer(String val){
@@ -123,10 +181,35 @@ class InvoiceController {
       this.step = 1;
     }
   }
+
+  void cancelInvoice( Invoice invoice){
+    if(window.confirm('you are sure to cancel this invoice?')){
+      var response = _invoiceService.cancel(invoice.id.toString());
+      response.then((success){
+        _messageServices.add("success", "The Invoice has been successfully cancel");
+        searchByBillto(this.billToSelectedId);
+      });
+    }
+  }
+  
+  void reopenInvoice( Invoice invoice){
+    if(window.confirm('you are sure to re-open this invoice?')){
+      var response = _invoiceService.reOpen(invoice.id.toString());
+      response.then((success){
+        _messageServices.add("success", "The Invoice has been successfully re-open");
+        searchByBillto(this.billToSelectedId);
+      });
+    }
+  }
+  
   
   bool _isValidInvoice() => this.invoice.is_valid();
-  
   bool inStep(int step) => step == this.step;
+  bool get has_invoices => this.invoices.isNotEmpty;
+  
+  
+  bool _isViewPath() => _routeProvider.routeName == 'invoice_view';
+  bool _isIndexPath() => _routeProvider.routeName == 'invoices';
   bool _isPreviewPath() => _routeProvider.routeName == 'invoice_preview';
   bool _isConsolidatedPatch() => _routeProvider.routeName == 'invoice_consolidated';
   bool _isManagerAPInvoicePatch() => _routeProvider.routeName == 'manager_view_invoice';

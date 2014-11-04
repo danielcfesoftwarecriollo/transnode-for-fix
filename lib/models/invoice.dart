@@ -12,6 +12,7 @@ class Invoice extends RecordModelNested{
   String updatedAt;
   List<InvoiceItem> items;
   var totalSelected;
+  String total;
   
   Invoice(){
     status = 'New';
@@ -69,6 +70,10 @@ class Invoice extends RecordModelNested{
       map.remove(key);      
     }
     return aux;
+  }
+
+  bool inStatus(String statusTo){
+    return (this.status.toString() == statusTo.toString());
   }
   
   void selectedItemsLoaded(){

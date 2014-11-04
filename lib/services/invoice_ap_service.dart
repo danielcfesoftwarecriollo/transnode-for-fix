@@ -28,6 +28,16 @@ class InvoiceAPService {
       .then((_) => _messageServices.add("info", "Carrier Invoice delete it"));
   }
   
+  Future cancel(String invoiceId) {
+    return _api.request("post", url + "/cancel/"+invoiceId)
+      .then((HttpResponse response) => response.data);
+  }
+
+  Future reOpen(String invoiceId) {
+    return _api.request("post", url + "/reopen/"+invoiceId)
+      .then((HttpResponse response) => response.data);
+  }
+    
   Future<InvoiceAP> saveReview(InvoiceAP invoiceAP) {
     return _api.request("post", url + "/review_invoice/${invoiceAP.id}", data:params_update(invoiceAP))
           .then((HttpResponse response){

@@ -14,6 +14,11 @@ class InvoiceService {
     return _api.request('get', url);
   }
 
+  Future getInvoicesByBillTo(String billToId, filters) {
+    return _api.request("get", url + "/by_bill_to/${billToId.toString()}/${filters['status']}" )
+      .then((HttpResponse response) => response.data);
+  }
+  
   Future<Invoice> getInvoice(String billToId) {
     return _api.request("get", url + "/consolidated_invoice/${billToId.toString()}" )
       .then((HttpResponse response) => LoadModel.loadInvoice(response.data));
@@ -24,16 +29,21 @@ class InvoiceService {
       .then((HttpResponse response) => LoadModel.loadInvoice(response.data));
   }
   
-  Future<Customer> get(String customerId) {
-    return _api.request("get", url + "/" + customerId.toString())
+  Future<Invoice> get(String invoiceId) {
+    return _api.request("get", url + "/" + invoiceId)
       .then((HttpResponse response) => LoadModel.loadInvoice(response.data));
   }
 
-  Future<Customer> delete(String customerId) {
-    return _api.request("delete", url + "/" + customerId.toString())
-      .then((_) => _messageServices.add("info", "customer delete it"));
+  Future cancel(String invoiceId) {
+    return _api.request("post", url + "/cancel/"+invoiceId)
+      .then((HttpResponse response) => response.data);
   }
 
+  Future reOpen(String invoiceId) {
+    return _api.request("post", url + "/reopen/"+invoiceId)
+      .then((HttpResponse response) => response.data);
+  }
+  
   Future save(Invoice invoice) {
     String method, parameters, path;
     if (invoice.is_new()) {
