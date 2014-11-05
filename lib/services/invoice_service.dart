@@ -28,6 +28,11 @@ class InvoiceService {
     return _api.request("get", url + "/consolidated_note_credit/${carrierId.toString()}" )
       .then((HttpResponse response) => LoadModel.loadInvoice(response.data));
   }
+
+  Future getInvoicesNotPaidByBillTo(String billToId) {
+    return _api.request("get", url + "/not_paid/${billToId.toString()}" )
+      .then((HttpResponse response) => response.data);
+  }
   
   Future<Invoice> get(String invoiceId) {
     return _api.request("get", url + "/" + invoiceId)

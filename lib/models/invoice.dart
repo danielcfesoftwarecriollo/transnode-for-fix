@@ -13,11 +13,13 @@ class Invoice extends RecordModelNested{
   List<InvoiceItem> items;
   var totalSelected;
   String total;
+  String balance;
   
   Invoice(){
     status = 'New';
     items = [];
     totalSelected = 0;
+    balance = '0';
     this._validator = new InvoiceValidator(this);
   }
   

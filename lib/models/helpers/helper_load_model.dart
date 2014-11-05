@@ -136,4 +136,16 @@ class LoadModel{
     }
     return null;
   }
+  
+  static Payment loadPayment(Map<String, dynamic> json) {
+    Payment p = new Payment();
+    p.loadWithJson(json);
+    return p;
+  }
+  
+  static PaymentInvoice loadPaymentInvoice(Map<String, dynamic> json) {
+    PaymentInvoice p = new PaymentInvoice();
+    p.loadWithJson(json);
+    return p;
+  }
 }

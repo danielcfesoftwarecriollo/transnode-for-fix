@@ -186,6 +186,10 @@ class TransnodeRouterInitializer {
               path: '/invoices',
               view: 'partials/invoices/index.html',
               preEnter: authenticatedAccess),
+          'add_cash': ngRoute(
+              path: '/payments/add_cash',
+              view: 'partials/payments/add_cash.html',
+              preEnter: authenticatedAccess),
     });
   }
 

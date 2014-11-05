@@ -1,0 +1,137 @@
+<div payment-controller class="row">
+  <div class="col-md-10 col-md-offset-1 container-invoice">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>ADD CASH RECEIPT</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <label for="customer">Bill To: {{ctrl.billTo.name}}</label>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-search"></i>
+              </div>
+              <input type="search" placeholder="Select Bill To" ng-model="ctrl.asyncSelected"
+               typeahead-min-length="3"
+               typeahead-on-select="ctrl.onSelectBillTo($item['value'])"
+               typeahead="billTo as billTo['label'] for billTo in ctrl.loadBillToCustomer($viewValue)"
+               typeahead-wait-ms="700"
+               typeahead-loading="ctrl.loadingBillTo"
+               class="form-control">
+            </div>
+          </div>
+          <i ng-show="ctrl.loadingBillTo" class="glyphicon glyphicon-refresh"></i>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-9">
+        <div class="col-md-6">
+          <div class="col-md-12">
+            <label for="">Name: {{ctrl.payment.billTo.name}}</label>
+          </div>
+          <div class="col-md-12">
+            <label for="">Address 1: {{ctrl.payment.billTo.address1}}</label>
+          </div>
+          <div class="col-md-12">
+            <label for="">Address 2:{{ctrl.payment.billTo.address2}} </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="col-md-12">
+            <label for="">City: {{ctrl.payment.billTo.city.name}}, Zip:{{ctrl.payment.billTo.zip}}, Country:{{ctrl.payment.billTo.country['name']}} </label>
+          </div>
+          <div class="col-md-12">
+            <label for="">Contact Name: {{ctrl.payment.billTo.contacts.first.name}}</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="inv-date">Pay. Date</label>
+              <input type="date"  id="inv-date" ng-model="ctrl.payment.payDate" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="inv-date">Check. Date</label>
+              <input type="date"  id="inv-date" ng-model="ctrl.payment.checkDate" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="inv-date">Type of Pay</label>
+          <select id="currency" ng-model="ctrl.payment.payType" class="form-control">
+            <option value="" disabled selected>Type of Pay</option>
+            <option ng-repeat=" type in ['Check','Wire','Transfer']" ng-value="type">{{type}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="inv-date">Currency</label>
+          <select id="currency" ng-model="ctrl.payment.currency" class="form-control">
+            <option value="" disabled selected>Currency</option>
+            <option ng-repeat=" currency in ['CAD','USD']" ng-selected="currency == ctrl.payment.currency" ng-value="ctrl.payment.currency">{{currency}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="inv-date"># ref</label>
+          <input type="text"  id="inv-date" placeholder="check number, #ref,etc." ng-model="ctrl.payment.checkNumber" class="form-control">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="inv-date">Amount</label>
+          <input type="text"  id="inv-date" placeholder="Amount" ng-model="ctrl.payment.amount" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>the invoices not paid</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-9">
+        <table class='table table-hover'>
+          <thead>
+            <tr>
+              <th>inv#</th>
+              <th>status</th>
+              <th>Original Amt</th>
+              <th>Inv Balance</th>
+              <th>Inv Date</th>
+              <th>Amount to Apply</th>
+              <th>Inv Balance After</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat='paymentInvoice in ctrl.payment.paymentInvoices'>
+              <td>IN{{paymentInvoice.invoice.id}}</td>
+              <td>{{paymentInvoice.invoice.status}}</td>
+              <td>{{paymentInvoice.invoice.total}}</td>
+              <td>{{paymentInvoice.invoice.balance}}</td>
+              <td>{{paymentInvoice.invoice.dueDateFormated()}}</td>
+              <td>
+                <input type="text" ng-change="paymentInvoice.checkBalanceAfter()" ng-model="paymentInvoice.amount" >
+              </td>
+              <td>{{paymentInvoice.balanceAfter}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
