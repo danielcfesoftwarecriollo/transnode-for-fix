@@ -39,13 +39,7 @@ class ExchangeValue extends RecordModelNested{
   _getCurrentRateExchage(){
     return exchangeRates[fromCurrency][toCurrency];
   }
-  
-//  setCurrency(toCurrency, fromCurrency, currenteFactor){
-//    this.currenteFactor = currenteFactor;
-//    this.toCurrency = toCurrency;
-//    this.fromCurrency = fromCurrency;
-//  }
-  
+
   Future loadRateExchange(from){
     var completer = new Completer();
     if(_hasRateExchage()){
@@ -55,15 +49,19 @@ class ExchangeValue extends RecordModelNested{
       var request = this._exchangeRateFactorService.getFactorExchange(from,toCurrency);
       request.then((response){
         exchangeRate = response['exchange_rate'];
-        addValueExchange(exchangeRate);
+        addValueExchange(exchangeRate,response['from'],response['to']);
         completer.complete( exchangeRate );
       });
     }   
     return completer.future;
   }
 
-  addValueExchange(valueExchange){
-    return exchangeRates.addAll({fromCurrency:{toCurrency : valueExchange}});
+  addValueExchange(valueExchange, fromCurrency, toCurrency){
+    if (exchangeRates.containsKey(fromCurrency)){
+      return exchangeRates[fromCurrency].addAll({toCurrency : valueExchange});
+    }else{
+      return exchangeRates.addAll({fromCurrency:{toCurrency : valueExchange}});
+    }
   }
 
   double getFactor(factor){
@@ -87,5 +85,17 @@ class ExchangeValue extends RecordModelNested{
          completer.complete( aux.toStringAsFixed(2) );
        });     
      return completer.future;
-  }  
+  }
+  
+  Future<double> calculateExchange(fromCurrency,toCurrency,amount){    
+     var completer = new Completer();
+     this.fromCurrency = fromCurrency;
+     this.toCurrency = toCurrency;
+      loadRateExchange(fromCurrency).then((exchangeRate){
+        double amountExchanged = ParserNumber.toDouble(amount.toString()) * exchangeRate;
+        double fixedNumber = ParserNumber.toDouble(amountExchanged.toStringAsFixed(2));
+         completer.complete(fixedNumber);
+       });     
+     return completer.future;
+  }
 }
