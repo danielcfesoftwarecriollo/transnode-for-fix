@@ -5,11 +5,14 @@ class PaymentInvoice extends RecordModelNested{
   Payment payment;
   double amount;
   double balanceAfter;
+  double localAmount;
 
   PaymentInvoice(){
+    this._validator = new PaymentInvoiceValidator(this);
     this.invoice = new Invoice();
     this.payment = new Payment();
     this.amount  = 0.0;
+    this.localAmount  = 0.0;
   }
 
   @override
@@ -20,7 +23,7 @@ class PaymentInvoice extends RecordModelNested{
   }
   
   checkBalanceAfter(){
-    balanceAfter = (ParserNumber.toDouble(this.invoice.balance) - this.amount);
+    balanceAfter = (ParserNumber.toDouble(this.invoice.balance) - ParserNumber.toDouble(this.amount));
   }
   
   loadInvoiceByMap(map,target){
@@ -44,9 +47,8 @@ class PaymentInvoice extends RecordModelNested{
   Map to_map() {
     return {
       'id' : id,
-      'payment_id' : payment.id,
       'invoice_id' : invoice.id,
-      'amount'     : amount
+      'amount'     : this.localAmount
     };
   }
 

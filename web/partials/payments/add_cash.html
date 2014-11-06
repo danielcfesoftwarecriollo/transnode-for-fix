@@ -7,8 +7,8 @@
     </div>
     <div class="row">
       <div class="col-md-3">
-        <label for="customer">Bill To: {{ctrl.billTo.name}}</label>
-          <div class="form-group">
+        <label for="customer">Bill To: {{ctrl.payment.billTo.name}}</label>
+          <div class="form-group" ng-class="{'has-error':ctrl.payment.has_errors('billTo')}">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-search"></i>
@@ -23,6 +23,7 @@
             </div>
           </div>
           <i ng-show="ctrl.loadingBillTo" class="glyphicon glyphicon-refresh"></i>
+          <p ng-show="ctrl.payment.has_errors('billTo')" class='error'>{{ctrl.payment.errors_by_field('billTo')}}</p>
       </div>
     </div>
     <div class="row">
@@ -45,22 +46,27 @@
           <div class="col-md-12">
             <label for="">Contact Name: {{ctrl.payment.billTo.contacts.first.name}}</label>
           </div>
+          <div class="col-md-12">
+            <label for="">Customer Balance: {{ctrl.customer.balance}}</label>
+          </div>
         </div>
       </div>
       <div class="col-md-3">
         <div class="row">
           <div class="col-md-12">
-            <div class="form-group">
+            <div class="form-group" ng-class="{'has-error':ctrl.payment.has_errors('payDate')}">
               <label for="inv-date">Pay. Date</label>
               <input type="date"  id="inv-date" ng-model="ctrl.payment.payDate" class="form-control">
+              <p ng-show="ctrl.payment.has_errors('payDate')" class='error'>{{ctrl.payment.errors_by_field('payDate')}}</p>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <div class="form-group">
+            <div class="form-group" ng-class="{'has-error':ctrl.payment.has_errors('checkDate')}" >
               <label for="inv-date">Check. Date</label>
               <input type="date"  id="inv-date" ng-model="ctrl.payment.checkDate" class="form-control">
+              <p ng-show="ctrl.payment.has_errors('checkDate')" class='error'>{{ctrl.payment.errors_by_field('checkDate')}}</p>
             </div>
           </div>
         </div>
@@ -68,33 +74,49 @@
     </div>
     <div class="row">
       <div class="col-md-3">
-        <div class="form-group">
+        <div class="form-group" ng-class="{'has-error':ctrl.payment.has_errors('payType')}">
           <label for="inv-date">Type of Pay</label>
           <select id="currency" ng-model="ctrl.payment.payType" class="form-control">
             <option value="" disabled selected>Type of Pay</option>
             <option ng-repeat=" type in ['Check','Wire','Transfer']" ng-value="type">{{type}}</option>
           </select>
+          <p ng-show="ctrl.payment.has_errors('payType')" class='error'>{{ctrl.payment.errors_by_field('payType')}}</p>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="form-group">
-          <label for="inv-date">Currency</label>
-          <select id="currency" ng-model="ctrl.payment.currency" class="form-control">
-            <option value="" disabled selected>Currency</option>
-            <option ng-repeat=" currency in ['CAD','USD']" ng-selected="currency == ctrl.payment.currency" ng-value="ctrl.payment.currency">{{currency}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="form-group">
+      <div class="col-md-2">
+        <div class="form-group" ng-class="{'has-error':ctrl.payment.has_errors('checkNumber')}" >
           <label for="inv-date"># ref</label>
           <input type="text"  id="inv-date" placeholder="check number, #ref,etc." ng-model="ctrl.payment.checkNumber" class="form-control">
+          <p ng-show="ctrl.payment.has_errors('checkNumber')" class='error'>{{ctrl.payment.errors_by_field('checkNumber')}}</p>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="form-group">
+      <div class="col-md-2">
+        <div class="form-group"  ng-class="{'has-error':ctrl.payment.has_errors('currency')}" >
+          <label for="inv-date">Currency: {{ctrl.payment.currency}}</label>
+          <select id="currency" ng-model="ctrl.payment.currency" class="form-control" ng-change="ctrl.changeCurrency()">
+            <option value="" disabled selected>Currency</option>
+            <option ng-repeat=" currency in ['CAD','USD']" ng-selected="currency == ctrl.payment.currency" ng-value="currency">{{currency}}</option>
+          </select>
+          <p ng-show="ctrl.payment.has_errors('currency')" class='error'>{{ctrl.payment.errors_by_field('currency')}}</p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group" ng-class="{'has-error':ctrl.payment.has_errors('amount')}" >
           <label for="inv-date">Amount</label>
-          <input type="text"  id="inv-date" placeholder="Amount" ng-model="ctrl.payment.amount" class="form-control">
+          <input type="text"  id="inv-date" placeholder="Amount" ng-model="ctrl.payment.amount" class="form-control" ng-keyup="ctrl.checkAllBalanceAfter()">
+          <p ng-show="ctrl.payment.has_errors('amount')" class='error'>{{ctrl.payment.errors_by_field('amount')}}</p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group" ng-class="{'has-error':ctrl.payment.has_errors('localAmount')}" >
+          <label for="inv-date">Local Amount</label>
+          <input readonly type="text"  id="inv-date" placeholder="Amount" ng-model="ctrl.payment.localAmount" class="form-control" ng-keyup="ctrl.checkAllBalanceAfter()">
+          <p ng-show="ctrl.payment.has_errors('localAmount')" class='error'>{{ctrl.payment.errors_by_field('localAmount')}}</p>
+        </div>
+      </div>
+      <div class="col-md-1">
+        <div style="padding-top: 30px;">
+          <b>CAD</b>
         </div>
       </div>
     </div>
@@ -110,10 +132,12 @@
             <tr>
               <th>inv#</th>
               <th>status</th>
+              <th>Inv Date</th>
+              <th>Currency</th>
               <th>Original Amt</th>
               <th>Inv Balance</th>
-              <th>Inv Date</th>
               <th>Amount to Apply</th>
+              <th>Pay in Amount</th>
               <th>Inv Balance After</th>
             </tr>
           </thead>
@@ -121,16 +145,43 @@
             <tr ng-repeat='paymentInvoice in ctrl.payment.paymentInvoices'>
               <td>IN{{paymentInvoice.invoice.id}}</td>
               <td>{{paymentInvoice.invoice.status}}</td>
+              <td>{{paymentInvoice.invoice.dueDateFormated()}}</td>
+              <td>{{paymentInvoice.invoice.currency}}</td>
               <td>{{paymentInvoice.invoice.total}}</td>
               <td>{{paymentInvoice.invoice.balance}}</td>
-              <td>{{paymentInvoice.invoice.dueDateFormated()}}</td>
               <td>
-                <input type="text" ng-change="paymentInvoice.checkBalanceAfter()" ng-model="paymentInvoice.amount" >
+                <input type="text" ng-keyup="ctrl.checkBalanceAfter(paymentInvoice)" ng-model="paymentInvoice.amount" >
               </td>
-              <td>{{paymentInvoice.balanceAfter}}</td>
+              <td>{{paymentInvoice.localAmount}}</td>
+              <td ng-class="{'has-error':paymentInvoice.has_errors('balanceAfter')}" >
+                {{paymentInvoice.balanceAfter}}
+                <p ng-show="paymentInvoice.has_errors('balanceAfter')" class='error'>{{paymentInvoice.errors_by_field('balanceAfter')}}</p>
+              </td>
             </tr>
           </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4">
+                <b>Total</b>
+              </td>
+              <td>{{ctrl.total['total']}}</td>
+              <td>{{ctrl.total['balance']}}</td>
+              <td>{{ctrl.total['amount']}}</td>
+              <td>{{ctrl.total['localAmount']}}</td>
+              <td>{{ctrl.total['balanceAfter']}}</td>
+            </tr>
+          </tfoot>
         </table>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group" ng-class="{'has-error':ctrl.payment.has_errors('balancePay')}" >
+          <label for="inv-date">Balance Of Pay</label>
+          <b>{{ctrl.payment.balancePay.toStringAsFixed(2)}}</b>
+          <p ng-show="ctrl.payment.has_errors('balancePay')" class='error'>{{ctrl.payment.errors_by_field('balancePay')}}</p>
+        </div>
+        <div class="col-md-12">
+          <button ng-click="ctrl.save()" ng-hide="ctrl.saved" class="btn margin-bottom btn-primary">Save Pay</button>
+        </div>
       </div>
     </div>
   </div>

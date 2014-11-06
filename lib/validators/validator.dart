@@ -85,6 +85,15 @@ class Validator {
     }
   }
 
+  void greater_than(var value1, var value2, String name_field) {
+    if (has_errors(name_field)){
+      return;
+    }
+    if (ParserNumber.toDouble(value1) < ParserNumber.toDouble(value2)) {
+      _add_error("should be greater than ${value2}", "${name_field}");
+    }
+  }
+  
   void format_int(int value, String name_field, {bool required: false}) {
     if (!required && !_is_present(value)) {
       return;

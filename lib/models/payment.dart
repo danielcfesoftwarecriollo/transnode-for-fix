@@ -1,21 +1,32 @@
 part of transnode;
 
 class Payment extends RecordModelNested{
-  Date    payDate;
+  DateTime    payDate;
   String  currency;
   double  amount;
   int invoiceId;
   int customerId;
-  int payType;
+  String payType;
   String checkNumber;
-  Date    checkDate;
+  DateTime   checkDate;
   double localAmount;
-  int status;
+  String status;
   List<PaymentInvoice> paymentInvoices;
   Location billTo;
+  double balancePay;
   
   Payment(){
-//    this._validator = new PaymentValidator(this);
+    this._validator = new PaymentValidator(this);
+    this.payDate = DateHelper.currentDate();
+    this.checkDate = DateHelper.currentDate();
+    this.balancePay = 0.0;
+    status = 'new_p';
+  }
+  
+  bool full_validator(){
+    bool result = this.is_valid();
+    this.paymentInvoices.forEach((pI) => result = pI.is_valid() && result);
+    return result;
   }
   
   @override
@@ -58,18 +69,16 @@ class Payment extends RecordModelNested{
   Map to_map() {
     return {
       'id' : id,
-      'pay_date' : payDate,
+      'pay_date' : payDate.toIso8601String(),
       'currency' : currency,
       'amount' : amount,
-      'invoices_attributes' : HelperList.to_map(paymentInvoices),
-      'invoice_id' : invoiceId,
-      'customer_id' : customerId,
-      'pay_type' : payType,
+      'pay_type' : payType.toLowerCase(),
       'check_number' : checkNumber,
-      'check_date' : checkDate,
+      'check_date' : checkDate.toIso8601String(),
       'local_amount' : localAmount,
       'status' : status,
-//      'customer' : customer,
+      'payment_invoices_attributes' : HelperList.to_map(paymentInvoices),
+      'bill_to_id' : this.billTo.id
     };
   }
 }

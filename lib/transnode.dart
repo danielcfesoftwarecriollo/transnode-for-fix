@@ -134,6 +134,7 @@ part 'validators/invoice.dart';
 part 'validators/invoice_ap.dart';
 part 'validators/review_invoice_ap.dart';
 part 'validators/payment.dart';
+part 'validators/payment_invoice.dart';
 
 class TransnodeModule extends Module {
 
