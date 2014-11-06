@@ -24,6 +24,7 @@ class Location extends RecordModelNested {
   String createdAt;
   String updatedAt;
   int customerId;
+  List cities;
 
   bool emailOptOut;
   String status;

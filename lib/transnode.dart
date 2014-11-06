@@ -167,6 +167,7 @@ class TransnodeModule extends Module {
     bind(UserService);
     bind(ApiService);
     bind(ShipmentService);
+    bind(LocationService);
     bind(MessagesService);
     bind(SessionService);
     bind(ContactService);

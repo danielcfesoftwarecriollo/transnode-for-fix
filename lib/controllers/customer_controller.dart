@@ -9,6 +9,7 @@ class CustomerController {
   RouteProvider _routeProvider;
   Router _router;
   final CustomerService _customerService;
+  final LocationService _locationService;
   
   // helpers
   List countries;
@@ -27,15 +28,18 @@ class CustomerController {
   List cities;
   int billToId;
   
-  CustomerController(this._customerService, this._routeProvider, this._router) {
+  CustomerController(this._locationService, this._customerService, this._routeProvider, this._router) {
     this.customer = new Customer();
     this.cities = [];
     this.customers = [];
     this.billTos = [];
     if (_isEditPath()) {
       var customer_id = _routeProvider.parameters['customerId'];
-      _customerService.get(customer_id).then((_) => this.customer = _);
-      load_form();
+      _customerService.get(customer_id).then((_){
+        this.customer = _;
+        load_form();
+        loadCities();
+        });      
     } else if (_isShowPath()) {
       var customer_id = _routeProvider.parameters['customerId'];
       _customerService.get(customer_id).then((_) => this.customer = _);
@@ -53,11 +57,14 @@ class CustomerController {
     this.step = 1;
   }
 
+  loadCities(){
+    this.customer.locations.forEach((l)=>this.changeStates(l));
+  }
+  
   void load_form(){
     _customerService.loadForm().then((response){
       this.countries = response['countries'];
       this.statesOfCountries = response['states_of_countries'];
-      load_cities(response['cities']);
     });
     
     new Timer(const Duration(milliseconds: 1000), () {
@@ -181,7 +188,7 @@ class CustomerController {
     this.sources = formData['sources'];
   }
 
-  void changeCountries (currentLocation) {
+  void changeCountries (Location currentLocation) {
      new Timer(const Duration(milliseconds: 1), () {
        print(currentLocation.countryId);
        List x = this.getStatesByCountry(currentLocation.countryId.toString());
@@ -198,6 +205,14 @@ class CustomerController {
     }
   }
 
+  void changeStates (Location currentLocation) {
+     new Timer(const Duration(milliseconds: 1), () {
+       this._locationService.getCitiesByState(currentLocation.stateId).then((cities){
+         currentLocation.cities = cities;
+       });
+     });
+  }
+  
   void change_bill_to() {
     print(this.customer.billToId);
     var response = this._customerService.load_billToLocations(this.customer.id);
