@@ -27,11 +27,12 @@ class CityService {
       });
   }
   
-  Future<HttpResponse> get_cities_by_name(String queryCode) {
-    return _api.request("get", url + "/by_name/" + queryCode.toString())
+  Future getCityByName(String queryCode) {
+    return _api.request("get", url + "/by_name_autocomplete/" + queryCode.toString())
       .then((HttpResponse response){
         return response.data;
       });
   }
+  
   
 }

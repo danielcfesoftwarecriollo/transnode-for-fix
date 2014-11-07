@@ -22,8 +22,7 @@ class LocationService {
         print(response);
       });
   }
-  
-  
+
   Future<List<City>> getCitiesByState(id) { 
     return _api.request("get", "/locations/cities_by_state/${id}")
       .then((HttpResponse response){

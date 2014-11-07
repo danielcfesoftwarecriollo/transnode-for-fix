@@ -18,8 +18,8 @@
         <td>
           <select ng-model='price.unit' id="unit{{ $index }}" class="form-control">
             <option value="" disabled selected>Select unit</option>
-            <option value="0" ng-selected="price.unit == 0" >Pcs</option>
-            <option value="1" ng-selected="price.unit == 1" >Skids</option>
+            <option value="pcs" ng-selected="price.unit == 'pcs'" >Pcs</option>
+            <option value="skids" ng-selected="price.unit == 'skids'" >Skids</option>
           </select>
         </td>
         <td>

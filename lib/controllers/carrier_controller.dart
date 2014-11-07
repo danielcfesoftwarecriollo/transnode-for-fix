@@ -10,9 +10,13 @@ class CarrierController {
   Router _router;
   final CarrierService _carrierService;
   final UserService _userService;
+  final LocationService _locationService;
+  final CityService _cityService;
   List locations;
   List countries;
   List cities;
+  var asyncSelected;
+  var asyncSelected2;
   var statesOfCountries;
 
 
@@ -22,17 +26,20 @@ class CarrierController {
   ModalInstance modalInstance;
   Scope scope;
   User current_user;
-
-  
-  CarrierController(this._userService,this._carrierService,this.scope, this.modal, this._routeProvider, this._router) {
+  bool loadingCity;
+   
+  CarrierController(this._cityService, this._locationService,this._userService,this._carrierService,this.scope, this.modal, this._routeProvider, this._router) {
     this.carriers = [];
     this.cities = [];
     this.current_user = _userService.user;
     this.carrier = new Carrier();
     if (_isEditPath()) {
       var carrier_id = _routeProvider.parameters['carrierId'];
-      _carrierService.get(carrier_id).then((_) => this.carrier = _);
-      load_form();
+      _carrierService.get(carrier_id).then((_){ 
+        this.carrier = _;
+        loadCities();
+        load_form();
+      });      
     } else if (_isShowPath()) {
       var carrier_id = _routeProvider.parameters['carrierId'];
       _carrierService.get(carrier_id).then((_) => this.carrier = _);
@@ -45,6 +52,29 @@ class CarrierController {
     }
     
   }
+  
+  loadCitiesByName(String cityName){
+    if(cityName.isNotEmpty){
+      var response = _cityService.getCityByName(cityName.toString());
+      return response.then((r) => r['cities']);
+    }else{
+      return [];
+    }
+  }
+  
+  onSelectTerm1(String cityId){
+    var response = _cityService.get(cityId.toString());
+    response.then((c){
+      this.laneHelper.term1 = c;
+    });    
+  }
+  
+  onSelectTerm2(String cityId){
+    var response = _cityService.get(cityId.toString());
+    response.then((c){
+      this.laneHelper.term2 = c;
+    });    
+  }  
 
   void open(String templateUrl) {
     modalInstance = modal.open(new ModalOptions(templateUrl:templateUrl),scope);
@@ -112,12 +142,14 @@ class CarrierController {
     }
   }
 
-
+  loadCities(){
+    this.carrier.locations.forEach((l)=>this.changeStates(l));
+  }
+  
   void load_form(){
     _carrierService.loadForm().then((response){
       this.countries = response['countries'];
       this.statesOfCountries = response['states_of_countries'];
-      load_cities(response['cities']);
     });
     new Timer(const Duration(milliseconds: 1000), () {
       List countries = querySelectorAll('.countries');
@@ -184,7 +216,15 @@ class CarrierController {
        print(currentLocation.states);
      });
   }
-  
+
+  void changeStates (Location currentLocation) {
+     new Timer(const Duration(milliseconds: 1), () {
+       this._locationService.getCitiesByState(currentLocation.stateId).then((cities){
+         currentLocation.cities = cities;
+       });
+     });
+  }
+
   List getStatesByCountry(String countryId) {
     if(countryId.toString() != 'null'){
       return this.statesOfCountries[countryId]['states'];
