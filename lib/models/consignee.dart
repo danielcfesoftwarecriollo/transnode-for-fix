@@ -40,6 +40,14 @@ class Consignee extends RecordModelNested{
     customerMap.remove('location_customer');
   }
   
+  int idToSelect(){
+    if(this.id == null || this.id.toString().isEmpty){
+      return locationCustomer.id;
+    }else{
+      return id;
+    }
+  }
+  
   Map to_map() {
     print('to_map cons');
     return {

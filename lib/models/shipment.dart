@@ -96,14 +96,19 @@ class Shipment extends RecordModel{
   }
 
   void addLineToConsignee(Line line){
+    Consignee consignee = null;
     try{
-    Consignee consignee = this.consignees.firstWhere((e)=> e.id == line.consigneeId);
-      if(consignee != null){
-        consignee.lines.add(line);
-        checkTotal();
-      }
+      consignee = this.consignees.firstWhere((e)=> e.id == line.consigneeId);
     }catch(e){
-      print(e);
+      try{
+         consignee = this.consignees.firstWhere((e)=> e.locationCustomer.id == line.consigneeId);
+      }catch(e){
+          print(e);
+      }
+    }
+    if(consignee != null){
+      consignee.lines.add(line);
+      checkTotal();
     }
   }
 
@@ -308,8 +313,8 @@ class Shipment extends RecordModel{
   }
 
   void _sumLine(Line line){
-    _totalWeight += double.parse(line.weight.toString());
-    _totalpcs += double.parse(line.numPcs.toString());
+    _totalWeight += ParserNumber.toDouble(line.weight.toString());
+    _totalpcs += ParserNumber.toDouble(line.numPcs.toString());
   }
   
 

@@ -13,7 +13,7 @@ class Note extends RecordModelNested{
   }
   
   String author(){
-    return (user != null || user.contact != null)? user.contact.name : user.email;
+    return (user != null && user.contact != null)? user.contact.name : user.email;
    }
   
   @override
