@@ -371,7 +371,7 @@ class ShipmentsController {
   }
   
   void pdfBooked(){
-    window.open('http://localhost:3000/shipments/download_booked/${this.shipment.id}/booked_confirmation.pdf', 'New Carrier');
+    window.open('${_shipmentService._api.path()}/shipments/download_booked/${this.shipment.id}/booked_confirmation.pdf', 'New Carrier');
   }
 
   void addCarrier(){

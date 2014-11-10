@@ -19,7 +19,8 @@ class ApiService {
 
   bool   is_production()    => ['127.0.0.1', 'localhost'].indexOf(window.location.hostname) == -1 ;
   String development_path() => "http://127.0.0.1:3000/";
-  String production_path()  => "http://transnode-api-newt2.apps.welkeglobal.com/";
+  String production_path()  => "https://transnode-api.herokuapp.com/";
+  String path() => api_url;
 
   Future<HttpResponse> request(String method, String url, { Map<String, dynamic> params, String data }) {
     url = api_url + url;
