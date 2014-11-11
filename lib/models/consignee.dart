@@ -3,17 +3,17 @@ part of transnode;
 class Consignee extends RecordModelNested{
 
   String instructions;
-  String openFrom;
-  String openTo;
-  String dateAppointment;
-  String appointmentHour;
-  String dateEta;
+  DateTime openFrom;
+  DateTime openTo;
+  DateTime dateAppointment;
+  DateTime appointmentHour;
+  DateTime dateEta;
   String receivedBy;
-  String dateReceived;
-  String receivedHour; // not add to map
+  DateTime dateReceived;
+  DateTime receivedHour; // not add to map
   String createdAt;
   String updatedAt;
-  String on;
+  DateTime on;
   Location locationCustomer;
   List<Line> lines;
   
@@ -27,6 +27,15 @@ class Consignee extends RecordModelNested{
 
   @override
   void loadWithJson(Map<String, dynamic> map) {
+    LoadModel loadModel = new LoadModel();
+    this.openFrom = loadModel.loadDate(map, 'open_from');
+    this.openTo = loadModel.loadDate(map, 'open_to');
+    this.dateEta = loadModel.loadDate(map, 'date_eta');
+    this.dateAppointment = loadModel.loadDate(map, 'date_appointment');
+    this.appointmentHour = loadModel.loadDate(map, 'appointment_hour');
+    this.dateReceived = loadModel.loadDate(map, 'date_received');
+    this.receivedHour = loadModel.loadDate(map, 'received_hour');
+    this.on = loadModel.loadDate(map, 'on');    
     loadCustomerLocation(map);
     super.loadWithJson(map);
   }
@@ -52,14 +61,15 @@ class Consignee extends RecordModelNested{
     print('to_map cons');
     return {
       'id' : id,
-      'date_eta' : dateEta,
-      'open_to': openTo,
-      'open_from': openFrom,
+      'date_eta' : ParserDate.dateToString(dateEta),
+      'open_to': ParserDate.dateToString(openTo),
+      'open_from': ParserDate.dateToString(openFrom),
       'received_by' : receivedBy,
       'instructions' : instructions,
-      'date_received' : dateReceived,
-      'date_appointment' : dateAppointment,
-//      'appointment_hour' : appointmentHour,
+      'date_received' : ParserDate.dateToString(dateReceived),
+      'received_hour' : ParserDate.dateToString(receivedHour),
+      'date_appointment' : ParserDate.dateToString(dateAppointment),
+      'appointment_hour' : ParserDate.dateToString(appointmentHour),
       'location_customer_id' : locationCustomer.id,
       '_destroy' : _destroy
     };

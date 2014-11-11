@@ -3,11 +3,11 @@ part of transnode;
 class Shipper extends RecordModelNested{
 
   String instructions;
-  String dateReady;
-  String openFrom;
-  String openTo;
-  String dateAppointment;
-  String appointmentHour;
+  DateTime dateReady;
+  DateTime openFrom;
+  DateTime openTo;
+  DateTime dateAppointment;
+  DateTime appointmentHour;
   String specialHandling;
   String createdAt;
   String updatedAt;
@@ -33,10 +33,17 @@ class Shipper extends RecordModelNested{
 
   @override
   void loadWithJson(Map<String, dynamic> map) {
-   loadCustomerLocation(map);
-   loadCustomer(map);
-   super.loadWithJson(map);
-   this._loadListObj(map);
+    LoadModel loadModel = new LoadModel();        
+    this.dateReady = loadModel.loadDate(map, 'date_ready');
+    this.openFrom = loadModel.loadDate(map, 'open_from');
+    this.openTo = loadModel.loadDate(map, 'open_to');
+    this.dateAppointment = loadModel.loadDate(map, 'date_appointment');
+    this.appointmentHour = loadModel.loadDate(map, 'appointment_hour');        
+        
+    loadCustomerLocation(map);
+    loadCustomer(map);
+    super.loadWithJson(map);
+    this._loadListObj(map);
   }
   
   void resetIdLists(){
@@ -84,12 +91,12 @@ class Shipper extends RecordModelNested{
     return {
       'id' : id,
       'instructions'    : instructions,
-      'date_ready'      : dateReady,
-      'open_from'        : openFrom,
-      'open_to'          : openTo,
-      'date_appointment' : dateAppointment,
+      'date_ready'      : ParserDate.dateToString(dateReady),
+      'open_from'        : ParserDate.dateToString(openFrom),
+      'open_to'          : ParserDate.dateToString(openTo),
+      'date_appointment' : ParserDate.dateToString(dateAppointment),
       'location_customer_id' : locationCustomer.id,
-//      'appointment_hour' : appointmentHour,
+      'appointment_hour' : ParserDate.dateToString(appointmentHour),
       'special_handling' : specialHandling,
       'lines_attributes' : HelperList.to_map(lines),
       '_destroy': _destroy

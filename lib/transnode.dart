@@ -104,6 +104,7 @@ part 'models/helpers/helper_load_model.dart';
 part 'models/helpers/carrier_price.dart';
 part 'models/helpers/exchange_value.dart';
 part 'models/helpers/parser_number.dart';
+part 'models/helpers/parser_date.dart';
 part 'models/helpers/date_helper.dart';
 
 part 'models/enumerates/status_invoice.dart';

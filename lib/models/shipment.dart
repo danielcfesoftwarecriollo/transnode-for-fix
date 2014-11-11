@@ -277,8 +277,6 @@ class Shipment extends RecordModel{
       'customer_id'     : customer.id,
       'billto_id'       : billto.id,
       'custom_broker_id' : customBroker.id,
-//      'file_created'   : file_created,
-//      'credit_check'   : credit_check,
       'multiple_carriers' : multipleCarriers,
        'quote' : (quote == null)? null : quote.id,
        'internal_notes_attributes'      : HelperList.to_map(internalNotes),

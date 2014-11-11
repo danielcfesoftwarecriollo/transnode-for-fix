@@ -290,37 +290,60 @@
           </div>
           <div class="col-md-6 container-info">
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Instructions</label>
+                  <div class="col-sm-8">
+                    <input ng-model="shipper.instructions" class="form-control" type="text" id="instructions">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
                 <button ng-hide="!ctrl.hasMoreOneShipperLocations()" ng-click="ctrl.shipment.delete_shipper(shipper)" class="ng-binding pull-right">
                   <i class="fa fa-times"></i>
                 </button>
-                <label class="title-align"  for="instructions">Instructions</label>
-                <input ng-model="shipper.instructions" type="text" id="instructions">
               </div>
             </div>
             <div class="row">
-              <div class="col-md-5">
-                <label for="" class="title-label title-align">Ready Date</label>
-                <input type="text" class="input-label" ng-model="shipper.dateReady" id="ready-date">
-                <p ng-show="shipper.has_errors('dateReady')" class='error'>{{shipper.errors_by_field('dateReady')}}</p>
-                <!-- <datepicker  ng-model="shipper.dateReady" ></datepicker> -->
-                <i class="fa fa-calendar"></i>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Ready Date</label>
+                  <div class="col-sm-10" style="padding-right: 0;padding-left: 25px;">
+                    <input type="date" min="2014-09-08" style="font-size:12px" class=" form-control" ng-model="shipper.dateReady" id="ready-date">
+                    <p ng-show="shipper.has_errors('dateReady')" class='error'>{{shipper.errors_by_field('dateReady')}}</p>
+                  </div>
+                </div>
               </div>
               <div class="col-md-4">
-                <label for="#open-from" class="title-label" >Open from</label>
-                <input type="text" class="input-label" ng-model="shipper.openFrom" id="open-from">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Open from</label>
+                  <div class="col-sm-10">
+                    <input type="time" min="9:00" max="20:00" step="900" class=" form-control" ng-model="shipper.openFrom" id="open-from">
+                  </div>
+                </div>
               </div>
-              <div class="col-md-3">
-                <label for="#open-to" class="title-label" >To</label>
-                <input type="text" class="input-label" ng-model="shipper.openTo" id="open-to">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">To</label>
+                  <div class="col-sm-10">
+                    <input type="time" min="9:00" max="20:00" step="900" class=" form-control" ng-model="shipper.openTo" id="open-to">
+                  </div>
+                </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-12">
-                <label class="title-align" for="appointment">Appointment</label>
-                <input type="text" id="appointment" ng-model="shipper.dateAppointment" >
-                <i class="fa fa-calendar"></i>
-                <input type="text" id="spec-handl-hour" ng-model="shipper.appointmentHour" >
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Appointment</label>
+                  <div class="col-sm-8">
+                    <input type="date" min="2014-09-08" id="appointment" ng-model="shipper.dateAppointment" >
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <input type="time" min="9:00" max="20:00" step="900" id="spec-handl-hour" ng-model="shipper.appointmentHour" class="form-control" >
+                </div>
               </div>
             </div>
             <div class="row">
@@ -457,18 +480,18 @@
                   </div>
                   
                   <div class="row">
-                    <div class="col-md-8 col-md-offset-4">
+                    <div class="col-md-10 col-md-offset-2">
                       <div class="col-md-3" style="padding: 0;">
                         <label for="">Open from: </label>
                       </div>
                       <div class="col-md-4">
-                        <input type="text" class="form-control" ng-model="consignee.openFrom">
+                        <input type="time" min="9:00" max="20:00" step="900" class="form-control" ng-model="consignee.openFrom">
                       </div>
                       <div class="col-md-1" style="margin-left: -20px;">
                         <label for="">To: </label>
                       </div>
                       <div class="col-md-4">
-                        <input type="text" class="form-control" ng-model="consignee.openTo">
+                        <input type="time" min="9:00" max="20:00" step="900" class="form-control" ng-model="consignee.openTo">
                       </div>
                     </div>
 
@@ -478,7 +501,7 @@
             </div>
           </div>
           <div class="col-md-6 container-info">
-            <div class="row">
+<!--             <div class="row">
               <div class="col-md-12">
                 <button ng-click="ctrl.shipment.delete_consignee(consignee)" class="ng-binding pull-right">
                   <i class="fa fa-times"></i>
@@ -487,35 +510,62 @@
                 <input ng-model="consignee.instructions" type="text" id="instructions">
               </div>
             </div>
+             -->
             <div class="row">
-              <div class="col-md-5">
-                <label for="" class="title-label title-align">Eta</label>
-                <input ng-model="consignee.dateEta" type="text" class="input-label" id="ready-date">
-                <i class="fa fa-calendar"></i>
-              </div>
-              <div class="col-md-7">
+              <div class="col-md-8">
                 <div class="form-group">
-                  <label class="title-align" for="appointment">Appointment</label>
-                  <input ng-model="consignee.dateAppointment" style="width: 80px;" type="text" id="appointment">
-                  <i class="fa fa-calendar"></i>
-                  <input ng-model="consignee.appointmentHour" style="width: 80px;" type="text" id="spec-handl-hour">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Instructions</label>
+                  <div class="col-sm-8">
+                    <input ng-model="consignee.instructions" class="form-control" type="text" id="instructions">
+                  </div>
                 </div>
+              </div>
+              <div class="col-md-4">
+                <button  ng-click="ctrl.shipment.delete_consignee(consignee)" class="ng-binding pull-right">
+                  <i class="fa fa-times"></i>
+                </button>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-group">
-                  <label class="title-align" for="spec-receivedBy">Received By</label>
-                  <input ng-model="consignee.receivedBy" id="spec-receivedBy" />
+                   <label for="" class="col-sm-2 control-label">Eta</label>
+                  <div class="col-sm-10">
+                    <input ng-model="consignee.dateEta"  type="date" min="2014-09-08" class="form-control" id="ready-date">
+                  </div>
+                </div>
+              </div>            
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label class="col-sm-4 control-label" for="appointment">Appointment</label>
+                  <div class="col-sm-8">
+                    <input ng-model="consignee.dateAppointment" class="form-control" type="date" min="2014-09-08" id="appointment">
+                  </div>
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-3">
+                <input ng-model="consignee.appointmentHour" class="form-control" type="time" min="9:00" max="20:00" step="900" id="spec-handl-hour">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5">
                 <div class="form-group">
-                  <label style="width:50px" for="appointment">On</label>
-                  <input ng-model="consignee.dateReceived" style="width: 80px;" type="text" id="appointment">
-                  <i class="fa fa-calendar"></i>
-                  <input ng-model="consignee.receivedHour" style="width: 80px;" type="text" id="spec-handl-hour">
+                  <label class="col-sm-4 control-label" for="spec-receivedBy">Received By</label>
+                  <div class="col-sm-8">
+                    <input ng-model="consignee.receivedBy" class="form-control"  id="spec-receivedBy" />
+                  </div>
                 </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="appointment">On</label>
+                  <div class="col-sm-10">
+                    <input ng-model="consignee.dateReceived" class="form-control" type="date" min="2014-09-08" id="appointment">
+                  </div>                 
+                </div>
+              </div>
+              <div class="col-md-3">
+                <input ng-model="consignee.receivedHour" class="form-control"  type="time" min="9:00" max="20:00" step="900" id="spec-handl-hour">
               </div>
             </div>
           </div>
@@ -528,7 +578,7 @@
                       <span>Ln {{$index+1}}</span>
                     </div>
                     <div class="col-mod col-md-1 col-xs-4"><span>H</span>
-                      <input ng-model="line.height" readonly type="text">s
+                      <input ng-model="line.height" readonly type="text">
                     </div>
                     <div class="col-mod col-md-1 col-xs-4"><span>W</span>
                       <input ng-model="line.width" readonly type="text">
