@@ -32,8 +32,9 @@ class InvoiceAP extends RecordModelNested{
   
   @override
   void loadWithJson(Map<String, dynamic> map) {
-    this.received_date = loadDate(map, 'received_date');
-    this.dueDate = loadDate(map, 'due_date');
+    LoadModel loadModel = new LoadModel();
+    this.received_date = loadModel.loadDate(map, 'received_date');
+    this.dueDate = loadModel.loadDate(map, 'due_date');
     this.vendor = loadCarrierByMap(map,'vendor');
     super.loadWithJson(map);
     loadItems(map);
@@ -112,17 +113,7 @@ class InvoiceAP extends RecordModelNested{
     this.acepted = false;
     this.status = StatusInvoice.ISSUE.value;
   }
-  
-    
-  loadDate(Map map, key){
-    DateTime aux;
-    if(map.containsKey(key)){
-      aux = LoadModel.loadDateTime(map[key]);
-      map.remove(key);      
-    }
-    return aux;
-  }
-  
+ 
   void selectedItemsLoaded(){
     this.items.forEach((i) => i.selected = true );
   }

@@ -17,7 +17,8 @@ class Location extends RecordModelNested {
   String fax;
   String laneCode;
   String email;
-  String hours;
+  DateTime openHour;
+  DateTime closeHour;
   String naics;
   String note;
   String currency;
@@ -30,7 +31,8 @@ class Location extends RecordModelNested {
   String status;
 
   List<Contact> contacts;
-
+  openHourFormated() => DateHelper.formated(this.openHour);
+  closeHourFormated() => DateHelper.formated(this.closeHour);
   
   List roles;
 //  Map<String, bool> _roles_map;
@@ -83,6 +85,9 @@ class Location extends RecordModelNested {
   
   @override
   void loadWithJson(Map<String, dynamic> map) {
+    LoadModel loadModel = new LoadModel();
+    this.openHour = loadModel.loadDate(map, 'open_hour');
+    this.closeHour = loadModel.loadDate(map, 'close_hour');
     loadCity(map);
     super.loadWithJson(map);
     if (map.containsKey("contacts_attributes")) {
@@ -169,6 +174,8 @@ class Location extends RecordModelNested {
       'country_id': countryId,
       'state_id': stateId,
       'city_id': city.id,
+      'open_hour' : ParserDate.dateToString(openHour),
+      'close_hour' : ParserDate.dateToString(closeHour),
       'zip': zip,
       'on': on,
       'phone': phone,

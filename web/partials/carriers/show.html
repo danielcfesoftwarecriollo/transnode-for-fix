@@ -49,9 +49,11 @@ border-radius: 5px;">
         <div class="col-xs-3">
           <p><span>NAICS: </span>{{location.naics}}</p>
         </div>
-      
         <div class="col-xs-3">
-          <p><span>hours: </span>{{location.hours}}</p>
+          <p><span>Open Hour: </span>{{location.openHourFormated()}}</p>
+        </div>
+        <div class="col-xs-3">
+          <p><span>Close Hour: </span>{{location.closeHourFormated()}}</p>
         </div>
         <div class="col-xs-3">
           <p><span>lane code: </span>{{location.laneCode}}</p>

@@ -131,9 +131,13 @@
       <label for="naics">NAICS</label>
       <input ng-model='location.naics' id="naics" class="form-control" placeholder='NAICS'>
     </div>
-    <div class="col-xs-4">
-      <label for="hours">Hours of Operation</label>
-      <input ng-model='location.hours' id="hours" class="form-control" placeholder='Hours of Operation           ex 8am - 9pm'>
+    <div class="col-xs-2">
+      <label for="hours">Open Hour</label>
+      <input type="time" min="9:00" max="20:00" step="900" ng-model='location.openHour' id="openHour" class="form-control" placeholder='Open Hour'>
+    </div>
+    <div class="col-xs-2">
+      <label for="hours">Close Hour</label>
+      <input type="time" min="9:00" max="20:00" step="900" ng-model='location.closeHour' id="closeHour" class="form-control" placeholder='Close Hour'>
     </div>
     <div class="col-xs-4">
       <label for="lanecode">Lane Code</label>
