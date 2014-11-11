@@ -183,14 +183,11 @@
                 <label for="description" class="col-sm-6 control-label">Request received on</label>
                 <div class="col-sm-6">
                   <div class="input-group">
-                    <input type="text" class="form-control" id="description" ng-model="ctrl.quote.rfqDate"  placeholder="Date">
+                    <input  type="date" min="2014-09-08" class="form-control" id="description" ng-model="ctrl.quote.rfqDate"  placeholder="Date">
                     <span class="input-group-btn">
-                      <button class="btn btn-default" ng-click="ctrl.toggleCalendar()" type="button">
-                        <i class="fa fa-calendar"></i>
-                      </button>
+                      <i class="fa fa-calendar"></i>
                     </span>
                   </div>
-                  <datepicker ng-show="ctrl.opened" ng-model="ctrl.quote.rfqDate" datepicker-popup="dd-MMMM-yyyy" ></datepicker>
                 </div>
               </div>
             </div>
@@ -221,14 +218,11 @@
               <label for="price" style="width: 10%;" class="col-md-1 control-label">Valid Until</label>
               <div class="col-sm-2">
                 <div class="input-group">
-                  <input type="text" class="form-control" id="description" ng-model="ctrl.quote.rfqDate"  placeholder="Date">
+                  <input type="date" min="2014-09-08" class="form-control" id="description" ng-model="ctrl.quote.dateValid"  placeholder="Date">
                   <span class="input-group-btn">
-                    <button class="btn btn-default" ng-click="ctrl.toggleCalendar()" type="button">
-                      <i class="fa fa-calendar"></i>
-                    </button>
+                    <i class="fa fa-calendar"></i>
                   </span>
                 </div>
-                <datepicker ng-show="ctrl.opened" ng-model="ctrl.quote.rfqDate" datepicker-popup="dd-MMMM-yyyy" ></datepicker>
               </div>
             </div>
 

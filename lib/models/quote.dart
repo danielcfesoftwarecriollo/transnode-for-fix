@@ -18,9 +18,9 @@ class Quote extends RecordModel{
   String internalNote;
   String status;
   var rfqSrc;
-  var rfqDate;
+  DateTime rfqDate;
   double price;
-  String dateValid;
+  DateTime dateValid;
   String createdAt;
   String updatedAt;
   String currency;
@@ -48,6 +48,9 @@ class Quote extends RecordModel{
   
   @override
   void loadWithJson(Map<String, dynamic> map) {
+    LoadModel loadModel = new LoadModel();
+    this.rfqDate = loadModel.loadDate(map, 'rfq_date');
+    this.dateValid = loadModel.loadDate(map, 'date_valid');
     loadCustomer(map); 
     loadCityTo(map);
     loadCityFrom(map);
@@ -122,12 +125,11 @@ class Quote extends RecordModel{
       'description' : description, 
       'customer_note' : customerNote, 
       'internal_note' : internalNote,
-      'rfq_src' : rfqSrc, 
-      'rfq_date' : rfqDate.toString(),
+      'rfq_src' : rfqSrc,
       'status' : status,
       'costs_attributes' : costs_to_map(),
-      // 'price' : price, 
-      // 'dateValid' : dateValid,
+       'rfq_date' : ParserDate.dateToString(rfqDate),
+       'date_valid' : ParserDate.dateToString(dateValid),
       'quote_lines_attributes' : lines_to_map()
     };
   }
