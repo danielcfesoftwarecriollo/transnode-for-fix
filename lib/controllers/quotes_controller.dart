@@ -6,6 +6,8 @@ class QuotesController {
   Router _router;
   final QuoteService _quoteService;
   final UsersService _usersService;
+  final CustomerService _customerService;
+  final List specialHandling = SpecialHandling.getAll;
   @NgTwoWay("quote")
   Quote quote;
   List<Quote> quotes;
@@ -33,7 +35,7 @@ class QuotesController {
     'startingDay': 1
   };
 
-  QuotesController(this._quoteService, this._routeProvider, this._router,this._usersService, this.scope, this.modal) {
+  QuotesController(this._customerService, this._quoteService, this._routeProvider, this._router,this._usersService, this.scope, this.modal) {
     this.quote = new Quote();
     this.searchTime = "TODAY";
 

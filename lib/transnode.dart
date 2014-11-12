@@ -97,6 +97,7 @@ part 'models/invoice_item.dart';
 part 'models/invoice_item_ap.dart';
 part 'models/payment.dart';
 part 'models/payment_invoice.dart';
+part 'models/special_handling.dart';
 
 part 'models/helpers/helper_list.dart';
 part 'models/helpers/helper_url.dart';

@@ -11,6 +11,7 @@ class Shipper extends RecordModelNested{
   String specialHandling;
   String createdAt;
   String updatedAt;
+  String typeHandling;
 
   List<Line> lines;
   Location locationCustomer;
@@ -97,6 +98,7 @@ class Shipper extends RecordModelNested{
       'date_appointment' : ParserDate.dateToString(dateAppointment),
       'location_customer_id' : locationCustomer.id,
       'appointment_hour' : ParserDate.dateToString(appointmentHour),
+      'type_handling' : typeHandling,
       'special_handling' : specialHandling,
       'lines_attributes' : HelperList.to_map(lines),
       '_destroy': _destroy

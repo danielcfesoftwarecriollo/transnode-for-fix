@@ -25,6 +25,8 @@ class Quote extends RecordModel{
   String updatedAt;
   String currency;
   User user;
+  String specialHandling;
+  String typeHandling;
 
   List<Line> lines;
   List<QuoteCost> costs;
@@ -37,6 +39,7 @@ class Quote extends RecordModel{
     this._validator = new QuoteValidator(this);
     this.lines = [new Line()];
     this.costs = [];
+    this.dateValid = DateHelper.addDate(30);
   }
 
   getVendor(){
@@ -114,8 +117,7 @@ class Quote extends RecordModel{
   Map to_map() {    
     return {
       'id' : id,
-      'entity_id' : _idObjNotNull(customer), 
-      'locationId' : locationId, 
+      'entity_id' : _idObjNotNull(customer),
       'from_city_id' : fromCityId, 
       'from_zip' : fromZip, 
       'from_country_id' : fromCountryId, 
@@ -127,9 +129,11 @@ class Quote extends RecordModel{
       'internal_note' : internalNote,
       'rfq_src' : rfqSrc,
       'status' : status,
+      'special_handling' : specialHandling,
+      'type_handling' :typeHandling,
       'costs_attributes' : costs_to_map(),
-       'rfq_date' : ParserDate.dateToString(rfqDate),
-       'date_valid' : ParserDate.dateToString(dateValid),
+      'rfq_date' : ParserDate.dateToString(rfqDate),
+      'date_valid' : ParserDate.dateToString(dateValid),
       'quote_lines_attributes' : lines_to_map()
     };
   }

@@ -12,6 +12,7 @@ class ShipmentsController {
   final ExchangeRateFactorService _exchangeRateFactorService;
   final CustomerService _customerService;
   final UserService _userService;
+  final List specialHandling = SpecialHandling.getAll;
   List<Shipper> shippers;
   List consigne_locations;
   List consignees;

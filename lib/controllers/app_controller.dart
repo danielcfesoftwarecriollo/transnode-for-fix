@@ -7,7 +7,6 @@ part of transnode;
 class AppController {
   UserService _user_service;
   Router _router;
-
   AppController(this._user_service, this._router) {
     Keys.shortcuts({
         'Ctrl+1': ()=> _router.go('home', {}),

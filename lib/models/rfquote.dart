@@ -16,9 +16,9 @@ class Rfquote extends Quote{
   String internalNote;
   String status;
   var rfqSrc;
-  var rfqDate;
+  DateTime rfqDate;
   double price;
-  String dateValid;
+  DateTime dateValid;
   String created_at;
   String updated_at;
 
@@ -34,6 +34,9 @@ class Rfquote extends Quote{
 
   @override
   void loadWithJson(Map<String, dynamic> map) {
+    LoadModel loadModel = new LoadModel();
+    this.rfqDate = loadModel.loadDate(map, 'rfq_date');
+    this.dateValid = loadModel.loadDate(map, 'date_valid');
     loadCustomer(map); 
     super.loadWithJson(map);
     this.lines = [];      
@@ -76,11 +79,11 @@ class Rfquote extends Quote{
       'description' : description, 
       'customer_note' : customerNote, 
       'internal_note' : internalNote,
-      'rfq_src' : rfqSrc, 
-      'rfq_date' : rfqDate.toString(),
+      'rfq_src' : rfqSrc,
       // 'status' : status,
-      // 'price' : price, 
-      // 'dateValid' : dateValid,
+//       'price' : price, 
+      'rfq_date' : ParserDate.dateToString(rfqDate),
+      'date_valid' : ParserDate.dateToString(dateValid),
       'quote_lines_attributes' : lines_to_map()
     };
   }

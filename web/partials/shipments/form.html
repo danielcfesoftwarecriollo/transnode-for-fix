@@ -347,7 +347,18 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="col-sm-12 control-label">Special Handling</label>
+                  <div class="col-sm-12">
+                    <select ng-model="shipper.typeHandling"  class="form-control">
+                      <option value="" disabled selected>Select type Handling</option>
+                      <option ng-repeat="tipeHandling in ctrl.specialHandling" ng-value="tipeHandling" value="{{tipeHandling}}" >{{tipeHandling}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-9">
                 <label class="title-align" for="spec-handl">Spec. Handl</label>
                 <textarea id="spec-handl" class="form-control" ng-model="shipper.specialHandling" ></textarea>
               </div>
