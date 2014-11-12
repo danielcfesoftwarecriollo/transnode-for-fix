@@ -23,8 +23,3 @@ dependency_overrides:
 transformers:
 - polymer:
     entry_points: web/index.html
-- $dart2js:
-    verbose: true
-    suppressWarnings: false
-    suppressHints: false
-    terse: false
