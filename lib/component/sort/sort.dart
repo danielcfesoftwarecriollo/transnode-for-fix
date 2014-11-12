@@ -1,5 +1,4 @@
 import 'package:polymer/polymer.dart';
-//import '../../showcase/item.dart';
 import 'dart:html';
 import 'package:html_components/html_components.dart' show DatatableComponent, GrowlComponent;
 
